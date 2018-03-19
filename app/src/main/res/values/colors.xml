@@ -4,7 +4,19 @@
     <color name="colorPrimaryDark">#131A56</color>
     <color name="secondPage">#00838F</color>
     <color name="colorAccent">#ba68c8</color>
+    <!--hanaa section -->
     <color name="text">#ffffff</color>
     <color name="text_two">#94ffffff</color>
     <color name="green">#940ce61f</color>
+    <!-- end hanaa section-->
+
+    <!--hesham section -->
+    <!-- end hesham section-->
+
+    <!--mark section -->
+    <!-- end mark section-->
+
+    <!--bodour section -->
+    <!-- end bodour section-->
+
 </resources>

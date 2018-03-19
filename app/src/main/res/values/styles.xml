@@ -7,7 +7,20 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
+    <!--hesham section -->
+    <!-- end hesham section-->
 
+
+    <!--bodour section -->
+    <!-- end bodour section-->
+
+
+    <!--mark section -->
+    <!-- end mark section-->
+
+
+
+    <!--hanaa section -->
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
@@ -16,5 +29,7 @@
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    <!-- end hanaa section-->
+
 
 </resources>

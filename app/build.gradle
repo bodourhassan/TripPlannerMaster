@@ -9,8 +9,8 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
-    compileSdkVersion 27
-    buildToolsVersion "27.0.2"
+    compileSdkVersion 26
+    buildToolsVersion "26.0.2"
     dataBinding {
         enabled true
     }
@@ -18,7 +18,7 @@ android {
         vectorDrawables.useSupportLibrary = true
         applicationId "com.ititeam.tripplannermaster"
         minSdkVersion 16
-        targetSdkVersion 27
+        targetSdkVersion 26
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -32,16 +32,29 @@ android {
 }
 
 dependencies {
+    // plz guys be sure that you use dependency Version 26.1.0 34an mnz3l4 b3d ^_^
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
     compile fileTree(dir: 'libs', include: ['*.jar'])
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-
+    //hanaa section
     compile "com.android.support:appcompat-v7:$support_version"
     compile "com.android.support:design:$support_version"
     compile "com.android.support:support-v4:$support_version"
     compile "com.android.support:recyclerview-v7:$support_version"
+    ///////////////////////////////////////////////////////////////
+    //hesham section
+    compile 'com.github.clans:fab:1.6.2'
+    compile 'com.android.support:recyclerview-v7:26.1.0'
+    compile 'com.android.support:cardview-v7:26.1.0'
+    ///////////////////////////////////////////////////////////////
+    //bodour section
 
+
+    ///////////////////////////////////////////////////////////////
+    // mark section
+
+    ///////////////////////////////////////////////////////////////
     testCompile 'junit:junit:4.12'
 }
