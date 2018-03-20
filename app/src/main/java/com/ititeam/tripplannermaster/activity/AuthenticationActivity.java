@@ -2,16 +2,30 @@ package com.ititeam.tripplannermaster.activity;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.Toast;
 
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
+import com.facebook.login.LoginResult;
+import com.facebook.login.widget.LoginButton;
 import com.ititeam.tripplannermaster.R;
 import com.ititeam.tripplannermaster.activity.login.LoginFragment;
 import com.ititeam.tripplannermaster.activity.login.SignUpFragment;
 import com.ititeam.tripplannermaster.databinding.ActivityAuthenticationBinding;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.Arrays;
 
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
@@ -19,12 +33,13 @@ import static android.view.View.VISIBLE;
 public class AuthenticationActivity extends AppCompatActivity {
     private ActivityAuthenticationBinding binding;
     private boolean isLogin = true;
+    LoginButton facebook_login_button;
+    CallbackManager callbackManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_authentication);
-
         LoginFragment bottomLoginFragment = new LoginFragment();
         LoginFragment topLoginFragment = new LoginFragment();
         SignUpFragment bottomSignUpFragment = new SignUpFragment();
@@ -59,6 +74,43 @@ public class AuthenticationActivity extends AppCompatActivity {
         });
 
         binding.bottomLogin.setAlpha(0f);
+       /* facebook_login_button=findViewById(R.id.facebook_login_button);
+
+        facebook_login_button.setReadPermissions("email","public_profile");
+        // If you are using in a fragment, call loginButton.setFragment(this);
+
+        // Callback registration
+        callbackManager=CallbackManager.Factory.create();
+        facebook_login_button.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+            @Override
+            public void onSuccess(LoginResult loginResult) {
+              String user_id=loginResult.getAccessToken().getUserId();
+              GraphRequest graphRequest=GraphRequest.newMeRequest(loginResult.getAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
+                  @Override
+                  public void onCompleted(JSONObject object, GraphResponse response) {
+                      getUserInfo(object);
+                  }
+              });
+              Bundle bundle=new Bundle();
+              bundle.putString("fields","first_name,last_name,email,id");
+              graphRequest.setParameters(bundle);
+              graphRequest.executeAsync();
+
+            }
+
+            @Override
+            public void onCancel() {
+                // App code
+
+            }
+
+            @Override
+            public void onError(FacebookException exception) {
+                // App code
+                Toast.makeText(AuthenticationActivity.this, "error", Toast.LENGTH_SHORT).show();
+            }
+        });*/
+
     }
 
     @Override

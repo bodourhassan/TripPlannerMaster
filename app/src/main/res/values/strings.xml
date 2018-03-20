@@ -25,6 +25,8 @@
     <string name="sign_up">Sign up</string>
     <string name="username">Username</string>
     <string name="or">or</string>
+    <string name="facebook_app_id">180984762703989</string>
+    <string name="fb_login_protocol_scheme">fb180984762703989</string>
     <!-- end hanaa section-->
 
 
