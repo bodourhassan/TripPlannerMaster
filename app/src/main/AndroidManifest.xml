@@ -50,6 +50,14 @@
         <!--end hanaa section-->
 
         <!--bodour section-->
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyBvYJmYWzd3_TBwl6Jmh-NS7XXyuoyzbWw"/>
+        <activity
+            android:name=".activity.AddNewTrip"
+            android:label= "@string/title_activity_add_new_trip"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
         <!--end boudour section-->
 
         <!--mark section-->

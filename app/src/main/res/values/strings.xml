@@ -5,6 +5,27 @@
 
 
     <!--bodour section -->
+    <string name="title_activity_add_new_trip">AddNewTrip</string>
+    <string name="tripNameHint">Trip Name</string>
+    <string name="AppNameKey">Triplanno</string>
+    <string name="StartPointHint">Start Point</string>
+    <string name="place_details">&lt;b&gt;%1$s&lt;/b&gt;&lt;br/&gt;&lt;i&gt;Place Id: %2$s&lt;/i&gt;&lt;br/&gt;Address: %3$s&lt;br/&gt;Phone: %4$s&lt;br/&gt;Website: %5$s</string>
+    <string name="EndPointValue">End Point</string>
+    <string name="TripNamehint">Trip Name</string>
+    <string name="StartPointhint">Start Point</string>
+    <string name="EndPointhint" >End Point</string>
+    <string name="DateValue">Date</string>
+    <string name="TimeValue">Time</string>
+    <string name="DateText">Date</string>
+    <string name="TimeText">Time</string>
+    <string name="TripTypeValue">Trip Type</string>
+    <string name="OneDirectionKey">One Direction</string>
+    <string name="RoundKey">Round</string>
+    <string name="TripCatValue">Trip Catagory</string>
+    <string name="Schoolkey">School</string>
+    <string name="WorkValue">Work</string>
+    <string name="NoteKey">Note List :</string>
+    <string name="NoteListkey">Note List :</string>
     <!-- end bodour section-->
 
 

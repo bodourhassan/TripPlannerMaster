@@ -51,6 +51,7 @@ dependencies {
     compile 'com.android.support:cardview-v7:26.1.0'
     ///////////////////////////////////////////////////////////////
     //bodour section
+    compile 'com.google.android.gms:play-services-places:11.2.0'
 
     ///////////////////////////////////////////////////////////////
     // mark section

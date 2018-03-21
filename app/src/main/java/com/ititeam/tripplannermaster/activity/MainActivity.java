@@ -40,6 +40,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }else if(view == btnBdour)
         {
             ///////
+            Intent intent=new Intent(MainActivity.this,AddNewTrip.class);
+            startActivity(intent);
 
 
         }else if(view == btnMark)
