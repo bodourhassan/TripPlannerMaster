@@ -6,7 +6,7 @@ import android.database.Cursor;
 
 import java.util.ArrayList;
 
-import model.Trip;
+import com.ititeam.tripplannermaster.model.Trip;
 
 /**
  * Created by MARK on 3/18/2018.

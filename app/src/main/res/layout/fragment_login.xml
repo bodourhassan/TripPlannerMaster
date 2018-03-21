@@ -17,6 +17,7 @@
         android:paddingStart="32dp"
         android:hint="@string/email"
         android:textColor="#ffffff"
+        android:drawableLeft="@drawable/ic_user_icon"
         />
 
     <EditText
@@ -30,7 +31,8 @@
         android:gravity="center_vertical"
         android:paddingStart="32dp"
         android:hint="@string/password"
-        android:textColor="#ffffff" />
+        android:textColor="#ffffff"
+        android:drawableLeft="@drawable/ic_pass_icon"/>
 
     <TextView
         android:layout_width="wrap_content"

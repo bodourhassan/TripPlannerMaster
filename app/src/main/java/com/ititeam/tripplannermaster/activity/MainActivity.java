@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }else if(view == btnHana)
         {
             //////////
-            Intent intent=new Intent(MainActivity.this,AuthenticationActivity.class);
+            Intent intent=new Intent(MainActivity.this,ShowTripActivity.class);
             startActivity(intent);
 
         }
