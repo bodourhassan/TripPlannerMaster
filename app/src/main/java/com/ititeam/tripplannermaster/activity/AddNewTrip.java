@@ -33,6 +33,7 @@ public class AddNewTrip extends AppCompatActivity implements ConnectionCallbacks
 
     private GoogleApiClient googleApiClient;
     AutoCompleteTextView mylocationStart;
+    AutoCompleteTextView mylocationEnd;
     private GeoDataClient geoDataClient ;
     TextView DateView;
     TextView TimeView;
@@ -50,6 +51,7 @@ public class AddNewTrip extends AppCompatActivity implements ConnectionCallbacks
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
          mylocationStart=findViewById(R.id.autoCompleteTextView2);
+        mylocationEnd=findViewById(R.id.autoCompleteTextView3);
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,6 +70,7 @@ public class AddNewTrip extends AppCompatActivity implements ConnectionCallbacks
         geoDataClient = Places.getGeoDataClient(this, null);
         MapPlacesAdapter mapPlacesAdapter=new MapPlacesAdapter(this , geoDataClient , LatLangBounds,null);
         mylocationStart.setAdapter(mapPlacesAdapter);
+        mylocationEnd.setAdapter(mapPlacesAdapter);
 
         DateView =findViewById(R.id.Date);
         TimeView =findViewById(R.id.Time);

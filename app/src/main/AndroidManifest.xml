@@ -52,7 +52,7 @@
         <!--bodour section-->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyBvYJmYWzd3_TBwl6Jmh-NS7XXyuoyzbWw"/>
+            android:value="AIzaSyC3dQad9fPAPiDkbhVLFvQ06XRPA7K5rm8"/>
         <activity
             android:name=".activity.AddNewTrip"
             android:label= "@string/title_activity_add_new_trip"
