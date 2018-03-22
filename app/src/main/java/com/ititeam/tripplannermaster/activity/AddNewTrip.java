@@ -13,9 +13,13 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.DatePicker;
+import android.widget.EditText;
+import android.widget.ListView;
+import android.widget.MultiAutoCompleteTextView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -27,23 +31,31 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.ititeam.tripplannermaster.R;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 
 public class AddNewTrip extends AppCompatActivity implements ConnectionCallbacks,OnConnectionFailedListener {
 
     private GoogleApiClient googleApiClient;
+
+    private GeoDataClient geoDataClient ;
+    ArrayList<String> listItems=new ArrayList<String>();
+    ArrayAdapter<String> NoteListadapter;
+
+    AutoCompleteTextView TripNameView;
     AutoCompleteTextView mylocationStart;
     AutoCompleteTextView mylocationEnd;
-    private GeoDataClient geoDataClient ;
+    EditText DescriptipnView;
     TextView DateView;
     TextView TimeView;
+    ListView MyNoteList;
+    MultiAutoCompleteTextView NoteItem;
+
     Calendar myCalender;
     int day,month,year;
     int hour,minute;
     String format;
-    public  static final LatLngBounds LatLangBounds =new LatLngBounds(
-
-     new LatLng(-40,-168),new LatLng(71,163));
+    public  static final LatLngBounds LatLangBounds =new LatLngBounds(new LatLng(-40,-168),new LatLng(71,163));
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,26 +64,41 @@ public class AddNewTrip extends AppCompatActivity implements ConnectionCallbacks
         setSupportActionBar(toolbar);
          mylocationStart=findViewById(R.id.autoCompleteTextView2);
         mylocationEnd=findViewById(R.id.autoCompleteTextView3);
+        NoteItem =findViewById(R.id.NoteId);
+        /************************** Note List Part ************************/
+        MyNoteList=findViewById(R.id.NoteList);
+        NoteListadapter=new ArrayAdapter<String>(this,
+                android.R.layout.simple_list_item_1,
+                listItems);
+        MyNoteList.setAdapter(NoteListadapter);
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+              //  Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+                String Notebody =NoteItem.getText().toString();
+                if(Notebody.trim().equals(""))
+                {
+                    Toast.makeText(getBaseContext(), " Enter Your Note ",
+                            Toast.LENGTH_SHORT).show();
+
+                }
+                else {
+
+                   //  addItems(Notebody);
+                    listItems.add(Notebody);
+                    NoteListadapter.notifyDataSetChanged();
+                    NoteItem.setText("".toString());
+                   // NoteListadapter.setNotifyOnChange(true);
+                   // MyNoteList.notifyAll();
+
+                }
             }
         });
-
-        googleApiClient=new GoogleApiClient
-                .Builder(this)
-                .addApi(Places.GEO_DATA_API)
-                .addApi(Places.PLACE_DETECTION_API)
-                .enableAutoManage(this, this)
-                .build();
         geoDataClient = Places.getGeoDataClient(this, null);
         MapPlacesAdapter mapPlacesAdapter=new MapPlacesAdapter(this , geoDataClient , LatLangBounds,null);
         mylocationStart.setAdapter(mapPlacesAdapter);
         mylocationEnd.setAdapter(mapPlacesAdapter);
-
         DateView =findViewById(R.id.Date);
         TimeView =findViewById(R.id.Time);
         myCalender= Calendar.getInstance();
@@ -116,16 +143,24 @@ public class AddNewTrip extends AppCompatActivity implements ConnectionCallbacks
                timePickerDialog.show();
            }
        });
-
+      /******************************************Trip Catagory Part ***********************/
         //get the spinner from the xml.
-        Spinner dropdown = findViewById(R.id.TripCat);
-//create a list of items for the spinner.
-        String[] items = new String[]{"Work", "School", "Shooping",""};
-//create an adapter to describe how the items are displayed, adapters are used in several places in android.
-//There are multiple variations of this, but this is the basic variant.
+        Spinner dropdown = findViewById(R.id.TripCatId);
+        //create a list of items for the spinner.
+        String[] items = new String[]{"Work", "School", "Shooping"};
+        //create an adapter to describe how the items are displayed, adapters are used in several places in android
+        // There are multiple variations of this, but this is the basic variant.
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, items);
-//set the spinners adapter to the previously created one.
+        //set the spinners adapter to the previously created one.
         dropdown.setAdapter(adapter);
+
+
+
+    }
+
+    public void addItems(String newNoteList) {
+        listItems.add(newNoteList);
+       NoteListadapter.notifyDataSetChanged();
     }
 
     public void hourFormat(int hour)
@@ -150,14 +185,10 @@ public class AddNewTrip extends AppCompatActivity implements ConnectionCallbacks
             format="AM";
         }
     }
+
+
     @Override
     public void onConnected(@Nullable Bundle bundle) {
-            refreshPlacesData();
-    }
-
-    public  void  refreshPlacesData()
-    {
-
 
     }
 
