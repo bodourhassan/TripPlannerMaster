@@ -8,12 +8,19 @@ public class Note {
 
     int noteId;
     String noteBody;
+
+
+
     String status;
     int tripIdFk;
 
     public Note() {
     }
 
+    public Note(String noteBody, String status) {
+        this.noteBody = noteBody;
+        this.status = status;
+    }
     public Note(int noteId, String noteBody, String status, int tripIdFk) {
         this.noteId = noteId;
         this.noteBody = noteBody;

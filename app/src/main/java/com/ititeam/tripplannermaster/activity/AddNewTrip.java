@@ -2,11 +2,11 @@ package com.ititeam.tripplannermaster.activity;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -16,6 +16,8 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.MultiAutoCompleteTextView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -29,7 +31,10 @@ import com.google.android.gms.location.places.GeoDataClient;
 import com.google.android.gms.location.places.Places;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
+import com.ititeam.tripplannermaster.DB.TripTableOperations;
 import com.ititeam.tripplannermaster.R;
+import com.ititeam.tripplannermaster.model.Note;
+import com.ititeam.tripplannermaster.model.Trip;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -37,11 +42,9 @@ import java.util.Calendar;
 public class AddNewTrip extends AppCompatActivity implements ConnectionCallbacks,OnConnectionFailedListener {
 
     private GoogleApiClient googleApiClient;
-
     private GeoDataClient geoDataClient ;
     ArrayList<String> listItems=new ArrayList<String>();
     ArrayAdapter<String> NoteListadapter;
-
     AutoCompleteTextView TripNameView;
     AutoCompleteTextView mylocationStart;
     AutoCompleteTextView mylocationEnd;
@@ -49,12 +52,16 @@ public class AddNewTrip extends AppCompatActivity implements ConnectionCallbacks
     TextView DateView;
     TextView TimeView;
     ListView MyNoteList;
+    RadioButton myRadiobutton;
     MultiAutoCompleteTextView NoteItem;
-
+    RadioGroup mytripGroup;
+    Spinner Tripcatagory;
+     ArrayList<Note> myNoteList=new ArrayList<>();
     Calendar myCalender;
     int day,month,year;
     int hour,minute;
     String format;
+    int userid=1;
     public  static final LatLngBounds LatLangBounds =new LatLngBounds(new LatLng(-40,-168),new LatLng(71,163));
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,16 +69,20 @@ public class AddNewTrip extends AppCompatActivity implements ConnectionCallbacks
         setContentView(R.layout.activity_add_new_trip);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-         mylocationStart=findViewById(R.id.autoCompleteTextView2);
-        mylocationEnd=findViewById(R.id.autoCompleteTextView3);
+         mylocationStart=findViewById(R.id.UAutoStart);
+        mylocationEnd=findViewById(R.id.AutoEnd);
         NoteItem =findViewById(R.id.NoteId);
+        TripNameView = findViewById(R.id.UAutTripNaame);
+        DescriptipnView=findViewById(R.id.EditDescription);
+        mytripGroup= findViewById(R.id.GroupType);
+        Tripcatagory= findViewById(R.id.TripCatId);
         /************************** Note List Part ************************/
         MyNoteList=findViewById(R.id.NoteList);
         NoteListadapter=new ArrayAdapter<String>(this,
                 android.R.layout.simple_list_item_1,
                 listItems);
         MyNoteList.setAdapter(NoteListadapter);
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.Ufab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -200,5 +211,62 @@ public class AddNewTrip extends AppCompatActivity implements ConnectionCallbacks
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
 
+    }
+
+    public void onClicksave(View view) {
+          if (TripNameView.getText().toString().trim().equals(""))
+          {
+              Toast.makeText(getBaseContext(), " Enter Trip Name ",
+                      Toast.LENGTH_SHORT).show();
+          }
+          else if(mylocationStart.getText().toString().trim().equals(""))
+          {
+              Toast.makeText(getBaseContext(), " Enter Your Start Location ",
+                      Toast.LENGTH_SHORT).show();
+
+          }
+          else if(mylocationEnd.getText().toString().trim().equals(""))
+          {
+              Toast.makeText(getBaseContext(), " Enter Your End Location ",
+                      Toast.LENGTH_SHORT).show();
+
+          }
+          else if(DescriptipnView.getText().toString().trim().equals(""))
+          {
+              Toast.makeText(getBaseContext(), " Enter Your Description  ",
+                      Toast.LENGTH_SHORT).show();
+
+          }
+          else {
+              String NameofTrip = TripNameView.getText().toString();
+              String StartLoc = mylocationStart.getText().toString();
+              String Endloc = mylocationEnd.getText().toString();
+              String Desc = DescriptipnView.getText().toString();
+              String Date = DateView.getText().toString();
+              String Time = TimeView.getText().toString();
+              // get selected radio button from radioGroup
+              int selectedId = mytripGroup.getCheckedRadioButtonId();
+              // find the radiobutton by returned id
+              myRadiobutton = findViewById(selectedId);
+              String TripDirection = myRadiobutton.getText().toString();
+              for (int i = 0; i < listItems.size(); i++) {
+                  Note note = new Note(listItems.get(i), "Later");
+                  myNoteList.add(note);
+
+              }
+              String TripCatagory = Tripcatagory.getSelectedItem().toString();
+              Trip NewTrip = new Trip(NameofTrip, StartLoc, Endloc, Date, Time, "Upcomming", TripDirection, Desc, "none", TripCatagory, userid, myNoteList);
+              TripTableOperations myTripTable = new TripTableOperations(getBaseContext());
+              myTripTable.insertTrip(NewTrip);
+              ArrayList<Trip> all= myTripTable.selectAllTrips();
+              Toast.makeText(getBaseContext(),all.size(),
+                      Toast.LENGTH_SHORT).show();
+          }
+
+        }
+
+    public void cancleClick(View view) {
+        Intent intent = new Intent(AddNewTrip.this,MainActivity.class);
+        startActivity(intent);
     }
 }

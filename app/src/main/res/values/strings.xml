@@ -13,7 +13,7 @@
     <string name="EndPointValue">End Point</string>
     <string name="TripNamehint">Trip Name</string>
     <string name="StartPointhint">Start Point</string>
-    <string name="EndPointhint" >End Point</string>
+    <string name="EndPointhint">End Point</string>
     <string name="DateValue">Date</string>
     <string name="TimeValue">Time</string>
     <string name="DateText">Date</string>
@@ -34,7 +34,7 @@
     <string name="AddnoteKey">Add Note....</string>
     <string name="TripDisc">Trip Description</string>
     <string name="RoundTripKey">Round Trip</string>
-    <string name="TroipDesc" >Trip Description</string>
+    <string name="TroipDesc">Trip Description</string>
     <!-- end bodour section-->
 
 
@@ -57,6 +57,7 @@
     <string name="or">or</string>
     <string name="facebook_app_id">180984762703989</string>
     <string name="fb_login_protocol_scheme">fb180984762703989</string>
+    <string name="title_activity_update_trip">UpdateTrip</string>
 
     <!-- end hanaa section-->
 

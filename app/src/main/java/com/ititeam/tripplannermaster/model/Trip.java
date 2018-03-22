@@ -16,6 +16,22 @@ public class Trip {
     String tripEndPoint;
     String tripDate;
     String tripTime;
+
+    public Trip(String tripName, String tripStartPoint, String tripEndPoint, String tripDate, String tripTime, String tripStatus, String tripDirection, String tripDescription, String tripRepetition, String tripCategory, int userId, ArrayList<Note> tripNodes) {
+        this.tripName = tripName;
+        this.tripStartPoint = tripStartPoint;
+        this.tripEndPoint = tripEndPoint;
+        this.tripDate = tripDate;
+        this.tripTime = tripTime;
+        this.tripStatus = tripStatus;
+        this.tripDirection = tripDirection;
+        this.tripDescription = tripDescription;
+        this.tripRepetition = tripRepetition;
+        this.tripCategory = tripCategory;
+        this.userId = userId;
+        this.tripNodes = tripNodes;
+    }
+
     String tripStatus;
     String tripDirection;
     String tripDescription;

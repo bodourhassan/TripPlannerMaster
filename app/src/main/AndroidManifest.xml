@@ -20,16 +20,17 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <!--hanaa section-->
+        <!-- hanaa section -->
         <activity
             android:name=".activity.AuthenticationActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".activity.ShowUpcomingTrips" />
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
+
         <activity
             android:name="com.facebook.FacebookActivity"
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
@@ -46,25 +47,32 @@
                 <data android:scheme="@string/fb_login_protocol_scheme" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.ShowTripActivity"></activity>
-        <!--end hanaa section-->
+        <activity android:name=".activity.ShowTripActivity" />
+        <!-- end hanaa section -->
 
-        <!--bodour section-->
+
+        <!-- bodour section -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyC3dQad9fPAPiDkbhVLFvQ06XRPA7K5rm8"/>
+            android:value="AIzaSyC3dQad9fPAPiDkbhVLFvQ06XRPA7K5rm8" />
+
         <activity
             android:name=".activity.AddNewTrip"
-            android:label= "@string/title_activity_add_new_trip"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
-        <!--end boudour section-->
+            android:label="@string/title_activity_add_new_trip"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <!-- end boudour section -->
 
-        <!--mark section-->
-        <!--end mark section-->
 
-        <!--hesham section-->
-        <!--end hesham section-->
+        <!-- mark section -->
+        <!-- end mark section -->
+
+
+        <!-- hesham section -->
+        <!-- end hesham section -->
+        <activity
+            android:name=".activity.UpdateTrip"
+            android:label="@string/title_activity_update_trip"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>
