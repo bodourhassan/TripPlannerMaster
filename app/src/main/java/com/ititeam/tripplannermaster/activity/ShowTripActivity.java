@@ -7,44 +7,28 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
+import com.github.clans.fab.Label;
+import com.ititeam.tripplannermaster.DB.TripTableOperations;
 import com.ititeam.tripplannermaster.R;
 import com.ititeam.tripplannermaster.classes.TripViewHolder;
+import com.ititeam.tripplannermaster.model.Trip;
 
 public class ShowTripActivity extends AppCompatActivity {
 
+    Label tripName,tripStartPoint;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_trip);
-        TripAdapter adapter=new TripAdapter();
-    }
-    public class TripAdapter extends RecyclerView.Adapter<TripViewHolder> {
+        tripName=findViewById(R.id.show_trip_name);
+        TripTableOperations tripTableOperations=new TripTableOperations(getBaseContext());
+        int trip_id=1;
+        Trip trip=tripTableOperations.selectSingleTrips(trip_id+"");
 
-        private LayoutInflater inflater;
-        TripViewHolder viewHolder;
-
-        @Override
-        public TripViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            View view = inflater.inflate(R.layout.list_layout_upcoming_trip ,null);
-            viewHolder = new TripViewHolder(view);
-            return  viewHolder;
-        }
-
-        @Override
-        public void onBindViewHolder(TripViewHolder holder, int position) {
-            //intialize array
-            //trip trip = array.get(position);
-
-        }
-
-        @Override
-        public int getItemCount() {
-            return 1;
-            //return size of array  // array.size
-        }
-
+        tripName.setText(trip.getTripName());
 
     }
+
 }

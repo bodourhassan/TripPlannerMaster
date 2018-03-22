@@ -1,10 +1,229 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="com.ititeam.tripplannermaster.activity.ShowTripActivity">
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appBarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
 
-</LinearLayout>
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/colorAccent"
+            app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+    </android.support.design.widget.AppBarLayout>
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="2000dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:clipToPadding="false"
+        android:fillViewport="true">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:orientation="vertical">
+
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/fab"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+
+                android:layout_alignEnd="@+id/TripCat"
+                android:layout_alignParentBottom="true"
+                android:layout_alignRight="@+id/TripCat"
+                app:backgroundTint="@color/colorAccent"
+                app:srcCompat="@android:drawable/ic_input_add" />
+
+            <ImageView
+                android:id="@+id/TripName"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginLeft="40dp"
+                android:layout_marginStart="40dp"
+                android:layout_marginTop="82dp"
+                app:srcCompat="@mipmap/name" />
+
+            <com.github.clans.fab.Label
+                android:id="@+id/show_trip_name"
+                android:layout_width="220dp"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/TripName"
+                android:layout_marginLeft="61dp"
+                android:layout_marginStart="61dp"
+                android:layout_toEndOf="@+id/TripName"
+                android:layout_toRightOf="@+id/TripName"
+                android:hint="@string/TripNamehint" />
+
+            <com.github.clans.fab.Label
+                android:id="@+id/show_trip_start_point"
+                android:layout_width="220dp"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/show_trip_name"
+                android:layout_alignStart="@+id/show_trip_name"
+                android:layout_below="@+id/show_trip_name"
+                android:layout_marginTop="28dp"
+                android:hint="@string/StartPointhint" />
+
+            <com.github.clans.fab.Label
+                android:id="@+id/show_trip_end_point"
+                android:layout_width="220dp"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/show_trip_start_point"
+                android:layout_alignStart="@+id/show_trip_start_point"
+                android:layout_below="@+id/show_trip_start_point"
+                android:layout_marginTop="32dp"
+                android:hint="@string/EndPointhint" />
+
+            <ImageView
+                android:id="@+id/StartPointimage"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_above="@+id/show_trip_end_point"
+                android:layout_alignLeft="@+id/TripName"
+                android:layout_alignStart="@+id/TripName"
+                app:srcCompat="@mipmap/start" />
+
+            <ImageView
+                android:id="@+id/EndPointImage"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignBottom="@+id/show_trip_end_point"
+                android:layout_alignEnd="@+id/StartPointimage"
+                android:layout_alignRight="@+id/StartPointimage"
+                app:srcCompat="@mipmap/start" />
+
+            <ImageView
+                android:id="@+id/CalenderImage"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignLeft="@+id/EndPointImage"
+                android:layout_alignStart="@+id/EndPointImage"
+                android:layout_below="@+id/show_trip_end_point"
+                android:layout_marginTop="45dp"
+                app:srcCompat="@mipmap/calender" />
+
+            <TextView
+                android:id="@+id/show_trip_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/CalenderImage"
+                android:layout_toEndOf="@+id/one"
+                android:layout_toRightOf="@+id/one"
+                android:text="@string/DateValue"
+                android:textColor="@color/common_google_signin_btn_text_dark_focused" />
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignLeft="@+id/CalenderImage"
+                android:layout_alignStart="@+id/CalenderImage"
+                android:layout_below="@+id/show_trip_date"
+                android:layout_marginTop="39dp"
+                app:srcCompat="@mipmap/clock" />
+
+            <TextView
+                android:id="@+id/show_trip_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/TimeText"
+                android:layout_alignBottom="@+id/TimeText"
+                android:layout_alignLeft="@+id/show_trip_date"
+                android:layout_alignStart="@+id/show_trip_date"
+                android:text="@string/TimeValue"
+                android:textColor="@color/common_google_signin_btn_text_dark_focused" />
+
+            <TextView
+                android:id="@+id/DateText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/imageView"
+                android:layout_alignLeft="@+id/show_trip_end_point"
+                android:layout_alignStart="@+id/show_trip_end_point"
+                android:text="@string/DateText" />
+
+            <TextView
+                android:id="@+id/TimeText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/DateText"
+                android:layout_alignStart="@+id/DateText"
+                android:layout_alignTop="@+id/imageView"
+                android:text="@string/TimeText" />
+
+            <TextView
+                android:id="@+id/textView5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/imageView"
+                android:layout_alignStart="@+id/imageView"
+                android:layout_below="@+id/imageView"
+                android:layout_marginTop="29dp"
+                android:text="@string/TripTypeValue"
+                android:textColor="@color/common_google_signin_btn_text_dark_focused" />
+
+            <CheckBox
+                android:id="@+id/one"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/textView5"
+                android:layout_alignBottom="@+id/textView5"
+                android:layout_alignLeft="@+id/TimeText"
+                android:layout_alignStart="@+id/TimeText"
+                android:text="@string/OneDirectionKey" />
+
+            <CheckBox
+                android:id="@+id/Round"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/one"
+                android:layout_alignBottom="@+id/one"
+                android:layout_alignLeft="@+id/show_trip_time"
+                android:layout_alignStart="@+id/show_trip_time"
+                android:text="@string/RoundKey" />
+
+            <TextView
+                android:id="@+id/textView6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/fab"
+                android:layout_alignLeft="@+id/textView5"
+                android:layout_alignStart="@+id/textView5"
+                android:layout_marginBottom="18dp"
+                android:text="@string/TripCatValue"
+                android:textColor="@color/common_google_signin_btn_text_dark_focused" />
+
+
+
+            <TextView
+                android:id="@+id/textView8"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/fab"
+                android:layout_alignLeft="@+id/textView6"
+                android:layout_alignStart="@+id/textView6"
+                android:text="@string/NoteListkey"
+                android:textColor="@color/common_google_signin_btn_text_dark_focused" />
+
+        </RelativeLayout>
+    </android.support.v4.widget.NestedScrollView>
+
+</RelativeLayout>
