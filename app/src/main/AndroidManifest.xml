@@ -68,7 +68,7 @@
 
         <!-- bodour section -->
 
-            <meta-data
+        <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyC3dQad9fPAPiDkbhVLFvQ06XRPA7K5rm8" />
 
@@ -79,15 +79,11 @@
             android:theme="@style/AppTheme.NoActionBar" />
 
 
-
-
         <!-- end boudour section -->
-
 
 
         <!-- mark section -->
         <!-- end mark section -->
-
 
 
         <!-- hesham section -->

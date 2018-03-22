@@ -60,11 +60,12 @@ public class ShowTripActivity extends FragmentActivity implements OnMapReadyCall
 
     Label tripName,tripStartPoint;
     private GoogleMap mMap;
-    private static final int LOCATION_REQUEST=500;
+    private static final int LOCATION_REQUEST = 500;
     ArrayList<LatLng> listPoints;
-    ArrayList<MarkerOptions>markers;
+    ArrayList<MarkerOptions> markers;
     SupportMapFragment mapFragment;
-    ArrayList<Note>notes=new ArrayList<>();
+    ArrayList<Note> notes = new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,38 +74,38 @@ public class ShowTripActivity extends FragmentActivity implements OnMapReadyCall
         TripTableOperations tripTableOperations=new TripTableOperations(getBaseContext());
         int trip_id=1;
 //        Trip trip=tripTableOperations.selectSingleTrips(trip_id+"");
-        Note note=new Note();
+        Note note = new Note();
         note.setNoteBody("note1");
         notes.add(note);
         notes.add(note);
         notes.add(note);
         notes.add(note);
         //tripName.setText(trip.getTripName());
-        listPoints=new ArrayList<>();
-        markers=new ArrayList<>();
-         mapFragment = (SupportMapFragment) getSupportFragmentManager()
+        listPoints = new ArrayList<>();
+        markers = new ArrayList<>();
+        mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-        LinearLayout notesLayout=findViewById(R.id.notes_layout);
-        for(Note nNote : notes) {
-            ImageView imageView=new ImageView(this);
+        LinearLayout notesLayout = findViewById(R.id.notes_layout);
+        for (Note nNote : notes) {
+            ImageView imageView = new ImageView(this);
             imageView.setImageResource(R.mipmap.wrong_icon);
             LinearLayout.LayoutParams imgLayoutParams = new LinearLayout.LayoutParams(30, 30);
             imageView.setLayoutParams(imgLayoutParams);
-            LinearLayout linearLayout=new LinearLayout(this);
+            LinearLayout linearLayout = new LinearLayout(this);
             linearLayout.setOrientation(LinearLayout.HORIZONTAL);
             Label label = new Label(this);
             label.setText(nNote.getNoteBody());
-            LinearLayout.LayoutParams labelLayoutParams=  new LinearLayout.LayoutParams(
+            LinearLayout.LayoutParams labelLayoutParams = new LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.MATCH_PARENT,
                     LinearLayout.LayoutParams.MATCH_PARENT);
-            labelLayoutParams.setMargins(5,-2,0,0);
+            labelLayoutParams.setMargins(5, -2, 0, 0);
             label.setLayoutParams(labelLayoutParams);
-            LinearLayout.LayoutParams layoutParams=  new LinearLayout.LayoutParams(
+            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.MATCH_PARENT,
                     LinearLayout.LayoutParams.MATCH_PARENT);
 
-            layoutParams.setMargins(0,0,0,15);
+            layoutParams.setMargins(0, 0, 0, 15);
             linearLayout.addView(imageView);
             linearLayout.addView(label);
             linearLayout.setLayoutParams(layoutParams);
@@ -114,6 +115,7 @@ public class ShowTripActivity extends FragmentActivity implements OnMapReadyCall
         }
 
     }
+
     /**
      * Manipulates the map once available.
      * This callback is triggered when the map is ready to be used.
@@ -121,13 +123,13 @@ public class ShowTripActivity extends FragmentActivity implements OnMapReadyCall
      * In this case, we just add a marker near Sydney, Australia.
      * If Google Play services is not installed on the device.
      * This method will only be triggered once the user has installed
-     Google Play services and returned to the app.
+     * Google Play services and returned to the app.
      */
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        LatLng latLng1=getLatLongFromGivenAddress("cairo,Egypt");
-        LatLng latLng2=getLatLongFromGivenAddress("sohag,Egypt");
+        LatLng latLng1 = getLatLongFromGivenAddress("cairo,Egypt");
+        LatLng latLng2 = getLatLongFromGivenAddress("sohag,Egypt");
         mMap = googleMap;
         mMap.getUiSettings().setZoomControlsEnabled(true);
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -142,7 +144,7 @@ public class ShowTripActivity extends FragmentActivity implements OnMapReadyCall
         markers.add(markerOptions);
         mMap.addMarker(markerOptions);
         listPoints.add(latLng2);
-       // markerOptions = new MarkerOptions();
+        // markerOptions = new MarkerOptions();
         MarkerOptions markerOptions2 = new MarkerOptions();
         markerOptions2.position(latLng2);
         markerOptions2.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
@@ -224,18 +226,17 @@ public class ShowTripActivity extends FragmentActivity implements OnMapReadyCall
     }
 
 
-
     private String getRequestUrl(LatLng origin, LatLng dest) {
         //Value of origin
-        String str_org = "origin=" + origin.latitude +","+origin.longitude;
+        String str_org = "origin=" + origin.latitude + "," + origin.longitude;
         //Value of destination
-        String str_dest = "destination=" + dest.latitude+","+dest.longitude;
+        String str_dest = "destination=" + dest.latitude + "," + dest.longitude;
         //Set value enable the sensor
         String sensor = "sensor=false";
         //Mode for find direction
         String mode = "mode=driving";
         //Build the full param
-        String param = str_org +"&" + str_dest + "&" +sensor+"&" +mode;
+        String param = str_org + "&" + str_dest + "&" + sensor + "&" + mode;
         //Output format
         String output = "json";
         //Create url to request
@@ -247,7 +248,7 @@ public class ShowTripActivity extends FragmentActivity implements OnMapReadyCall
         String responseString = "";
         InputStream inputStream = null;
         HttpURLConnection httpURLConnection = null;
-        try{
+        try {
             URL url = new URL(reqUrl);
             httpURLConnection = (HttpURLConnection) url.openConnection();
             httpURLConnection.connect();
@@ -281,7 +282,7 @@ public class ShowTripActivity extends FragmentActivity implements OnMapReadyCall
     @SuppressLint("MissingPermission")
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        switch (requestCode){
+        switch (requestCode) {
             case LOCATION_REQUEST:
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     mMap.setMyLocationEnabled(true);
@@ -300,7 +301,7 @@ public class ShowTripActivity extends FragmentActivity implements OnMapReadyCall
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            return  responseString;
+            return responseString;
         }
 
         @Override
@@ -312,7 +313,7 @@ public class ShowTripActivity extends FragmentActivity implements OnMapReadyCall
         }
     }
 
-    public class TaskParser extends AsyncTask<String, Void, List<List<HashMap<String, String>>> > {
+    public class TaskParser extends AsyncTask<String, Void, List<List<HashMap<String, String>>>> {
 
         @Override
         protected List<List<HashMap<String, String>>> doInBackground(String... strings) {
@@ -344,7 +345,7 @@ public class ShowTripActivity extends FragmentActivity implements OnMapReadyCall
                     double lat = Double.parseDouble(point.get("lat"));
                     double lon = Double.parseDouble(point.get("lon"));
 
-                    points.add(new LatLng(lat,lon));
+                    points.add(new LatLng(lat, lon));
                 }
 
                 polylineOptions.addAll(points);
@@ -353,7 +354,7 @@ public class ShowTripActivity extends FragmentActivity implements OnMapReadyCall
                 polylineOptions.geodesic(true);
             }
 
-            if (polylineOptions!=null) {
+            if (polylineOptions != null) {
                 mMap.addPolyline(polylineOptions);
             } else {
                 Toast.makeText(getApplicationContext(), "Direction not found!", Toast.LENGTH_SHORT).show();
@@ -361,30 +362,26 @@ public class ShowTripActivity extends FragmentActivity implements OnMapReadyCall
 
         }
     }
-    public  LatLng getLatLongFromGivenAddress(String address)
-    {
-        double lat= 0.0, lng= 0.0;
-        LatLng latLng=null;
+
+    public LatLng getLatLongFromGivenAddress(String address) {
+        double lat = 0.0, lng = 0.0;
+        LatLng latLng = null;
 
         Geocoder geoCoder = new Geocoder(this, Locale.getDefault());
-        try
-        {
-            List<Address> addresses = geoCoder.getFromLocationName(address , 1);
-            if (addresses.size() > 0)
-            {
+        try {
+            List<Address> addresses = geoCoder.getFromLocationName(address, 1);
+            if (addresses.size() > 0) {
                 latLng = new LatLng(
                         (addresses.get(0).getLatitude()),
                         (addresses.get(0).getLongitude()));
 
-                lat=latLng.latitude;
-                lng=latLng.longitude;
+                lat = latLng.latitude;
+                lng = latLng.longitude;
 
-                Log.d("Latitude", ""+lat);
-                Log.d("Longitude", ""+lng);
+                Log.d("Latitude", "" + lat);
+                Log.d("Longitude", "" + lng);
             }
-        }
-        catch(Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return latLng;
