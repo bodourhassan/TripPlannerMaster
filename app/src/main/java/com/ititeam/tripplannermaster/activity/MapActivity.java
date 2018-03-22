@@ -2,8 +2,8 @@ package com.ititeam.tripplannermaster.activity;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.pm.PackageManager;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.location.Address;
 import android.location.Geocoder;
@@ -11,36 +11,19 @@ import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.Toast;
-
-import com.facebook.internal.Utility;
-import com.github.clans.fab.Label;
-import com.google.android.gms.maps.CameraUpdate;
-import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.LatLngBounds;
-import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
-import com.ititeam.tripplannermaster.DB.TripTableOperations;
 import com.ititeam.tripplannermaster.R;
 import com.ititeam.tripplannermaster.classes.DirectionsParser;
-import com.ititeam.tripplannermaster.classes.TripViewHolder;
-import com.ititeam.tripplannermaster.model.Note;
-import com.ititeam.tripplannermaster.model.Trip;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -56,64 +39,22 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
-public class ShowTripActivity extends FragmentActivity implements OnMapReadyCallback {
+public class MapActivity extends FragmentActivity implements OnMapReadyCallback {
 
-    Label tripName,tripStartPoint;
     private GoogleMap mMap;
     private static final int LOCATION_REQUEST=500;
-    ArrayList<LatLng> listPoints;
-    ArrayList<MarkerOptions>markers;
-    SupportMapFragment mapFragment;
-    ArrayList<Note>notes=new ArrayList<>();
+    ArrayList <LatLng> listPoints;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_trip);
-        //tripName=findViewById(R.id.show_trip_name);
-        TripTableOperations tripTableOperations=new TripTableOperations(getBaseContext());
-        int trip_id=1;
-//        Trip trip=tripTableOperations.selectSingleTrips(trip_id+"");
-        Note note=new Note();
-        note.setNoteBody("note1");
-        notes.add(note);
-        notes.add(note);
-        notes.add(note);
-        notes.add(note);
-        //tripName.setText(trip.getTripName());
-        listPoints=new ArrayList<>();
-        markers=new ArrayList<>();
-         mapFragment = (SupportMapFragment) getSupportFragmentManager()
+        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
+       /* SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-        LinearLayout notesLayout=findViewById(R.id.notes_layout);
-        for(Note nNote : notes) {
-            ImageView imageView=new ImageView(this);
-            imageView.setImageResource(R.mipmap.wrong_icon);
-            LinearLayout.LayoutParams imgLayoutParams = new LinearLayout.LayoutParams(30, 30);
-            imageView.setLayoutParams(imgLayoutParams);
-            LinearLayout linearLayout=new LinearLayout(this);
-            linearLayout.setOrientation(LinearLayout.HORIZONTAL);
-            Label label = new Label(this);
-            label.setText(nNote.getNoteBody());
-            LinearLayout.LayoutParams labelLayoutParams=  new LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.MATCH_PARENT,
-                    LinearLayout.LayoutParams.MATCH_PARENT);
-            labelLayoutParams.setMargins(5,-2,0,0);
-            label.setLayoutParams(labelLayoutParams);
-            LinearLayout.LayoutParams layoutParams=  new LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.MATCH_PARENT,
-                    LinearLayout.LayoutParams.MATCH_PARENT);
-
-            layoutParams.setMargins(0,0,0,15);
-            linearLayout.addView(imageView);
-            linearLayout.addView(label);
-            linearLayout.setLayoutParams(layoutParams);
-            notesLayout.addView(linearLayout);
-
-
-        }
-
+        listPoints=new ArrayList<>();*/
     }
+
     /**
      * Manipulates the map once available.
      * This callback is triggered when the map is ready to be used.
@@ -139,17 +80,13 @@ public class ShowTripActivity extends FragmentActivity implements OnMapReadyCall
         MarkerOptions markerOptions = new MarkerOptions();
         markerOptions.position(latLng1);
         markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
-        markers.add(markerOptions);
         mMap.addMarker(markerOptions);
         listPoints.add(latLng2);
-       // markerOptions = new MarkerOptions();
-        MarkerOptions markerOptions2 = new MarkerOptions();
-        markerOptions2.position(latLng2);
-        markerOptions2.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
-        mMap.addMarker(markerOptions2);
-        markers.add(markerOptions2);
+        markerOptions.position(latLng2);
+        markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
+        mMap.addMarker(markerOptions);
         String url = getRequestUrl(listPoints.get(0), listPoints.get(1));
-        ShowTripActivity.TaskRequestDirections taskRequestDirections = new ShowTripActivity.TaskRequestDirections();
+        TaskRequestDirections taskRequestDirections = new TaskRequestDirections();
         taskRequestDirections.execute(url);
         /*mMap.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
             @Override
@@ -183,47 +120,7 @@ public class ShowTripActivity extends FragmentActivity implements OnMapReadyCall
             }
         });*/
 
-        //googleMap.animateCamera(cu);
-        mMap.setOnMapLoadedCallback(new GoogleMap.OnMapLoadedCallback() {
-            @Override
-            public void onMapLoaded() {
-               /* if (mMap != null) {
-                    LatLngBounds.Builder builder = new LatLngBounds.Builder();
-                    for (MarkerOptions marker : markers) {
-                        builder.include(marker.getPosition());
-                    }
-                    // builder.include(markerOptions.getPosition());
-                    LatLngBounds bounds = builder.build();
-                    int padding = 50; // offset from edges of the map in pixels
-                    int width = getResources().getDisplayMetrics().widthPixels;
-                    int height = getResources().getDisplayMetrics().heightPixels;
-                    CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bounds, padding);
-                    mMap.animateCamera(cu);
-
-                }*/
-            }
-        });
-        mapFragment.getView().post(new Runnable() {
-            @Override
-            public void run() {
-                if (mMap != null) {
-                    LatLngBounds.Builder builder = new LatLngBounds.Builder();
-                    for (MarkerOptions marker : markers) {
-                        builder.include(marker.getPosition());
-                    }
-                    // builder.include(markerOptions.getPosition());
-                    LatLngBounds bounds = builder.build();
-                    int padding = 50; // offset from edges of the map in pixels
-                    int width = getResources().getDisplayMetrics().widthPixels;
-                    int height = getResources().getDisplayMetrics().heightPixels;
-                    CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bounds, padding);
-                    mMap.animateCamera(cu);
-                }
-            }
-        });
     }
-
-
 
     private String getRequestUrl(LatLng origin, LatLng dest) {
         //Value of origin
@@ -307,7 +204,7 @@ public class ShowTripActivity extends FragmentActivity implements OnMapReadyCall
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             //Parse json here
-            ShowTripActivity.TaskParser taskParser = new ShowTripActivity.TaskParser();
+            TaskParser taskParser = new TaskParser();
             taskParser.execute(s);
         }
     }
@@ -372,9 +269,9 @@ public class ShowTripActivity extends FragmentActivity implements OnMapReadyCall
             List<Address> addresses = geoCoder.getFromLocationName(address , 1);
             if (addresses.size() > 0)
             {
-                latLng = new LatLng(
+                 latLng = new LatLng(
                         (addresses.get(0).getLatitude()),
-                        (addresses.get(0).getLongitude()));
+                       (addresses.get(0).getLongitude()));
 
                 lat=latLng.latitude;
                 lng=latLng.longitude;
