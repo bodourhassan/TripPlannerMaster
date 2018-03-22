@@ -6,24 +6,26 @@ package com.ititeam.tripplannermaster.model;
 
 public class Note {
 
-    String noteId;
+    int noteId;
     String noteBody;
-    String tripIdFk;
+    String status;
+    int tripIdFk;
 
     public Note() {
     }
 
-    public Note(String noteId, String noteBody, String tripIdFk) {
+    public Note(int noteId, String noteBody, String status, int tripIdFk) {
         this.noteId = noteId;
         this.noteBody = noteBody;
+        this.status = status;
         this.tripIdFk = tripIdFk;
     }
 
-    public String getNoteId() {
+    public int getNoteId() {
         return noteId;
     }
 
-    public void setNoteId(String noteId) {
+    public void setNoteId(int noteId) {
         this.noteId = noteId;
     }
 
@@ -35,11 +37,19 @@ public class Note {
         this.noteBody = noteBody;
     }
 
-    public String getTripIdFk() {
+    public int getTripIdFk() {
         return tripIdFk;
     }
 
-    public void setTripIdFk(String tripIdFk) {
+    public void setTripIdFk(int tripIdFk) {
         this.tripIdFk = tripIdFk;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }
