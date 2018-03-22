@@ -41,7 +41,6 @@ import java.util.Calendar;
 
 public class AddNewTrip extends AppCompatActivity implements ConnectionCallbacks,OnConnectionFailedListener {
 
-    private GoogleApiClient googleApiClient;
     private GeoDataClient geoDataClient ;
     ArrayList<String> listItems=new ArrayList<String>();
     ArrayAdapter<String> NoteListadapter;
@@ -69,10 +68,10 @@ public class AddNewTrip extends AppCompatActivity implements ConnectionCallbacks
         setContentView(R.layout.activity_add_new_trip);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-         mylocationStart=findViewById(R.id.UAutoStart);
+         mylocationStart=findViewById(R.id.AutoStart);
         mylocationEnd=findViewById(R.id.AutoEnd);
         NoteItem =findViewById(R.id.NoteId);
-        TripNameView = findViewById(R.id.UAutTripNaame);
+        TripNameView = findViewById(R.id.AutTripName);
         DescriptipnView=findViewById(R.id.EditDescription);
         mytripGroup= findViewById(R.id.GroupType);
         Tripcatagory= findViewById(R.id.TripCatId);
@@ -82,7 +81,7 @@ public class AddNewTrip extends AppCompatActivity implements ConnectionCallbacks
                 android.R.layout.simple_list_item_1,
                 listItems);
         MyNoteList.setAdapter(NoteListadapter);
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.Ufab);
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -256,7 +255,7 @@ public class AddNewTrip extends AppCompatActivity implements ConnectionCallbacks
               }
               String TripCatagory = Tripcatagory.getSelectedItem().toString();
               Trip NewTrip = new Trip(NameofTrip, StartLoc, Endloc, Date, Time, "Upcomming", TripDirection, Desc, "none", TripCatagory, userid, myNoteList);
-              TripTableOperations myTripTable = new TripTableOperations(getBaseContext());
+              TripTableOperations myTripTable = new TripTableOperations(this);
               myTripTable.insertTrip(NewTrip);
               ArrayList<Trip> all= myTripTable.selectAllTrips();
               Toast.makeText(getBaseContext(),all.size(),

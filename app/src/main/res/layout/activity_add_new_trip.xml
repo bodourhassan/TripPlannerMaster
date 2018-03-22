@@ -33,7 +33,7 @@
             android:layout_alignParentTop="true">
 
             <android.support.design.widget.FloatingActionButton
-                android:id="@+id/Ufab"
+                android:id="@+id/fab"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
 
@@ -58,31 +58,33 @@
                 app:srcCompat="@mipmap/name" />
 
             <AutoCompleteTextView
-                android:id="@+id/UAutTripNaame"
+                android:id="@+id/AutTripName"
                 android:layout_width="220dp"
                 android:layout_height="wrap_content"
                 android:layout_alignBottom="@+id/TripName"
                 android:layout_marginLeft="61dp"
                 android:layout_marginStart="61dp"
                 android:layout_toEndOf="@+id/TripName"
-                android:layout_toRightOf="@+id/TripName" />
+                android:layout_toRightOf="@+id/TripName"
+                android:hint="@string/TripNamehint" />
 
             <AutoCompleteTextView
-                android:id="@+id/UAutoStart"
+                android:id="@+id/AutoStart"
                 android:layout_width="220dp"
                 android:layout_height="wrap_content"
-                android:layout_alignLeft="@+id/UAutTripNaame"
-                android:layout_alignStart="@+id/UAutTripNaame"
-                android:layout_below="@+id/UAutTripNaame"
-                android:layout_marginTop="28dp" />
+                android:layout_alignLeft="@+id/AutTripName"
+                android:layout_alignStart="@+id/AutTripName"
+                android:layout_below="@+id/AutTripName"
+                android:layout_marginTop="28dp"
+                android:hint="@string/StartPointHint" />
 
             <AutoCompleteTextView
                 android:id="@+id/AutoEnd"
                 android:layout_width="220dp"
                 android:layout_height="wrap_content"
-                android:layout_alignLeft="@+id/UAutoStart"
-                android:layout_alignStart="@+id/UAutoStart"
-                android:layout_below="@+id/UAutoStart"
+                android:layout_alignLeft="@+id/AutoStart"
+                android:layout_alignStart="@+id/AutoStart"
+                android:layout_below="@+id/AutoStart"
                 android:layout_marginTop="32dp"
                 android:hint="@string/EndPointhint" />
 
@@ -140,8 +142,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignBottom="@+id/CalenderImage"
-                android:layout_toLeftOf="@+id/Ufab"
-                android:layout_toStartOf="@+id/Ufab"
+                android:layout_toLeftOf="@+id/fab"
+                android:layout_toStartOf="@+id/fab"
                 android:text="@string/DateValue"
                 android:textColor="@color/common_google_signin_btn_text_dark_focused" />
 
@@ -219,8 +221,8 @@
                 android:id="@+id/TripCatId"
                 android:layout_width="120dp"
                 android:layout_height="wrap_content"
-                android:layout_alignEnd="@+id/Ufab"
-                android:layout_alignRight="@+id/Ufab"
+                android:layout_alignEnd="@+id/fab"
+                android:layout_alignRight="@+id/fab"
                 android:layout_alignTop="@+id/TripCat"
                 android:entries="@string/WorkValue" />
 
@@ -263,7 +265,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
-                android:layout_below="@+id/Ufab"
+                android:layout_below="@+id/fab"
                 android:layout_marginLeft="16dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="14dp"
@@ -277,8 +279,8 @@
                 android:layout_height="wrap_content"
                 android:layout_alignBaseline="@+id/SaveId"
                 android:layout_alignBottom="@+id/SaveId"
-                android:layout_alignEnd="@+id/Ufab"
-                android:layout_alignRight="@+id/Ufab"
+                android:layout_alignEnd="@+id/fab"
+                android:layout_alignRight="@+id/fab"
                 android:background="@color/colorAccent"
                 android:onClick="cancleClick"
                 android:text="@string/CanclebuttonKey"

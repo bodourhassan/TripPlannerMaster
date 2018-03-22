@@ -58,6 +58,8 @@
     <string name="facebook_app_id">180984762703989</string>
     <string name="fb_login_protocol_scheme">fb180984762703989</string>
     <string name="title_activity_update_trip">UpdateTrip</string>
+    <string name="title_activity_x">x</string>
+    <string name="UpdateKey">Update</string>
 
     <!-- end hanaa section-->
 
