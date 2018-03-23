@@ -6,7 +6,7 @@ import android.database.Cursor;
 
 import java.util.ArrayList;
 
-import com.ititeam.tripplannermaster.model.Trip;
+import com.ititeam.tripplannermaster.model.*;
 
 /**
  * Created by MARK on 3/18/2018.
@@ -33,6 +33,7 @@ public class TripTableOperations {
                 AdapterDba.DbOpenHelper.TRIP_DIRECTION,
                 AdapterDba.DbOpenHelper.TRIP_DESCRIPTION,
                 AdapterDba.DbOpenHelper.TRIP_REPITITION,
+                AdapterDba.DbOpenHelper.TRIP_CATEGORY,
                 AdapterDba.DbOpenHelper.USER_ID};
         String whereClause = null;
         String [] selectArgs = null;
@@ -44,7 +45,7 @@ public class TripTableOperations {
         while (cursor.moveToNext())
         {
             Trip trip = new Trip();
-            trip.setTripId(cursor.getString(0));
+            trip.setTripId(cursor.getInt(0));
             trip.setTripName(cursor.getString(1));
             trip.setTripStartPoint(cursor.getString(2));
             trip.setTripEndPoint(cursor.getString(3));
@@ -54,7 +55,8 @@ public class TripTableOperations {
             trip.setTripDirection(cursor.getString(7));
             trip.setTripDescription(cursor.getString(8));
             trip.setTripRepetition(cursor.getString(9));
-            trip.setUserId(cursor.getString(10));
+            trip.setTripCategory(cursor.getString(10));
+            trip.setUserId(cursor.getInt(11));
             returnedData.add(trip);
         }
         return returnedData;
@@ -71,6 +73,7 @@ public class TripTableOperations {
                 AdapterDba.DbOpenHelper.TRIP_DIRECTION,
                 AdapterDba.DbOpenHelper.TRIP_DESCRIPTION,
                 AdapterDba.DbOpenHelper.TRIP_REPITITION,
+                AdapterDba.DbOpenHelper.TRIP_CATEGORY,
                 AdapterDba.DbOpenHelper.USER_ID};
         String whereClause = AdapterDba.DbOpenHelper.TRIP_ID+"=?";
         String [] selectArgs = {id};
@@ -82,7 +85,7 @@ public class TripTableOperations {
         Trip trip = new Trip();
         if (cursor.moveToNext())
         {
-            trip.setTripId(cursor.getString(0));
+            trip.setTripId(cursor.getInt(0));
             trip.setTripName(cursor.getString(1));
             trip.setTripStartPoint(cursor.getString(2));
             trip.setTripEndPoint(cursor.getString(3));
@@ -91,8 +94,8 @@ public class TripTableOperations {
             trip.setTripStatus(cursor.getString(6));
             trip.setTripDirection(cursor.getString(7));
             trip.setTripDescription(cursor.getString(8));
-            trip.setTripRepetition(cursor.getString(9));
-            trip.setUserId(cursor.getString(10));
+            trip.setTripCategory(cursor.getString(10));
+            trip.setUserId(cursor.getInt(11));
 
         }
         return trip;
@@ -101,7 +104,6 @@ public class TripTableOperations {
     public void insertTrip (Trip trip)
     {
         ContentValues newValues = new ContentValues();
-        newValues.put(AdapterDba.DbOpenHelper.TRIP_ID, trip.getTripId());
         newValues.put(AdapterDba.DbOpenHelper.TRIP_NAME, trip.getTripName());
         newValues.put(AdapterDba.DbOpenHelper.TRIP_START_POINT, trip.getTripStartPoint());
         newValues.put(AdapterDba.DbOpenHelper.TRIP_END_POINT, trip.getTripEndPoint());
@@ -111,16 +113,21 @@ public class TripTableOperations {
         newValues.put(AdapterDba.DbOpenHelper.TRIP_DIRECTION, trip.getTripDirection());
         newValues.put(AdapterDba.DbOpenHelper.TRIP_DESCRIPTION, trip.getTripDescription());
         newValues.put(AdapterDba.DbOpenHelper.TRIP_REPITITION, trip.getTripRepetition());
+        newValues.put(AdapterDba.DbOpenHelper.TRIP_CATEGORY, trip.getTripCategory());
         newValues.put(AdapterDba.DbOpenHelper.USER_ID, trip.getUserId());
         AdapterDba.getAdapterDbaInstance(context)._insert(AdapterDba.DbOpenHelper.TRIP_TABLE , newValues);
+
+        for (Note note : trip.getTripNodes())
+        {
+            new NoteTableOperations(context).insertNote(note);
+        }
     }
 
     public void updateTrip (Trip trip)
     {
         String whereClause = AdapterDba.DbOpenHelper.TRIP_ID+"=?";
-        String [] whereArgs = {trip.getTripId()};
+        String [] whereArgs = {trip.getTripId()+""};
         ContentValues newValues = new ContentValues();
-        newValues.put(AdapterDba.DbOpenHelper.TRIP_ID, trip.getTripId());
         newValues.put(AdapterDba.DbOpenHelper.TRIP_START_POINT, trip.getTripStartPoint());
         newValues.put(AdapterDba.DbOpenHelper.TRIP_END_POINT, trip.getTripEndPoint());
         newValues.put(AdapterDba.DbOpenHelper.TRIP_DATE, trip.getTripDate());
@@ -129,6 +136,7 @@ public class TripTableOperations {
         newValues.put(AdapterDba.DbOpenHelper.TRIP_DIRECTION, trip.getTripDirection());
         newValues.put(AdapterDba.DbOpenHelper.TRIP_DESCRIPTION, trip.getTripDescription());
         newValues.put(AdapterDba.DbOpenHelper.TRIP_REPITITION, trip.getTripRepetition());
+        newValues.put(AdapterDba.DbOpenHelper.TRIP_CATEGORY, trip.getTripCategory());
         newValues.put(AdapterDba.DbOpenHelper.USER_ID, trip.getUserId());
         AdapterDba.getAdapterDbaInstance(context)._update(AdapterDba.DbOpenHelper.TRIP_TABLE ,whereClause ,whereArgs , newValues);
     }

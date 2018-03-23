@@ -72,7 +72,7 @@ public class ShowTripActivity extends FragmentActivity implements OnMapReadyCall
         //tripName=findViewById(R.id.show_trip_name);
         TripTableOperations tripTableOperations=new TripTableOperations(getBaseContext());
         int trip_id=1;
-        Trip trip=tripTableOperations.selectSingleTrips(trip_id+"");
+//        Trip trip=tripTableOperations.selectSingleTrips(trip_id+"");
         Note note=new Note();
         note.setNoteBody("note1");
         notes.add(note);

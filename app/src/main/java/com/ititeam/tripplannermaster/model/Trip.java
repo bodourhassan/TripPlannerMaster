@@ -1,28 +1,49 @@
 package com.ititeam.tripplannermaster.model;
 
+import java.util.ArrayList;
+
+import com.ititeam.tripplannermaster.model.Note;
+
 /**
  * Created by MARK on 3/18/2018.
  */
 
 public class Trip {
 
-    String tripId;
+    int tripId;
     String tripName;
     String tripStartPoint;
     String tripEndPoint;
     String tripDate;
     String tripTime;
+
+    public Trip(String tripName, String tripStartPoint, String tripEndPoint, String tripDate, String tripTime, String tripStatus, String tripDirection, String tripDescription, String tripRepetition, String tripCategory, int userId, ArrayList<Note> tripNodes) {
+        this.tripName = tripName;
+        this.tripStartPoint = tripStartPoint;
+        this.tripEndPoint = tripEndPoint;
+        this.tripDate = tripDate;
+        this.tripTime = tripTime;
+        this.tripStatus = tripStatus;
+        this.tripDirection = tripDirection;
+        this.tripDescription = tripDescription;
+        this.tripRepetition = tripRepetition;
+        this.tripCategory = tripCategory;
+        this.userId = userId;
+        this.tripNodes = tripNodes;
+    }
+
     String tripStatus;
     String tripDirection;
     String tripDescription;
     String tripRepetition;
-    String userId;
-
+    String tripCategory;
+    int userId;
+    ArrayList<Note> tripNodes;
 
     public Trip() {
     }
 
-    public Trip(String tripId, String tripName, String tripStartPoint, String tripEndPoint, String tripDate, String tripTime, String tripStatus, String tripDirection, String tripDescription, String tripRepetition, String userId) {
+    public Trip(int tripId, String tripName, String tripStartPoint, String tripEndPoint, String tripDate, String tripTime, String tripStatus, String tripDirection, String tripDescription, String tripRepetition, String tripCategory, int userId, ArrayList<Note> tripNodes) {
         this.tripId = tripId;
         this.tripName = tripName;
         this.tripStartPoint = tripStartPoint;
@@ -33,14 +54,16 @@ public class Trip {
         this.tripDirection = tripDirection;
         this.tripDescription = tripDescription;
         this.tripRepetition = tripRepetition;
+        this.tripCategory = tripCategory;
         this.userId = userId;
+        this.tripNodes = tripNodes;
     }
 
-    public String getTripId() {
+    public int getTripId() {
         return tripId;
     }
 
-    public void setTripId(String tripId) {
+    public void setTripId(int tripId) {
         this.tripId = tripId;
     }
 
@@ -116,11 +139,27 @@ public class Trip {
         this.tripRepetition = tripRepetition;
     }
 
-    public String getUserId() {
+    public int getUserId() {
         return userId;
     }
 
-    public void setUserId(String userId) {
+    public void setUserId(int userId) {
         this.userId = userId;
+    }
+
+    public ArrayList<Note> getTripNodes() {
+        return tripNodes;
+    }
+
+    public void setTripNodes(ArrayList<Note> tripNodes) {
+        this.tripNodes = tripNodes;
+    }
+
+    public String getTripCategory() {
+        return tripCategory;
+    }
+
+    public void setTripCategory(String tripCategory) {
+        this.tripCategory = tripCategory;
     }
 }

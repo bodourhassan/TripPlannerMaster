@@ -3,8 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    tools:context="com.ititeam.tripplannermaster.activity.AddNewTrip">
+    android:layout_height="match_parent"
+    tools:context="com.ititeam.tripplannermaster.activity.UpdateTrip">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appBarLayout"
@@ -65,7 +65,8 @@
                 android:layout_marginLeft="61dp"
                 android:layout_marginStart="61dp"
                 android:layout_toEndOf="@+id/TripName"
-                android:layout_toRightOf="@+id/TripName" />
+                android:layout_toRightOf="@+id/TripName"
+                android:hint="@string/TripNamehint" />
 
             <AutoCompleteTextView
                 android:id="@+id/UAutoStart"
@@ -74,7 +75,8 @@
                 android:layout_alignLeft="@+id/UAutTripNaame"
                 android:layout_alignStart="@+id/UAutTripNaame"
                 android:layout_below="@+id/UAutTripNaame"
-                android:layout_marginTop="28dp" />
+                android:layout_marginTop="28dp"
+                android:hint="@string/StartPointhint" />
 
             <AutoCompleteTextView
                 android:id="@+id/AutoEnd"
@@ -280,7 +282,6 @@
                 android:layout_alignEnd="@+id/Ufab"
                 android:layout_alignRight="@+id/Ufab"
                 android:background="@color/colorAccent"
-                android:onClick="cancleClick"
                 android:text="@string/CanclebuttonKey"
                 android:textColor="@color/cardview_light_background" />
 
@@ -303,11 +304,9 @@
                 android:layout_below="@+id/NoteList"
                 android:layout_marginTop="76dp"
                 android:background="@color/colorAccent"
-                android:onClick="onClicksave"
                 android:text="@string/SaveIdKey"
                 android:textColor="@color/cardview_light_background" />
 
         </RelativeLayout>
     </ScrollView>
-
 </RelativeLayout>

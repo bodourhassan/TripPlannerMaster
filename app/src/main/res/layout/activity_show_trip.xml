@@ -35,200 +35,200 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true">
-
-
-        <ImageView
-            android:id="@+id/TripName"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginLeft="80dp"
-            android:layout_marginStart="60dp"
-            android:layout_marginTop="10dp"
-            android:src="@mipmap/name" />
-
-        <com.github.clans.fab.Label
-            android:id="@+id/show_trip_name"
-            android:layout_width="220dp"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/TripName"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_marginEnd="30dp"
-            android:layout_marginRight="30dp"
-            android:hint="@string/TripNamehint" />
-
-        <ImageView
-            android:id="@+id/description_img"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_alignBottom="@+id/show_trip_description"
-            android:layout_alignLeft="@+id/TripName"
-            android:layout_alignStart="@+id/TripName"
-            android:src="@mipmap/name" />
-
-        <com.github.clans.fab.Label
-            android:id="@+id/show_trip_description"
-            android:layout_width="220dp"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/show_trip_name"
-            android:layout_alignStart="@+id/show_trip_name"
-            android:layout_below="@+id/show_trip_name"
-            android:layout_marginTop="38dp"
-            android:hint="@string/tripDescription" />
-      <ImageView
-            android:id="@+id/imageView6"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_alignBottom="@+id/show_trip_start_point"
-            android:layout_alignLeft="@+id/description_img"
-            android:layout_alignStart="@+id/description_img"
-            android:src="@mipmap/start" />
-
-        <com.github.clans.fab.Label
-            android:id="@+id/show_trip_start_point"
-            android:layout_width="220dp"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/show_trip_description"
-            android:layout_alignStart="@+id/show_trip_description"
-            android:layout_below="@+id/show_trip_description"
-            android:layout_marginTop="38dp"
-            android:hint="@string/StartPointhint" />
-
-        <ImageView
-            android:id="@+id/imageView7"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_alignLeft="@+id/description_img"
-            android:layout_alignStart="@+id/description_img"
-            android:layout_alignTop="@+id/show_trip_end_point"
-            android:src="@mipmap/start" />
-
-        <com.github.clans.fab.Label
-            android:id="@+id/show_trip_end_point"
-            android:layout_width="220dp"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/show_trip_start_point"
-            android:layout_alignStart="@+id/show_trip_start_point"
-            android:layout_below="@+id/show_trip_start_point"
-            android:layout_marginTop="35dp"
-            android:hint="@string/EndPointhint" />
-        <ImageView
-            android:id="@+id/imageView10"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_alignLeft="@+id/description_img"
-            android:layout_alignStart="@+id/description_img"
-            android:layout_alignTop="@+id/show_trip_direction"
-            android:src="@mipmap/start" />
-
-        <com.github.clans.fab.Label
-            android:id="@+id/show_trip_direction"
-            android:layout_width="220dp"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/show_trip_end_point"
-            android:layout_alignStart="@+id/show_trip_end_point"
-            android:layout_below="@+id/show_trip_end_point"
-            android:layout_marginTop="35dp"
-            android:hint="@string/tripDirection" />
-
-        <TextView
-            android:id="@+id/show_trip_date"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/show_trip_direction"
-            android:layout_alignStart="@+id/show_trip_direction"
-            android:layout_below="@+id/imageView10"
-            android:layout_marginLeft="12dp"
-            android:layout_marginStart="12dp"
-            android:layout_marginTop="22dp"
-            android:text="@string/DateValue"
-            android:textColor="@color/common_google_signin_btn_text_dark_focused" />
-
-        <TextView
-            android:id="@+id/DateText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBaseline="@+id/show_trip_date"
-            android:layout_alignBottom="@+id/show_trip_date"
-            android:layout_marginLeft="68dp"
-            android:layout_marginStart="68dp"
-            android:layout_toEndOf="@+id/show_trip_date"
-            android:layout_toRightOf="@+id/show_trip_date"
-            android:text="@string/DateText" />
-
-        <ImageView
-            android:id="@+id/imageView8"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_alignLeft="@+id/imageView7"
-            android:layout_alignStart="@+id/imageView7"
-            android:layout_alignTop="@+id/show_trip_date"
-            android:src="@mipmap/calender" />
-        <TextView
-            android:id="@+id/show_trip_time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/show_trip_date"
-            android:layout_alignStart="@+id/show_trip_date"
-            android:layout_below="@+id/imageView8"
-            android:layout_marginLeft="0dp"
-            android:layout_marginStart="0dp"
-            android:layout_marginTop="22dp"
-            android:text="@string/TimeValue"
-            android:textColor="@color/common_google_signin_btn_text_dark_focused" />
-
-        <TextView
-            android:id="@+id/TimeText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBaseline="@+id/show_trip_time"
-            android:layout_alignBottom="@+id/show_trip_time"
-            android:layout_marginLeft="68dp"
-            android:layout_marginStart="68dp"
-            android:layout_toEndOf="@+id/show_trip_time"
-            android:layout_toRightOf="@+id/show_trip_time"
-            android:text="@string/TimeText" />
-
-        <ImageView
-            android:id="@+id/imageView9"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_alignLeft="@+id/imageView8"
-            android:layout_alignStart="@+id/imageView8"
-            android:layout_alignTop="@+id/show_trip_time"
-            android:src="@mipmap/clock" />
-        <ImageView
-            android:id="@+id/imageView11"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_alignLeft="@+id/imageView9"
-            android:layout_alignStart="@+id/imageView9"
-            android:layout_alignTop="@+id/notes_layout"
-            android:src="@mipmap/clock"
-            />
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:id="@+id/notes_layout"
-            android:layout_alignLeft="@+id/show_trip_time"
-            android:layout_alignStart="@+id/show_trip_time"
-            android:layout_below="@+id/TimeText"
-            android:layout_marginTop="34dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true">
 
-            >
 
-        </LinearLayout>
-    </RelativeLayout>
+            <ImageView
+                android:id="@+id/TripName"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginLeft="80dp"
+                android:layout_marginStart="60dp"
+                android:layout_marginTop="10dp"
+                android:src="@mipmap/name" />
+
+            <com.github.clans.fab.Label
+                android:id="@+id/show_trip_name"
+                android:layout_width="220dp"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/TripName"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginEnd="30dp"
+                android:layout_marginRight="30dp"
+                android:hint="@string/TripNamehint" />
+
+            <ImageView
+                android:id="@+id/description_img"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignBottom="@+id/show_trip_description"
+                android:layout_alignLeft="@+id/TripName"
+                android:layout_alignStart="@+id/TripName"
+                android:src="@mipmap/name" />
+
+            <com.github.clans.fab.Label
+                android:id="@+id/show_trip_description"
+                android:layout_width="220dp"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/show_trip_name"
+                android:layout_alignStart="@+id/show_trip_name"
+                android:layout_below="@+id/show_trip_name"
+                android:layout_marginTop="38dp"
+                android:hint="@string/tripDescription" />
+            <ImageView
+                android:id="@+id/imageView6"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignBottom="@+id/show_trip_start_point"
+                android:layout_alignLeft="@+id/description_img"
+                android:layout_alignStart="@+id/description_img"
+                android:src="@mipmap/start" />
+
+            <com.github.clans.fab.Label
+                android:id="@+id/show_trip_start_point"
+                android:layout_width="220dp"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/show_trip_description"
+                android:layout_alignStart="@+id/show_trip_description"
+                android:layout_below="@+id/show_trip_description"
+                android:layout_marginTop="38dp"
+                android:hint="@string/StartPointhint" />
+
+            <ImageView
+                android:id="@+id/imageView7"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignLeft="@+id/description_img"
+                android:layout_alignStart="@+id/description_img"
+                android:layout_alignTop="@+id/show_trip_end_point"
+                android:src="@mipmap/start" />
+
+            <com.github.clans.fab.Label
+                android:id="@+id/show_trip_end_point"
+                android:layout_width="220dp"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/show_trip_start_point"
+                android:layout_alignStart="@+id/show_trip_start_point"
+                android:layout_below="@+id/show_trip_start_point"
+                android:layout_marginTop="35dp"
+                android:hint="@string/EndPointhint" />
+            <ImageView
+                android:id="@+id/imageView10"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignLeft="@+id/description_img"
+                android:layout_alignStart="@+id/description_img"
+                android:layout_alignTop="@+id/show_trip_direction"
+                android:src="@mipmap/start" />
+
+            <com.github.clans.fab.Label
+                android:id="@+id/show_trip_direction"
+                android:layout_width="220dp"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/show_trip_end_point"
+                android:layout_alignStart="@+id/show_trip_end_point"
+                android:layout_below="@+id/show_trip_end_point"
+                android:layout_marginTop="35dp"
+                android:hint="@string/tripDirection" />
+
+            <TextView
+                android:id="@+id/show_trip_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/show_trip_direction"
+                android:layout_alignStart="@+id/show_trip_direction"
+                android:layout_below="@+id/imageView10"
+                android:layout_marginLeft="12dp"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="22dp"
+                android:text="@string/DateValue"
+                android:textColor="@color/common_google_signin_btn_text_dark_focused" />
+
+            <TextView
+                android:id="@+id/DateText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/show_trip_date"
+                android:layout_alignBottom="@+id/show_trip_date"
+                android:layout_marginLeft="68dp"
+                android:layout_marginStart="68dp"
+                android:layout_toEndOf="@+id/show_trip_date"
+                android:layout_toRightOf="@+id/show_trip_date"
+                android:text="@string/DateText" />
+
+            <ImageView
+                android:id="@+id/imageView8"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignLeft="@+id/imageView7"
+                android:layout_alignStart="@+id/imageView7"
+                android:layout_alignTop="@+id/show_trip_date"
+                android:src="@mipmap/calender" />
+            <TextView
+                android:id="@+id/show_trip_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/show_trip_date"
+                android:layout_alignStart="@+id/show_trip_date"
+                android:layout_below="@+id/imageView8"
+                android:layout_marginLeft="0dp"
+                android:layout_marginStart="0dp"
+                android:layout_marginTop="22dp"
+                android:text="@string/TimeValue"
+                android:textColor="@color/common_google_signin_btn_text_dark_focused" />
+
+            <TextView
+                android:id="@+id/TimeText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/show_trip_time"
+                android:layout_alignBottom="@+id/show_trip_time"
+                android:layout_marginLeft="68dp"
+                android:layout_marginStart="68dp"
+                android:layout_toEndOf="@+id/show_trip_time"
+                android:layout_toRightOf="@+id/show_trip_time"
+                android:text="@string/TimeText" />
+
+            <ImageView
+                android:id="@+id/imageView9"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignLeft="@+id/imageView8"
+                android:layout_alignStart="@+id/imageView8"
+                android:layout_alignTop="@+id/show_trip_time"
+                android:src="@mipmap/clock" />
+            <ImageView
+                android:id="@+id/imageView11"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignLeft="@+id/imageView9"
+                android:layout_alignStart="@+id/imageView9"
+                android:layout_alignTop="@+id/notes_layout"
+                android:src="@mipmap/clock"
+                />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:id="@+id/notes_layout"
+                android:layout_alignLeft="@+id/show_trip_time"
+                android:layout_alignStart="@+id/show_trip_time"
+                android:layout_below="@+id/TimeText"
+                android:layout_marginTop="34dp"
+
+                >
+
+            </LinearLayout>
+        </RelativeLayout>
     </ScrollView>
 
 </LinearLayout>
