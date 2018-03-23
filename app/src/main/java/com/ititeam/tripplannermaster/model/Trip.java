@@ -20,13 +20,14 @@ public class Trip {
     String tripDirection;
     String tripDescription;
     String tripRepetition;
+    String tripCategory;
     String userId;
     ArrayList<Note> tripNodes;
 
     public Trip() {
     }
 
-    public Trip(String tripId, String tripName, String tripStartPoint, String tripEndPoint, String tripDate, String tripTime, String tripStatus, String tripDirection, String tripDescription, String tripRepetition, String userId, ArrayList<Note> tripNodes) {
+    public Trip(String tripId, String tripName, String tripStartPoint, String tripEndPoint, String tripDate, String tripTime, String tripStatus, String tripDirection, String tripDescription, String tripRepetition, String tripCategory, String userId, ArrayList<Note> tripNodes) {
         this.tripId = tripId;
         this.tripName = tripName;
         this.tripStartPoint = tripStartPoint;
@@ -37,6 +38,7 @@ public class Trip {
         this.tripDirection = tripDirection;
         this.tripDescription = tripDescription;
         this.tripRepetition = tripRepetition;
+        this.tripCategory = tripCategory;
         this.userId = userId;
         this.tripNodes = tripNodes;
     }
@@ -135,5 +137,13 @@ public class Trip {
 
     public void setTripNodes(ArrayList<Note> tripNodes) {
         this.tripNodes = tripNodes;
+    }
+
+    public String getTripCategory() {
+        return tripCategory;
+    }
+
+    public void setTripCategory(String tripCategory) {
+        this.tripCategory = tripCategory;
     }
 }

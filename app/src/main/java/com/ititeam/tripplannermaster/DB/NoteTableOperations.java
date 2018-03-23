@@ -70,7 +70,6 @@ public class NoteTableOperations {
     public void insertNote (Note note)
     {
         ContentValues newValues = new ContentValues();
-        newValues.put(AdapterDba.DbOpenHelper.NOTE_ID, note.getNoteId());
         newValues.put(AdapterDba.DbOpenHelper.NOTE, note.getNoteBody());
         newValues.put(AdapterDba.DbOpenHelper.STATUS, note.getStatus());
         newValues.put(AdapterDba.DbOpenHelper.TRIP_ID_FK, note.getTripIdFk());
@@ -82,7 +81,6 @@ public class NoteTableOperations {
         String whereClause = AdapterDba.DbOpenHelper.NOTE_ID+"=?";
         String [] whereArgs = {note.getNoteId()};
         ContentValues newValues = new ContentValues();
-        newValues.put(AdapterDba.DbOpenHelper.NOTE_ID, note.getNoteId());
         newValues.put(AdapterDba.DbOpenHelper.NOTE, note.getNoteBody());
         newValues.put(AdapterDba.DbOpenHelper.STATUS, note.getStatus());
         newValues.put(AdapterDba.DbOpenHelper.TRIP_ID_FK, note.getTripIdFk());

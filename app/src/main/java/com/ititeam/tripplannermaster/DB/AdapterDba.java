@@ -75,6 +75,7 @@ public class AdapterDba {
         public static final String TRIP_DIRECTION = "TRIP_DIRECTION";
         public static final String TRIP_DESCRIPTION = "TRIP_DESCRIPTION";
         public static final String TRIP_REPITITION = "TRIP_REPITITION";
+        public static final String TRIP_CATEGORY = "TRIP_CATEGORY";
         public static final String USER_ID = "USER_ID";
 
         private static final String TRIP_CREATE_STATMENT = "CREATE TABLE "+
@@ -88,6 +89,7 @@ public class AdapterDba {
                                      + TRIP_DIRECTION + " text , "
                                      + TRIP_DESCRIPTION + " text , "
                                      + TRIP_REPITITION + " text , "
+                                     + TRIP_CATEGORY + " text , "
                                      + USER_ID + " text )";
         private static final String TRIP_DROP_STATEMENT = "DROP TABLE IF IT EXISTS "+
                 TRIP_TABLE;
