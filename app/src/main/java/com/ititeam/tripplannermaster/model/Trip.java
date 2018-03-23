@@ -1,5 +1,9 @@
 package com.ititeam.tripplannermaster.model;
 
+import java.util.ArrayList;
+
+import com.ititeam.tripplannermaster.model.Note;
+
 /**
  * Created by MARK on 3/18/2018.
  */
@@ -17,12 +21,12 @@ public class Trip {
     String tripDescription;
     String tripRepetition;
     String userId;
-
+    ArrayList<Note> tripNodes;
 
     public Trip() {
     }
 
-    public Trip(String tripId, String tripName, String tripStartPoint, String tripEndPoint, String tripDate, String tripTime, String tripStatus, String tripDirection, String tripDescription, String tripRepetition, String userId) {
+    public Trip(String tripId, String tripName, String tripStartPoint, String tripEndPoint, String tripDate, String tripTime, String tripStatus, String tripDirection, String tripDescription, String tripRepetition, String userId, ArrayList<Note> tripNodes) {
         this.tripId = tripId;
         this.tripName = tripName;
         this.tripStartPoint = tripStartPoint;
@@ -34,6 +38,7 @@ public class Trip {
         this.tripDescription = tripDescription;
         this.tripRepetition = tripRepetition;
         this.userId = userId;
+        this.tripNodes = tripNodes;
     }
 
     public String getTripId() {
@@ -122,5 +127,13 @@ public class Trip {
 
     public void setUserId(String userId) {
         this.userId = userId;
+    }
+
+    public ArrayList<Note> getTripNodes() {
+        return tripNodes;
+    }
+
+    public void setTripNodes(ArrayList<Note> tripNodes) {
+        this.tripNodes = tripNodes;
     }
 }

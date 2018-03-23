@@ -8,14 +8,16 @@ public class Note {
 
     String noteId;
     String noteBody;
+    String status;
     String tripIdFk;
 
     public Note() {
     }
 
-    public Note(String noteId, String noteBody, String tripIdFk) {
+    public Note(String noteId, String noteBody, String status, String tripIdFk) {
         this.noteId = noteId;
         this.noteBody = noteBody;
+        this.status = status;
         this.tripIdFk = tripIdFk;
     }
 
@@ -41,5 +43,13 @@ public class Note {
 
     public void setTripIdFk(String tripIdFk) {
         this.tripIdFk = tripIdFk;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

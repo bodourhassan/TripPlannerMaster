@@ -6,7 +6,7 @@ import android.database.Cursor;
 
 import java.util.ArrayList;
 
-import com.ititeam.tripplannermaster.model.Trip;
+import com.ititeam.tripplannermaster.model.*
 
 /**
  * Created by MARK on 3/18/2018.
@@ -113,6 +113,11 @@ public class TripTableOperations {
         newValues.put(AdapterDba.DbOpenHelper.TRIP_REPITITION, trip.getTripRepetition());
         newValues.put(AdapterDba.DbOpenHelper.USER_ID, trip.getUserId());
         AdapterDba.getAdapterDbaInstance(context)._insert(AdapterDba.DbOpenHelper.TRIP_TABLE , newValues);
+
+        for (Note note : trip.getTripNodes())
+        {
+            new NoteTableOperations(context).insertNote(note);
+        }
     }
 
     public void updateTrip (Trip trip)

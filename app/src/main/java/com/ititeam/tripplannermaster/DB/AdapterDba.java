@@ -97,11 +97,13 @@ public class AdapterDba {
 
         public static final String NOTE_ID = "NOTE_ID";
         public static final String NOTE = "NOTE";
+        public static final String STATUS = "STATUS";
         public static final String TRIP_ID_FK = "TRIP_ID_FK";
 
         private static final String NOTES_CREATE_STATMENT = "CREATE TABLE "+
                 NOTES_TABLE +" (" + NOTE_ID +" integer primary key autoincrement , "
                 + NOTE + " text , "
+                + STATUS + " text , "
                 + TRIP_ID_FK + " integer REFERENCES "+TRIP_TABLE+");";
 
         private static final String NOTES_DROP_STATEMENT = "DROP TABLE IF IT EXISTS "+
