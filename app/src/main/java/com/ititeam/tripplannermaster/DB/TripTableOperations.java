@@ -45,7 +45,7 @@ public class TripTableOperations {
         while (cursor.moveToNext())
         {
             Trip trip = new Trip();
-            trip.setTripId(cursor.getString(0));
+            trip.setTripId(cursor.getInt(0));
             trip.setTripName(cursor.getString(1));
             trip.setTripStartPoint(cursor.getString(2));
             trip.setTripEndPoint(cursor.getString(3));
@@ -56,7 +56,7 @@ public class TripTableOperations {
             trip.setTripDescription(cursor.getString(8));
             trip.setTripRepetition(cursor.getString(9));
             trip.setTripCategory(cursor.getString(10));
-            trip.setUserId(cursor.getString(11));
+            trip.setUserId(cursor.getInt(11));
             returnedData.add(trip);
         }
         return returnedData;
@@ -85,7 +85,7 @@ public class TripTableOperations {
         Trip trip = new Trip();
         if (cursor.moveToNext())
         {
-            trip.setTripId(cursor.getString(0));
+            trip.setTripId(cursor.getInt(0));
             trip.setTripName(cursor.getString(1));
             trip.setTripStartPoint(cursor.getString(2));
             trip.setTripEndPoint(cursor.getString(3));
@@ -95,7 +95,7 @@ public class TripTableOperations {
             trip.setTripDirection(cursor.getString(7));
             trip.setTripDescription(cursor.getString(8));
             trip.setTripCategory(cursor.getString(10));
-            trip.setUserId(cursor.getString(11));
+            trip.setUserId(cursor.getInt(11));
 
         }
         return trip;
@@ -126,7 +126,7 @@ public class TripTableOperations {
     public void updateTrip (Trip trip)
     {
         String whereClause = AdapterDba.DbOpenHelper.TRIP_ID+"=?";
-        String [] whereArgs = {trip.getTripId()};
+        String [] whereArgs = {trip.getTripId()+""};
         ContentValues newValues = new ContentValues();
         newValues.put(AdapterDba.DbOpenHelper.TRIP_START_POINT, trip.getTripStartPoint());
         newValues.put(AdapterDba.DbOpenHelper.TRIP_END_POINT, trip.getTripEndPoint());

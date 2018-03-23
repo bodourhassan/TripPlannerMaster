@@ -37,10 +37,10 @@ public class NoteTableOperations {
         while (cursor.moveToNext())
         {
             Note note = new Note();
-            note.setNoteId(cursor.getString(0));
+            note.setNoteId(cursor.getInt(0));
             note.setNoteBody(cursor.getString(1));
             note.setStatus(cursor.getString(2));
-            note.setTripIdFk(cursor.getString(3));
+            note.setTripIdFk(cursor.getInt(3));
             returnedData.add(note);
         }
         return returnedData;
@@ -60,9 +60,10 @@ public class NoteTableOperations {
         Note note = new Note();
         if (cursor.moveToNext())
         {
-            note.setNoteId(cursor.getString(0));
+            note.setNoteId(cursor.getInt(0));
             note.setNoteBody(cursor.getString(1));
-            note.setTripIdFk(cursor.getString(2));
+            note.setStatus(cursor.getString(2));
+            note.setTripIdFk(cursor.getInt(3));
         }
         return note;
     }
@@ -79,7 +80,7 @@ public class NoteTableOperations {
     public void updateNote (Note note)
     {
         String whereClause = AdapterDba.DbOpenHelper.NOTE_ID+"=?";
-        String [] whereArgs = {note.getNoteId()};
+        String [] whereArgs = {note.getNoteId()+""};
         ContentValues newValues = new ContentValues();
         newValues.put(AdapterDba.DbOpenHelper.NOTE, note.getNoteBody());
         newValues.put(AdapterDba.DbOpenHelper.STATUS, note.getStatus());
