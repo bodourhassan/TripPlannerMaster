@@ -13,7 +13,7 @@
     <string name="EndPointValue">End Point</string>
     <string name="TripNamehint">Trip Name</string>
     <string name="StartPointhint">Start Point</string>
-    <string name="EndPointhint" >End Point</string>
+    <string name="EndPointhint">End Point</string>
     <string name="DateValue">Date</string>
     <string name="TimeValue">Time</string>
     <string name="DateText">Date</string>
@@ -49,6 +49,8 @@
     <string name="facebook_app_id">180984762703989</string>
     <string name="fb_login_protocol_scheme">fb180984762703989</string>
     <string name="TripCatKey">Trip Catagory</string>
+    <string name="tripDescription">Description</string>
+    <string name="tripDirection">Direction</string>
     <!-- end hanaa section-->
 
 
