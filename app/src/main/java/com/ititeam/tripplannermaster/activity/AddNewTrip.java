@@ -157,7 +157,7 @@ public class AddNewTrip extends AppCompatActivity implements ConnectionCallbacks
         //get the spinner from the xml.
         Spinner dropdown = findViewById(R.id.TripCatId);
         //create a list of items for the spinner.
-        String[] items = new String[]{"Work", "School", "Shooping"};
+        String[] items = new String[]{"Work", "School", "Shopping"};
         //create an adapter to describe how the items are displayed, adapters are used in several places in android
         // There are multiple variations of this, but this is the basic variant.
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, items);
