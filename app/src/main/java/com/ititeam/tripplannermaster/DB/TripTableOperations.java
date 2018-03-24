@@ -146,8 +146,9 @@ public class TripTableOperations {
         return flag;
     }
 
-    public void updateTrip (Trip trip)
+    boolean updateTrip (Trip trip)
     {
+        boolean flag = false;
         String whereClause = AdapterDba.DbOpenHelper.TRIP_ID+"=?";
         String [] whereArgs = {trip.getTripId()+""};
         ContentValues newValues = new ContentValues();
@@ -162,6 +163,13 @@ public class TripTableOperations {
         newValues.put(AdapterDba.DbOpenHelper.TRIP_CATEGORY, trip.getTripCategory());
         newValues.put(AdapterDba.DbOpenHelper.USER_ID, trip.getUserId());
         AdapterDba.getAdapterDbaInstance(context)._update(AdapterDba.DbOpenHelper.TRIP_TABLE ,whereClause ,whereArgs , newValues);
+
+        for (Note note : trip.getTripNodes())
+        {
+            new NoteTableOperations(context).updateNote(note);
+            flag = true;
+        }
+        return flag;
     }
 
     public void deleteTrip (String id)
