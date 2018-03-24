@@ -29,7 +29,7 @@ public class Trip {
         this.tripRepetition = tripRepetition;
         this.tripCategory = tripCategory;
         this.userId = userId;
-        this.tripNodes = tripNodes;
+        this.tripNotes = tripNodes;
     }
 
     String tripStatus;
@@ -38,12 +38,12 @@ public class Trip {
     String tripRepetition;
     String tripCategory;
     int userId;
-    ArrayList<Note> tripNodes;
+    ArrayList<Note> tripNotes;
 
     public Trip() {
     }
 
-    public Trip(int tripId, String tripName, String tripStartPoint, String tripEndPoint, String tripDate, String tripTime, String tripStatus, String tripDirection, String tripDescription, String tripRepetition, String tripCategory, int userId, ArrayList<Note> tripNodes) {
+    public Trip(int tripId, String tripName, String tripStartPoint, String tripEndPoint, String tripDate, String tripTime, String tripStatus, String tripDirection, String tripDescription, String tripRepetition, String tripCategory, int userId, ArrayList<Note> tripNotes) {
         this.tripId = tripId;
         this.tripName = tripName;
         this.tripStartPoint = tripStartPoint;
@@ -56,7 +56,7 @@ public class Trip {
         this.tripRepetition = tripRepetition;
         this.tripCategory = tripCategory;
         this.userId = userId;
-        this.tripNodes = tripNodes;
+        this.tripNotes = tripNotes;
     }
 
     public int getTripId() {
@@ -143,16 +143,12 @@ public class Trip {
         return userId;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
-    }
+    public void setUserId(int userId) {this.userId = userId;}
 
     public ArrayList<Note> getTripNodes() {
-        return tripNodes;
-    }
-
-    public void setTripNodes(ArrayList<Note> tripNodes) {
-        this.tripNodes = tripNodes;
+        if (tripNotes == null)
+            tripNotes = new ArrayList<Note>();
+        return tripNotes;
     }
 
     public String getTripCategory() {
