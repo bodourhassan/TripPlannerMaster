@@ -68,6 +68,31 @@ public class NoteTableOperations {
         return note;
     }
 
+    public ArrayList<Note> selectNoteWithTripFk (String id)
+    {
+        String [] result_columns = {AdapterDba.DbOpenHelper.NOTE_ID,
+                AdapterDba.DbOpenHelper.NOTE,
+                AdapterDba.DbOpenHelper.STATUS,
+                AdapterDba.DbOpenHelper.TRIP_ID_FK};
+        String whereClause = AdapterDba.DbOpenHelper.TRIP_ID_FK+"=?";
+        String [] selectArgs = {id};
+        String groupBy  = null;
+        String having = null;
+        String orderBy = null;
+        Cursor cursor = AdapterDba.getAdapterDbaInstance(context)._select(AdapterDba.DbOpenHelper.NOTES_TABLE ,result_columns , whereClause, selectArgs, groupBy , having , orderBy);
+        Note note = new Note();
+        ArrayList<Note> tripNotes = new ArrayList<>();
+        while (cursor.moveToNext())
+        {
+            note.setNoteId(cursor.getInt(0));
+            note.setNoteBody(cursor.getString(1));
+            note.setStatus(cursor.getString(2));
+            note.setTripIdFk(cursor.getInt(3));
+            tripNotes.add(note);
+        }
+        return tripNotes;
+    }
+
     public void insertNote (Note note)
     {
         ContentValues newValues = new ContentValues();

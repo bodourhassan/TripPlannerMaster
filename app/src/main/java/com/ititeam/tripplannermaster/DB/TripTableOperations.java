@@ -116,6 +116,13 @@ public class TripTableOperations {
             trip.setUserId(cursor.getInt(11));
 
         }
+
+        ArrayList<Note> notes =  new NoteTableOperations(context).selectNoteWithTripFk(trip.getTripId()+"");
+        for (Note note : notes)
+        {
+            trip.getTripNotes().add(note);
+        }
+
         return trip;
     }
 
@@ -137,7 +144,7 @@ public class TripTableOperations {
         AdapterDba.getAdapterDbaInstance(context)._insert(AdapterDba.DbOpenHelper.TRIP_TABLE , newValues);
         Trip  tripWithId=  this.selectAllTripsForGettingLastId();
 
-        for (Note note : trip.getTripNodes())
+        for (Note note : trip.getTripNotes())
         {
             note.setTripIdFk(tripWithId.getTripId());
             new NoteTableOperations(context).insertNote(note);
@@ -164,7 +171,7 @@ public class TripTableOperations {
         newValues.put(AdapterDba.DbOpenHelper.USER_ID, trip.getUserId());
         AdapterDba.getAdapterDbaInstance(context)._update(AdapterDba.DbOpenHelper.TRIP_TABLE ,whereClause ,whereArgs , newValues);
 
-        for (Note note : trip.getTripNodes())
+        for (Note note : trip.getTripNotes())
         {
             new NoteTableOperations(context).updateNote(note);
             flag = true;

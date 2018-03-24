@@ -145,7 +145,7 @@ public class Trip {
 
     public void setUserId(int userId) {this.userId = userId;}
 
-    public ArrayList<Note> getTripNodes() {
+    public ArrayList<Note> getTripNotes() {
         if (tripNotes == null)
             tripNotes = new ArrayList<Note>();
         return tripNotes;
