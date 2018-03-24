@@ -2,8 +2,18 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.ititeam.tripplannermaster">
 
+    <!-- hanaa section -->
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
+    <!-- end hanaa section -->
+    <!-- bodour section -->
+    <!-- end bodour section -->
+    <!-- mark section -->
+    <!-- end mark section -->
+    <!-- hesham section -->
+    <!-- end hesham section -->
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -25,7 +35,6 @@
             android:name=".activity.AuthenticationActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".activity.ShowUpcomingTrips" />
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
@@ -48,18 +57,28 @@
             </intent-filter>
         </activity>
         <activity android:name=".activity.ShowTripActivity" />
+        <activity android:name=".activity.ShowHistoryActivity"></activity>
+        <activity android:name=".activity.MapActivity" />
+
+        <!--<meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyDnnxzdQQoISCymOiEmSj3la9SNZ_qF-4E" />-->
         <!-- end hanaa section -->
 
 
         <!-- bodour section -->
+
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyC3dQad9fPAPiDkbhVLFvQ06XRPA7K5rm8" />
 
+
         <activity
             android:name=".activity.AddNewTrip"
             android:label="@string/title_activity_add_new_trip"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+
+
         <!-- end boudour section -->
 
 
@@ -68,6 +87,8 @@
 
 
         <!-- hesham section -->
+        <activity android:name=".activity.ShowUpcomingTrips" />
+
         <!-- end hesham section -->
         <activity
             android:name=".activity.UpdateTrip"
