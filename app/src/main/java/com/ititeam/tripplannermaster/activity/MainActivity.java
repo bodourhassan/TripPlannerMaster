@@ -35,11 +35,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Note note1 = new Note();
         note1.setNoteBody("any note1");
         note1.setStatus("not determined");
-        trip.getTripNodes().add(note1);
+        trip.getTripNotes().add(note1);
         Note note2 = new Note();
         note2.setNoteBody("any note2");
         note2.setStatus("not determined");
-        trip.getTripNodes().add(note2);
+        trip.getTripNotes().add(note2);
 
         trip.setTripName("asdasd");
         trip.setTripStartPoint("12");
