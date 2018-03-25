@@ -60,17 +60,17 @@
         <activity android:name=".activity.ShowHistoryActivity"></activity>
         <activity android:name=".activity.MapActivity" />
 
-        <!--<meta-data
+        <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyDnnxzdQQoISCymOiEmSj3la9SNZ_qF-4E" />-->
+            android:value="AIzaSyDnnxzdQQoISCymOiEmSj3la9SNZ_qF-4E" />
         <!-- end hanaa section -->
 
 
         <!-- bodour section -->
 
-        <meta-data
+       <!-- <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyC3dQad9fPAPiDkbhVLFvQ06XRPA7K5rm8" />
+            android:value="AIzaSyC3dQad9fPAPiDkbhVLFvQ06XRPA7K5rm8" />-->
 
 
         <activity
