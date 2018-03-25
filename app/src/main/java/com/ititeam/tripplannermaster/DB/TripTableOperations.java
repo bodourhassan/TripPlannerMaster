@@ -61,6 +61,24 @@ public class TripTableOperations {
         }
         return returnedData;
     }
+
+    public Trip selectAllTripsForGettingLastId ()
+    {
+        String [] result_columns = {AdapterDba.DbOpenHelper.TRIP_ID,};
+        String whereClause = null;
+        String [] selectArgs = null;
+        String groupBy  = null;
+        String having = null;
+        String orderBy = null;
+        Cursor cursor = AdapterDba.getAdapterDbaInstance(context)._select(AdapterDba.DbOpenHelper.TRIP_TABLE ,result_columns , whereClause, selectArgs, groupBy , having , orderBy);
+        Trip trip = new Trip();
+        while (cursor.moveToNext())
+        {
+            trip.setTripId(cursor.getInt(0));
+        }
+        return trip;
+    }
+
     public Trip selectSingleTrips (String id)
     {
         String [] result_columns = {AdapterDba.DbOpenHelper.TRIP_ID,
@@ -98,11 +116,19 @@ public class TripTableOperations {
             trip.setUserId(cursor.getInt(11));
 
         }
+
+        ArrayList<Note> notes =  new NoteTableOperations(context).selectNoteWithTripFk(trip.getTripId()+"");
+        for (Note note : notes)
+        {
+            trip.getTripNotes().add(note);
+        }
+
         return trip;
     }
 
-    public void insertTrip (Trip trip)
+    public boolean insertTrip (Trip trip)
     {
+        boolean flag = false;
         ContentValues newValues = new ContentValues();
         newValues.put(AdapterDba.DbOpenHelper.TRIP_NAME, trip.getTripName());
         newValues.put(AdapterDba.DbOpenHelper.TRIP_START_POINT, trip.getTripStartPoint());
@@ -116,15 +142,20 @@ public class TripTableOperations {
         newValues.put(AdapterDba.DbOpenHelper.TRIP_CATEGORY, trip.getTripCategory());
         newValues.put(AdapterDba.DbOpenHelper.USER_ID, trip.getUserId());
         AdapterDba.getAdapterDbaInstance(context)._insert(AdapterDba.DbOpenHelper.TRIP_TABLE , newValues);
+        Trip  tripWithId=  this.selectAllTripsForGettingLastId();
 
-        for (Note note : trip.getTripNodes())
+        for (Note note : trip.getTripNotes())
         {
+            note.setTripIdFk(tripWithId.getTripId());
             new NoteTableOperations(context).insertNote(note);
+            flag = true;
         }
+        return flag;
     }
 
-    public void updateTrip (Trip trip)
+    boolean updateTrip (Trip trip)
     {
+        boolean flag = false;
         String whereClause = AdapterDba.DbOpenHelper.TRIP_ID+"=?";
         String [] whereArgs = {trip.getTripId()+""};
         ContentValues newValues = new ContentValues();
@@ -139,6 +170,13 @@ public class TripTableOperations {
         newValues.put(AdapterDba.DbOpenHelper.TRIP_CATEGORY, trip.getTripCategory());
         newValues.put(AdapterDba.DbOpenHelper.USER_ID, trip.getUserId());
         AdapterDba.getAdapterDbaInstance(context)._update(AdapterDba.DbOpenHelper.TRIP_TABLE ,whereClause ,whereArgs , newValues);
+
+        for (Note note : trip.getTripNotes())
+        {
+            new NoteTableOperations(context).updateNote(note);
+            flag = true;
+        }
+        return flag;
     }
 
     public void deleteTrip (String id)
