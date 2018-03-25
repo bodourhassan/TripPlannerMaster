@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         {
             ///////
             Toast.makeText(this, "clicked", Toast.LENGTH_SHORT).show();
-            Intent i = new Intent(this , ShowUpcomingTrips.class);
+            Intent i = new Intent(this , StartActivityDrawer.class);
             startActivity(i);
 
         }else if(view == btnBdour)

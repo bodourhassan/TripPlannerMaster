@@ -13,7 +13,7 @@
     <string name="EndPointValue">End Point</string>
     <string name="TripNamehint">Trip Name</string>
     <string name="StartPointhint">Start Point</string>
-    <string name="EndPointhint" >End Point</string>
+    <string name="EndPointhint">End Point</string>
     <string name="DateValue">Date</string>
     <string name="TimeValue">Time</string>
     <string name="DateText">Date</string>
@@ -31,7 +31,20 @@
 
     <!--hesham section -->
     <string name="tripTitle">trip title</string>
-    <string name="buttonStart">start trip</string>
+    <string name="buttonStart">"start "</string>
+    <string name="drawer_open">Open</string>
+    <string name="drawer_close">Close</string>
+    <string name="nav_item_home">Home</string>
+    <string name="nav_item_friends">Friends</string>
+    <string name="nav_item_notifications">Messages</string>
+    <string name="title_home">Home</string>
+
+    <!-- navigation drawer item labels  -->
+    <string-array name="nav_drawer_labels">
+        <item>@string/nav_item_home</item>
+        <item>@string/nav_item_friends</item>
+        <item>@string/nav_item_notifications</item>
+    </string-array>
     <!-- end hesham section-->
 
 
