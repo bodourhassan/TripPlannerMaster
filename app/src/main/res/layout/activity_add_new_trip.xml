@@ -27,7 +27,7 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="1000dp"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true">
@@ -259,18 +259,15 @@
                 android:hint="@string/AddnoteKey" />
 
 
-            <ListView
-                android:id="@+id/NoteList"
+            <include
+                android:id="@+id/includeAdd"
+                layout="@layout/add_trip_list"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
+                android:layout_alignLeft="@+id/SaveId"
+                android:layout_alignStart="@+id/SaveId"
                 android:layout_below="@+id/fab"
-                android:layout_marginLeft="16dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="14dp"
-                android:background="@color/cardview_light_background"
-                android:scrollbars="vertical" />
+                android:layout_marginTop="6dp" />
 
 
             <Button
@@ -300,10 +297,10 @@
                 android:id="@+id/SaveId"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignLeft="@+id/NoteId"
-                android:layout_alignStart="@+id/NoteId"
-                android:layout_below="@+id/NoteList"
-                android:layout_marginTop="76dp"
+                android:layout_alignEnd="@+id/TripCat"
+                android:layout_alignRight="@+id/TripCat"
+                android:layout_below="@+id/includeAdd"
+                android:layout_marginTop="10dp"
                 android:background="@color/colorAccent"
                 android:onClick="onClicksave"
                 android:text="@string/SaveIdKey"

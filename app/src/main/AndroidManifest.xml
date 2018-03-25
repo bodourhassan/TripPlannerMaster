@@ -9,6 +9,7 @@
 
     <!-- end hanaa section -->
     <!-- bodour section -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"></uses-permission>
     <!-- end bodour section -->
     <!-- mark section -->
     <!-- end mark section -->
@@ -57,12 +58,14 @@
             </intent-filter>
         </activity>
         <activity android:name=".activity.ShowTripActivity" />
-        <activity android:name=".activity.ShowHistoryActivity"></activity>
+        <activity android:name=".activity.ShowHistoryActivity" />
         <activity android:name=".activity.MapActivity" />
 
-        <!--<meta-data
+        <!--
+            <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyDnnxzdQQoISCymOiEmSj3la9SNZ_qF-4E" />-->
+            android:value="AIzaSyDnnxzdQQoISCymOiEmSj3la9SNZ_qF-4E" />
+        -->
         <!-- end hanaa section -->
 
 
@@ -72,12 +75,14 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyC3dQad9fPAPiDkbhVLFvQ06XRPA7K5rm8" />
 
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
 
         <activity
             android:name=".activity.AddNewTrip"
             android:label="@string/title_activity_add_new_trip"
             android:theme="@style/AppTheme.NoActionBar" />
-
 
         <!-- end boudour section -->
 
@@ -93,7 +98,8 @@
         <activity
             android:name=".activity.UpdateTrip"
             android:label="@string/title_activity_update_trip"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".activity.StartTripActivity"></activity>
     </application>
 
 </manifest>
