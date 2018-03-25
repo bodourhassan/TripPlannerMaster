@@ -32,9 +32,11 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_marginBottom="10dp" />
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -84,6 +86,7 @@
                 android:layout_below="@+id/show_trip_name"
                 android:layout_marginTop="38dp"
                 android:hint="@string/tripDescription" />
+
             <ImageView
                 android:id="@+id/imageView6"
                 android:layout_width="30dp"
@@ -121,6 +124,7 @@
                 android:layout_below="@+id/show_trip_start_point"
                 android:layout_marginTop="35dp"
                 android:hint="@string/EndPointhint" />
+
             <ImageView
                 android:id="@+id/imageView10"
                 android:layout_width="30dp"
@@ -173,6 +177,7 @@
                 android:layout_alignStart="@+id/imageView7"
                 android:layout_alignTop="@+id/show_trip_date"
                 android:src="@mipmap/calender" />
+
             <TextView
                 android:id="@+id/show_trip_time"
                 android:layout_width="wrap_content"
@@ -206,6 +211,7 @@
                 android:layout_alignStart="@+id/imageView8"
                 android:layout_alignTop="@+id/show_trip_time"
                 android:src="@mipmap/clock" />
+
             <ImageView
                 android:id="@+id/imageView11"
                 android:layout_width="30dp"
@@ -213,8 +219,8 @@
                 android:layout_alignLeft="@+id/imageView9"
                 android:layout_alignStart="@+id/imageView9"
                 android:layout_alignTop="@+id/notes_layout"
-                android:src="@mipmap/clock"
-                />
+                android:src="@mipmap/clock" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"

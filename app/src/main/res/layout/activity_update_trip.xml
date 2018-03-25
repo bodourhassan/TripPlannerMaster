@@ -7,13 +7,13 @@
     tools:context="com.ititeam.tripplannermaster.activity.UpdateTrip">
 
     <android.support.design.widget.AppBarLayout
-        android:id="@+id/appBarLayout"
+        android:id="@+id/UappBarLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:theme="@style/AppTheme.AppBarOverlay">
 
         <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
+            android:id="@+id/Utoolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="@color/colorAccent"
@@ -37,16 +37,16 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
 
-                android:layout_alignBottom="@+id/NoteId"
-                android:layout_alignEnd="@+id/EditDescription"
-                android:layout_alignRight="@+id/EditDescription"
+                android:layout_alignBottom="@+id/UNoteId"
+                android:layout_alignEnd="@+id/UEditDescription"
+                android:layout_alignRight="@+id/UEditDescription"
                 android:layout_marginEnd="10dp"
                 android:layout_marginRight="10dp"
                 app:backgroundTint="@color/colorAccent"
                 app:srcCompat="@drawable/fab_add" />
 
             <ImageView
-                android:id="@+id/TripName"
+                android:id="@+id/UTripName"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_alignParentLeft="true"
@@ -58,159 +58,157 @@
                 app:srcCompat="@mipmap/name" />
 
             <AutoCompleteTextView
-                android:id="@+id/UAutTripNaame"
+                android:id="@+id/UAutTripName"
                 android:layout_width="220dp"
                 android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/TripName"
+                android:layout_alignBottom="@+id/UTripName"
                 android:layout_marginLeft="61dp"
                 android:layout_marginStart="61dp"
-                android:layout_toEndOf="@+id/TripName"
-                android:layout_toRightOf="@+id/TripName"
-                android:hint="@string/TripNamehint" />
+                android:layout_toEndOf="@+id/UTripName"
+                android:layout_toRightOf="@+id/UTripName" />
 
             <AutoCompleteTextView
                 android:id="@+id/UAutoStart"
                 android:layout_width="220dp"
                 android:layout_height="wrap_content"
-                android:layout_alignLeft="@+id/UAutTripNaame"
-                android:layout_alignStart="@+id/UAutTripNaame"
-                android:layout_below="@+id/UAutTripNaame"
-                android:layout_marginTop="28dp"
-                android:hint="@string/StartPointhint" />
+                android:layout_alignLeft="@+id/UAutTripName"
+                android:layout_alignStart="@+id/UAutTripName"
+                android:layout_below="@+id/UAutTripName"
+                android:layout_marginTop="28dp" />
 
             <AutoCompleteTextView
-                android:id="@+id/AutoEnd"
+                android:id="@+id/UAutoEnd"
                 android:layout_width="220dp"
                 android:layout_height="wrap_content"
                 android:layout_alignLeft="@+id/UAutoStart"
                 android:layout_alignStart="@+id/UAutoStart"
                 android:layout_below="@+id/UAutoStart"
-                android:layout_marginTop="32dp"
-                android:hint="@string/EndPointhint" />
+                android:layout_marginTop="32dp" />
 
             <ImageView
-                android:id="@+id/StartPointimage"
+                android:id="@+id/UStartPointimage"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:layout_above="@+id/AutoEnd"
-                android:layout_alignLeft="@+id/TripName"
-                android:layout_alignStart="@+id/TripName"
+                android:layout_above="@+id/UAutoEnd"
+                android:layout_alignLeft="@+id/UTripName"
+                android:layout_alignStart="@+id/UTripName"
                 app:srcCompat="@mipmap/start" />
 
             <ImageView
-                android:id="@+id/EndPointImage"
+                android:id="@+id/UEndPointImage"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:layout_alignBottom="@+id/AutoEnd"
-                android:layout_alignEnd="@+id/StartPointimage"
-                android:layout_alignRight="@+id/StartPointimage"
+                android:layout_alignBottom="@+id/UAutoEnd"
+                android:layout_alignEnd="@+id/UStartPointimage"
+                android:layout_alignRight="@+id/UStartPointimage"
                 app:srcCompat="@mipmap/start" />
 
             <ImageView
-                android:id="@+id/imageView2"
+                android:id="@+id/UimageView2"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:layout_alignLeft="@+id/EndPointImage"
-                android:layout_alignStart="@+id/EndPointImage"
-                android:layout_below="@+id/EndPointImage"
+                android:layout_alignLeft="@+id/UEndPointImage"
+                android:layout_alignStart="@+id/UEndPointImage"
+                android:layout_below="@+id/UEndPointImage"
                 android:layout_marginTop="33dp"
                 app:srcCompat="@drawable/edit" />
 
             <EditText
-                android:id="@+id/EditDescription"
+                android:id="@+id/UEditDescription"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/imageView2"
-                android:layout_alignEnd="@+id/AutoEnd"
-                android:layout_alignRight="@+id/AutoEnd"
+                android:layout_alignBottom="@+id/UimageView2"
+                android:layout_alignEnd="@+id/UAutoEnd"
+                android:layout_alignRight="@+id/UAutoEnd"
                 android:ems="10"
-                android:hint="@string/TroipDesc"
                 android:inputType="textMultiLine" />
 
             <ImageView
-                android:id="@+id/CalenderImage"
+                android:id="@+id/UCalenderImage"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:layout_alignLeft="@+id/imageView2"
-                android:layout_alignStart="@+id/imageView2"
-                android:layout_below="@+id/imageView2"
+                android:layout_alignLeft="@+id/UimageView2"
+                android:layout_alignStart="@+id/UimageView2"
+                android:layout_below="@+id/UimageView2"
                 android:layout_marginTop="37dp"
                 app:srcCompat="@mipmap/calender" />
 
             <TextView
-                android:id="@+id/Date"
+                android:id="@+id/UDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/CalenderImage"
-                android:layout_toLeftOf="@+id/Ufab"
-                android:layout_toStartOf="@+id/Ufab"
+                android:layout_alignBottom="@+id/UCalenderImage"
+                android:layout_marginLeft="22dp"
+                android:layout_marginStart="22dp"
+                android:layout_toEndOf="@+id/UNoteId"
+                android:layout_toRightOf="@+id/UNoteId"
                 android:text="@string/DateValue"
                 android:textColor="@color/common_google_signin_btn_text_dark_focused" />
 
             <ImageView
-                android:id="@+id/imageView"
+                android:id="@+id/UimageView"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:layout_alignLeft="@+id/CalenderImage"
-                android:layout_alignStart="@+id/CalenderImage"
-                android:layout_below="@+id/Date"
+                android:layout_alignLeft="@+id/UCalenderImage"
+                android:layout_alignStart="@+id/UCalenderImage"
+                android:layout_below="@+id/UDate"
                 android:layout_marginTop="39dp"
                 app:srcCompat="@mipmap/clock" />
 
             <TextView
-                android:id="@+id/Time"
+                android:id="@+id/UTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignBaseline="@+id/TimeText"
-                android:layout_alignBottom="@+id/TimeText"
-                android:layout_alignEnd="@+id/Date"
-                android:layout_alignRight="@+id/Date"
+                android:layout_alignBaseline="@+id/UTimeText"
+                android:layout_alignBottom="@+id/UTimeText"
+                android:layout_alignEnd="@+id/UDate"
+                android:layout_alignRight="@+id/UDate"
                 android:text="@string/TimeValue"
                 android:textColor="@color/common_google_signin_btn_text_dark_focused" />
 
             <TextView
-                android:id="@+id/TimeText"
+                android:id="@+id/UTimeText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignLeft="@+id/AutoEnd"
-                android:layout_alignStart="@+id/AutoEnd"
-                android:layout_alignTop="@+id/imageView"
+                android:layout_alignLeft="@+id/UAutoEnd"
+                android:layout_alignStart="@+id/UAutoEnd"
+                android:layout_alignTop="@+id/UimageView"
                 android:text="@string/TimeText" />
 
             <TextView
-                android:id="@+id/textView5"
+                android:id="@+id/UtextView5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignLeft="@+id/imageView"
-                android:layout_alignStart="@+id/imageView"
-                android:layout_below="@+id/imageView"
+                android:layout_alignLeft="@+id/UimageView"
+                android:layout_alignStart="@+id/UimageView"
+                android:layout_below="@+id/UimageView"
                 android:layout_marginTop="34dp"
                 android:text="@string/TripTypeValue"
                 android:textColor="@color/common_google_signin_btn_text_dark_focused" />
 
             <RadioGroup
-                android:id="@+id/GroupType"
+                android:id="@+id/UGroupType"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/textView5"
-                android:layout_toEndOf="@+id/TripCat"
-                android:layout_toRightOf="@+id/TripCat"
+                android:layout_alignBottom="@+id/UtextView5"
+                android:layout_toEndOf="@+id/UTripCat"
+                android:layout_toRightOf="@+id/UTripCat"
                 android:orientation="horizontal">
 
                 <RadioButton
-                    android:id="@+id/one"
+                    android:id="@+id/Uone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentRight="true"
-                    android:layout_below="@+id/imageView"
+                    android:layout_below="@+id/UimageView"
                     android:layout_marginEnd="20dp"
                     android:layout_marginRight="20dp"
                     android:checked="true"
                     android:text="@string/OneDirectionKey" />
 
                 <RadioButton
-                    android:id="@+id/Round"
+                    android:id="@+id/URound"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -218,95 +216,99 @@
             </RadioGroup>
 
             <Spinner
-                android:id="@+id/TripCatId"
+                android:id="@+id/UTripCatId"
                 android:layout_width="120dp"
                 android:layout_height="wrap_content"
                 android:layout_alignEnd="@+id/Ufab"
                 android:layout_alignRight="@+id/Ufab"
-                android:layout_alignTop="@+id/TripCat"
+                android:layout_alignTop="@+id/UTripCat"
+                android:layout_marginEnd="21dp"
+                android:layout_marginRight="21dp"
                 android:entries="@string/WorkValue" />
 
             <TextView
-                android:id="@+id/TripCat"
+                android:id="@+id/UTripCat"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignLeft="@+id/textView5"
-                android:layout_alignStart="@+id/textView5"
-                android:layout_below="@+id/GroupType"
+                android:layout_alignLeft="@+id/UtextView5"
+                android:layout_alignStart="@+id/UtextView5"
+                android:layout_below="@+id/UGroupType"
                 android:layout_marginTop="38dp"
                 android:text="@string/TripCatKey"
                 android:textColor="@color/common_google_signin_btn_text_dark_focused" />
 
             <TextView
-                android:id="@+id/textView"
+                android:id="@+id/UtextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignLeft="@+id/TripCat"
-                android:layout_alignStart="@+id/TripCat"
-                android:layout_below="@+id/TripCatId"
+                android:layout_alignLeft="@+id/UTripCat"
+                android:layout_alignStart="@+id/UTripCat"
+                android:layout_below="@+id/UTripCatId"
                 android:layout_marginTop="20dp"
                 android:text="@string/NodeListKey"
                 android:textColor="@color/common_google_signin_btn_text_dark_focused" />
 
             <MultiAutoCompleteTextView
-                android:id="@+id/NoteId"
+                android:id="@+id/UNoteId"
                 android:layout_width="220dp"
                 android:layout_height="wrap_content"
-                android:layout_alignLeft="@+id/textView"
-                android:layout_alignStart="@+id/textView"
-                android:layout_below="@+id/textView"
+                android:layout_alignLeft="@+id/UtextView"
+                android:layout_alignStart="@+id/UtextView"
+                android:layout_below="@+id/UtextView"
                 android:layout_marginTop="22dp"
                 android:hint="@string/AddnoteKey" />
 
 
+            <Button
+                android:id="@+id/UCancleId"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/UUpdate"
+                android:layout_alignBottom="@+id/UUpdate"
+                android:layout_alignEnd="@+id/Ufab"
+                android:layout_alignRight="@+id/Ufab"
+                android:background="@color/colorAccent"
+                android:text="@string/CanclebuttonKey"
+                android:textColor="@color/cardview_light_background"
+                android:onClick="cancel"/>
+
+            <TextView
+                android:id="@+id/UDateText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/UDate"
+                android:layout_alignBottom="@+id/UDate"
+                android:layout_alignEnd="@+id/UTimeText"
+                android:layout_alignRight="@+id/UTimeText"
+                android:text="@string/DateText" />
+
+            <Button
+                android:id="@+id/UUpdate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/UNoteList"
+                android:layout_marginTop="74dp"
+                android:layout_toLeftOf="@+id/UEditDescription"
+                android:layout_toStartOf="@+id/UEditDescription"
+                android:background="@color/colorAccent"
+                android:text="@string/UpdateKey"
+                android:textColor="@color/cardview_light_background"
+                android:onClick="UpdateClick"/>
+
             <ListView
-                android:id="@+id/NoteList"
+                android:id="@+id/UNoteList"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
                 android:layout_below="@+id/Ufab"
-                android:layout_marginLeft="16dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="14dp"
+                android:layout_marginLeft="14dp"
+                android:layout_marginStart="14dp"
+                android:layout_marginTop="11dp"
                 android:background="@color/cardview_light_background"
                 android:scrollbars="vertical" />
 
-
-            <Button
-                android:id="@+id/CancleId"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBaseline="@+id/SaveId"
-                android:layout_alignBottom="@+id/SaveId"
-                android:layout_alignEnd="@+id/Ufab"
-                android:layout_alignRight="@+id/Ufab"
-                android:background="@color/colorAccent"
-                android:text="@string/CanclebuttonKey"
-                android:textColor="@color/cardview_light_background" />
-
-            <TextView
-                android:id="@+id/DateText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBaseline="@+id/Date"
-                android:layout_alignBottom="@+id/Date"
-                android:layout_alignLeft="@+id/EditDescription"
-                android:layout_alignStart="@+id/EditDescription"
-                android:text="@string/DateText" />
-
-            <Button
-                android:id="@+id/SaveId"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignLeft="@+id/NoteId"
-                android:layout_alignStart="@+id/NoteId"
-                android:layout_below="@+id/NoteList"
-                android:layout_marginTop="76dp"
-                android:background="@color/colorAccent"
-                android:text="@string/SaveIdKey"
-                android:textColor="@color/cardview_light_background" />
-
         </RelativeLayout>
     </ScrollView>
+
 </RelativeLayout>
