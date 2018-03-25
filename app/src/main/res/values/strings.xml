@@ -26,6 +26,15 @@
     <string name="WorkValue">Work</string>
     <string name="NoteKey">Note List :</string>
     <string name="NoteListkey">Note List :</string>
+    <string name="TripCatKey">Trip Catagory</string>
+    <string name="NodeListKey">Node List :</string>
+    <string name="AddNoteKey">Add Note....</string>
+    <string name="SaveIdKey">Save</string>
+    <string name="CanclebuttonKey">Cancle</string>
+    <string name="AddnoteKey">Add Note....</string>
+    <string name="TripDisc">Trip Description</string>
+    <string name="RoundTripKey">Round Trip</string>
+    <string name="TroipDesc">Trip Description</string>
     <!-- end bodour section-->
 
 
@@ -61,6 +70,13 @@
     <string name="or">or</string>
     <string name="facebook_app_id">180984762703989</string>
     <string name="fb_login_protocol_scheme">fb180984762703989</string>
+    <string name="tripDescription">Description</string>
+    <string name="tripDirection">Direction</string>
+    <string name="title_activity_update_trip">UpdateTrip</string>
+    <string name="title_activity_x">x</string>
+    <string name="UpdateKey">Update</string>
+
+    >>>>>>> 667d92dbffcb7363e1e107f7388d42c7c2d0162e
     <!-- end hanaa section-->
 
 

@@ -7,7 +7,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.ititeam.tripplannermaster.DB.TripTableOperations;
 import com.ititeam.tripplannermaster.R;
+import com.ititeam.tripplannermaster.*;
+import com.ititeam.tripplannermaster.model.Note;
+import com.ititeam.tripplannermaster.model.Trip;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -26,6 +30,30 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnMark.setOnClickListener(this);
         btnBdour.setOnClickListener(this);
         btnHesham.setOnClickListener(this);
+        Trip trip = new Trip();
+
+        Note note1 = new Note();
+        note1.setNoteBody("any note1");
+        note1.setStatus("not determined");
+        trip.getTripNodes().add(note1);
+        Note note2 = new Note();
+        note2.setNoteBody("any note2");
+        note2.setStatus("not determined");
+        trip.getTripNodes().add(note2);
+
+        trip.setTripName("asdasd");
+        trip.setTripStartPoint("12");
+        trip.setTripEndPoint("13");
+        trip.setTripDate("12345");
+        trip.setTripTime("mon");
+        trip.setTripStatus("qwertyui");
+        trip.setTripDirection("qwo");
+        trip.setTripDescription("asdfg");
+        trip.setTripRepetition("122334");
+        trip.setTripCategory("cat1");
+        trip.setUserId(1);
+        boolean flag = new TripTableOperations(getApplicationContext()).insertTrip(trip);
+        Toast.makeText(getApplicationContext(), flag+"", Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -40,7 +68,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }else if(view == btnBdour)
         {
             ///////
-            Intent intent=new Intent(MainActivity.this,AddNewTrip.class);
+            Intent intent=new Intent(MainActivity.this,UpdateTrip.class);
             startActivity(intent);
 
 
