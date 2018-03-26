@@ -256,9 +256,9 @@ public class AddNewTrip extends AppCompatActivity implements ConnectionCallbacks
               String TripCatagory = Tripcatagory.getSelectedItem().toString();
               Trip NewTrip = new Trip(NameofTrip, StartLoc, Endloc, Date, Time, "Upcomming", TripDirection, Desc, "none", TripCatagory, userid, myNoteList);
               TripTableOperations myTripTable = new TripTableOperations(this);
-              myTripTable.insertTrip(NewTrip);
-              ArrayList<Trip> all= myTripTable.selectAllTrips();
-              Toast.makeText(getBaseContext(),all.size(),
+              boolean test = myTripTable.insertTrip(NewTrip);
+              //  ArrayList<Trip> all= myTripTable.selectAllTrips();
+              Toast.makeText(getBaseContext(), test + "",
                       Toast.LENGTH_SHORT).show();
           }
 

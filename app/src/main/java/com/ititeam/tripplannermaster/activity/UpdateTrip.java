@@ -85,39 +85,39 @@ public class UpdateTrip extends AppCompatActivity implements GoogleApiClient.Con
         int TripId=1;
         /***************************Get TRip Data***************************/
          tripTableOperations =new TripTableOperations(this);
-         //   UpdateTrip =tripTableOperations.selectSingleTrips(TripId+"");
-//           TripNameView.setText(UpdateTrip.getTripName());
-        TripNameView.setText("My Trip");
-//            mylocationStart.setText(UpdateTrip.getTripStartPoint());
-        mylocationStart.setText("cairo");
-//            mylocationEnd .setText(UpdateTrip.getTripEndPoint());
-        mylocationEnd .setText("Alex");
-//            DescriptipnView.setText(UpdateTrip.getTripDescription());
-        DescriptipnView.setText("My first Trip");
-//            DateView.setText(UpdateTrip.getTripDate());
-        DateView.setText("17/5/1994");
-//            TimeView.setText(UpdateTrip.getTripDate());
-        TimeView.setText("15.30 Am");
-//            String RadiobuttonValue= UpdateTrip.getTripDirection();
+        UpdateTrip = tripTableOperations.selectSingleTrips(TripId + "");
+        TripNameView.setText(UpdateTrip.getTripName());
+        // TripNameView.setText("My Trip");
+        mylocationStart.setText(UpdateTrip.getTripStartPoint());
+        //   mylocationStart.setText("cairo");
+        mylocationEnd.setText(UpdateTrip.getTripEndPoint());
+        //     mylocationEnd .setText("Alex");
+        DescriptipnView.setText(UpdateTrip.getTripDescription());
+        //    DescriptipnView.setText("My first Trip");
+        DateView.setText(UpdateTrip.getTripDate());
+        //   DateView.setText("17/5/1994");
+        TimeView.setText(UpdateTrip.getTripTime());
+        //    TimeView.setText("15.30 Am");
+        String RadiobuttonValue = UpdateTrip.getTripDirection();
         RadioButton RadiobuttonGet;
         for(int i=0;i<mytripGroup.getChildCount();i++)
         {
 
              RadiobuttonGet = (RadioButton) mytripGroup.getChildAt(i);
-            // if(RadiobuttonGet.getText().toString().equals(RadiobuttonValue))
-            if(RadiobuttonGet.getText().toString().equals("Round Trip"))
+            if (RadiobuttonGet.getText().toString().equals(RadiobuttonValue))
+            //  if(RadiobuttonGet.getText().toString().equals("Round Trip"))
             {
                  mytripGroup.check(RadiobuttonGet.getId());
                //  RadiobuttonGet.setChecked(true);
              }
 
         }
-//        NmyNoteList = UpdateTrip.getTripNodes();
-       // for (int i=0 ;i<NmyNoteList.size() ;i++)
-            for (int i=0 ;i<5 ;i++)
+        NmyNoteList = UpdateTrip.getTripNotes();
+        for (int i = 0; i < NmyNoteList.size(); i++)
+        //  for (int i=0 ;i<5 ;i++)
         {
-            // listItems.add(NmyNoteList.get(i).getNoteBody());
-            listItems.add("listItem");
+            listItems.add(NmyNoteList.get(i).getNoteBody());
+            // listItems.add("listItem");
         }
         NoteListadapter=new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,listItems);
         MyNoteList.setAdapter(NoteListadapter);
@@ -298,18 +298,20 @@ public class UpdateTrip extends AppCompatActivity implements GoogleApiClient.Con
             }
             String TripCatagory = Tripcatagory.getSelectedItem().toString();
 
-//            Toast.makeText(getBaseContext(),all.size(),
-//                    Toast.LENGTH_SHORT).show();
-//         UpdateTrip.setTripName(NameofTrip);
-//         UpdateTrip.setTripStartPoint(StartLoc);
-//         UpdateTrip.setTripEndPoint(Endloc);
-//         UpdateTrip.setTripDate(Date);
-//         UpdateTrip.setTripTime(Time);
-//         UpdateTrip.setTripDescription(TripDirection);
-//         UpdateTrip.setTripDescription(Desc);
-//           UpdateTrip.setTripCategory(TripCatagory);
-//           UpdateTrip.setTripNodes(NmyNoteList);
-//           tripTableOperations.updateTrip(UpdateTrip);
+            // Toast.makeText(getBaseContext(),all.size(),
+            //        Toast.LENGTH_SHORT).show();
+            UpdateTrip.setTripName(NameofTrip);
+            UpdateTrip.setTripStartPoint(StartLoc);
+            UpdateTrip.setTripEndPoint(Endloc);
+            UpdateTrip.setTripDate(Date);
+            UpdateTrip.setTripTime(Time);
+            UpdateTrip.setTripDescription(TripDirection);
+            UpdateTrip.setTripDescription(Desc);
+            UpdateTrip.setTripCategory(TripCatagory);
+            UpdateTrip.setTripNotes(NmyNoteList);
+            boolean test = tripTableOperations.updateTrip(UpdateTrip);
+            Toast.makeText(getBaseContext(), test + "",
+                    Toast.LENGTH_SHORT).show();
 
         }
 

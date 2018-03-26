@@ -32,28 +32,28 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnHesham.setOnClickListener(this);
         Trip trip = new Trip();
 
-        Note note1 = new Note();
-        note1.setNoteBody("any note1");
-        note1.setStatus("not determined");
-        trip.getTripNodes().add(note1);
-        Note note2 = new Note();
-        note2.setNoteBody("any note2");
-        note2.setStatus("not determined");
-        trip.getTripNodes().add(note2);
-
-        trip.setTripName("asdasd");
-        trip.setTripStartPoint("12");
-        trip.setTripEndPoint("13");
-        trip.setTripDate("12345");
-        trip.setTripTime("mon");
-        trip.setTripStatus("qwertyui");
-        trip.setTripDirection("qwo");
-        trip.setTripDescription("asdfg");
-        trip.setTripRepetition("122334");
-        trip.setTripCategory("cat1");
-        trip.setUserId(1);
-        boolean flag = new TripTableOperations(getApplicationContext()).insertTrip(trip);
-        Toast.makeText(getApplicationContext(), flag+"", Toast.LENGTH_LONG).show();
+//        Note note1 = new Note();
+//        note1.setNoteBody("any note1");
+//        note1.setStatus("not determined");
+//        trip.getTripNotes().add(note1);
+//        Note note2 = new Note();
+//        note2.setNoteBody("any note2");
+//        note2.setStatus("not determined");
+//        trip.getTripNotes().add(note2);
+//
+//        trip.setTripName("asdasd");
+//        trip.setTripStartPoint("12");
+//        trip.setTripEndPoint("13");
+//        trip.setTripDate("12345");
+//        trip.setTripTime("mon");
+//        trip.setTripStatus("qwertyui");
+//        trip.setTripDirection("qwo");
+//        trip.setTripDescription("asdfg");
+//        trip.setTripRepetition("122334");
+//        trip.setTripCategory("cat1");
+//        trip.setUserId(1);
+//        boolean flag = new TripTableOperations(getApplicationContext()).insertTrip(trip);
+//        Toast.makeText(getApplicationContext(), flag+"", Toast.LENGTH_LONG).show();
     }
 
     @Override
