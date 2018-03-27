@@ -7,19 +7,24 @@ import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Address;
 import android.location.Geocoder;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
+import android.text.Layout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.facebook.internal.Utility;
@@ -58,34 +63,53 @@ import java.util.Locale;
 
 public class ShowTripActivity extends FragmentActivity implements OnMapReadyCallback {
 
-    Label tripName,tripStartPoint;
+    Label tripName,tripStartPoint,tripEndPoint,tripDirection,tripDescription;
+    TextView tripDate,tripTime;
     private GoogleMap mMap;
     private static final int LOCATION_REQUEST = 500;
     ArrayList<LatLng> listPoints;
     ArrayList<MarkerOptions> markers;
     SupportMapFragment mapFragment;
     ArrayList<Note> notes = new ArrayList<>();
+    Trip trip=null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_trip);
-        //tripName=findViewById(R.id.show_trip_name);
+        tripName=findViewById(R.id.show_trip_name);
+        tripStartPoint=findViewById(R.id.show_trip_start_point);
+        tripEndPoint=findViewById(R.id.show_trip_end_point);
+        tripDescription=findViewById(R.id.show_trip_description);
+        tripDirection=findViewById(R.id.show_trip_direction);
+        tripDate=findViewById(R.id.DateText);
+        tripTime=findViewById(R.id.TimeText);
         TripTableOperations tripTableOperations=new TripTableOperations(getBaseContext());
         int trip_id=1;
-//        Trip trip=tripTableOperations.selectSingleTrips(trip_id+"");
-        Note note = new Note();
-        note.setNoteBody("note1");
-        notes.add(note);
-        notes.add(note);
-        notes.add(note);
-        notes.add(note);
-        //tripName.setText(trip.getTripName());
+         trip=tripTableOperations.selectSingleTrips(trip_id+"");
+
+        notes=trip.getTripNotes();
+        tripName.setText(trip.getTripName());
+        tripStartPoint.setText(trip.getTripStartPoint());
+        tripEndPoint.setText(trip.getTripEndPoint());
+        tripTime.setText(trip.getTripName());
+        tripDate.setText(trip.getTripDate());
+        tripDirection.setText(trip.getTripDirection());
+        tripDescription.setText(trip.getTripDescription());
+
         listPoints = new ArrayList<>();
         markers = new ArrayList<>();
-        mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.map);
-        mapFragment.getMapAsync(this);
+        if(!haveNetworkConnection()) {
+            LinearLayout mapLayout = findViewById(R.id.map_layout);
+            LinearLayout.LayoutParams mapLayoutParams = new LinearLayout.LayoutParams(0, 0);
+            mapLayout.setLayoutParams(mapLayoutParams);
+
+
+        }else {
+            mapFragment = (SupportMapFragment) getSupportFragmentManager()
+                    .findFragmentById(R.id.map);
+            mapFragment.getMapAsync(this);
+        }
         LinearLayout notesLayout = findViewById(R.id.notes_layout);
         for (Note nNote : notes) {
             ImageView imageView = new ImageView(this);
@@ -128,31 +152,32 @@ public class ShowTripActivity extends FragmentActivity implements OnMapReadyCall
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        LatLng latLng1 = getLatLongFromGivenAddress("cairo,Egypt");
-        LatLng latLng2 = getLatLongFromGivenAddress("sohag,Egypt");
-        mMap = googleMap;
-        mMap.getUiSettings().setZoomControlsEnabled(true);
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, LOCATION_REQUEST);
-            return;
-        }
-        mMap.setMyLocationEnabled(true);
-        listPoints.add(latLng1);
-        MarkerOptions markerOptions = new MarkerOptions();
-        markerOptions.position(latLng1);
-        markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
-        markers.add(markerOptions);
-        mMap.addMarker(markerOptions);
-        listPoints.add(latLng2);
-        // markerOptions = new MarkerOptions();
-        MarkerOptions markerOptions2 = new MarkerOptions();
-        markerOptions2.position(latLng2);
-        markerOptions2.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
-        mMap.addMarker(markerOptions2);
-        markers.add(markerOptions2);
-        String url = getRequestUrl(listPoints.get(0), listPoints.get(1));
-        ShowTripActivity.TaskRequestDirections taskRequestDirections = new ShowTripActivity.TaskRequestDirections();
-        taskRequestDirections.execute(url);
+        if (haveNetworkConnection()) {
+            LatLng latLng1 = getLatLongFromGivenAddress(trip.getTripStartPoint());
+            LatLng latLng2 = getLatLongFromGivenAddress(trip.getTripEndPoint());
+            mMap = googleMap;
+            mMap.getUiSettings().setZoomControlsEnabled(true);
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, LOCATION_REQUEST);
+                return;
+            }
+            mMap.setMyLocationEnabled(true);
+            listPoints.add(latLng1);
+            MarkerOptions markerOptions = new MarkerOptions();
+            markerOptions.position(latLng1);
+            markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
+            markers.add(markerOptions);
+            mMap.addMarker(markerOptions);
+            listPoints.add(latLng2);
+            // markerOptions = new MarkerOptions();
+            MarkerOptions markerOptions2 = new MarkerOptions();
+            markerOptions2.position(latLng2);
+            markerOptions2.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
+            mMap.addMarker(markerOptions2);
+            markers.add(markerOptions2);
+            String url = getRequestUrl(listPoints.get(0), listPoints.get(1));
+            ShowTripActivity.TaskRequestDirections taskRequestDirections = new ShowTripActivity.TaskRequestDirections();
+            taskRequestDirections.execute(url);
         /*mMap.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
             @Override
             public void onMapLongClick(LatLng latLng) {
@@ -185,10 +210,10 @@ public class ShowTripActivity extends FragmentActivity implements OnMapReadyCall
             }
         });*/
 
-        //googleMap.animateCamera(cu);
-        mMap.setOnMapLoadedCallback(new GoogleMap.OnMapLoadedCallback() {
-            @Override
-            public void onMapLoaded() {
+            //googleMap.animateCamera(cu);
+            mMap.setOnMapLoadedCallback(new GoogleMap.OnMapLoadedCallback() {
+                @Override
+                public void onMapLoaded() {
                /* if (mMap != null) {
                     LatLngBounds.Builder builder = new LatLngBounds.Builder();
                     for (MarkerOptions marker : markers) {
@@ -203,29 +228,29 @@ public class ShowTripActivity extends FragmentActivity implements OnMapReadyCall
                     mMap.animateCamera(cu);
 
                 }*/
-            }
-        });
-        mapFragment.getView().post(new Runnable() {
-            @Override
-            public void run() {
-                if (mMap != null) {
-                    LatLngBounds.Builder builder = new LatLngBounds.Builder();
-                    for (MarkerOptions marker : markers) {
-                        builder.include(marker.getPosition());
-                    }
-                    // builder.include(markerOptions.getPosition());
-                    LatLngBounds bounds = builder.build();
-                    int padding = 50; // offset from edges of the map in pixels
-                    int width = getResources().getDisplayMetrics().widthPixels;
-                    int height = getResources().getDisplayMetrics().heightPixels;
-                    CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bounds, padding);
-                    mMap.animateCamera(cu);
                 }
-            }
-        });
+            });
+            mapFragment.getView().post(new Runnable() {
+                @Override
+                public void run() {
+                    if (mMap != null) {
+                        LatLngBounds.Builder builder = new LatLngBounds.Builder();
+                        for (MarkerOptions marker : markers) {
+                            builder.include(marker.getPosition());
+                        }
+                        // builder.include(markerOptions.getPosition());
+                        LatLngBounds bounds = builder.build();
+                        int padding = 50; // offset from edges of the map in pixels
+                        int width = getResources().getDisplayMetrics().widthPixels;
+                        int height = getResources().getDisplayMetrics().heightPixels;
+                        CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bounds, padding);
+                        mMap.animateCamera(cu);
+                    }
+                }
+            });
+        }
+
     }
-
-
     private String getRequestUrl(LatLng origin, LatLng dest) {
         //Value of origin
         String str_org = "origin=" + origin.latitude + "," + origin.longitude;
@@ -385,5 +410,21 @@ public class ShowTripActivity extends FragmentActivity implements OnMapReadyCall
             e.printStackTrace();
         }
         return latLng;
+    }
+    private boolean haveNetworkConnection() {
+        boolean haveConnectedWifi = false;
+        boolean haveConnectedMobile = false;
+
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo[] netInfo = cm.getAllNetworkInfo();
+        for (NetworkInfo ni : netInfo) {
+            if (ni.getTypeName().equalsIgnoreCase("WIFI"))
+                if (ni.isConnected())
+                    haveConnectedWifi = true;
+            if (ni.getTypeName().equalsIgnoreCase("MOBILE"))
+                if (ni.isConnected())
+                    haveConnectedMobile = true;
+        }
+        return haveConnectedWifi || haveConnectedMobile;
     }
 }
