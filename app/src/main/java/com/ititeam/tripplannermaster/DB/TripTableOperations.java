@@ -386,4 +386,8 @@ public class TripTableOperations {
         AdapterDba.getAdapterDbaInstance(context)._delete(AdapterDba.DbOpenHelper.TRIP_TABLE ,whereClause ,whereArgs);
     }
 
+
+    //Start Hanaa Section
+    
+    //end  Hanaa Section
 }
