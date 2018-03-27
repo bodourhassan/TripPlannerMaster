@@ -24,9 +24,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.facebook.internal.Utility;
+import com.github.clans.fab.FloatingActionButton;
+import com.github.clans.fab.FloatingActionMenu;
 import com.github.clans.fab.Label;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -61,26 +64,46 @@ import java.util.List;
 import java.util.Locale;
 
 public class ShowTripActivity extends FragmentActivity implements OnMapReadyCallback {
-
-    Label tripName,tripStartPoint;
+    FloatingActionMenu materialDesignFAM;
+    FloatingActionButton floatingActionButton1, floatingActionButton2, floatingActionButton3;
+    Label tripName,tripStartPoint,tripEndPoint,tripDirection,tripDescription;
+    TextView tripDate,tripTime;
     private GoogleMap mMap;
     private static final int LOCATION_REQUEST = 500;
     ArrayList<LatLng> listPoints;
     ArrayList<MarkerOptions> markers;
     SupportMapFragment mapFragment;
     ArrayList<Note> notes = new ArrayList<>();
+    Trip trip=null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_trip);
         tripName=findViewById(R.id.show_trip_name);
+        tripStartPoint=findViewById(R.id.show_trip_start_point);
+        tripEndPoint=findViewById(R.id.show_trip_end_point);
+        tripDescription=findViewById(R.id.show_trip_description);
+        tripDirection=findViewById(R.id.show_trip_direction);
+        tripDate=findViewById(R.id.DateText);
+        tripTime=findViewById(R.id.TimeText);
+        floatingActionButton1 = findViewById(R.id.show_trip_start);
+        floatingActionButton2 = findViewById(R.id.show_trip_edit);
+        floatingActionButton3 = findViewById(R.id.show_trip_done);
+
         TripTableOperations tripTableOperations=new TripTableOperations(getBaseContext());
         int trip_id=1;
-        Trip trip=tripTableOperations.selectSingleTrips(trip_id+"");
-        Note note = new Note();
+         trip=tripTableOperations.selectSingleTrips(trip_id+"");
+
         notes=trip.getTripNotes();
         tripName.setText(trip.getTripName());
+        tripStartPoint.setText(trip.getTripStartPoint());
+        tripEndPoint.setText(trip.getTripEndPoint());
+        tripTime.setText(trip.getTripName());
+        tripDate.setText(trip.getTripDate());
+        tripDirection.setText(trip.getTripDirection());
+        tripDescription.setText(trip.getTripDescription());
+
         listPoints = new ArrayList<>();
         markers = new ArrayList<>();
         if(!haveNetworkConnection()) {
@@ -121,7 +144,27 @@ public class ShowTripActivity extends FragmentActivity implements OnMapReadyCall
 
 
         }
+        floatingActionButton1.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                //TODO something when floating action menu first item clicked
+                // Intent i = new Intent(ShowUpcomingTrips.this , AddTrip.class);
+                // startActivity(i);
+                Toast.makeText(ShowTripActivity.this, "start", Toast.LENGTH_SHORT).show();
+            }
+        });
+        floatingActionButton2.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                //TODO something when floating action menu second item clicked
+                Toast.makeText(ShowTripActivity.this, "edit", Toast.LENGTH_SHORT).show();
 
+            }
+        });
+        floatingActionButton3.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                //TODO something when floating action menu third item clicked
+                Toast.makeText(ShowTripActivity.this, "done", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     /**
@@ -137,8 +180,8 @@ public class ShowTripActivity extends FragmentActivity implements OnMapReadyCall
     @Override
     public void onMapReady(GoogleMap googleMap) {
         if (haveNetworkConnection()) {
-            LatLng latLng1 = getLatLongFromGivenAddress("cairo,Egypt");
-            LatLng latLng2 = getLatLongFromGivenAddress("sohag,Egypt");
+            LatLng latLng1 = getLatLongFromGivenAddress(trip.getTripStartPoint());
+            LatLng latLng2 = getLatLongFromGivenAddress(trip.getTripEndPoint());
             mMap = googleMap;
             mMap.getUiSettings().setZoomControlsEnabled(true);
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
