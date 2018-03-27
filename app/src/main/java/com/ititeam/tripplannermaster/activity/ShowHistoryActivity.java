@@ -27,6 +27,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
+import com.ititeam.tripplannermaster.DB.TripTableOperations;
 import com.ititeam.tripplannermaster.R;
 import com.ititeam.tripplannermaster.classes.DirectionsParser;
 import com.ititeam.tripplannermaster.model.Trip;
@@ -60,7 +61,7 @@ public class ShowHistoryActivity extends AppCompatActivity implements OnMapReady
         setContentView(R.layout.activity_show_history);
         listPoints=new ArrayList<>();
         markers=new ArrayList<>();
-        trips=new ArrayList<>();
+       /* trips=new ArrayList<>();
         Trip trip=new Trip();
         trip.setTripStartPoint("Aswan,egypt");
         trip.setTripEndPoint("cairo");
@@ -71,8 +72,8 @@ public class ShowHistoryActivity extends AppCompatActivity implements OnMapReady
         trips.add(trip);
         trip=new Trip();
         trip.setTripStartPoint("cairo");
-        trip.setTripEndPoint("Alexandria,egypt");
-        trips.add(trip);
+        trip.setTripEndPoint("Alexandria,egypt");*/
+        trips=new TripTableOperations(this).selectPastTripsUsingDateAndStatus();
         if(haveNetworkConnection()) {
             mapFragment = (SupportMapFragment) getSupportFragmentManager()
                     .findFragmentById(R.id.history_map);
@@ -91,40 +92,42 @@ public class ShowHistoryActivity extends AppCompatActivity implements OnMapReady
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        if (haveNetworkConnection()) {
-            mMap = googleMap;
-            mMap.getUiSettings().setZoomControlsEnabled(true);
-            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, LOCATION_REQUEST);
-                return;
-            }
-            mMap.setMyLocationEnabled(true);
-            int i = 0;
-            for (Trip trip : trips) {
+        if (trips.size()>0) {
+            if (haveNetworkConnection()) {
+                mMap = googleMap;
+                mMap.getUiSettings().setZoomControlsEnabled(true);
+                if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, LOCATION_REQUEST);
+                    return;
+                }
+                mMap.setMyLocationEnabled(true);
+                int i = 0;
 
-                LatLng latLng1 = getLatLongFromGivenAddress(trip.getTripStartPoint());
-                LatLng latLng2 = getLatLongFromGivenAddress(trip.getTripEndPoint());
+                for (Trip trip : trips) {
 
-                listPoints.add(latLng1);
-                MarkerOptions markerOptions = new MarkerOptions();
-                markerOptions.position(latLng1);
-                markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
-                markers.add(markerOptions);
-                mMap.addMarker(markerOptions);
-                listPoints.add(latLng2);
-                // markerOptions = new MarkerOptions();
-                MarkerOptions markerOptions2 = new MarkerOptions();
-                markerOptions2.position(latLng2);
-                markerOptions2.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
-                mMap.addMarker(markerOptions2);
-                markers.add(markerOptions2);
-                String url = getRequestUrl(listPoints.get(0), listPoints.get(1));
-                ShowHistoryActivity.TaskRequestDirections taskRequestDirections = new ShowHistoryActivity.TaskRequestDirections();
-                taskRequestDirections.execute(url);
-                listPoints.clear();
+                    LatLng latLng1 = getLatLongFromGivenAddress(trip.getTripStartPoint());
+                    LatLng latLng2 = getLatLongFromGivenAddress(trip.getTripEndPoint());
 
-                tripIndex++;
-            }
+                    listPoints.add(latLng1);
+                    MarkerOptions markerOptions = new MarkerOptions();
+                    markerOptions.position(latLng1);
+                    markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
+                    markers.add(markerOptions);
+                    mMap.addMarker(markerOptions);
+                    listPoints.add(latLng2);
+                    // markerOptions = new MarkerOptions();
+                    MarkerOptions markerOptions2 = new MarkerOptions();
+                    markerOptions2.position(latLng2);
+                    markerOptions2.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
+                    mMap.addMarker(markerOptions2);
+                    markers.add(markerOptions2);
+                    String url = getRequestUrl(listPoints.get(0), listPoints.get(1));
+                    ShowHistoryActivity.TaskRequestDirections taskRequestDirections = new ShowHistoryActivity.TaskRequestDirections();
+                    taskRequestDirections.execute(url);
+                    listPoints.clear();
+
+                    tripIndex++;
+                }
         /*mMap.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
             @Override
             public void onMapLongClick(LatLng latLng) {
@@ -157,10 +160,10 @@ public class ShowHistoryActivity extends AppCompatActivity implements OnMapReady
             }
         });*/
 
-            //googleMap.animateCamera(cu);
-            mMap.setOnMapLoadedCallback(new GoogleMap.OnMapLoadedCallback() {
-                @Override
-                public void onMapLoaded() {
+                //googleMap.animateCamera(cu);
+                mMap.setOnMapLoadedCallback(new GoogleMap.OnMapLoadedCallback() {
+                    @Override
+                    public void onMapLoaded() {
                /* if (mMap != null) {
                     LatLngBounds.Builder builder = new LatLngBounds.Builder();
                     for (MarkerOptions marker : markers) {
@@ -175,41 +178,41 @@ public class ShowHistoryActivity extends AppCompatActivity implements OnMapReady
                     mMap.animateCamera(cu);
 
                 }*/
-                }
-            });
-            mapFragment.getView().post(new Runnable() {
-                @Override
-                public void run() {
-                    if (mMap != null) {
-                        LatLngBounds.Builder builder = new LatLngBounds.Builder();
-                        for (MarkerOptions marker : markers) {
-                            builder.include(marker.getPosition());
-                        }
-                        // builder.include(markerOptions.getPosition());
-                        LatLngBounds bounds = builder.build();
-                        int padding = 50; // offset from edges of the map in pixels
-                        int width = getResources().getDisplayMetrics().widthPixels;
-                        int height = getResources().getDisplayMetrics().heightPixels;
-                        CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bounds, padding);
-                        mMap.animateCamera(cu);
                     }
-                }
-            });
+                });
+                mapFragment.getView().post(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (mMap != null) {
+                            LatLngBounds.Builder builder = new LatLngBounds.Builder();
+                            for (MarkerOptions marker : markers) {
+                                builder.include(marker.getPosition());
+                            }
+                            // builder.include(markerOptions.getPosition());
+                            LatLngBounds bounds = builder.build();
+                            int padding = 50; // offset from edges of the map in pixels
+                            int width = getResources().getDisplayMetrics().widthPixels;
+                            int height = getResources().getDisplayMetrics().heightPixels;
+                            CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bounds, padding);
+                            mMap.animateCamera(cu);
+                        }
+                    }
+                });
+            }
+
         }
-
     }
-
     private String getRequestUrl(LatLng origin, LatLng dest) {
         //Value of origin
-        String str_org = "origin=" + origin.latitude +","+origin.longitude;
+        String str_org = "origin=" + origin.latitude + "," + origin.longitude;
         //Value of destination
-        String str_dest = "destination=" + dest.latitude+","+dest.longitude;
+        String str_dest = "destination=" + dest.latitude + "," + dest.longitude;
         //Set value enable the sensor
         String sensor = "sensor=false";
         //Mode for find direction
         String mode = "mode=driving";
         //Build the full param
-        String param = str_org +"&" + str_dest + "&" +sensor+"&" +mode;
+        String param = str_org + "&" + str_dest + "&" + sensor + "&" + mode;
         //Output format
         String output = "json";
         //Create url to request
@@ -221,7 +224,7 @@ public class ShowHistoryActivity extends AppCompatActivity implements OnMapReady
         String responseString = "";
         InputStream inputStream = null;
         HttpURLConnection httpURLConnection = null;
-        try{
+        try {
             URL url = new URL(reqUrl);
             httpURLConnection = (HttpURLConnection) url.openConnection();
             httpURLConnection.connect();
@@ -255,7 +258,7 @@ public class ShowHistoryActivity extends AppCompatActivity implements OnMapReady
     @SuppressLint("MissingPermission")
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        switch (requestCode){
+        switch (requestCode) {
             case LOCATION_REQUEST:
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     mMap.setMyLocationEnabled(true);

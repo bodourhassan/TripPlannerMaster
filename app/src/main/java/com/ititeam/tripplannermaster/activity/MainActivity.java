@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.ititeam.tripplannermaster.DB.NoteTableOperations;
 import com.ititeam.tripplannermaster.DB.TripTableOperations;
 import com.ititeam.tripplannermaster.R;
 import com.ititeam.tripplannermaster.*;
@@ -179,8 +180,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }else if(view == btnHana)
         {
             //////////
-            Intent intent=new Intent(MainActivity.this,FirebaseActivity.class);
+           /* Trip trip5 = new Trip();
+            trip5.setTripName("5");
+            trip5.setTripStartPoint("cairo");
+            trip5.setTripEndPoint("Aswan");
+            trip5.setTripDate("2018-05-11");
+            trip5.setTripTime("mon");
+            trip5.setTripStatus(TripConstant.DoneStatus);
+            trip5.setTripDirection("qwo");
+            trip5.setTripDescription("asdfg");
+            trip5.setTripRepetition("122334");
+            trip5.setTripCategory("cat1");
+            trip5.setUserId(1);
+            new TripTableOperations(MainActivity.this).insertTrip(trip5);*/
+            Intent intent=new Intent(MainActivity.this,ShowTripActivity
+                    .class);
             startActivity(intent);
+
 
         }
     }

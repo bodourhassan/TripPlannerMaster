@@ -36,7 +36,9 @@ public class DownLoadDataFromFirebase extends AsyncTask<String,Integer,Object> {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 ArrayList<Trip> trips=new ArrayList<>();
                 trips= (ArrayList<Trip>) dataSnapshot.getValue();
-                Toast.makeText(getApplicationContext(), "download"+trips.size(), Toast.LENGTH_SHORT).show();
+                if(trips!=null) {
+                    Toast.makeText(getApplicationContext(), "download" + trips.size(), Toast.LENGTH_SHORT).show();
+                }
             }
 
             @Override

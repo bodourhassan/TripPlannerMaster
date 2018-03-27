@@ -31,23 +31,25 @@ public class UploadDataToFirebase extends AsyncTask<String,Integer,Object> {
         databaseReference= FirebaseDatabase.getInstance().getReference();
         TripTableOperations tripTableOperations=new TripTableOperations(context);
         ArrayList<Trip> trips=tripTableOperations.selectAllTrips();
-        if(trips.size()>0) {
-            databaseReference.child("User" + trips.get(0).getUserId()).setValue(trips);
-            databaseReference.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    Toast.makeText(context, "done"+trips.size(), Toast.LENGTH_SHORT).show();
-                }
+        if(trips!=null) {
+            if (trips.size() > 0) {
 
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
+                databaseReference.child("User" + trips.get(0).getUserId()).setValue(trips);
+                databaseReference.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        Toast.makeText(context,  trips.get(trips.size()-1).getTripNotes().size()+"done" + trips.size(), Toast.LENGTH_SHORT).show();
+                    }
 
-                }
-            });
-            //Toast.makeText(context, "done"+trips.size(), Toast.LENGTH_SHORT).show();
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
 
+                    }
+                });
+                //Toast.makeText(context, "done"+trips.size(), Toast.LENGTH_SHORT).show();
+
+            }
         }
-
         return null;
     }
     protected void onPostExecute(Object result) {
