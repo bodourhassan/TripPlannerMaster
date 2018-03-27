@@ -59,6 +59,7 @@
         <activity android:name=".activity.ShowTripActivity" />
         <activity android:name=".activity.ShowHistoryActivity" />
         <activity android:name=".activity.MapActivity" />
+        <activity android:name=".activity.FirebaseActivity"></activity>
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
@@ -100,7 +101,7 @@
 
         <!-- end hesham section -->
 
-        <activity android:name=".activity.FirebaseActivity"></activity>
+
     </application>
 
 </manifest>
