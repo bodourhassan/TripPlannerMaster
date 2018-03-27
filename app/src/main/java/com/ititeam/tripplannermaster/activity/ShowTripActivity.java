@@ -28,6 +28,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.facebook.internal.Utility;
+import com.github.clans.fab.FloatingActionButton;
+import com.github.clans.fab.FloatingActionMenu;
 import com.github.clans.fab.Label;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -62,33 +64,38 @@ import java.util.List;
 import java.util.Locale;
 
 public class ShowTripActivity extends FragmentActivity implements OnMapReadyCallback {
-
-    Label tripName, tripStartPoint, tripEndPoint, tripDirection, tripDescription;
-    TextView tripDate, tripTime;
+    FloatingActionMenu materialDesignFAM;
+    FloatingActionButton floatingActionButton1, floatingActionButton2, floatingActionButton3;
+    Label tripName,tripStartPoint,tripEndPoint,tripDirection,tripDescription;
+    TextView tripDate,tripTime;
     private GoogleMap mMap;
     private static final int LOCATION_REQUEST = 500;
     ArrayList<LatLng> listPoints;
     ArrayList<MarkerOptions> markers;
     SupportMapFragment mapFragment;
     ArrayList<Note> notes = new ArrayList<>();
-    Trip trip = null;
+    Trip trip=null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_trip);
-        tripName = findViewById(R.id.show_trip_name);
-        tripStartPoint = findViewById(R.id.show_trip_start_point);
-        tripEndPoint = findViewById(R.id.show_trip_end_point);
-        tripDescription = findViewById(R.id.show_trip_description);
-        tripDirection = findViewById(R.id.show_trip_direction);
-        tripDate = findViewById(R.id.DateText);
-        tripTime = findViewById(R.id.TimeText);
+        tripName=findViewById(R.id.show_trip_name);
+        tripStartPoint=findViewById(R.id.show_trip_start_point);
+        tripEndPoint=findViewById(R.id.show_trip_end_point);
+        tripDescription=findViewById(R.id.show_trip_description);
+        tripDirection=findViewById(R.id.show_trip_direction);
+        tripDate=findViewById(R.id.DateText);
+        tripTime=findViewById(R.id.TimeText);
+        floatingActionButton1 = findViewById(R.id.show_trip_start);
+        floatingActionButton2 = findViewById(R.id.show_trip_edit);
+        floatingActionButton3 = findViewById(R.id.show_trip_done);
+
         TripTableOperations tripTableOperations=new TripTableOperations(getBaseContext());
         int trip_id=1;
-        trip = tripTableOperations.selectSingleTrips(trip_id + "");
+         trip=tripTableOperations.selectSingleTrips(trip_id+"");
 
-        notes = trip.getTripNotes();
+        notes=trip.getTripNotes();
         tripName.setText(trip.getTripName());
         tripStartPoint.setText(trip.getTripStartPoint());
         tripEndPoint.setText(trip.getTripEndPoint());
@@ -99,13 +106,13 @@ public class ShowTripActivity extends FragmentActivity implements OnMapReadyCall
 
         listPoints = new ArrayList<>();
         markers = new ArrayList<>();
-        if (!haveNetworkConnection()) {
+        if(!haveNetworkConnection()) {
             LinearLayout mapLayout = findViewById(R.id.map_layout);
             LinearLayout.LayoutParams mapLayoutParams = new LinearLayout.LayoutParams(0, 0);
             mapLayout.setLayoutParams(mapLayoutParams);
 
 
-        } else {
+        }else {
             mapFragment = (SupportMapFragment) getSupportFragmentManager()
                     .findFragmentById(R.id.map);
             mapFragment.getMapAsync(this);
@@ -137,7 +144,27 @@ public class ShowTripActivity extends FragmentActivity implements OnMapReadyCall
 
 
         }
+        floatingActionButton1.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                //TODO something when floating action menu first item clicked
+                // Intent i = new Intent(ShowUpcomingTrips.this , AddTrip.class);
+                // startActivity(i);
+                Toast.makeText(ShowTripActivity.this, "start", Toast.LENGTH_SHORT).show();
+            }
+        });
+        floatingActionButton2.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                //TODO something when floating action menu second item clicked
+                Toast.makeText(ShowTripActivity.this, "edit", Toast.LENGTH_SHORT).show();
 
+            }
+        });
+        floatingActionButton3.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                //TODO something when floating action menu third item clicked
+                Toast.makeText(ShowTripActivity.this, "done", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     /**
@@ -411,7 +438,6 @@ public class ShowTripActivity extends FragmentActivity implements OnMapReadyCall
         }
         return latLng;
     }
-
     private boolean haveNetworkConnection() {
         boolean haveConnectedWifi = false;
         boolean haveConnectedMobile = false;
