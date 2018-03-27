@@ -154,14 +154,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //        for (Trip pastTrip : pastTrips) {
 //            Toast.makeText(getApplicationContext(), pastTrip.getTripName(), Toast.LENGTH_SHORT).show();
 //        }
-        Trip trip = new TripTableOperations(getApplicationContext()).selectSingleTrips(1+"");
+        Trip trip = new TripTableOperations(getApplicationContext()).selectSingleTrips(1 + "");
 
-        for (Note note : trip.getTripNotes())
-        {
+        for (Note note : trip.getTripNotes()) {
             Toast.makeText(getApplicationContext(), note.getNoteBody(), Toast.LENGTH_SHORT).show();
         }
 
-        Note note2 =  trip.getTripNotes().get(1);
+        Note note2 = trip.getTripNotes().get(1);
         note2.setNoteBody("note2");
         note2.setStatus("not determined");
         new NoteTableOperations(getApplicationContext()).updateNote(note2);
@@ -173,13 +172,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         {
             ///////
             Toast.makeText(this, "clicked", Toast.LENGTH_SHORT).show();
-            Intent i = new Intent(this , StartActivityDrawer.class);
+            Intent i = new Intent(this, StartActivityDrawer.class);
             startActivity(i);
 
         }else if(view == btnBdour)
         {
             ///////
-            Intent intent=new Intent(MainActivity.this,UpdateTrip.class);
+            Intent intent = new Intent(MainActivity.this, UpdateTrip.class);
             startActivity(intent);
 
 
@@ -191,7 +190,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }else if(view == btnHana)
         {
             //////////
-            Intent intent=new Intent(MainActivity.this,ShowTripActivity.class);
+            Intent intent = new Intent(MainActivity.this, ShowTripActivity.class);
             startActivity(intent);
 
         }
