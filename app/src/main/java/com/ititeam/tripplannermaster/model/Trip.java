@@ -38,6 +38,11 @@ public class Trip {
     String tripRepetition;
     String tripCategory;
     int userId;
+
+    public void setTripNotes(ArrayList<Note> tripNotes) {
+        this.tripNotes = tripNotes;
+    }
+
     ArrayList<Note> tripNotes;
 
     public Trip() {

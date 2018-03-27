@@ -3,12 +3,15 @@ package com.ititeam.tripplannermaster.activity;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -38,6 +41,8 @@ import com.ititeam.tripplannermaster.model.Trip;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
+import java.util.Locale;
 
 public class AddNewTrip extends AppCompatActivity implements ConnectionCallbacks,OnConnectionFailedListener {
 
@@ -61,6 +66,7 @@ public class AddNewTrip extends AppCompatActivity implements ConnectionCallbacks
     int hour,minute;
     String format;
     int userid=1;
+    String Notebody;
     public  static final LatLngBounds LatLangBounds =new LatLngBounds(new LatLng(-40,-168),new LatLng(71,163));
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,13 +86,13 @@ public class AddNewTrip extends AppCompatActivity implements ConnectionCallbacks
         NoteListadapter=new ArrayAdapter<String>(this,
                 android.R.layout.simple_list_item_1,
                 listItems);
-        MyNoteList.setAdapter(NoteListadapter);
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+
+        FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
               //  Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG).setAction("Action", null).show();
-                String Notebody =NoteItem.getText().toString();
+                Notebody = NoteItem.getText().toString();
                 if(Notebody.trim().equals(""))
                 {
                     Toast.makeText(getBaseContext(), " Enter Your Note ",
@@ -96,6 +102,7 @@ public class AddNewTrip extends AppCompatActivity implements ConnectionCallbacks
                 else {
 
                    //  addItems(Notebody);
+                    Log.e("Add", Notebody);
                     listItems.add(Notebody);
                     NoteListadapter.notifyDataSetChanged();
                     NoteItem.setText("".toString());
@@ -105,6 +112,10 @@ public class AddNewTrip extends AppCompatActivity implements ConnectionCallbacks
                 }
             }
         });
+
+        MyNoteList.setAdapter(NoteListadapter);
+
+
         geoDataClient = Places.getGeoDataClient(this, null);
         MapPlacesAdapter mapPlacesAdapter=new MapPlacesAdapter(this , geoDataClient , LatLangBounds,null);
         mylocationStart.setAdapter(mapPlacesAdapter);
@@ -236,6 +247,16 @@ public class AddNewTrip extends AppCompatActivity implements ConnectionCallbacks
                       Toast.LENGTH_SHORT).show();
 
           }
+//          else if(getLatLongFromGivenAddress(mylocationStart.getText().toString())==null){
+//
+//              Toast.makeText(getBaseContext(), " Enter a valid Start point ",
+//                      Toast.LENGTH_SHORT).show();
+//          }
+//          else if(getLatLongFromGivenAddress(mylocationEnd.getText().toString())==null){
+//
+//              Toast.makeText(getBaseContext(), " Enter a valid End point ",
+//                      Toast.LENGTH_SHORT).show();
+//          }
           else {
               String NameofTrip = TripNameView.getText().toString();
               String StartLoc = mylocationStart.getText().toString();
@@ -249,17 +270,27 @@ public class AddNewTrip extends AppCompatActivity implements ConnectionCallbacks
               myRadiobutton = findViewById(selectedId);
               String TripDirection = myRadiobutton.getText().toString();
               for (int i = 0; i < listItems.size(); i++) {
-                  Note note = new Note(listItems.get(i), "Later");
+                  Log.e("When Add", listItems.get(i));
+                  Note note = new Note(listItems.get(i), TripConstant.NoteLater);
                   myNoteList.add(note);
 
               }
               String TripCatagory = Tripcatagory.getSelectedItem().toString();
               Trip NewTrip = new Trip(NameofTrip, StartLoc, Endloc, Date, Time, "Upcomming", TripDirection, Desc, "none", TripCatagory, userid, myNoteList);
               TripTableOperations myTripTable = new TripTableOperations(this);
-              myTripTable.insertTrip(NewTrip);
-              ArrayList<Trip> all= myTripTable.selectAllTrips();
-              Toast.makeText(getBaseContext(),all.size(),
+              boolean test = myTripTable.insertTrip(NewTrip);
+              for (int i = 0; i < NewTrip.getTripNotes().size(); i++) {
+                  Log.e("Trip before", NewTrip.getTripNotes().get(i).getNoteBody());
+              }
+              Trip afterinsetTrip = myTripTable.selectSingleTrips(1 + "");
+              for (int i = 0; i < afterinsetTrip.getTripNotes().size(); i++) {
+                  Log.e("Trip after", afterinsetTrip.getTripNotes().get(i).getNoteBody());
+              }
+              ArrayList<Trip> all = myTripTable.selectAllTrips();
+              Toast.makeText(getBaseContext(), all.size() + "",
                       Toast.LENGTH_SHORT).show();
+              Intent intent = new Intent(AddNewTrip.this, UpdateTrip.class);
+              startActivity(intent);
           }
 
         }
@@ -268,4 +299,28 @@ public class AddNewTrip extends AppCompatActivity implements ConnectionCallbacks
         Intent intent = new Intent(AddNewTrip.this,MainActivity.class);
         startActivity(intent);
     }
+
+//    public LatLng getLatLongFromGivenAddress(String address) {
+//        double lat = 0.0, lng = 0.0;
+//        LatLng latLng = null;
+//
+//        Geocoder geoCoder = new Geocoder(this, Locale.getDefault());
+//        try {
+//            List<Address> addresses = geoCoder.getFromLocationName(address, 1);
+//            if (addresses.size() > 0) {
+//                latLng = new LatLng(
+//                        (addresses.get(0).getLatitude()),
+//                        (addresses.get(0).getLongitude()));
+//
+//                lat = latLng.latitude;
+//                lng = latLng.longitude;
+//
+//                Log.d("Latitude", "" + lat);
+//                Log.d("Longitude", "" + lng);
+//            }
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        return latLng;
+//    }
 }

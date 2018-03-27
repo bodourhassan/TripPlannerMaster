@@ -1,9 +1,4 @@
 package com.ititeam.tripplannermaster.activity;
-
-/**
- * Created by body on 24/03/2018.
- */
-
 public class TripConstant {
     /*************************Trip Status***********************/
     public static String DoneStatus = "Done";
