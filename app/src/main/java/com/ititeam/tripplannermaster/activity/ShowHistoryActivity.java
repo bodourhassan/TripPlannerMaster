@@ -48,37 +48,39 @@ import java.util.Random;
 
 public class ShowHistoryActivity extends AppCompatActivity implements OnMapReadyCallback {
     private GoogleMap mMap;
-    private static final int LOCATION_REQUEST=500;
+    private static final int LOCATION_REQUEST = 500;
     ArrayList<LatLng> listPoints;
-    ArrayList<MarkerOptions>markers;
+    ArrayList<MarkerOptions> markers;
     ArrayList<Trip> trips;
     SupportMapFragment mapFragment;
-    int tripIndex=0;
+    int tripIndex = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_history);
-        listPoints=new ArrayList<>();
-        markers=new ArrayList<>();
-        trips=new ArrayList<>();
-        Trip trip=new Trip();
+        listPoints = new ArrayList<>();
+        markers = new ArrayList<>();
+        trips = new ArrayList<>();
+        Trip trip = new Trip();
         trip.setTripStartPoint("Aswan,egypt");
         trip.setTripEndPoint("cairo");
         trips.add(trip);
-        trip=new Trip();
+        trip = new Trip();
         trip.setTripStartPoint("sohag");
         trip.setTripEndPoint("Assuit");
         trips.add(trip);
-        trip=new Trip();
+        trip = new Trip();
         trip.setTripStartPoint("cairo");
         trip.setTripEndPoint("Alexandria,egypt");
         trips.add(trip);
-        if(haveNetworkConnection()) {
+        if (haveNetworkConnection()) {
             mapFragment = (SupportMapFragment) getSupportFragmentManager()
                     .findFragmentById(R.id.history_map);
             mapFragment.getMapAsync(this);
         }
     }
+
     /**
      * Manipulates the map once available.
      * This callback is triggered when the map is ready to be used.
@@ -86,7 +88,7 @@ public class ShowHistoryActivity extends AppCompatActivity implements OnMapReady
      * In this case, we just add a marker near Sydney, Australia.
      * If Google Play services is not installed on the device.
      * This method will only be triggered once the user has installed
-     Google Play services and returned to the app.
+     * Google Play services and returned to the app.
      */
 
     @Override
@@ -201,15 +203,15 @@ public class ShowHistoryActivity extends AppCompatActivity implements OnMapReady
 
     private String getRequestUrl(LatLng origin, LatLng dest) {
         //Value of origin
-        String str_org = "origin=" + origin.latitude +","+origin.longitude;
+        String str_org = "origin=" + origin.latitude + "," + origin.longitude;
         //Value of destination
-        String str_dest = "destination=" + dest.latitude+","+dest.longitude;
+        String str_dest = "destination=" + dest.latitude + "," + dest.longitude;
         //Set value enable the sensor
         String sensor = "sensor=false";
         //Mode for find direction
         String mode = "mode=driving";
         //Build the full param
-        String param = str_org +"&" + str_dest + "&" +sensor+"&" +mode;
+        String param = str_org + "&" + str_dest + "&" + sensor + "&" + mode;
         //Output format
         String output = "json";
         //Create url to request
@@ -221,7 +223,7 @@ public class ShowHistoryActivity extends AppCompatActivity implements OnMapReady
         String responseString = "";
         InputStream inputStream = null;
         HttpURLConnection httpURLConnection = null;
-        try{
+        try {
             URL url = new URL(reqUrl);
             httpURLConnection = (HttpURLConnection) url.openConnection();
             httpURLConnection.connect();
@@ -255,7 +257,7 @@ public class ShowHistoryActivity extends AppCompatActivity implements OnMapReady
     @SuppressLint("MissingPermission")
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        switch (requestCode){
+        switch (requestCode) {
             case LOCATION_REQUEST:
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     mMap.setMyLocationEnabled(true);
@@ -274,7 +276,7 @@ public class ShowHistoryActivity extends AppCompatActivity implements OnMapReady
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            return  responseString;
+            return responseString;
         }
 
         @Override
@@ -286,7 +288,7 @@ public class ShowHistoryActivity extends AppCompatActivity implements OnMapReady
         }
     }
 
-    public class TaskParser extends AsyncTask<String, Void, List<List<HashMap<String, String>>> > {
+    public class TaskParser extends AsyncTask<String, Void, List<List<HashMap<String, String>>>> {
 
         @Override
         protected List<List<HashMap<String, String>>> doInBackground(String... strings) {
@@ -318,7 +320,7 @@ public class ShowHistoryActivity extends AppCompatActivity implements OnMapReady
                     double lat = Double.parseDouble(point.get("lat"));
                     double lon = Double.parseDouble(point.get("lon"));
 
-                    points.add(new LatLng(lat,lon));
+                    points.add(new LatLng(lat, lon));
                 }
 
                 polylineOptions.addAll(points);
@@ -328,7 +330,7 @@ public class ShowHistoryActivity extends AppCompatActivity implements OnMapReady
                 polylineOptions.geodesic(true);
             }
 
-            if (polylineOptions!=null) {
+            if (polylineOptions != null) {
                 mMap.addPolyline(polylineOptions);
             } else {
                 Toast.makeText(getApplicationContext(), "Direction not found!", Toast.LENGTH_SHORT).show();
@@ -336,21 +338,19 @@ public class ShowHistoryActivity extends AppCompatActivity implements OnMapReady
 
         }
     }
-    public  LatLng getLatLongFromGivenAddress(String address)
-    {
-        double lat= 0.0, lng= 0.0;
-        LatLng latLng=null;
+
+    public LatLng getLatLongFromGivenAddress(String address) {
+        double lat = 0.0, lng = 0.0;
+        LatLng latLng = null;
 
         Geocoder geoCoder = new Geocoder(this, Locale.getDefault());
-        try
-        {
-            List<Address> addresses = geoCoder.getFromLocationName(address , 1);
-            if (addresses.size() > 0)
-            {
-                boolean flag=false;
-                for(int j=0;j<tripIndex;j++){
+        try {
+            List<Address> addresses = geoCoder.getFromLocationName(address, 1);
+            if (addresses.size() > 0) {
+                boolean flag = false;
+                for (int j = 0; j < tripIndex; j++) {
 
-                    if(address.equals(trips.get(j).getTripStartPoint())||address.equals(trips.get(j).getTripEndPoint())){
+                    if (address.equals(trips.get(j).getTripStartPoint()) || address.equals(trips.get(j).getTripEndPoint())) {
                        /* latLng = new LatLng(
                                 (addresses.get(0).getLatitude()+3),
                                 (addresses.get(0).getLongitude()+3));
@@ -360,24 +360,23 @@ public class ShowHistoryActivity extends AppCompatActivity implements OnMapReady
                     }
 
                 }
-                if(!flag) {
+                if (!flag) {
                     latLng = new LatLng(
                             (addresses.get(0).getLatitude()),
                             (addresses.get(0).getLongitude()));
                 }
-                lat=latLng.latitude;
-                lng=latLng.longitude;
+                lat = latLng.latitude;
+                lng = latLng.longitude;
 
-                Log.d("Latitude", ""+lat);
-                Log.d("Longitude", ""+lng);
+                Log.d("Latitude", "" + lat);
+                Log.d("Longitude", "" + lng);
             }
-        }
-        catch(Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return latLng;
     }
+
     private boolean haveNetworkConnection() {
         boolean haveConnectedWifi = false;
         boolean haveConnectedMobile = false;
@@ -393,7 +392,7 @@ public class ShowHistoryActivity extends AppCompatActivity implements OnMapReady
                     haveConnectedMobile = true;
         }*/
         NetworkInfo networkInfo = cm.getActiveNetworkInfo();
-       boolean connected = networkInfo != null && networkInfo.isAvailable() &&
+        boolean connected = networkInfo != null && networkInfo.isAvailable() &&
                 networkInfo.isConnected();
         return connected;
     }

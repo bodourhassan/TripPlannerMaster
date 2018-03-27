@@ -14,6 +14,8 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -54,6 +56,8 @@ public class StartTripActivity extends FragmentActivity implements OnMapReadyCal
     ArrayList<LatLng> listPoints;
     ArrayList<MarkerOptions> markers;
     SupportMapFragment mapFragment;
+    String startplace;
+    String EndPlace;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,16 +67,31 @@ public class StartTripActivity extends FragmentActivity implements OnMapReadyCal
 //        Intent intent =getIntent();
 //        int TripId= intent.getIntExtra("MyTripId",1);
         int TripId = 1;
-//        TripTableOperations myOperation  = new TripTableOperations(this);
-//        Trip myTrip =myOperation.selectSingleTrips(TripId+"");
-//       ArrayList<Note> myNotes = myTrip.getTripNodes();
-        ArrayList<Note> myNotes = new ArrayList<Note>();
-        Note myNote = new Note("note1", "Later");
+        TripTableOperations myOperation = new TripTableOperations(this);
+        Trip myTrip = myOperation.selectSingleTrips(TripId + "");
+        ArrayList<Note> myNotes = myTrip.getTripNotes();
+
+        startplace = myTrip.getTripStartPoint();
+
+        EndPlace = myTrip.getTripEndPoint();
+
+        Toast.makeText(getBaseContext(), "start :" + startplace + ", End :" + EndPlace, Toast.LENGTH_LONG).show();
+
+        Log.e("Start", "Startpoint:" + startplace);
+        Log.e("Start", "Endpoint:" + EndPlace);
+
+
+        for (int i = 0; i < myNotes.size(); i++) {
+            Log.e("Start", "NoteValue:" + myNotes.get(i).getNoteBody());
+
+        }
+        //  ArrayList<Note> myNotes = new ArrayList<Note>();
+        //  Note myNote = new Note("note1", "Later");
         //        for(int i=0;i<myNotes.size();i++)
-        for (int i = 0; i < 15; i++) {
+        /*for (int i = 0; i < 15; i++) {
             //  myNote.add(myList.get(i));
             myNotes.add(myNote);
-        }
+        }*/
 
 //        repeatChkBx.setOnCheckedChangeListener(new OnCheckedChangeListener()
 //        {
@@ -87,18 +106,28 @@ public class StartTripActivity extends FragmentActivity implements OnMapReadyCal
 //            }
 //        });
         MyNoteAdapter myadapter = new MyNoteAdapter(this, R.layout.ech_item_note, R.id.NoteItem, myNotes);
-        myList.setAdapter(myadapter);
+
         listPoints = new ArrayList<>();
         markers = new ArrayList<>();
         mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.Mymap);
         mapFragment.getMapAsync(this);
+
+
+        myList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+                Toast.makeText(getBaseContext(), "clicked" + i, Toast.LENGTH_SHORT).show();
+            }
+        });
+        myList.setAdapter(myadapter);
     }
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        LatLng latLng1 = getLatLongFromGivenAddress("cairo,Egypt");
-        LatLng latLng2 = getLatLongFromGivenAddress("sohag,Egypt");
+        LatLng latLng1 = getLatLongFromGivenAddress(startplace);
+        LatLng latLng2 = getLatLongFromGivenAddress(EndPlace);
         mMap = googleMap;
         mMap.getUiSettings().setZoomControlsEnabled(true);
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {

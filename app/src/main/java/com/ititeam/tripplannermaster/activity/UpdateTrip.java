@@ -10,6 +10,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -291,8 +292,10 @@ public class UpdateTrip extends AppCompatActivity implements GoogleApiClient.Con
             // find the radiobutton by returned id
             myRadiobutton = findViewById(selectedId);
             String TripDirection = myRadiobutton.getText().toString();
+            NmyNoteList.clear();
             for (int i = 0; i < listItems.size(); i++) {
                 Note note = new Note(listItems.get(i), "Later");
+
                 NmyNoteList.add(note);
 
             }
@@ -308,10 +311,16 @@ public class UpdateTrip extends AppCompatActivity implements GoogleApiClient.Con
             UpdateTrip.setTripDescription(TripDirection);
             UpdateTrip.setTripDescription(Desc);
             UpdateTrip.setTripCategory(TripCatagory);
+            for (int i = 0; i < NmyNoteList.size(); i++) {
+                Log.e("uuuuuuuuuuuuuuu", "Note" + i + NmyNoteList.get(i).getNoteBody());
+
+            }
             UpdateTrip.setTripNotes(NmyNoteList);
             boolean test = tripTableOperations.updateTrip(UpdateTrip);
             Toast.makeText(getBaseContext(), test + "",
                     Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(UpdateTrip.this, StartTripActivity.class);
+            startActivity(intent);
 
         }
 

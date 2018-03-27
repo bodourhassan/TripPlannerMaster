@@ -4,8 +4,7 @@ package com.ititeam.tripplannermaster.model;
  * Created by Hesham Kadry on 3/23/2018.
  */
 
-public class NavDrawerItem
-{
+public class NavDrawerItem {
 
     private boolean showNotify;
     private String title;

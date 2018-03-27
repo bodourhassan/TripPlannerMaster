@@ -47,7 +47,7 @@ public class TripViewHolder extends RecyclerView.ViewHolder
     public TripViewHolder(View itemView) {
         super(itemView);
 
-        swipeLayout =  itemView.findViewById(R.id.swipe);
+        swipeLayout = itemView.findViewById(R.id.swipe);
         Name = itemView.findViewById(R.id.Name);
         EmailId = itemView.findViewById(R.id.EmailId);
         Delete = itemView.findViewById(R.id.Delete);

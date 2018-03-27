@@ -9,6 +9,7 @@
 
     <!-- end hanaa section -->
     <!-- bodour section -->
+
     <!-- end bodour section -->
     <!-- mark section -->
     <!-- end mark section -->
@@ -62,19 +63,29 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyDnnxzdQQoISCymOiEmSj3la9SNZ_qF-4E" />
+
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
         <!-- end hanaa section -->
 
         <!-- bodour section -->
         <!--<meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyC3dQad9fPAPiDkbhVLFvQ06XRPA7K5rm8" />-->
-
-
         <activity
             android:name=".activity.AddNewTrip"
-            android:label= "@string/title_activity_add_new_trip"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
+            android:label="@string/title_activity_add_new_trip"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".activity.UpdateTrip"
+            android:label="@string/title_activity_update_trip"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".activity.StartTripActivity"
+            android:label="@string/StartTrip"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+
         <!--end boudour section-->
 
         <!--mark section-->
@@ -83,14 +94,11 @@
 
         <!-- hesham section -->
         <activity android:name=".activity.ShowUpcomingTrips" />
-        <activity android:name=".activity.StartActivityDrawer"
+        <activity
+            android:name=".activity.StartActivityDrawer"
             android:theme="@style/AppTheme"></activity>
 
         <!-- end hesham section -->
-        <activity
-            android:name=".activity.UpdateTrip"
-            android:label="@string/title_activity_update_trip"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>
