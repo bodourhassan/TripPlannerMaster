@@ -3,6 +3,7 @@ package com.ititeam.tripplannermaster.DB;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.util.Log;
 
 import java.util.ArrayList;
 
@@ -15,7 +16,7 @@ import com.ititeam.tripplannermaster.activity.TripConstant;
 public class TripTableOperations {
 
     Context context;
-
+    String TAG = "MY TAG";
     public TripTableOperations(Context context)
     {
         this.context = context;
@@ -57,6 +58,11 @@ public class TripTableOperations {
             trip.setTripRepetition(cursor.getString(9));
             trip.setTripCategory(cursor.getString(10));
             trip.setUserId(cursor.getInt(11));
+            ArrayList<Note> notes =  new NoteTableOperations(context).selectNoteWithTripFk(trip.getTripId()+"");
+            for (Note note : notes)
+            {
+                trip.getTripNotes().add(note);
+            }
             returnedData.add(trip);
         }
         return returnedData;
@@ -98,12 +104,13 @@ public class TripTableOperations {
             trip.setTripRepetition(cursor.getString(9));
             trip.setTripCategory(cursor.getString(10));
             trip.setUserId(cursor.getInt(11));
-            returnedData.add(trip);
+
             ArrayList<Note> notes =  new NoteTableOperations(context).selectNoteWithTripFk(trip.getTripId()+"");
             for (Note note : notes)
             {
                 trip.getTripNotes().add(note);
             }
+            returnedData.add(trip);
         }
         return returnedData;
     }
@@ -144,12 +151,13 @@ public class TripTableOperations {
             trip.setTripRepetition(cursor.getString(9));
             trip.setTripCategory(cursor.getString(10));
             trip.setUserId(cursor.getInt(11));
-            returnedData.add(trip);
+
             ArrayList<Note> notes =  new NoteTableOperations(context).selectNoteWithTripFk(trip.getTripId()+"");
             for (Note note : notes)
             {
                 trip.getTripNotes().add(note);
             }
+            returnedData.add(trip);
         }
         return returnedData;
     }
@@ -190,12 +198,13 @@ public class TripTableOperations {
             trip.setTripRepetition(cursor.getString(9));
             trip.setTripCategory(cursor.getString(10));
             trip.setUserId(cursor.getInt(11));
-            returnedData.add(trip);
+
             ArrayList<Note> notes =  new NoteTableOperations(context).selectNoteWithTripFk(trip.getTripId()+"");
             for (Note note : notes)
             {
                 trip.getTripNotes().add(note);
             }
+            returnedData.add(trip);
         }
         return returnedData;
     }
@@ -257,6 +266,7 @@ public class TripTableOperations {
         ArrayList<Note> notes =  new NoteTableOperations(context).selectNoteWithTripFk(trip.getTripId()+"");
         for (Note note : notes)
         {
+            Log.i(TAG, note.getNoteBody());
             trip.getTripNotes().add(note);
         }
 
@@ -318,6 +328,13 @@ public class TripTableOperations {
 
     public void deleteTrip (String id)
     {
+        ArrayList<Note> notes =  new NoteTableOperations(context).selectNoteWithTripFk(id+"");
+        for (Note note : notes)
+        {
+            Log.i(TAG, note.getNoteBody());
+            new NoteTableOperations(context).deleteNote(note.getNoteId()+"");
+        }
+
         String whereClause = AdapterDba.DbOpenHelper.TRIP_ID+"=?";
         String [] whereArgs = {id};
         AdapterDba.getAdapterDbaInstance(context)._delete(AdapterDba.DbOpenHelper.TRIP_TABLE ,whereClause ,whereArgs);
