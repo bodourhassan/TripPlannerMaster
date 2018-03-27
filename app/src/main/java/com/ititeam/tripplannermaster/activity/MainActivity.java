@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnHesham.setOnClickListener(this);
         Trip trip = new Trip();
 
-        Note note1 = new Note();
+        /*Note note1 = new Note();
         note1.setNoteBody("any note1");
         note1.setStatus("not determined");
         trip.getTripNotes().add(note1);
@@ -42,8 +42,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         trip.getTripNotes().add(note2);
 
         trip.setTripName("asdasd");
-        trip.setTripStartPoint("12");
-        trip.setTripEndPoint("13");
+        trip.setTripStartPoint("cairo");
+        trip.setTripEndPoint("alexandria");
         trip.setTripDate("12345");
         trip.setTripTime("mon");
         trip.setTripStatus("qwertyui");
@@ -54,6 +54,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         trip.setUserId(1);
         boolean flag = new TripTableOperations(getApplicationContext()).insertTrip(trip);
         Toast.makeText(getApplicationContext(), flag+"", Toast.LENGTH_LONG).show();
+        */
     }
 
     @Override
