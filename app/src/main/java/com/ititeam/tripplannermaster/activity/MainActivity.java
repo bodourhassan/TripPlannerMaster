@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.ititeam.tripplannermaster.DB.NoteTableOperations;
 import com.ititeam.tripplannermaster.DB.TripTableOperations;
 import com.ititeam.tripplannermaster.R;
 import com.ititeam.tripplannermaster.*;
@@ -32,8 +33,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnMark.setOnClickListener(this);
         btnBdour.setOnClickListener(this);
         btnHesham.setOnClickListener(this);
-        Trip trip = new Trip();
-
+//        Trip trip = new Trip();
+//
 //        Note note1 = new Note();
 //        note1.setNoteBody("any note1");
 //        note1.setStatus("not determined");
@@ -42,7 +43,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //        note2.setNoteBody("any note2");
 //        note2.setStatus("not determined");
 //        trip.getTripNotes().add(note2);
-
+//
 //        trip.setTripName("0");
 //        trip.setTripStartPoint("cairo");
 //        trip.setTripEndPoint("alexandria");
@@ -55,7 +56,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //        trip.setTripCategory("cat1");
 //        trip.setUserId(1);
 //        boolean flag = new TripTableOperations(getApplicationContext()).insertTrip(trip);
-//        Toast.makeText(getApplicationContext(), flag + "", Toast.LENGTH_LONG).show();
+//        Toast.makeText(getApplicationContext(), flag+"", Toast.LENGTH_LONG).show();
 //
 //        Trip trip1 = new Trip();
 //        trip1.setTripName("1");
@@ -70,7 +71,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //        trip1.setTripCategory("cat1");
 //        trip1.setUserId(1);
 //        boolean flag1 = new TripTableOperations(getApplicationContext()).insertTrip(trip1);
-//        Toast.makeText(getApplicationContext(), flag + "", Toast.LENGTH_LONG).show();
+//        Toast.makeText(getApplicationContext(), flag+"", Toast.LENGTH_LONG).show();
 //
 //
 //        Trip trip2 = new Trip();
@@ -86,7 +87,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //        trip2.setTripCategory("cat1");
 //        trip2.setUserId(1);
 //        boolean flag2 = new TripTableOperations(getApplicationContext()).insertTrip(trip2);
-//        Toast.makeText(getApplicationContext(), flag + "", Toast.LENGTH_LONG).show();
+//        Toast.makeText(getApplicationContext(), flag+"", Toast.LENGTH_LONG).show();
 //
 //        Trip trip3 = new Trip();
 //        trip3.setTripName("3");
@@ -101,7 +102,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //        trip3.setTripCategory("cat1");
 //        trip3.setUserId(1);
 //        boolean flag3 = new TripTableOperations(getApplicationContext()).insertTrip(trip3);
-//        Toast.makeText(getApplicationContext(), flag + "", Toast.LENGTH_LONG).show();
+//        Toast.makeText(getApplicationContext(), flag+"", Toast.LENGTH_LONG).show();
 //
 //        Trip trip4 = new Trip();
 //        trip4.setTripName("4");
@@ -116,7 +117,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //        trip4.setTripCategory("cat1");
 //        trip4.setUserId(1);
 //        boolean flag4 = new TripTableOperations(getApplicationContext()).insertTrip(trip4);
-//        Toast.makeText(getApplicationContext(), flag + "", Toast.LENGTH_LONG).show();
+//        Toast.makeText(getApplicationContext(), flag+"", Toast.LENGTH_LONG).show();
 //
 //        Trip trip5 = new Trip();
 //        trip5.setTripName("5");
@@ -131,7 +132,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //        trip5.setTripCategory("cat1");
 //        trip5.setUserId(1);
 //        boolean flag5 = new TripTableOperations(getApplicationContext()).insertTrip(trip5);
-//        Toast.makeText(getApplicationContext(), flag + "", Toast.LENGTH_LONG).show();
+//        Toast.makeText(getApplicationContext(), flag+"", Toast.LENGTH_LONG).show();
 //
 //        Trip trip6 = new Trip();
 //        trip6.setTripName("6");
@@ -146,13 +147,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //        trip6.setTripCategory("cat1");
 //        trip6.setUserId(1);
 //        boolean flag6 = new TripTableOperations(getApplicationContext()).insertTrip(trip6);
-//        Toast.makeText(getApplicationContext(), flag + "", Toast.LENGTH_LONG).show();
+//        Toast.makeText(getApplicationContext(), flag+"", Toast.LENGTH_LONG).show();
 //
 //        ArrayList<Trip> pastTrips = new TripTableOperations(getApplicationContext()).selectPastTripsUsingDateAndStatus();
 //
 //        for (Trip pastTrip : pastTrips) {
 //            Toast.makeText(getApplicationContext(), pastTrip.getTripName(), Toast.LENGTH_SHORT).show();
 //        }
+        Trip trip = new TripTableOperations(getApplicationContext()).selectSingleTrips(1+"");
+
+        for (Note note : trip.getTripNotes())
+        {
+            Toast.makeText(getApplicationContext(), note.getNoteBody(), Toast.LENGTH_SHORT).show();
+        }
+
+        Note note2 =  trip.getTripNotes().get(1);
+        note2.setNoteBody("note2");
+        note2.setStatus("not determined");
+        new NoteTableOperations(getApplicationContext()).updateNote(note2);
     }
 
     @Override
@@ -161,13 +173,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         {
             ///////
             Toast.makeText(this, "clicked", Toast.LENGTH_SHORT).show();
-            Intent i = new Intent(this, StartActivityDrawer.class);
+            Intent i = new Intent(this , StartActivityDrawer.class);
             startActivity(i);
 
         }else if(view == btnBdour)
         {
             ///////
-            Intent intent = new Intent(MainActivity.this, StartTripActivity.class);
+            Intent intent=new Intent(MainActivity.this,UpdateTrip.class);
             startActivity(intent);
 
 
@@ -179,7 +191,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }else if(view == btnHana)
         {
             //////////
-            Intent intent = new Intent(MainActivity.this, ShowTripActivity.class);
+            Intent intent=new Intent(MainActivity.this,ShowTripActivity.class);
             startActivity(intent);
 
         }

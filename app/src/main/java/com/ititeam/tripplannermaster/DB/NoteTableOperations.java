@@ -80,10 +80,11 @@ public class NoteTableOperations {
         String having = null;
         String orderBy = null;
         Cursor cursor = AdapterDba.getAdapterDbaInstance(context)._select(AdapterDba.DbOpenHelper.NOTES_TABLE ,result_columns , whereClause, selectArgs, groupBy , having , orderBy);
-        Note note = new Note();
+
         ArrayList<Note> tripNotes = new ArrayList<>();
         while (cursor.moveToNext())
         {
+            Note note = new Note();
             note.setNoteId(cursor.getInt(0));
             note.setNoteBody(cursor.getString(1));
             note.setStatus(cursor.getString(2));
