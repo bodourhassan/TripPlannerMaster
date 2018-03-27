@@ -23,7 +23,7 @@ public class TripViewHistoryHolder extends RecyclerView.ViewHolder{
     public TextView Delete;
     public TextView Edit;
     //public TextView Share;
-    public TextView startDate;
+    //public TextView startDate;
     public ImageButton btnLocation;
     public ImageView imgViewIcon;
 
@@ -36,7 +36,7 @@ public class TripViewHistoryHolder extends RecyclerView.ViewHolder{
         EmailId = itemView.findViewById(R.id.EmailId);
         Delete = itemView.findViewById(R.id.Delete);
         Edit = itemView.findViewById(R.id.Edit);
-        startDate = itemView.findViewById(R.id.textView2);
+        //startDate = itemView.findViewById(R.id.textView2);
         btnLocation = itemView.findViewById(R.id.btnLocation);
         imgViewIcon = itemView.findViewById(R.id.SwipLayout_ImageView);
 

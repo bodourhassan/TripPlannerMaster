@@ -3,6 +3,7 @@ package com.ititeam.tripplannermaster.activity;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -18,10 +19,13 @@ import android.view.ViewGroup;
 
 import com.daimajia.swipe.SwipeLayout;
 import com.daimajia.swipe.adapters.RecyclerSwipeAdapter;
+import com.daimajia.swipe.implments.SwipeItemRecyclerMangerImpl;
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
+import com.ititeam.tripplannermaster.DB.TripTableOperations;
 import com.ititeam.tripplannermaster.R;
 import com.ititeam.tripplannermaster.classes.TripViewHolder;
+import com.ititeam.tripplannermaster.model.Trip;
 
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -36,11 +40,18 @@ public class HomeFragment extends Fragment{
     RecyclerView recyclerView;
     TripAdapterFragment myAdapter;
     private Toolbar mToolbar;
-    FragmentDrawer drawerFragment;
+    TripTableOperations tripTableOperations;
+
+    ArrayList<Trip> upcommingTrips = new ArrayList<>();
 
 
-    ArrayList<String> myTrip = new ArrayList<>();
-    ArrayList<String> desc = new ArrayList<>();
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        tripTableOperations = new TripTableOperations(getActivity());
+        upcommingTrips = tripTableOperations.selectUpcomingTripsUsingOnlyDate();
+        Toast.makeText(getActivity(), "size array oncreate "+upcommingTrips.size(), Toast.LENGTH_SHORT).show();
+    }
 
     public HomeFragment() {
         // Required empty public constructor
@@ -82,13 +93,14 @@ public class HomeFragment extends Fragment{
                 // Intent i = new Intent(ShowUpcomingTrips.this , AddTrip.class);
                 // startActivity(i);
                 Toast.makeText(getActivity(), "clicked", Toast.LENGTH_SHORT).show();
+                Intent i = new Intent(getActivity() , AuthenticationActivity.class);
+                startActivity(i);
             }
         });
         floatingActionButton2.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 //TODO something when floating action menu second item clicked
                 Toast.makeText(getActivity(), "mashy", Toast.LENGTH_SHORT).show();
-
             }
         });
         floatingActionButton3.setOnClickListener(new View.OnClickListener() {
@@ -97,27 +109,6 @@ public class HomeFragment extends Fragment{
 
             }
         });
-
-        myTrip.add("hewham");
-        myTrip.add("mostafa");
-        myTrip.add("alyyyy");
-        myTrip.add("zeinnn");
-        myTrip.add("malik");
-        myTrip.add("alolaaa");
-        myTrip.add("kolaaa");
-        myTrip.add("bolaaaa");
-
-
-        desc.add("this is trip number one i am gointg to have some fun with my family");
-        desc.add("this is trip number one i am gointg to have some fun with my family");
-        desc.add("this is trip number one i am gointg to have some fun with my family");
-        desc.add("this is trip number one i am gointg to have some fun with my family");
-        desc.add("this is trip number one i am gointg to have some fun with my family");
-        desc.add("this is trip number one i am gointg to have some fun with my family");
-        desc.add("this is trip number one i am gointg to have some fun with my family");
-        desc.add("this is trip number one i am gointg to have some fun with my family");
-
-
 
         myAdapter = new TripAdapterFragment();
         recyclerView.setAdapter(myAdapter);
@@ -168,9 +159,10 @@ public class HomeFragment extends Fragment{
 
 
 
-            viewHolder.Name.setText(myTrip.get(position));
+            viewHolder.Name.setText(upcommingTrips.get(position).getTripName());
             viewHolder.Name.setTypeface(null, Typeface.BOLD);
-            viewHolder.EmailId.setText(desc.get(position));
+            viewHolder.EmailId.setText(upcommingTrips.get(position).getTripDescription());
+            viewHolder.startDate.setText(upcommingTrips.get(position).getTripDate());
             holder.imgViewIcon.setImageDrawable(getResources().getDrawable(R.drawable.see));
 
 
@@ -220,14 +212,14 @@ public class HomeFragment extends Fragment{
             viewHolder.swipeLayout.getSurfaceView().setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(getActivity(), "position is "+myTrip.get(position).toString(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "position is "+upcommingTrips.get(position).toString(), Toast.LENGTH_SHORT).show();
                 }
             });
 
             viewHolder.btnLocation.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(v.getContext(), "Clicked on Information " + myTrip.get(position).toString(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(v.getContext(), "Clicked on Information " + upcommingTrips.get(position).toString(), Toast.LENGTH_SHORT).show();
                 }
             });
 
@@ -235,7 +227,7 @@ public class HomeFragment extends Fragment{
                 @Override
                 public void onClick(View view) {
 
-                    Toast.makeText(view.getContext(), "Clicked on Share " + myTrip.get(position).toString().toString(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(view.getContext(), "Clicked on Share " + upcommingTrips.get(position).toString().toString(), Toast.LENGTH_SHORT).show();
                 }
             });
 
@@ -250,27 +242,25 @@ public class HomeFragment extends Fragment{
             viewHolder.Delete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    tripTableOperations.deleteTrip(String.valueOf(upcommingTrips.get(position).getTripId()));
                     mItemManger.removeShownLayouts(viewHolder.swipeLayout);
-                    desc.remove(position);
-                    myTrip.remove(position);
+                    upcommingTrips.remove(position);
                     notifyItemRemoved(position);
-                    notifyItemRangeChanged(position, desc.size());
+                    notifyItemRangeChanged(position, upcommingTrips.size());
                     mItemManger.closeAllItems();
-                    Toast.makeText(v.getContext(), "Deleted " + viewHolder.Name.getText().toString(), Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(v.getContext(), "Deleted " + upcommingTrips.get(position).getTripId(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "array size"+ upcommingTrips.size(), Toast.LENGTH_SHORT).show();
                 }
             });
 
             mItemManger.bindView(viewHolder.itemView, position);
 
 
-
-
-
         }
 
         @Override
         public int getItemCount() {
-            return myTrip.size();
+            return upcommingTrips.size();
             //return size of array  // array.size
         }
 

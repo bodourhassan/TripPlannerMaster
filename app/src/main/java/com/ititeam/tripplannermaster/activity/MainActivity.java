@@ -42,8 +42,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //        note2.setNoteBody("any note2");
 //        note2.setStatus("not determined");
 //        trip.getTripNotes().add(note2);
-
-       /* trip.setTripName("0");
+/*
+        trip.setTripName("0");
         trip.setTripStartPoint("cairo");
         trip.setTripEndPoint("alexandria");
         trip.setTripDate("12345");
@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         trip.setTripCategory("cat1");
         trip.setUserId(1);
         boolean flag = new TripTableOperations(getApplicationContext()).insertTrip(trip);
-        Toast.makeText(getApplicationContext(), flag+"", Toast.LENGTH_LONG).show();
+       // Toast.makeText(getApplicationContext(), flag+"", Toast.LENGTH_LONG).show();
 
         Trip trip1 = new Trip();
         trip1.setTripName("1");
@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         trip1.setTripCategory("cat1");
         trip1.setUserId(1);
         boolean flag1 = new TripTableOperations(getApplicationContext()).insertTrip(trip1);
-        Toast.makeText(getApplicationContext(), flag+"", Toast.LENGTH_LONG).show();
+       // Toast.makeText(getApplicationContext(), flag+"", Toast.LENGTH_LONG).show();
 
 
         Trip trip2 = new Trip();
@@ -86,7 +86,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         trip2.setTripCategory("cat1");
         trip2.setUserId(1);
         boolean flag2 = new TripTableOperations(getApplicationContext()).insertTrip(trip2);
-        Toast.makeText(getApplicationContext(), flag+"", Toast.LENGTH_LONG).show();
+       // Toast.makeText(getApplicationContext(), flag+"", Toast.LENGTH_LONG).show();
 
         Trip trip3 = new Trip();
         trip3.setTripName("3");
@@ -101,7 +101,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         trip3.setTripCategory("cat1");
         trip3.setUserId(1);
         boolean flag3 = new TripTableOperations(getApplicationContext()).insertTrip(trip3);
-        Toast.makeText(getApplicationContext(), flag+"", Toast.LENGTH_LONG).show();
+       // Toast.makeText(getApplicationContext(), flag+"", Toast.LENGTH_LONG).show();
 
         Trip trip4 = new Trip();
         trip4.setTripName("4");
@@ -116,7 +116,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         trip4.setTripCategory("cat1");
         trip4.setUserId(1);
         boolean flag4 = new TripTableOperations(getApplicationContext()).insertTrip(trip4);
-        Toast.makeText(getApplicationContext(), flag+"", Toast.LENGTH_LONG).show();
+       // Toast.makeText(getApplicationContext(), flag+"", Toast.LENGTH_LONG).show();
 
         Trip trip5 = new Trip();
         trip5.setTripName("5");
@@ -131,7 +131,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         trip5.setTripCategory("cat1");
         trip5.setUserId(1);
         boolean flag5 = new TripTableOperations(getApplicationContext()).insertTrip(trip5);
-        Toast.makeText(getApplicationContext(), flag+"", Toast.LENGTH_LONG).show();
+        //Toast.makeText(getApplicationContext(), flag+"", Toast.LENGTH_LONG).show();
 
         Trip trip6 = new Trip();
         trip6.setTripName("6");
@@ -146,13 +146,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         trip6.setTripCategory("cat1");
         trip6.setUserId(1);
         boolean flag6 = new TripTableOperations(getApplicationContext()).insertTrip(trip6);
-        Toast.makeText(getApplicationContext(), flag+"", Toast.LENGTH_LONG).show();
-
+        //Toast.makeText(getApplicationContext(), flag+"", Toast.LENGTH_LONG).show();
+*/
         ArrayList<Trip> pastTrips = new TripTableOperations(getApplicationContext()).selectPastTripsUsingDateAndStatus();
 
         for (Trip pastTrip : pastTrips) {
-            Toast.makeText(getApplicationContext(), pastTrip.getTripName(), Toast.LENGTH_SHORT).show();
-        }*/
+          //  Toast.makeText(getApplicationContext(), pastTrip.getTripName(), Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override
@@ -161,7 +161,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         {
             ///////
             Toast.makeText(this, "clicked", Toast.LENGTH_SHORT).show();
-            Intent i = new Intent(this , StartActivityDrawer.class);
+            Intent i = new Intent(this , AuthenticationActivity.class);
             startActivity(i);
 
         }else if(view == btnBdour)

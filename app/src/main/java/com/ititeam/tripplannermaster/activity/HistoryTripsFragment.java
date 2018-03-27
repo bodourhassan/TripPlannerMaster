@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -17,8 +18,10 @@ import android.widget.Toast;
 
 import com.daimajia.swipe.SwipeLayout;
 import com.daimajia.swipe.adapters.RecyclerSwipeAdapter;
+import com.ititeam.tripplannermaster.DB.TripTableOperations;
 import com.ititeam.tripplannermaster.R;
 import com.ititeam.tripplannermaster.classes.TripViewHistoryHolder;
+import com.ititeam.tripplannermaster.model.Trip;
 
 import java.util.ArrayList;
 
@@ -32,6 +35,8 @@ public class HistoryTripsFragment extends Fragment {
     RecyclerView recyclerView;
     ArrayList<String> myTrip = new ArrayList<>();
     ArrayList<String> desc = new ArrayList<>();
+    ArrayList<Trip> historyTrip;
+    TripTableOperations tripTableOperations;
     TripAdapterFragmentHistory adapterHistory;
 
 
@@ -40,6 +45,13 @@ public class HistoryTripsFragment extends Fragment {
         // Required empty public constructor
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        historyTrip = new ArrayList<>();
+        tripTableOperations = new TripTableOperations(getActivity());
+        historyTrip = tripTableOperations.selectPastTripsUsingOnlyDate();
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -98,9 +110,9 @@ public class HistoryTripsFragment extends Fragment {
 
         @Override
         public void onBindViewHolder(TripViewHistoryHolder holder, final int position) {
-            viewHolder.Name.setText(myTrip.get(position));
+            viewHolder.Name.setText(historyTrip.get(position).getTripName());
             viewHolder.Name.setTypeface(null, Typeface.BOLD);
-            viewHolder.EmailId.setText(desc.get(position));
+            viewHolder.EmailId.setText(historyTrip.get(position).getTripDescription());
             holder.imgViewIcon.setImageDrawable(getResources().getDrawable(R.drawable.see));
 
 
@@ -190,8 +202,8 @@ public class HistoryTripsFragment extends Fragment {
                 @Override
                 public void onClick(View v) {
                     mItemManger.removeShownLayouts(viewHolder.swipeLayout2);
-                    desc.remove(position);
-                    myTrip.remove(position);
+
+                    historyTrip.remove(position);
                     notifyItemRemoved(position);
                     notifyItemRangeChanged(position, desc.size());
                     mItemManger.closeAllItems();
@@ -205,7 +217,7 @@ public class HistoryTripsFragment extends Fragment {
 
         @Override
         public int getItemCount() {
-            return myTrip.size();
+            return historyTrip.size();
             //return size of array  // array.size
         }
 
