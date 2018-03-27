@@ -193,8 +193,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             //////////
 
 
-           /* Trip trip5 = new Trip();
-            trip5.setTripName("5");
+          /*  Trip trip5 = new Trip();
+            trip5.setTripName("safari");
             trip5.setTripStartPoint("cairo");
             trip5.setTripEndPoint("Aswan");
             trip5.setTripDate("2018-05-11");
@@ -204,12 +204,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             trip5.setTripDescription("asdfg");
             trip5.setTripRepetition("122334");
             trip5.setTripCategory("cat1");
-            trip5.setUserId(2);
+            trip5.setUserId(1);
             Note note=new Note();
             note.setNoteBody("kkk");
             trip5.getTripNotes().add(note);
             new TripTableOperations(MainActivity.this).insertTrip(trip5);*/
-            Intent intent=new Intent(MainActivity.this,FirebaseActivity
+           Intent intent=new Intent(MainActivity.this,FirebaseActivity
                     .class);
 
             startActivity(intent);

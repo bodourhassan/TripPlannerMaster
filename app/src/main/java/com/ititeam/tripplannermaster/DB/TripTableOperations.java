@@ -375,6 +375,14 @@ public class TripTableOperations {
 
 
     //Start Hanaa Section
+    public void getTripFromFirebase(ArrayList<Trip>trips){
 
+        for(Trip trip : trips){
+            Trip localTrip=selectSingleTrips(trip.getTripId()+"");
+            if(localTrip==null){
+                insertTrip(trip);
+            }
+        }
+    }
     //end  Hanaa Section
 }

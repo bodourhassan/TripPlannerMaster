@@ -8,7 +8,9 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.ValueEventListener;
+import com.ititeam.tripplannermaster.DB.TripTableOperations;
 import com.ititeam.tripplannermaster.activity.FirebaseActivity;
 import com.ititeam.tripplannermaster.model.Trip;
 
@@ -30,14 +32,17 @@ public class DownLoadDataFromFirebase extends AsyncTask<String,Integer,Object> {
     @Override
     protected Object doInBackground(String... strings) {
         databaseReference= FirebaseDatabase.getInstance().getReference();
-        getDatabaseReference=databaseReference.child("User"+3);
+        String user_id="1";
+        getDatabaseReference=databaseReference.child("User"+user_id);
         getDatabaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 ArrayList<Trip> trips=null;
-                trips= (ArrayList<Trip>) dataSnapshot.getValue();
+                GenericTypeIndicator<ArrayList<Trip>> genericTypeIndicator = new GenericTypeIndicator<ArrayList<Trip>>() {};
+                trips=  dataSnapshot.getValue(genericTypeIndicator);
                 if(trips!=null) {
                     Toast.makeText(getApplicationContext(), "download" + trips.size(), Toast.LENGTH_SHORT).show();
+                    new TripTableOperations(getApplicationContext()).getTripFromFirebase(trips);
                 }
             }
 
