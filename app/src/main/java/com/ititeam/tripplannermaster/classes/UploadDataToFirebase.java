@@ -10,7 +10,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.ititeam.tripplannermaster.DB.TripTableOperations;
-import com.ititeam.tripplannermaster.activity.FirebaseActivity;
 import com.ititeam.tripplannermaster.model.Trip;
 
 import java.util.ArrayList;
@@ -30,7 +29,7 @@ public class UploadDataToFirebase extends AsyncTask<String,Integer,Object> {
     protected Object doInBackground(String... strings) {
         databaseReference= FirebaseDatabase.getInstance().getReference();
         TripTableOperations tripTableOperations=new TripTableOperations(context);
-        ArrayList<Trip> trips=tripTableOperations.selectAllTrips();
+        ArrayList<Trip> trips=tripTableOperations.selectTripsUsingUserId("3");
         if(trips!=null) {
             if (trips.size() > 0) {
 
@@ -38,7 +37,7 @@ public class UploadDataToFirebase extends AsyncTask<String,Integer,Object> {
                 databaseReference.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        Toast.makeText(context,  trips.get(trips.size()-1).getTripNotes().size()+"done" + trips.size(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context,  "done" + trips.size(), Toast.LENGTH_SHORT).show();
                     }
 
                     @Override
@@ -53,7 +52,7 @@ public class UploadDataToFirebase extends AsyncTask<String,Integer,Object> {
         return null;
     }
     protected void onPostExecute(Object result) {
-        Toast.makeText(context, "done", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(context, "done", Toast.LENGTH_SHORT).show();
 
     }
 }

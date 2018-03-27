@@ -35,6 +35,7 @@
     <string name="TripDisc">Trip Description</string>
     <string name="RoundTripKey">Round Trip</string>
     <string name="TroipDesc">Trip Description</string>
+    <string name="StartTrip">Start Trip</string>
     <!-- end bodour section-->
 
 
@@ -75,6 +76,7 @@
     <string name="title_activity_update_trip">UpdateTrip</string>
     <string name="title_activity_x">x</string>
     <string name="UpdateKey">Update</string>
+    <string name="NoteListMap">Note List :</string>
 
     >>>>>>> 667d92dbffcb7363e1e107f7388d42c7c2d0162e
     <!-- end hanaa section-->

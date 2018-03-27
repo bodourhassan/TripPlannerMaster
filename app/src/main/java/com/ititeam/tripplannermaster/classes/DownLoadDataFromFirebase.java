@@ -30,11 +30,11 @@ public class DownLoadDataFromFirebase extends AsyncTask<String,Integer,Object> {
     @Override
     protected Object doInBackground(String... strings) {
         databaseReference= FirebaseDatabase.getInstance().getReference();
-        getDatabaseReference=databaseReference.child("User"+1);
+        getDatabaseReference=databaseReference.child("User"+3);
         getDatabaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                ArrayList<Trip> trips=new ArrayList<>();
+                ArrayList<Trip> trips=null;
                 trips= (ArrayList<Trip>) dataSnapshot.getValue();
                 if(trips!=null) {
                     Toast.makeText(getApplicationContext(), "download" + trips.size(), Toast.LENGTH_SHORT).show();

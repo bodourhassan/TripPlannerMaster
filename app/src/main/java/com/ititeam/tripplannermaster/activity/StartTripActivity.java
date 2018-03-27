@@ -2,19 +2,21 @@ package com.ititeam.tripplannermaster.activity;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
-import android.content.Context;
+import android.app.Activity;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Address;
 import android.location.Geocoder;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.AsyncTask;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdate;
@@ -30,6 +32,7 @@ import com.google.android.gms.maps.model.PolylineOptions;
 import com.ititeam.tripplannermaster.DB.TripTableOperations;
 import com.ititeam.tripplannermaster.R;
 import com.ititeam.tripplannermaster.classes.DirectionsParser;
+import com.ititeam.tripplannermaster.model.Note;
 import com.ititeam.tripplannermaster.model.Trip;
 
 import org.json.JSONException;
@@ -45,89 +48,109 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
-import java.util.Random;
 
-public class ShowHistoryActivity extends AppCompatActivity implements OnMapReadyCallback {
+public class StartTripActivity extends FragmentActivity implements OnMapReadyCallback {
+    ListView myList;
     private GoogleMap mMap;
-    private static final int LOCATION_REQUEST=500;
+    private static final int LOCATION_REQUEST = 500;
     ArrayList<LatLng> listPoints;
-    ArrayList<MarkerOptions>markers;
-    ArrayList<Trip> trips;
+    ArrayList<MarkerOptions> markers;
     SupportMapFragment mapFragment;
-    int tripIndex=0;
+    String startplace;
+    String EndPlace;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_show_history);
-        listPoints=new ArrayList<>();
-        markers=new ArrayList<>();
-       /* trips=new ArrayList<>();
-        Trip trip=new Trip();
-        trip.setTripStartPoint("Aswan,egypt");
-        trip.setTripEndPoint("cairo");
-        trips.add(trip);
-        trip=new Trip();
-        trip.setTripStartPoint("sohag");
-        trip.setTripEndPoint("Assuit");
-        trips.add(trip);
-        trip=new Trip();
-        trip.setTripStartPoint("cairo");
-        trip.setTripEndPoint("Alexandria,egypt");*/
-        trips=new TripTableOperations(this).selectPastTripsUsingDateAndStatus();
-        if(haveNetworkConnection()) {
-            mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                    .findFragmentById(R.id.history_map);
-            mapFragment.getMapAsync(this);
+        setContentView(R.layout.activity_start_trip);
+        myList = findViewById(R.id.MyNoteCustomList);
+//        Intent intent =getIntent();
+//        int TripId= intent.getIntExtra("MyTripId",1);
+        int TripId = 1;
+        TripTableOperations myOperation = new TripTableOperations(this);
+        Trip myTrip = myOperation.selectSingleTrips(TripId + "");
+        ArrayList<Note> myNotes = myTrip.getTripNotes();
+
+        startplace = myTrip.getTripStartPoint();
+
+        EndPlace = myTrip.getTripEndPoint();
+
+        Toast.makeText(getBaseContext(), "start :" + startplace + ", End :" + EndPlace, Toast.LENGTH_LONG).show();
+
+        Log.e("Start", "Startpoint:" + startplace);
+        Log.e("Start", "Endpoint:" + EndPlace);
+
+
+        for (int i = 0; i < myNotes.size(); i++) {
+            Log.e("Start", "NoteValue:" + myNotes.get(i).getNoteBody());
+
         }
+        //  ArrayList<Note> myNotes = new ArrayList<Note>();
+        //  Note myNote = new Note("note1", "Later");
+        //        for(int i=0;i<myNotes.size();i++)
+        /*for (int i = 0; i < 15; i++) {
+            //  myNote.add(myList.get(i));
+            myNotes.add(myNote);
+        }*/
+
+//        repeatChkBx.setOnCheckedChangeListener(new OnCheckedChangeListener()
+//        {
+//            @Override
+//            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
+//            {
+//                if ( isChecked )
+//                {
+//                    // perform logic
+//                }
+//
+//            }
+//        });
+        MyNoteAdapter myadapter = new MyNoteAdapter(this, R.layout.ech_item_note, R.id.NoteItem, myNotes);
+
+        listPoints = new ArrayList<>();
+        markers = new ArrayList<>();
+        mapFragment = (SupportMapFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.Mymap);
+        mapFragment.getMapAsync(this);
+
+
+        myList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+                Toast.makeText(getBaseContext(), "clicked" + i, Toast.LENGTH_SHORT).show();
+            }
+        });
+        myList.setAdapter(myadapter);
     }
-    /**
-     * Manipulates the map once available.
-     * This callback is triggered when the map is ready to be used.
-     * This is where we can add markers or lines, add listeners or move the camera.
-     * In this case, we just add a marker near Sydney, Australia.
-     * If Google Play services is not installed on the device.
-     * This method will only be triggered once the user has installed
-     Google Play services and returned to the app.
-     */
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        if (trips.size()>0) {
-            if (haveNetworkConnection()) {
-                mMap = googleMap;
-                mMap.getUiSettings().setZoomControlsEnabled(true);
-                if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                    ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, LOCATION_REQUEST);
-                    return;
-                }
-                mMap.setMyLocationEnabled(true);
-                int i = 0;
-
-                for (Trip trip : trips) {
-
-                    LatLng latLng1 = getLatLongFromGivenAddress(trip.getTripStartPoint());
-                    LatLng latLng2 = getLatLongFromGivenAddress(trip.getTripEndPoint());
-
-                    listPoints.add(latLng1);
-                    MarkerOptions markerOptions = new MarkerOptions();
-                    markerOptions.position(latLng1);
-                    markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
-                    markers.add(markerOptions);
-                    mMap.addMarker(markerOptions);
-                    listPoints.add(latLng2);
-                    // markerOptions = new MarkerOptions();
-                    MarkerOptions markerOptions2 = new MarkerOptions();
-                    markerOptions2.position(latLng2);
-                    markerOptions2.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
-                    mMap.addMarker(markerOptions2);
-                    markers.add(markerOptions2);
-                    String url = getRequestUrl(listPoints.get(0), listPoints.get(1));
-                    ShowHistoryActivity.TaskRequestDirections taskRequestDirections = new ShowHistoryActivity.TaskRequestDirections();
-                    taskRequestDirections.execute(url);
-                    listPoints.clear();
-
-                    tripIndex++;
-                }
+        LatLng latLng1 = getLatLongFromGivenAddress(startplace);
+        LatLng latLng2 = getLatLongFromGivenAddress(EndPlace);
+        mMap = googleMap;
+        mMap.getUiSettings().setZoomControlsEnabled(true);
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, LOCATION_REQUEST);
+            return;
+        }
+        mMap.setMyLocationEnabled(true);
+        listPoints.add(latLng1);
+        MarkerOptions markerOptions = new MarkerOptions();
+        markerOptions.position(latLng1);
+        markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
+        markers.add(markerOptions);
+        mMap.addMarker(markerOptions);
+        listPoints.add(latLng2);
+        // markerOptions = new MarkerOptions();
+        MarkerOptions markerOptions2 = new MarkerOptions();
+        markerOptions2.position(latLng2);
+        markerOptions2.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
+        mMap.addMarker(markerOptions2);
+        markers.add(markerOptions2);
+        String url = getRequestUrl(listPoints.get(0), listPoints.get(1));
+        StartTripActivity.TaskRequestDirections taskRequestDirections = new StartTripActivity.TaskRequestDirections();
+        taskRequestDirections.execute(url);
         /*mMap.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
             @Override
             public void onMapLongClick(LatLng latLng) {
@@ -160,10 +183,10 @@ public class ShowHistoryActivity extends AppCompatActivity implements OnMapReady
             }
         });*/
 
-                //googleMap.animateCamera(cu);
-                mMap.setOnMapLoadedCallback(new GoogleMap.OnMapLoadedCallback() {
-                    @Override
-                    public void onMapLoaded() {
+        //googleMap.animateCamera(cu);
+        mMap.setOnMapLoadedCallback(new GoogleMap.OnMapLoadedCallback() {
+            @Override
+            public void onMapLoaded() {
                /* if (mMap != null) {
                     LatLngBounds.Builder builder = new LatLngBounds.Builder();
                     for (MarkerOptions marker : markers) {
@@ -178,30 +201,29 @@ public class ShowHistoryActivity extends AppCompatActivity implements OnMapReady
                     mMap.animateCamera(cu);
 
                 }*/
-                    }
-                });
-                mapFragment.getView().post(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (mMap != null) {
-                            LatLngBounds.Builder builder = new LatLngBounds.Builder();
-                            for (MarkerOptions marker : markers) {
-                                builder.include(marker.getPosition());
-                            }
-                            // builder.include(markerOptions.getPosition());
-                            LatLngBounds bounds = builder.build();
-                            int padding = 50; // offset from edges of the map in pixels
-                            int width = getResources().getDisplayMetrics().widthPixels;
-                            int height = getResources().getDisplayMetrics().heightPixels;
-                            CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bounds, padding);
-                            mMap.animateCamera(cu);
-                        }
-                    }
-                });
             }
-
-        }
+        });
+        mapFragment.getView().post(new Runnable() {
+            @Override
+            public void run() {
+                if (mMap != null) {
+                    LatLngBounds.Builder builder = new LatLngBounds.Builder();
+                    for (MarkerOptions marker : markers) {
+                        builder.include(marker.getPosition());
+                    }
+                    // builder.include(markerOptions.getPosition());
+                    LatLngBounds bounds = builder.build();
+                    int padding = 50; // offset from edges of the map in pixels
+                    int width = getResources().getDisplayMetrics().widthPixels;
+                    int height = getResources().getDisplayMetrics().heightPixels;
+                    CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bounds, padding);
+                    mMap.animateCamera(cu);
+                }
+            }
+        });
     }
+
+
     private String getRequestUrl(LatLng origin, LatLng dest) {
         //Value of origin
         String str_org = "origin=" + origin.latitude + "," + origin.longitude;
@@ -277,19 +299,19 @@ public class ShowHistoryActivity extends AppCompatActivity implements OnMapReady
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            return  responseString;
+            return responseString;
         }
 
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             //Parse json here
-            ShowHistoryActivity.TaskParser taskParser = new ShowHistoryActivity.TaskParser();
+            StartTripActivity.TaskParser taskParser = new StartTripActivity.TaskParser();
             taskParser.execute(s);
         }
     }
 
-    public class TaskParser extends AsyncTask<String, Void, List<List<HashMap<String, String>>> > {
+    public class TaskParser extends AsyncTask<String, Void, List<List<HashMap<String, String>>>> {
 
         @Override
         protected List<List<HashMap<String, String>>> doInBackground(String... strings) {
@@ -321,17 +343,16 @@ public class ShowHistoryActivity extends AppCompatActivity implements OnMapReady
                     double lat = Double.parseDouble(point.get("lat"));
                     double lon = Double.parseDouble(point.get("lon"));
 
-                    points.add(new LatLng(lat,lon));
+                    points.add(new LatLng(lat, lon));
                 }
 
                 polylineOptions.addAll(points);
                 polylineOptions.width(7);
-                Random rnd = new Random();
-                polylineOptions.color(Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256)));
+                polylineOptions.color(Color.RED);
                 polylineOptions.geodesic(true);
             }
 
-            if (polylineOptions!=null) {
+            if (polylineOptions != null) {
                 mMap.addPolyline(polylineOptions);
             } else {
                 Toast.makeText(getApplicationContext(), "Direction not found!", Toast.LENGTH_SHORT).show();
@@ -339,65 +360,29 @@ public class ShowHistoryActivity extends AppCompatActivity implements OnMapReady
 
         }
     }
-    public  LatLng getLatLongFromGivenAddress(String address)
-    {
-        double lat= 0.0, lng= 0.0;
-        LatLng latLng=null;
+
+    public LatLng getLatLongFromGivenAddress(String address) {
+        double lat = 0.0, lng = 0.0;
+        LatLng latLng = null;
 
         Geocoder geoCoder = new Geocoder(this, Locale.getDefault());
-        try
-        {
-            List<Address> addresses = geoCoder.getFromLocationName(address , 1);
-            if (addresses.size() > 0)
-            {
-                boolean flag=false;
-                for(int j=0;j<tripIndex;j++){
+        try {
+            List<Address> addresses = geoCoder.getFromLocationName(address, 1);
+            if (addresses.size() > 0) {
+                latLng = new LatLng(
+                        (addresses.get(0).getLatitude()),
+                        (addresses.get(0).getLongitude()));
 
-                    if(address.equals(trips.get(j).getTripStartPoint())||address.equals(trips.get(j).getTripEndPoint())){
-                       /* latLng = new LatLng(
-                                (addresses.get(0).getLatitude()+3),
-                                (addresses.get(0).getLongitude()+3));
-                        flag=true;
-                        Toast.makeText(this, "iii", Toast.LENGTH_SHORT).show();*/
-                        break;
-                    }
+                lat = latLng.latitude;
+                lng = latLng.longitude;
 
-                }
-                if(!flag) {
-                    latLng = new LatLng(
-                            (addresses.get(0).getLatitude()),
-                            (addresses.get(0).getLongitude()));
-                }
-                lat=latLng.latitude;
-                lng=latLng.longitude;
-
-                Log.d("Latitude", ""+lat);
-                Log.d("Longitude", ""+lng);
+                Log.d("Latitude", "" + lat);
+                Log.d("Longitude", "" + lng);
             }
-        }
-        catch(Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return latLng;
     }
-    private boolean haveNetworkConnection() {
-        boolean haveConnectedWifi = false;
-        boolean haveConnectedMobile = false;
 
-        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        /*NetworkInfo[] netInfo = cm.getAllNetworkInfo();
-        for (NetworkInfo ni : netInfo) {
-            if (ni.getTypeName().equalsIgnoreCase("WIFI"))
-                if (ni.isConnected())
-                    haveConnectedWifi = true;
-            if (ni.getTypeName().equalsIgnoreCase("MOBILE"))
-                if (ni.isConnected())
-                    haveConnectedMobile = true;
-        }*/
-        NetworkInfo networkInfo = cm.getActiveNetworkInfo();
-        boolean connected = networkInfo != null && networkInfo.isAvailable() &&
-                networkInfo.isConnected();
-        return connected;
-    }
 }

@@ -30,7 +30,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 
-public class HomeFragment extends Fragment{
+public class HomeFragment extends Fragment {
     FloatingActionMenu materialDesignFAM;
     FloatingActionButton floatingActionButton1, floatingActionButton2, floatingActionButton3;
     RecyclerView recyclerView;
@@ -68,12 +68,9 @@ public class HomeFragment extends Fragment{
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 ////////////////////////////////////////////////////////////////////////////////////////////
-      //  drawerFragment = (FragmentDrawer) getActivity().getSupportFragmentManager().findFragmentById(R.id.fragment_navigation_drawer);
-      //  drawerFragment.setUp(R.id.fragment_navigation_drawer, (DrawerLayout) rootView.findViewById(R.id.drawer_layout), mToolbar);
-      //  drawerFragment.setDrawerListener((FragmentDrawer.FragmentDrawerListener) getActivity());
-
-
-
+        //  drawerFragment = (FragmentDrawer) getActivity().getSupportFragmentManager().findFragmentById(R.id.fragment_navigation_drawer);
+        //  drawerFragment.setUp(R.id.fragment_navigation_drawer, (DrawerLayout) rootView.findViewById(R.id.drawer_layout), mToolbar);
+        //  drawerFragment.setDrawerListener((FragmentDrawer.FragmentDrawerListener) getActivity());
 
 
         floatingActionButton1.setOnClickListener(new View.OnClickListener() {
@@ -118,7 +115,6 @@ public class HomeFragment extends Fragment{
         desc.add("this is trip number one i am gointg to have some fun with my family");
 
 
-
         myAdapter = new TripAdapterFragment();
         recyclerView.setAdapter(myAdapter);
         //displayView(0);
@@ -127,22 +123,22 @@ public class HomeFragment extends Fragment{
     }
 
 
-
     public class TripAdapterFragment extends RecyclerSwipeAdapter<TripViewHolder> {
 
         private LayoutInflater inflater;
         TripViewHolder viewHolder;
 
-        public TripAdapterFragment(){
-            Log.e("ADAPTER", "TripAdapterFragment: Is here" );
+        public TripAdapterFragment() {
+            Log.e("ADAPTER", "TripAdapterFragment: Is here");
         }
+
         @Override
         public TripViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
             inflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            View view = inflater.inflate(R.layout.swip_layout ,null);
+            View view = inflater.inflate(R.layout.swip_layout, null);
             viewHolder = new TripViewHolder(view);
-            return  viewHolder;
+            return viewHolder;
         }
 
         @Override
@@ -166,13 +162,10 @@ public class HomeFragment extends Fragment{
 */
 
 
-
-
             viewHolder.Name.setText(myTrip.get(position));
             viewHolder.Name.setTypeface(null, Typeface.BOLD);
             viewHolder.EmailId.setText(desc.get(position));
             holder.imgViewIcon.setImageDrawable(getResources().getDrawable(R.drawable.see));
-
 
 
             viewHolder.swipeLayout.setShowMode(SwipeLayout.ShowMode.PullOut);
@@ -182,7 +175,6 @@ public class HomeFragment extends Fragment{
 
             //dari kanan
             viewHolder.swipeLayout.addDrag(SwipeLayout.DragEdge.Right, viewHolder.swipeLayout.findViewById(R.id.bottom_wraper));
-
 
 
             viewHolder.swipeLayout.addSwipeListener(new SwipeLayout.SwipeListener() {
@@ -220,7 +212,7 @@ public class HomeFragment extends Fragment{
             viewHolder.swipeLayout.getSurfaceView().setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(getActivity(), "position is "+myTrip.get(position).toString(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "position is " + myTrip.get(position).toString(), Toast.LENGTH_SHORT).show();
                 }
             });
 
@@ -263,9 +255,6 @@ public class HomeFragment extends Fragment{
             mItemManger.bindView(viewHolder.itemView, position);
 
 
-
-
-
         }
 
         @Override
@@ -280,7 +269,6 @@ public class HomeFragment extends Fragment{
             return R.id.swipe;
         }
     }
-
 
 
 }
