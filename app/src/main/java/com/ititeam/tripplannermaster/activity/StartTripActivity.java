@@ -16,9 +16,10 @@ import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.CheckBox;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
-
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -63,6 +64,7 @@ public class StartTripActivity extends FragmentActivity implements OnMapReadyCal
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start_trip);
+        //  RelativeLayout myLayout= findViewById(R.id.mystartRoot);
         myList = findViewById(R.id.MyNoteCustomList);
 //        Intent intent =getIntent();
 //        int TripId= intent.getIntExtra("MyTripId",1);
@@ -75,16 +77,6 @@ public class StartTripActivity extends FragmentActivity implements OnMapReadyCal
 
         EndPlace = myTrip.getTripEndPoint();
 
-        Toast.makeText(getBaseContext(), "start :" + startplace + ", End :" + EndPlace, Toast.LENGTH_LONG).show();
-
-        Log.e("Start", "Startpoint:" + startplace);
-        Log.e("Start", "Endpoint:" + EndPlace);
-
-
-        for (int i = 0; i < myNotes.size(); i++) {
-            Log.e("Start", "NoteValue:" + myNotes.get(i).getNoteBody());
-
-        }
         //  ArrayList<Note> myNotes = new ArrayList<Note>();
         //  Note myNote = new Note("note1", "Later");
         //        for(int i=0;i<myNotes.size();i++)
@@ -112,13 +104,28 @@ public class StartTripActivity extends FragmentActivity implements OnMapReadyCal
         mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.Mymap);
         mapFragment.getMapAsync(this);
-
-
         myList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
-                Toast.makeText(getBaseContext(), "clicked" + i, Toast.LENGTH_SHORT).show();
+            /**
+             * Callback method to be invoked when an item in this AdapterView has
+             * been clicked.
+             * <p>
+             * Implementers can call getItemAtPosition(position) if they need
+             * to access the data associated with the selected item.
+             *
+             * @param parent   The AdapterView where the click happened.
+             * @param view     The view within the AdapterView that was clicked (this
+             *                 will be a view provided by the adapter)
+             * @param position The position of the view in the adapter.
+             * @param id       The row id of the item that was clicked.
+             */
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Log.e("mmmmmmmmmmmmmmmmmmm", "clicked");
+                Toast.makeText(getBaseContext(), "clicked", Toast.LENGTH_SHORT);
+                CheckBox mychecked = parent.getSelectedView().findViewById(R.id.CheckItem);
+                mychecked.setActivated(false);
+
             }
         });
         myList.setAdapter(myadapter);
@@ -126,8 +133,10 @@ public class StartTripActivity extends FragmentActivity implements OnMapReadyCal
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        LatLng latLng1 = getLatLongFromGivenAddress(startplace);
-        LatLng latLng2 = getLatLongFromGivenAddress(EndPlace);
+//        LatLng latLng1 = getLatLongFromGivenAddress(startplace);
+//        LatLng latLng2 = getLatLongFromGivenAddress(EndPlace);
+        LatLng latLng1 = getLatLongFromGivenAddress("Cairo,Egypt");
+        LatLng latLng2 = getLatLongFromGivenAddress("Tanata,Egypt");
         mMap = googleMap;
         mMap.getUiSettings().setZoomControlsEnabled(true);
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {

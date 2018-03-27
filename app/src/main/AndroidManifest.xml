@@ -77,6 +77,14 @@
             android:name=".activity.AddNewTrip"
             android:label="@string/title_activity_add_new_trip"
             android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".activity.UpdateTrip"
+            android:label="@string/title_activity_update_trip"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activity.StartTripActivity"
+            android:label="@string/StartTrip"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <!-- end boudour section -->
 
 
@@ -91,10 +99,7 @@
             android:theme="@style/AppTheme" />
 
         <!-- end hesham section -->
-        <activity
-            android:name=".activity.UpdateTrip"
-            android:label="@string/title_activity_update_trip"
-            android:theme="@style/AppTheme.NoActionBar" />
+
         <activity android:name=".activity.FirebaseActivity"></activity>
     </application>
 
