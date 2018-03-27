@@ -20,23 +20,25 @@ import static com.facebook.FacebookSdk.getApplicationContext;
  * Created by Hanaa on 3/27/2018.
  */
 
-public class DownLoadDataFromFirebase extends AsyncTask<String,Integer,Object> {
+public class DownLoadDataFromFirebase extends AsyncTask<String, Integer, Object> {
 
-    private DatabaseReference databaseReference,getDatabaseReference;
+    private DatabaseReference databaseReference, getDatabaseReference;
     Context context;
-    public DownLoadDataFromFirebase(Context context){
-        this.context=context;
+
+    public DownLoadDataFromFirebase(Context context) {
+        this.context = context;
     }
+
     @Override
     protected Object doInBackground(String... strings) {
-        databaseReference= FirebaseDatabase.getInstance().getReference();
-        getDatabaseReference=databaseReference.child("User"+1);
+        databaseReference = FirebaseDatabase.getInstance().getReference();
+        getDatabaseReference = databaseReference.child("User" + 1);
         getDatabaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                ArrayList<Trip> trips=new ArrayList<>();
-                trips= (ArrayList<Trip>) dataSnapshot.getValue();
-                Toast.makeText(getApplicationContext(), "download"+trips.size(), Toast.LENGTH_SHORT).show();
+                ArrayList<Trip> trips = new ArrayList<>();
+                trips = (ArrayList<Trip>) dataSnapshot.getValue();
+                Toast.makeText(getApplicationContext(), "download" + trips.size(), Toast.LENGTH_SHORT).show();
             }
 
             @Override
