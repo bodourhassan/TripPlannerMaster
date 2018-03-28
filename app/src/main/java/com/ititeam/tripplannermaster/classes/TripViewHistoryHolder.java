@@ -15,7 +15,7 @@ import com.ititeam.tripplannermaster.R;
  * Created by Hesham Kadry on 3/26/2018.
  */
 
-public class TripViewHistoryHolder extends RecyclerView.ViewHolder{
+public class TripViewHistoryHolder extends RecyclerView.ViewHolder {
 
     public SwipeLayout swipeLayout2;
     public TextView Name;
@@ -30,7 +30,7 @@ public class TripViewHistoryHolder extends RecyclerView.ViewHolder{
     public TripViewHistoryHolder(View itemView) {
         super(itemView);
 
-        swipeLayout2 =  itemView.findViewById(R.id.swipe);
+        swipeLayout2 = itemView.findViewById(R.id.swipe);
         //Share = itemView.findViewById(R.id.Share);
         Name = itemView.findViewById(R.id.Name);
         EmailId = itemView.findViewById(R.id.EmailId);

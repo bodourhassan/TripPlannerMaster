@@ -1,28 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/NoteItem"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginLeft="53dp"
-        android:layout_marginStart="53dp"
-        android:layout_marginTop="32dp"
-        android:text="TextView" />
+    <CheckedTextView
 
-    <CheckBox
-        android:id="@+id/CheckItem"
+        android:id="@+id/MycheckedTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/NoteItem"
-        android:layout_alignBottom="@+id/NoteItem"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginEnd="35dp"
-        android:layout_marginRight="35dp" />
+        android:checked="false"
+        android:drawableLeft="?android:attr/listChoiceIndicatorMultiple"
+        android:gravity="center"
+        android:paddingBottom="10dip"
+        android:paddingLeft="30dip"
+        android:paddingRight="20dip"
+        android:paddingTop="10dip"
+         />
+
+    <ImageView
+        android:id="@+id/imageCheck"
+        android:layout_width="50dp"
+        android:layout_height="30dp"
+        android:layout_alignBottom="@+id/MycheckedTextView"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="25dp"
+        android:layout_marginStart="25dp"
+        android:layout_toEndOf="@+id/MycheckedTextView"
+        android:layout_toRightOf="@+id/MycheckedTextView"
+        android:visibility="invisible"
+        app:srcCompat="@mipmap/pink_check_mark" />
 </RelativeLayout>

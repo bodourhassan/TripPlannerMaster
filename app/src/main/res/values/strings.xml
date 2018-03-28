@@ -35,6 +35,10 @@
     <string name="TripDisc">Trip Description</string>
     <string name="RoundTripKey">Round Trip</string>
     <string name="TroipDesc">Trip Description</string>
+    <string name="title_activity_update_trip">UpdateTrip</string>
+    <string name="title_activity_x">x</string>
+    <string name="UpdateKey">Update</string>
+    <string name="NoteListMap">Note List :</string>
     <!-- end bodour section-->
 
 
@@ -73,14 +77,8 @@
     <string name="fb_login_protocol_scheme">fb180984762703989</string>
     <string name="tripDescription">Description</string>
     <string name="tripDirection">Direction</string>
-    <string name="title_activity_update_trip">UpdateTrip</string>
-    <string name="title_activity_x">x</string>
-    <string name="UpdateKey">Update</string>
     <string name="minimum_password">Password too short, enter minimum 6 characters!</string>
     <string name="auth_failed">Authentication failed, check your email and password or sign up</string>
-    <string name="NoteListMap">Note List :</string>
-
-    >>>>>>> 667d92dbffcb7363e1e107f7388d42c7c2d0162e
     <!-- end hanaa section-->
 
 

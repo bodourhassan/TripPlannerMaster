@@ -22,25 +22,27 @@ import static com.facebook.FacebookSdk.getApplicationContext;
  * Created by Hanaa on 3/27/2018.
  */
 
-public class DownLoadDataFromFirebase extends AsyncTask<String,Integer,Object> {
+public class DownLoadDataFromFirebase extends AsyncTask<String, Integer, Object> {
 
-    private DatabaseReference databaseReference,getDatabaseReference;
+    private DatabaseReference databaseReference, getDatabaseReference;
     Context context;
-    public DownLoadDataFromFirebase(Context context){
-        this.context=context;
+
+    public DownLoadDataFromFirebase(Context context) {
+        this.context = context;
     }
     @Override
     protected Object doInBackground(String... strings) {
-        databaseReference= FirebaseDatabase.getInstance().getReference();
-        String user_id="1";
-        getDatabaseReference=databaseReference.child("User"+user_id);
+        databaseReference = FirebaseDatabase.getInstance().getReference();
+        String user_id = "1";
+        getDatabaseReference = databaseReference.child("User" + user_id);
         getDatabaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                ArrayList<Trip> trips=null;
-                GenericTypeIndicator<ArrayList<Trip>> genericTypeIndicator = new GenericTypeIndicator<ArrayList<Trip>>() {};
-                trips=  dataSnapshot.getValue(genericTypeIndicator);
-                if(trips!=null) {
+                ArrayList<Trip> trips = null;
+                GenericTypeIndicator<ArrayList<Trip>> genericTypeIndicator = new GenericTypeIndicator<ArrayList<Trip>>() {
+                };
+                trips = dataSnapshot.getValue(genericTypeIndicator);
+                if (trips != null) {
                     Toast.makeText(getApplicationContext(), "download" + trips.size(), Toast.LENGTH_SHORT).show();
                     new TripTableOperations(getApplicationContext()).getTripFromFirebase(trips);
                 }

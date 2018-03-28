@@ -3,6 +3,7 @@ package com.ititeam.tripplannermaster.activity;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Address;
@@ -85,8 +86,10 @@ public class ShowTripActivity extends FragmentActivity implements OnMapReadyCall
         tripEndPoint = findViewById(R.id.show_trip_end_point);
         tripDescription = findViewById(R.id.show_trip_description);
         tripDirection = findViewById(R.id.show_trip_direction);
-        tripDate = findViewById(R.id.DateText);
-        tripTime = findViewById(R.id.TimeText);
+
+        tripDate = findViewById(R.id.show_trip_date);
+        tripTime = findViewById(R.id.show_trip_time);
+        materialDesignFAM = findViewById(R.id.show_trip_material_design_android_floating_action_menu);
         floatingActionButton1 = findViewById(R.id.show_trip_start);
         floatingActionButton2 = findViewById(R.id.show_trip_edit);
         floatingActionButton3 = findViewById(R.id.show_trip_done);
@@ -103,6 +106,10 @@ public class ShowTripActivity extends FragmentActivity implements OnMapReadyCall
         tripDate.setText(trip.getTripDate());
         tripDirection.setText(trip.getTripDirection());
         tripDescription.setText(trip.getTripDescription());
+        trip.setTripStatus(TripConstant.halfTripStatus);
+        if(trip.getTripStatus()==TripConstant.halfTripStatus){
+            floatingActionButton1.setLabelText("start Round");
+        }
 
         listPoints = new ArrayList<>();
         markers = new ArrayList<>();
@@ -147,8 +154,14 @@ public class ShowTripActivity extends FragmentActivity implements OnMapReadyCall
         floatingActionButton1.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 //TODO something when floating action menu first item clicked
-                // Intent i = new Intent(ShowUpcomingTrips.this , AddTrip.class);
-                // startActivity(i);
+           //go to start Activity
+           Intent intent =new Intent();
+           intent.putExtra("trip_id",trip_id);
+
+
+
+
+
                 Toast.makeText(ShowTripActivity.this, "start", Toast.LENGTH_SHORT).show();
             }
         });
