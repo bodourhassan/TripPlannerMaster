@@ -9,63 +9,69 @@
         android:layout_gravity="center"
         android:layout_height="match_parent"
         android:orientation="vertical">
+
         <EditText
+            android:id="@+id/Fragment_SignUp_UserName"
             android:layout_width="300dp"
             android:layout_height="56dp"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="92dp"
             android:background="@drawable/bubble"
+            android:drawableLeft="@drawable/ic_user_icon"
             android:gravity="center_vertical"
             android:hint="@string/username"
             android:inputType="text"
-            android:paddingStart="32dp"
             android:paddingEnd="32dp"
+            android:paddingStart="32dp"
             android:textColor="#ffffff"
-            android:textColorHint="#8effffff"
-            android:drawableLeft="@drawable/ic_user_icon"/>
+            android:textColorHint="#8effffff" />
+
         <EditText
+            android:id="@+id/Fragment_SignUp_Email"
             android:layout_width="300dp"
             android:layout_height="56dp"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="16dp"
             android:background="@drawable/bubble"
+            android:drawableLeft="@drawable/ic_user_icon"
             android:gravity="center_vertical"
             android:hint="@string/email"
             android:inputType="text"
-            android:paddingStart="32dp"
             android:paddingEnd="32dp"
+            android:paddingStart="32dp"
             android:textColor="#ffffff"
-            android:textColorHint="#8effffff"
-            android:drawableLeft="@drawable/ic_user_icon"/>
+            android:textColorHint="#8effffff" />
 
         <EditText
+            android:id="@+id/Fragment_SignUp_Password"
             android:layout_width="300dp"
             android:layout_height="56dp"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="16dp"
             android:background="@drawable/bubble"
+            android:drawableLeft="@drawable/ic_pass_icon"
             android:gravity="center_vertical"
             android:hint="@string/password"
             android:inputType="textPassword"
+            android:paddingEnd="32dp"
             android:paddingStart="32dp"
             android:textColor="#ffffff"
-            android:paddingEnd="32dp"
-            android:textColorHint="#8effffff"
-            android:drawableLeft="@drawable/ic_pass_icon"/>
+            android:textColorHint="#8effffff" />
 
         <EditText
+            android:id="@+id/Fragment_SignUp_ConformPassword"
             android:layout_width="300dp"
             android:layout_height="56dp"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="16dp"
             android:background="@drawable/bubble"
+            android:drawableLeft="@drawable/ic_confirm_icon"
             android:gravity="center_vertical"
             android:hint="@string/confirm_password"
             android:inputType="textPassword"
             android:paddingEnd="32dp"
             android:paddingStart="32dp"
             android:textColor="#ffffff"
-            android:textColorHint="#8effffff"
-            android:drawableLeft="@drawable/ic_confirm_icon"/>
+            android:textColorHint="#8effffff" />
     </LinearLayout>
 </FrameLayout>

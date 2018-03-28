@@ -119,8 +119,8 @@ public class ShowUpcomingTrips extends AppCompatActivity implements FragmentDraw
         desc.add("this is trip number one i am gointg to have some fun with my family");
 
 
-        myAdapter = new TripAdapter();
-        recyclerView.setAdapter(myAdapter);
+        // myAdapter = new TripAdapter();
+        // recyclerView.setAdapter(myAdapter);
 
     }
 

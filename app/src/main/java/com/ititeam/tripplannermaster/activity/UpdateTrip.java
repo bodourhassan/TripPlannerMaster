@@ -316,9 +316,9 @@ public class UpdateTrip extends AppCompatActivity implements GoogleApiClient.Con
 
             }
             UpdateTrip.setTripNotes(NmyNoteList);
-            boolean test = tripTableOperations.updateTrip(UpdateTrip);
+            /*boolean test = tripTableOperations.updateTrip(UpdateTrip);
             Toast.makeText(getBaseContext(), test + "",
-                    Toast.LENGTH_SHORT).show();
+                    Toast.LENGTH_SHORT).show();*/
             Intent intent = new Intent(UpdateTrip.this, StartTripActivity.class);
             startActivity(intent);
 
