@@ -3,6 +3,7 @@ package com.ititeam.tripplannermaster.activity;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Address;
@@ -105,6 +106,10 @@ public class ShowTripActivity extends FragmentActivity implements OnMapReadyCall
         tripDate.setText(trip.getTripDate());
         tripDirection.setText(trip.getTripDirection());
         tripDescription.setText(trip.getTripDescription());
+        trip.setTripStatus(TripConstant.halfTripStatus);
+        if(trip.getTripStatus()==TripConstant.halfTripStatus){
+            floatingActionButton1.setLabelText("start Round");
+        }
 
         listPoints = new ArrayList<>();
         markers = new ArrayList<>();
@@ -149,9 +154,13 @@ public class ShowTripActivity extends FragmentActivity implements OnMapReadyCall
         floatingActionButton1.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 //TODO something when floating action menu first item clicked
-       if (trip.getTripDirection().equals(TripConstant.RoundTrip)) {
+           //go to start Activity
+           Intent intent =new Intent();
+           intent.putExtra("trip_id",trip_id);
 
-                }
+
+
+
 
                 Toast.makeText(ShowTripActivity.this, "start", Toast.LENGTH_SHORT).show();
             }

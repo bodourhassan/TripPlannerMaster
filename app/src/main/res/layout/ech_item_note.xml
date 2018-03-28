@@ -16,7 +16,7 @@
         android:paddingLeft="30dip"
         android:paddingRight="20dip"
         android:paddingTop="10dip"
-        android:text="@string/TestKey" />
+         />
 
     <ImageView
         android:id="@+id/imageCheck"
