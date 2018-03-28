@@ -2,7 +2,9 @@ package com.ititeam.tripplannermaster.activity;
 
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -242,14 +244,37 @@ public class HomeFragment extends Fragment{
             viewHolder.Delete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    tripTableOperations.deleteTrip(String.valueOf(upcommingTrips.get(position).getTripId()));
-                    mItemManger.removeShownLayouts(viewHolder.swipeLayout);
-                    upcommingTrips.remove(position);
-                    notifyItemRemoved(position);
-                    notifyItemRangeChanged(position, upcommingTrips.size());
-                    mItemManger.closeAllItems();
+                    AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
+                    alert.setTitle("Delete Trip "+upcommingTrips.get(position).getTripName());
+                    alert.setMessage("Are you sure you want to delete "+upcommingTrips.get(position).getTripName()+" ?");
+
+                    alert.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+
+
+                        public void onClick(DialogInterface dialog, int which) {
+                            // continue with delete
+                            tripTableOperations.deleteTrip(String.valueOf(upcommingTrips.get(position).getTripId()));
+                            mItemManger.removeShownLayouts(viewHolder.swipeLayout);
+                            upcommingTrips.remove(position);
+                            notifyItemRemoved(position);
+                            notifyItemRangeChanged(position, upcommingTrips.size());
+                            mItemManger.closeAllItems();
+                            Toast.makeText(getActivity(), "here in delete", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+
+                    alert.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            // close dialog
+                            dialog.cancel();
+                        }
+                    });
+                    alert.show();
+
+
+
                     //Toast.makeText(v.getContext(), "Deleted " + upcommingTrips.get(position).getTripId(), Toast.LENGTH_SHORT).show();
-                    Toast.makeText(getActivity(), "array size"+ upcommingTrips.size(), Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getActivity(), "array size"+ upcommingTrips.size(), Toast.LENGTH_SHORT).show();
                 }
             });
 

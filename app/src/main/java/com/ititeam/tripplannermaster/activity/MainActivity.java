@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //        note2.setNoteBody("any note2");
 //        note2.setStatus("not determined");
 //        trip.getTripNotes().add(note2);
-/*
+
         trip.setTripName("0");
         trip.setTripStartPoint("cairo");
         trip.setTripEndPoint("alexandria");
@@ -147,7 +147,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         trip6.setUserId(1);
         boolean flag6 = new TripTableOperations(getApplicationContext()).insertTrip(trip6);
         //Toast.makeText(getApplicationContext(), flag+"", Toast.LENGTH_LONG).show();
-*/
+
         ArrayList<Trip> pastTrips = new TripTableOperations(getApplicationContext()).selectPastTripsUsingDateAndStatus();
 
         for (Trip pastTrip : pastTrips) {
@@ -161,7 +161,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         {
             ///////
             Toast.makeText(this, "clicked", Toast.LENGTH_SHORT).show();
-            Intent i = new Intent(this , AuthenticationActivity.class);
+            Intent i = new Intent(this , StartActivityDrawer.class);
             startActivity(i);
 
         }else if(view == btnBdour)
