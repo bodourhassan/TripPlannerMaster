@@ -165,6 +165,17 @@
                 android:text="@string/DateValue"
                 android:textColor="@color/common_google_signin_btn_text_dark_focused" />
 
+            <TextView
+                android:id="@+id/DateText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/show_trip_date"
+                android:layout_alignBottom="@+id/show_trip_date"
+                android:layout_marginLeft="68dp"
+                android:layout_marginStart="68dp"
+                android:layout_toEndOf="@+id/show_trip_date"
+                android:layout_toRightOf="@+id/show_trip_date"
+                android:text="@string/DateText" />
 
             <ImageView
                 android:id="@+id/imageView8"
@@ -188,6 +199,17 @@
                 android:text="@string/TimeValue"
                 android:textColor="@color/common_google_signin_btn_text_dark_focused" />
 
+            <TextView
+                android:id="@+id/TimeText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/show_trip_time"
+                android:layout_alignBottom="@+id/show_trip_time"
+                android:layout_marginLeft="68dp"
+                android:layout_marginStart="68dp"
+                android:layout_toEndOf="@+id/show_trip_time"
+                android:layout_toRightOf="@+id/show_trip_time"
+                android:text="@string/TimeText" />
 
             <ImageView
                 android:id="@+id/imageView9"
@@ -214,7 +236,7 @@
                 android:id="@+id/notes_layout"
                 android:layout_alignLeft="@+id/show_trip_time"
                 android:layout_alignStart="@+id/show_trip_time"
-                android:layout_below="@+id/show_trip_time"
+                android:layout_below="@+id/TimeText"
                 android:layout_marginTop="34dp"
                 >
 
@@ -224,7 +246,7 @@
     </ScrollView>
 
     <com.github.clans.fab.FloatingActionMenu
-        android:id="@+id/show_trip_material_design_android_floating_action_menu"
+        android:id="@+id/material_design_android_floating_action_menu"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -238,6 +260,7 @@
         fab:menu_colorNormal="#da3c2f"
         fab:menu_colorPressed="#dc4b3f"
         fab:menu_colorRipple="#99d4d4d4"
+        fab:menu_fab_label="Menu"
         fab:menu_fab_size="normal"
         fab:menu_icon="@drawable/fab_add"
         fab:menu_labels_colorNormal="#333"
@@ -282,8 +305,8 @@
             android:id="@+id/show_trip_done"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/rubbish"
-            fab:fab_label="Delete"
+            android:src="@drawable/plus"
+            fab:fab_label="Done"
             fab:fab_size="mini" />
     </com.github.clans.fab.FloatingActionMenu>
 </RelativeLayout>
