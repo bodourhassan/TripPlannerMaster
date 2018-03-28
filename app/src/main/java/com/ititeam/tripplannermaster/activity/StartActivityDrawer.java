@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import com.ititeam.tripplannermaster.R;
 import com.ititeam.tripplannermaster.activity.login.LoginFragment;
+import com.ititeam.tripplannermaster.activity.login.SignUpFragment;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -56,12 +57,12 @@ public class StartActivityDrawer extends AppCompatActivity implements FragmentDr
                 title = getString(R.string.title_home);
                 break;
             case 1:
-                //fragment = new FriendsFragment();
-                //title = getString(R.string.title_friends);
+                fragment = new HistoryTripsFragment();
+                title = "History";
                 Toast.makeText(this, "jjjjjj", Toast.LENGTH_SHORT).show();
                 break;
             case 2:
-                //fragment = new MessagesFragment();
+                fragment = new LoginFragment();
                 //title = getString(R.string.title_messages);
                 Toast.makeText(this, "lllllllllllllll", Toast.LENGTH_SHORT).show();
                 break;
