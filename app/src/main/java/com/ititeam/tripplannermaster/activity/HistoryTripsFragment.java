@@ -40,6 +40,7 @@ public class HistoryTripsFragment extends Fragment {
     TripAdapterFragmentHistory adapterHistory;
 
 
+
     public HistoryTripsFragment() {
         // Required empty public constructor
     }
@@ -94,17 +95,17 @@ public class HistoryTripsFragment extends Fragment {
         private LayoutInflater inflater;
         TripViewHistoryHolder viewHolder;
 
-        public TripAdapterFragmentHistory() {
-            Log.e("ADAPTER", "TripAdapterFragment: Is here");
+        public TripAdapterFragmentHistory(){
+            Log.e("ADAPTER", "TripAdapterFragment: Is here" );
         }
 
         @Override
         public TripViewHistoryHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
             inflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            View view = inflater.inflate(R.layout.swip_layout_history, null);
+            View view = inflater.inflate(R.layout.swip_layout_history ,null);
             viewHolder = new TripViewHistoryHolder(view);
-            return viewHolder;
+            return  viewHolder;
         }
 
         @Override
@@ -115,6 +116,7 @@ public class HistoryTripsFragment extends Fragment {
             holder.imgViewIcon.setImageDrawable(getResources().getDrawable(R.drawable.see));
 
 
+
             viewHolder.swipeLayout2.setShowMode(SwipeLayout.ShowMode.PullOut);
 
             //dari kiri
@@ -122,6 +124,7 @@ public class HistoryTripsFragment extends Fragment {
 
             //dari kanan
             viewHolder.swipeLayout2.addDrag(SwipeLayout.DragEdge.Right, viewHolder.swipeLayout2.findViewById(R.id.bottom_wraper));
+
 
 
             viewHolder.swipeLayout2.addSwipeListener(new SwipeLayout.SwipeListener() {
@@ -159,7 +162,7 @@ public class HistoryTripsFragment extends Fragment {
             viewHolder.swipeLayout2.getSurfaceView().setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(getActivity(), "position is " + myTrip.get(position).toString(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "position is "+myTrip.get(position).toString(), Toast.LENGTH_SHORT).show();
                 }
             });
 

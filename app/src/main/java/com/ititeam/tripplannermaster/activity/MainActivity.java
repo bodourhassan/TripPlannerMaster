@@ -154,16 +154,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //        for (Trip pastTrip : pastTrips) {
 //            Toast.makeText(getApplicationContext(), pastTrip.getTripName(), Toast.LENGTH_SHORT).show();
 //        }
-//        Trip trip = new TripTableOperations(getApplicationContext()).selectSingleTrips(1 + "");
-//
-//        for (Note note : trip.getTripNotes()) {
-//            Toast.makeText(getApplicationContext(), note.getNoteBody(), Toast.LENGTH_SHORT).show();
-//        }
-//
-//        Note note2 = trip.getTripNotes().get(1);
-//        note2.setNoteBody("note2");
-//        note2.setStatus("not determined");
-//        new NoteTableOperations(getApplicationContext()).updateNote(note2);
+
+       /* Trip trip = new TripTableOperations(getApplicationContext()).selectSingleTrips(1 + "");
+
+        for (Note note : trip.getTripNotes()) {
+            Toast.makeText(getApplicationContext(), note.getNoteBody(), Toast.LENGTH_SHORT).show();
+        }
+
+        Note note2 = trip.getTripNotes().get(1);
+        note2.setNoteBody("note2");
+        note2.setStatus("not determined");
+        new NoteTableOperations(getApplicationContext()).updateNote(note2);*/
     }
 
     @Override
@@ -178,7 +179,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }else if(view == btnBdour)
         {
             ///////
-            Intent intent = new Intent(MainActivity.this, StartTripActivity.class);
+            Intent intent = new Intent(MainActivity.this, UpdateTrip.class);
             startActivity(intent);
 
 
@@ -190,8 +191,28 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }else if(view == btnHana)
         {
             //////////
-            Intent intent = new Intent(MainActivity.this, ShowTripActivity.class);
+
+
+          /*  Trip trip5 = new Trip();
+            trip5.setTripName("safari");
+            trip5.setTripStartPoint("cairo");
+            trip5.setTripEndPoint("Aswan");
+            trip5.setTripDate("2018-05-11");
+            trip5.setTripTime("mon");
+            trip5.setTripStatus(TripConstant.DoneStatus);
+            trip5.setTripDirection("qwo");
+            trip5.setTripDescription("asdfg");
+            trip5.setTripRepetition("122334");
+            trip5.setTripCategory("cat1");
+            trip5.setUserId(1);
+            Note note=new Note();
+            note.setNoteBody("kkk");
+            trip5.getTripNotes().add(note);
+            new TripTableOperations(MainActivity.this).insertTrip(trip5);*/
+           Intent intent=new Intent(MainActivity.this,ShowTripActivity.class);
+
             startActivity(intent);
+
 
         }
     }

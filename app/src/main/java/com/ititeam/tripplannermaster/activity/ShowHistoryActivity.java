@@ -49,18 +49,18 @@ import java.util.Random;
 
 public class ShowHistoryActivity extends AppCompatActivity implements OnMapReadyCallback {
     private GoogleMap mMap;
-    private static final int LOCATION_REQUEST = 500;
+    private static final int LOCATION_REQUEST=500;
     ArrayList<LatLng> listPoints;
-    ArrayList<MarkerOptions> markers;
+    ArrayList<MarkerOptions>markers;
     ArrayList<Trip> trips;
     SupportMapFragment mapFragment;
-    int tripIndex = 0;
+    int tripIndex=0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_history);
-        listPoints = new ArrayList<>();
-        markers = new ArrayList<>();
+        listPoints=new ArrayList<>();
+        markers=new ArrayList<>();
        /* trips=new ArrayList<>();
         Trip trip=new Trip();
         trip.setTripStartPoint("Aswan,egypt");
@@ -73,8 +73,8 @@ public class ShowHistoryActivity extends AppCompatActivity implements OnMapReady
         trip=new Trip();
         trip.setTripStartPoint("cairo");
         trip.setTripEndPoint("Alexandria,egypt");*/
-        trips = new TripTableOperations(this).selectPastTripsUsingDateAndStatus();
-        if (haveNetworkConnection()) {
+        trips=new TripTableOperations(this).selectPastTripsUsingDateAndStatus();
+        if(haveNetworkConnection()) {
             mapFragment = (SupportMapFragment) getSupportFragmentManager()
                     .findFragmentById(R.id.history_map);
             mapFragment.getMapAsync(this);
@@ -92,7 +92,7 @@ public class ShowHistoryActivity extends AppCompatActivity implements OnMapReady
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        if (trips.size() > 0) {
+        if (trips.size()>0) {
             if (haveNetworkConnection()) {
                 mMap = googleMap;
                 mMap.getUiSettings().setZoomControlsEnabled(true);
@@ -277,7 +277,7 @@ public class ShowHistoryActivity extends AppCompatActivity implements OnMapReady
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            return responseString;
+            return  responseString;
         }
 
         @Override
@@ -289,7 +289,7 @@ public class ShowHistoryActivity extends AppCompatActivity implements OnMapReady
         }
     }
 
-    public class TaskParser extends AsyncTask<String, Void, List<List<HashMap<String, String>>>> {
+    public class TaskParser extends AsyncTask<String, Void, List<List<HashMap<String, String>>> > {
 
         @Override
         protected List<List<HashMap<String, String>>> doInBackground(String... strings) {
@@ -321,7 +321,7 @@ public class ShowHistoryActivity extends AppCompatActivity implements OnMapReady
                     double lat = Double.parseDouble(point.get("lat"));
                     double lon = Double.parseDouble(point.get("lon"));
 
-                    points.add(new LatLng(lat, lon));
+                    points.add(new LatLng(lat,lon));
                 }
 
                 polylineOptions.addAll(points);
@@ -331,7 +331,7 @@ public class ShowHistoryActivity extends AppCompatActivity implements OnMapReady
                 polylineOptions.geodesic(true);
             }
 
-            if (polylineOptions != null) {
+            if (polylineOptions!=null) {
                 mMap.addPolyline(polylineOptions);
             } else {
                 Toast.makeText(getApplicationContext(), "Direction not found!", Toast.LENGTH_SHORT).show();
@@ -339,19 +339,21 @@ public class ShowHistoryActivity extends AppCompatActivity implements OnMapReady
 
         }
     }
-
-    public LatLng getLatLongFromGivenAddress(String address) {
-        double lat = 0.0, lng = 0.0;
-        LatLng latLng = null;
+    public  LatLng getLatLongFromGivenAddress(String address)
+    {
+        double lat= 0.0, lng= 0.0;
+        LatLng latLng=null;
 
         Geocoder geoCoder = new Geocoder(this, Locale.getDefault());
-        try {
-            List<Address> addresses = geoCoder.getFromLocationName(address, 1);
-            if (addresses.size() > 0) {
-                boolean flag = false;
-                for (int j = 0; j < tripIndex; j++) {
+        try
+        {
+            List<Address> addresses = geoCoder.getFromLocationName(address , 1);
+            if (addresses.size() > 0)
+            {
+                boolean flag=false;
+                for(int j=0;j<tripIndex;j++){
 
-                    if (address.equals(trips.get(j).getTripStartPoint()) || address.equals(trips.get(j).getTripEndPoint())) {
+                    if(address.equals(trips.get(j).getTripStartPoint())||address.equals(trips.get(j).getTripEndPoint())){
                        /* latLng = new LatLng(
                                 (addresses.get(0).getLatitude()+3),
                                 (addresses.get(0).getLongitude()+3));
@@ -361,18 +363,20 @@ public class ShowHistoryActivity extends AppCompatActivity implements OnMapReady
                     }
 
                 }
-                if (!flag) {
+                if(!flag) {
                     latLng = new LatLng(
                             (addresses.get(0).getLatitude()),
                             (addresses.get(0).getLongitude()));
                 }
-                lat = latLng.latitude;
-                lng = latLng.longitude;
+                lat=latLng.latitude;
+                lng=latLng.longitude;
 
-                Log.d("Latitude", "" + lat);
-                Log.d("Longitude", "" + lng);
+                Log.d("Latitude", ""+lat);
+                Log.d("Longitude", ""+lng);
             }
-        } catch (Exception e) {
+        }
+        catch(Exception e)
+        {
             e.printStackTrace();
         }
         return latLng;

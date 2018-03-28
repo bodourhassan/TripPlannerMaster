@@ -43,8 +43,8 @@ public class LoginFragment extends Fragment implements OnLoginListener{
     private static final String TAG = "LoginFragment";
     com.facebook.login.widget.LoginButton facebook_login_button;
     CallbackManager callbackManager;
-    EditText etEmail, etPassword;
-    String uEmail, uPassword;
+    EditText etEmail , etPassword;
+    String uEmail , uPassword;
     private FirebaseAuth auth;
 
     public LoginFragment() {
@@ -107,8 +107,7 @@ public class LoginFragment extends Fragment implements OnLoginListener{
 
         return inflate;
     }
-
-    public boolean isConnected() {
+    public boolean isConnected(){
         ConnectivityManager connMgr = (ConnectivityManager) getActivity().getSystemService(Activity.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
         if (networkInfo != null && networkInfo.isConnected())
@@ -139,8 +138,8 @@ public class LoginFragment extends Fragment implements OnLoginListener{
             //f@yah.com
             //12345678
 
-            Log.i("userdatalogin", "" + uEmail);
-            Log.i("userdatalogin", "" + uPassword);
+            Log.i("userdatalogin" , ""+uEmail);
+            Log.i("userdatalogin" , ""+uPassword);
             //authenticate user
             final ProgressDialog prog = new ProgressDialog(getActivity());
             prog.setMessage("signing up !!!!!!");
@@ -161,7 +160,7 @@ public class LoginFragment extends Fragment implements OnLoginListener{
                                 } else {
                                     //Toast.makeText(getActivity(), getString(R.string.auth_failed), Toast.LENGTH_LONG).show();
                                     Toast.makeText(getActivity(), task.getException().getMessage(), Toast.LENGTH_LONG).show();
-                                    Log.i("myExce", "" + task.getException().getMessage());
+                                    Log.i("myExce",""+ task.getException().getMessage());
                                 }
                             } else {
                                 Intent intent = new Intent(getActivity(), StartActivityDrawer.class);
@@ -169,7 +168,7 @@ public class LoginFragment extends Fragment implements OnLoginListener{
                             }
                         }
                     });
-        } else {
+        }else {
             Toast.makeText(getActivity(), "No internet connection", Toast.LENGTH_SHORT).show();
         }
 
