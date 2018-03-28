@@ -11,12 +11,15 @@ import android.location.Geocoder;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.CheckBox;
+import android.widget.CheckedTextView;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
@@ -59,13 +62,15 @@ public class StartTripActivity extends FragmentActivity implements OnMapReadyCal
     SupportMapFragment mapFragment;
     String startplace;
     String EndPlace;
-
+    FloatingActionButton fab;
+    ImageView mycheckedImage;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start_trip);
         //  RelativeLayout myLayout= findViewById(R.id.mystartRoot);
         myList = findViewById(R.id.MyNoteCustomList);
+
 //        Intent intent =getIntent();
 //        int TripId= intent.getIntExtra("MyTripId",1);
         int TripId = 1;
@@ -76,67 +81,97 @@ public class StartTripActivity extends FragmentActivity implements OnMapReadyCal
         startplace = myTrip.getTripStartPoint();
 
         EndPlace = myTrip.getTripEndPoint();
-
-        //  ArrayList<Note> myNotes = new ArrayList<Note>();
-        //  Note myNote = new Note("note1", "Later");
-        //        for(int i=0;i<myNotes.size();i++)
-        /*for (int i = 0; i < 15; i++) {
-            //  myNote.add(myList.get(i));
-            myNotes.add(myNote);
-        }*/
-
-//        repeatChkBx.setOnCheckedChangeListener(new OnCheckedChangeListener()
-//        {
-//            @Override
-//            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
-//            {
-//                if ( isChecked )
-//                {
-//                    // perform logic
-//                }
-//
-//            }
-//        });
-        MyNoteAdapter myadapter = new MyNoteAdapter(this, R.layout.ech_item_note, R.id.NoteItem, myNotes);
+        MyNoteAdapter myadapter = new MyNoteAdapter(this, R.layout.ech_item_note, myNotes);
 
         listPoints = new ArrayList<>();
         markers = new ArrayList<>();
-        mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.Mymap);
+        mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.Mymap);
         mapFragment.getMapAsync(this);
+        myList.setAdapter(myadapter);
         myList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
-            /**
-             * Callback method to be invoked when an item in this AdapterView has
-             * been clicked.
-             * <p>
-             * Implementers can call getItemAtPosition(position) if they need
-             * to access the data associated with the selected item.
-             *
-             * @param parent   The AdapterView where the click happened.
-             * @param view     The view within the AdapterView that was clicked (this
-             *                 will be a view provided by the adapter)
-             * @param position The position of the view in the adapter.
-             * @param id       The row id of the item that was clicked.
-             */
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Log.e("mmmmmmmmmmmmmmmmmmm", "clicked");
-                Toast.makeText(getBaseContext(), "clicked", Toast.LENGTH_SHORT);
-                CheckBox mychecked = parent.getSelectedView().findViewById(R.id.CheckItem);
-                mychecked.setActivated(false);
+                CheckedTextView ctv = view.findViewById(R.id.MycheckedTextView);
+                mycheckedImage = view.findViewById(R.id.imageCheck);
+                if (ctv.isChecked()) {
+                    // Toast.makeText(StartTripActivity.this, "now it is unchecked"+position, Toast.LENGTH_SHORT).show();
+                    ctv.setChecked(false);
+                    ctv.setEnabled(true);
+                    mycheckedImage.setVisibility(View.INVISIBLE);
+                    myNotes.get(position).setStatus(TripConstant.NoteLater);
+
+                } else {
+                    // Toast.makeText(StartTripActivity.this, "now it is checked"+position, Toast.LENGTH_SHORT).show();
+                    ctv.setChecked(true);
+                    ctv.setEnabled(false);
+                    mycheckedImage.setVisibility(View.VISIBLE);
+                    myNotes.get(position).setStatus(TripConstant.NoteDone);
+                }
 
             }
         });
-        myList.setAdapter(myadapter);
+        fab = findViewById(R.id.MyDoneTripButton);
+        fab.setOnClickListener(new View.OnClickListener() {
+
+            /**
+             * Called when a view has been clicked.
+             *
+             * @param v The view that was clicked.
+             */
+            @Override
+            public void onClick(View v) {
+                myTrip.setTripNotes(myNotes);
+                String allnote = "";
+                String Status = myTrip.getTripStatus();
+                if (Status.equals(TripConstant.UpcomingStatus)) {
+                    if (myTrip.getTripDirection().equals(TripConstant.RoundTrip)) {
+                        myTrip.setTripStatus(TripConstant.halfTripStatus);
+                    } else if (myTrip.getTripDirection().equals(TripConstant.OneDirection)) {
+                        myTrip.setTripStatus(TripConstant.DoneStatus);
+                    }
+
+                } else if (Status.equals(TripConstant.halfTripStatus)) {
+
+                    myTrip.setTripStatus(TripConstant.DoneStatus);
+
+                }
+
+                boolean tset = myOperation.updateTrip(myTrip);
+//                Trip myTrip2 = myOperation.selectSingleTrips(TripId + "");
+//                for(int i=0;i<myTrip2.getTripNotes().size();i++)
+//                {
+//                    allnote+=i+":"+myTrip2.getTripNotes().get(i).getStatus()+",";
+//                }
+//                Toast.makeText(StartTripActivity.this, allnote, Toast.LENGTH_LONG).show();
+            }
+        });
+
     }
 
+    //    public class CheckBoxClick implements AdapterView.OnItemClickListener{
+//
+//        @Override
+//        public void onItemClick(AdapterView<?> arg0, View arg1, int Position, long arg3) {
+//            // TODO Auto-generated method stub
+//            CheckedTextView ctv = (CheckedTextView)arg1;
+//            if(ctv.isChecked()){
+//                Toast.makeText(StartTripActivity.this, "now it is unchecked"+Position, Toast.LENGTH_SHORT).show();
+//                ctv.setChecked(false);
+//                ctv.setEnabled(true);
+//
+//            }else{
+//                Toast.makeText(StartTripActivity.this, "now it is checked"+Position, Toast.LENGTH_SHORT).show();
+//                ctv.setChecked(true);
+//                ctv.setEnabled(false);
+//            }
+//        }
+//    }
     @Override
     public void onMapReady(GoogleMap googleMap) {
-//        LatLng latLng1 = getLatLongFromGivenAddress(startplace);
-//        LatLng latLng2 = getLatLongFromGivenAddress(EndPlace);
-        LatLng latLng1 = getLatLongFromGivenAddress("Cairo,Egypt");
-        LatLng latLng2 = getLatLongFromGivenAddress("Tanata,Egypt");
+        LatLng latLng1 = getLatLongFromGivenAddress(startplace);
+        LatLng latLng2 = getLatLongFromGivenAddress(EndPlace);
+//        LatLng latLng1 = getLatLongFromGivenAddress("Cairo,Egypt");
+//        LatLng latLng2 = getLatLongFromGivenAddress("Tanata,Egypt");
         mMap = googleMap;
         mMap.getUiSettings().setZoomControlsEnabled(true);
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {

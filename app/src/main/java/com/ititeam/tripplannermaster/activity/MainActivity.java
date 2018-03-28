@@ -154,16 +154,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //        for (Trip pastTrip : pastTrips) {
 //            Toast.makeText(getApplicationContext(), pastTrip.getTripName(), Toast.LENGTH_SHORT).show();
 //        }
-        Trip trip = new TripTableOperations(getApplicationContext()).selectSingleTrips(1 + "");
-
-        for (Note note : trip.getTripNotes()) {
-            Toast.makeText(getApplicationContext(), note.getNoteBody(), Toast.LENGTH_SHORT).show();
-        }
-
-        Note note2 = trip.getTripNotes().get(1);
-        note2.setNoteBody("note2");
-        note2.setStatus("not determined");
-        new NoteTableOperations(getApplicationContext()).updateNote(note2);
+//        Trip trip = new TripTableOperations(getApplicationContext()).selectSingleTrips(1 + "");
+//
+//        for (Note note : trip.getTripNotes()) {
+//            Toast.makeText(getApplicationContext(), note.getNoteBody(), Toast.LENGTH_SHORT).show();
+//        }
+//
+//        Note note2 = trip.getTripNotes().get(1);
+//        note2.setNoteBody("note2");
+//        note2.setStatus("not determined");
+//        new NoteTableOperations(getApplicationContext()).updateNote(note2);
     }
 
     @Override
@@ -178,7 +178,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }else if(view == btnBdour)
         {
             ///////
-            Intent intent = new Intent(MainActivity.this, UpdateTrip.class);
+            Intent intent = new Intent(MainActivity.this, StartTripActivity.class);
             startActivity(intent);
 
 

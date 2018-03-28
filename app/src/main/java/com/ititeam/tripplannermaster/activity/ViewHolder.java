@@ -1,6 +1,7 @@
 package com.ititeam.tripplannermaster.activity;
 
 import android.view.View;
+import android.widget.CheckedTextView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -12,7 +13,8 @@ import com.ititeam.tripplannermaster.R;
 
 public class ViewHolder {
     View converView;
-    TextView Notebody;
+    // TextView Notebody;
+    CheckedTextView Notebody;
 
     public ViewHolder(View v) {
         converView = v;
@@ -21,7 +23,7 @@ public class ViewHolder {
 
     public TextView getheader() {
         if (Notebody == null) {
-            Notebody = converView.findViewById(R.id.NoteItem);
+            Notebody = converView.findViewById(R.id.MycheckedTextView);
         }
         return Notebody;
     }

@@ -334,7 +334,7 @@ public class TripTableOperations {
         return flag;
     }
 
-    boolean updateTrip(Trip trip)
+    public boolean updateTrip(Trip trip)
     {
         boolean flag = false;
         String whereClause = AdapterDba.DbOpenHelper.TRIP_ID+"=?";

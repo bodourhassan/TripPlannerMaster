@@ -4,6 +4,7 @@ public class TripConstant {
     public static String DoneStatus = "Done";
     public static String CancelledStatus = "Cancelled";
     public static String UpcomingStatus = "Upcomming";
+    public static String halfTripStatus = "halfTrip";
     /************************Trip Catagory *******************/
     public static String SchoolCatagory = "School";
     public static String ShoppingCatagory = "Shopping";
