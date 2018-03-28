@@ -37,7 +37,7 @@ public class TripViewHolder extends RecyclerView.ViewHolder
     public SwipeLayout swipeLayout;
     public TextView Name;
     public TextView EmailId;
-    public TextView Delete , startDate;
+    public TextView Delete, startDate;
     public TextView Edit;
     public TextView Share;
     public ImageButton btnLocation;
@@ -48,7 +48,7 @@ public class TripViewHolder extends RecyclerView.ViewHolder
         super(itemView);
 
         startDate = itemView.findViewById(R.id.StartDate);
-        swipeLayout =  itemView.findViewById(R.id.swipe);
+        swipeLayout = itemView.findViewById(R.id.swipe);
         Name = itemView.findViewById(R.id.Name);
         EmailId = itemView.findViewById(R.id.EmailId);
         Delete = itemView.findViewById(R.id.Delete);
