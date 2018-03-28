@@ -59,6 +59,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -85,16 +86,16 @@ public class ShowTripActivity extends FragmentActivity implements OnMapReadyCall
         tripEndPoint = findViewById(R.id.show_trip_end_point);
         tripDescription = findViewById(R.id.show_trip_description);
         tripDirection = findViewById(R.id.show_trip_direction);
-        tripDate = findViewById(R.id.DateText);
-        tripTime = findViewById(R.id.TimeText);
+        tripDate = findViewById(R.id.show_trip_date);
+        tripTime = findViewById(R.id.show_trip_time);
+        materialDesignFAM=findViewById(R.id.show_trip_material_design_android_floating_action_menu);
         floatingActionButton1 = findViewById(R.id.show_trip_start);
         floatingActionButton2 = findViewById(R.id.show_trip_edit);
         floatingActionButton3 = findViewById(R.id.show_trip_done);
-
         TripTableOperations tripTableOperations=new TripTableOperations(getBaseContext());
         int trip_id=1;
         trip = tripTableOperations.selectSingleTrips(trip_id + "");
-
+        Date d = new Date();
         notes = trip.getTripNotes();
         tripName.setText(trip.getTripName());
         tripStartPoint.setText(trip.getTripStartPoint());
@@ -147,8 +148,9 @@ public class ShowTripActivity extends FragmentActivity implements OnMapReadyCall
         floatingActionButton1.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 //TODO something when floating action menu first item clicked
-                // Intent i = new Intent(ShowUpcomingTrips.this , AddTrip.class);
-                // startActivity(i);
+                if(trip.getTripDirection().equals(TripConstant.RoundTrip)){
+
+                }
                 Toast.makeText(ShowTripActivity.this, "start", Toast.LENGTH_SHORT).show();
             }
         });
@@ -162,7 +164,7 @@ public class ShowTripActivity extends FragmentActivity implements OnMapReadyCall
         floatingActionButton3.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 //TODO something when floating action menu third item clicked
-                Toast.makeText(ShowTripActivity.this, "done", Toast.LENGTH_SHORT).show();
+                Toast.makeText(ShowTripActivity.this, "delete", Toast.LENGTH_SHORT).show();
             }
         });
     }
