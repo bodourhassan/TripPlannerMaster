@@ -21,20 +21,21 @@ import java.util.ArrayList;
 
 public class FirebaseActivity extends AppCompatActivity {
 
-    private DatabaseReference databaseReference,getDatabaseReference;
-    Button uploadBtn,downlaodBtn;
+    private DatabaseReference databaseReference, getDatabaseReference;
+    Button uploadBtn, downlaodBtn;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_firebase);
 
         // databaseReference= FirebaseDatabase.getInstance().getReference().child("user1");
-        uploadBtn=findViewById(R.id.uploadBtn);
-        downlaodBtn=findViewById(R.id.downloadBtn);
+        uploadBtn = findViewById(R.id.uploadBtn);
+        downlaodBtn = findViewById(R.id.downloadBtn);
         uploadBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                UploadDataToFirebase uploadDataToFirebase=new UploadDataToFirebase(FirebaseActivity.this);
+                UploadDataToFirebase uploadDataToFirebase = new UploadDataToFirebase(FirebaseActivity.this);
                 uploadDataToFirebase.execute();
             }
         });
@@ -42,7 +43,7 @@ public class FirebaseActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                DownLoadDataFromFirebase downLoadDataFromFirebase=new DownLoadDataFromFirebase(FirebaseActivity.this);
+                DownLoadDataFromFirebase downLoadDataFromFirebase = new DownLoadDataFromFirebase(FirebaseActivity.this);
                 downLoadDataFromFirebase.execute();
             }
         });

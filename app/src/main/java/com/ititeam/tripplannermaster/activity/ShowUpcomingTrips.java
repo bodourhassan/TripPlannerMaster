@@ -30,7 +30,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 
 
-
 import java.util.ArrayList;
 
 public class ShowUpcomingTrips extends AppCompatActivity implements FragmentDrawer.FragmentDrawerListener {
@@ -40,7 +39,6 @@ public class ShowUpcomingTrips extends AppCompatActivity implements FragmentDraw
     TripAdapter myAdapter;
     private Toolbar mToolbar;
     FragmentDrawer drawerFragment;
-
 
 
     ArrayList<String> myTrip = new ArrayList<>();
@@ -66,10 +64,10 @@ public class ShowUpcomingTrips extends AppCompatActivity implements FragmentDraw
         */
 
 //        setSupportActionBar(mToolbar);
- //       getSupportActionBar().setDisplayShowHomeEnabled(true);
+        //       getSupportActionBar().setDisplayShowHomeEnabled(true);
 
-     //   setSupportActionBar(mToolbar);
-      //  getSupportActionBar().setDisplayShowHomeEnabled(true);
+        //   setSupportActionBar(mToolbar);
+        //  getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         drawerFragment = (FragmentDrawer)
                 getSupportFragmentManager().findFragmentById(R.id.fragment_navigation_drawer);
@@ -141,8 +139,8 @@ public class ShowUpcomingTrips extends AppCompatActivity implements FragmentDraw
                 title = getString(R.string.title_home);
                 break;
             case 1:
-              //  fragment = new FriendsFragment();
-               // title = getString(R.string.title_friends);
+                //  fragment = new FriendsFragment();
+                // title = getString(R.string.title_friends);
                 break;
             case 2:
                 //fragment = new MessagesFragment();
@@ -191,7 +189,7 @@ public class ShowUpcomingTrips extends AppCompatActivity implements FragmentDraw
         public TripViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
             inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            View view = inflater.inflate(R.layout.swip_layout ,null);
+            View view = inflater.inflate(R.layout.swip_layout, null);
             viewHolder = new TripViewHolder(view);
             return  viewHolder;
         }
@@ -217,13 +215,10 @@ public class ShowUpcomingTrips extends AppCompatActivity implements FragmentDraw
 */
 
 
-
-
             viewHolder.Name.setText(myTrip.get(position));
             viewHolder.Name.setTypeface(null, Typeface.BOLD);
             viewHolder.EmailId.setText(desc.get(position));
             holder.imgViewIcon.setImageDrawable(getResources().getDrawable(R.drawable.see));
-
 
 
             viewHolder.swipeLayout.setShowMode(SwipeLayout.ShowMode.PullOut);
@@ -233,7 +228,6 @@ public class ShowUpcomingTrips extends AppCompatActivity implements FragmentDraw
 
             //dari kanan
             viewHolder.swipeLayout.addDrag(SwipeLayout.DragEdge.Right, viewHolder.swipeLayout.findViewById(R.id.bottom_wraper));
-
 
 
             viewHolder.swipeLayout.addSwipeListener(new SwipeLayout.SwipeListener() {
@@ -271,7 +265,7 @@ public class ShowUpcomingTrips extends AppCompatActivity implements FragmentDraw
             viewHolder.swipeLayout.getSurfaceView().setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(ShowUpcomingTrips.this, "position is "+myTrip.get(position).toString(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ShowUpcomingTrips.this, "position is " + myTrip.get(position).toString(), Toast.LENGTH_SHORT).show();
                 }
             });
 

@@ -1,4 +1,5 @@
 package com.ititeam.tripplannermaster.activity;
+
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -30,7 +31,7 @@ public class StartActivityDrawer extends AppCompatActivity implements FragmentDr
         mToolbar = findViewById(R.id.toolbar);
 
 //        setSupportActionBar(mToolbar);
- //       getSupportActionBar().setDisplayShowHomeEnabled(true);
+        //       getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         drawerFragment = (FragmentDrawer)
                 getSupportFragmentManager().findFragmentById(R.id.fragment_navigation_drawer);
@@ -40,8 +41,6 @@ public class StartActivityDrawer extends AppCompatActivity implements FragmentDr
         // display the first navigation drawer view on app launch
         displayView(0);
     }
-
-
 
 
     @Override
