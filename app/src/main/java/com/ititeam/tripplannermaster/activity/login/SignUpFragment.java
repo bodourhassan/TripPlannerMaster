@@ -28,8 +28,8 @@ import com.ititeam.tripplannermaster.activity.MainActivity;
 
 public class SignUpFragment extends Fragment implements OnSignUpListener{
     private static final String TAG = "SignUpFragment";
-    EditText userName , email , password ,confirmPassword;
-    String uName , uEmail , uPassword , uConformPassword;
+    EditText userName, email, password, confirmPassword;
+    String uName, uEmail, uPassword, uConformPassword;
     private FirebaseAuth auth;
 
 
@@ -45,7 +45,8 @@ public class SignUpFragment extends Fragment implements OnSignUpListener{
         auth = FirebaseAuth.getInstance();
 
     }
-    public boolean isConnected(){
+
+    public boolean isConnected() {
         ConnectivityManager connMgr = (ConnectivityManager) getActivity().getSystemService(Activity.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
         if (networkInfo != null && networkInfo.isConnected())
@@ -68,30 +69,26 @@ public class SignUpFragment extends Fragment implements OnSignUpListener{
 
     @Override
     public void signUp() {
-        if(isConnected())
-        {
-        uName = userName.getText().toString().trim();
-        uEmail = email.getText().toString().trim();
-        uPassword = password.getText().toString().trim();
-        uConformPassword = confirmPassword.getText().toString().trim();
+        if (isConnected()) {
+            uName = userName.getText().toString().trim();
+            uEmail = email.getText().toString().trim();
+            uPassword = password.getText().toString().trim();
+            uConformPassword = confirmPassword.getText().toString().trim();
 
-        if(TextUtils.isEmpty(uName))
-        {
-            Toast.makeText(getActivity(), "Enter email address!", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        
-        if(TextUtils.isEmpty(uEmail))
-        {
-            Toast.makeText(getActivity(), "Enter email Email!", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        
-        if(uPassword.length()<6)
-        {
-            Toast.makeText(getActivity(), "Password too short, enter minimum 6 characters!", Toast.LENGTH_SHORT).show();
-            return;
-        }
+            if (TextUtils.isEmpty(uName)) {
+                Toast.makeText(getActivity(), "Enter email address!", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            if (TextUtils.isEmpty(uEmail)) {
+                Toast.makeText(getActivity(), "Enter email Email!", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            if (uPassword.length() < 6) {
+                Toast.makeText(getActivity(), "Password too short, enter minimum 6 characters!", Toast.LENGTH_SHORT).show();
+                return;
+            }
 
 
             final ProgressDialog prog = new ProgressDialog(getActivity());
@@ -99,9 +96,9 @@ public class SignUpFragment extends Fragment implements OnSignUpListener{
             prog.setCancelable(false);
             prog.show();
 
-            Log.i("userdatasignup" , ""+uEmail);
-            Log.i("userdatasignup" , ""+uPassword);
-            auth.createUserWithEmailAndPassword(uEmail , uPassword).addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
+            Log.i("userdatasignup", "" + uEmail);
+            Log.i("userdatasignup", "" + uPassword);
+            auth.createUserWithEmailAndPassword(uEmail, uPassword).addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     Toast.makeText(getActivity(), "createUserWithEmail:onComplete:" + task.isSuccessful(), Toast.LENGTH_SHORT).show();
@@ -111,7 +108,7 @@ public class SignUpFragment extends Fragment implements OnSignUpListener{
                         Toast.makeText(getActivity(), "Authentication failed." + task.getException(),
                                 Toast.LENGTH_SHORT).show();
 
-                        Log.i("exceptionis",""+task.getException());
+                        Log.i("exceptionis", "" + task.getException());
                     } else {
                         prog.dismiss();
                         Toast.makeText(getActivity(), "succefull", Toast.LENGTH_SHORT).show();
@@ -121,7 +118,7 @@ public class SignUpFragment extends Fragment implements OnSignUpListener{
 
 
             });
-        }else{
+        } else {
             Toast.makeText(getActivity(), "No internet connection", Toast.LENGTH_SHORT).show();
         }
 

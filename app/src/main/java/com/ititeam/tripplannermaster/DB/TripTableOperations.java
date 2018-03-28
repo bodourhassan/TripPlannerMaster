@@ -334,7 +334,7 @@ public class TripTableOperations {
         return flag;
     }
 
-    boolean updateTrip(Trip trip)
+    public boolean updateTrip(Trip trip)
     {
         boolean flag = false;
         String whereClause = AdapterDba.DbOpenHelper.TRIP_ID+"=?";
@@ -375,11 +375,11 @@ public class TripTableOperations {
 
 
     //Start Hanaa Section
-    public void getTripFromFirebase(ArrayList<Trip>trips){
+    public void getTripFromFirebase(ArrayList<Trip> trips) {
 
-        for(Trip trip : trips){
-            Trip localTrip=selectSingleTrips(trip.getTripId()+"");
-            if(localTrip==null){
+        for (Trip trip : trips) {
+            Trip localTrip = selectSingleTrips(trip.getTripId() + "");
+            if (localTrip == null) {
                 insertTrip(trip);
             }
         }

@@ -209,8 +209,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             note.setNoteBody("kkk");
             trip5.getTripNotes().add(note);
             new TripTableOperations(MainActivity.this).insertTrip(trip5);*/
-           Intent intent=new Intent(MainActivity.this,FirebaseActivity
-                    .class);
+   Intent intent = new Intent(MainActivity.this, ShowTripActivity.class);
+
 
             startActivity(intent);
 
