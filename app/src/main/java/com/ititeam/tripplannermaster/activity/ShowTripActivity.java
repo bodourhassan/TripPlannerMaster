@@ -21,10 +21,12 @@ import android.support.v7.widget.RecyclerView;
 import android.text.Layout;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -59,15 +61,19 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.TimeZone;
 
 public class ShowTripActivity extends FragmentActivity implements OnMapReadyCallback {
     FloatingActionMenu materialDesignFAM;
-    FloatingActionButton floatingActionButton1, floatingActionButton2, floatingActionButton3;
-    Label tripName, tripStartPoint, tripEndPoint, tripDirection, tripDescription;
+    FloatingActionButton floatingActionButton1, floatingActionButton2, floatingActionButton3,floatingActionButton4,floatingActionButton5;
+    Label tripName, tripStartPoint, tripEndPoint, tripDirection, tripDescription,tripStatus;
     TextView tripDate, tripTime;
     private GoogleMap mMap;
     private static final int LOCATION_REQUEST = 500;
@@ -76,6 +82,7 @@ public class ShowTripActivity extends FragmentActivity implements OnMapReadyCall
     SupportMapFragment mapFragment;
     ArrayList<Note> notes = new ArrayList<>();
     Trip trip = null;
+    TripTableOperations tripTableOperations=null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,46 +93,124 @@ public class ShowTripActivity extends FragmentActivity implements OnMapReadyCall
         tripEndPoint = findViewById(R.id.show_trip_end_point);
         tripDescription = findViewById(R.id.show_trip_description);
         tripDirection = findViewById(R.id.show_trip_direction);
-
+        tripStatus=findViewById(R.id.show_trip_status);
         tripDate = findViewById(R.id.show_trip_date);
         tripTime = findViewById(R.id.show_trip_time);
         materialDesignFAM = findViewById(R.id.show_trip_material_design_android_floating_action_menu);
         floatingActionButton1 = findViewById(R.id.show_trip_start);
         floatingActionButton2 = findViewById(R.id.show_trip_edit);
         floatingActionButton3 = findViewById(R.id.show_trip_done);
-
-        TripTableOperations tripTableOperations=new TripTableOperations(getBaseContext());
+        floatingActionButton4 = findViewById(R.id.show_trip_cancel);
+        floatingActionButton5 = findViewById(R.id.show_trip_delete);
+         tripTableOperations=new TripTableOperations(getBaseContext());
         int trip_id=1;
         trip = tripTableOperations.selectSingleTrips(trip_id + "");
 
         notes = trip.getTripNotes();
-        tripName.setText(trip.getTripName());
+        notes.get(0).setStatus(TripConstant.NoteLater);
+        Note n=new Note();
+        n.setNoteBody("kkkk");
+        n.setStatus(TripConstant.NoteDone);
+        notes.add(n);
+        Note n1=new Note();
+        n1.setNoteBody("kkkk");
+        n1.setStatus(TripConstant.NoteDone);
+        notes.add(n1);
+        Note n2=new Note();
+        n2.setNoteBody("kkkk");
+        n2.setStatus(TripConstant.NoteDone);
+        notes.add(n2);
+        Note n3=new Note();
+        n3.setNoteBody("kkkk");
+        n3.setStatus(TripConstant.NoteDone);
+        notes.add(n3);
+        Note n4=new Note();
+        n4.setNoteBody("kkkk");
+        n4.setStatus(TripConstant.NoteDone);
+        notes.add(n4);
+        Note n5=new Note();
+        n5.setNoteBody("kkkk");
+        n5.setStatus(TripConstant.NoteDone);
+        notes.add(n5);
+        Note n6=new Note();
+        n6.setNoteBody("kkkk");
+        n6.setStatus(TripConstant.NoteDone);
+        notes.add(n6);
+        Note n7=new Note();
+        n7.setNoteBody("kkkk");
+        n7.setStatus(TripConstant.NoteDone);
+        notes.add(n7);
+        Note n8=new Note();
+        n8.setNoteBody("kkkk");
+        n8.setStatus(TripConstant.NoteDone);
+        notes.add(n8);
+        Note n9=new Note();
+        n9.setNoteBody("kkkk");
+        n9.setStatus(TripConstant.NoteDone);
+        notes.add(n9);
+        Note n10=new Note();
+        n10.setNoteBody("kkkk");
+        n10.setStatus(TripConstant.NoteDone);
+        notes.add(n10);
+        Note n11=new Note();
+        n11.setNoteBody("kkkk");
+        n11.setStatus(TripConstant.NoteDone);
+        notes.add(n11);
+        Toast.makeText(this, ""+notes.size(), Toast.LENGTH_SHORT).show();
+         ListView myList = findViewById(R.id.show_trip_note_custom_list);
+        ShowTripNotesAdapter myadapter = new ShowTripNotesAdapter(this, R.layout.show_trip_notes_layout, notes);
+         myList.setAdapter(myadapter);
+        myList.setOnTouchListener(new View.OnTouchListener() {
+            // Setting on Touch Listener for handling the touch inside ScrollView
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                // Disallow the touch request for parent scroll on touch of child view
+                v.getParent().requestDisallowInterceptTouchEvent(true);
+                return false;
+            }
+        });
+         tripName.setText(trip.getTripName());
         tripStartPoint.setText(trip.getTripStartPoint());
         tripEndPoint.setText(trip.getTripEndPoint());
         tripTime.setText(trip.getTripName());
         tripDate.setText(trip.getTripDate());
         tripDirection.setText(trip.getTripDirection());
         tripDescription.setText(trip.getTripDescription());
-        trip.setTripStatus(TripConstant.halfTripStatus);
-        if(trip.getTripStatus()==TripConstant.halfTripStatus){
-            floatingActionButton1.setLabelText("start Round");
-        }
+        tripStatus.setText(trip.getTripStatus());
+        Date nowDate = new Date();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+        sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
+        try {
+            Date tripDate = sdf.parse(trip.getTripDate());
+            if(nowDate.compareTo(tripDate)>0||trip.getTripStatus().equals(TripConstant.DoneStatus)||trip.getTripStatus().equals(TripConstant.CancelledStatus)){
+                materialDesignFAM.removeMenuButton(floatingActionButton1);
+                materialDesignFAM.removeMenuButton(floatingActionButton2);
 
+            }
+            if(trip.getTripStatus().equals(TripConstant.DoneStatus)||trip.getTripStatus().equals(TripConstant.CancelledStatus)){
+                materialDesignFAM.removeMenuButton(floatingActionButton3);
+                materialDesignFAM.removeMenuButton(floatingActionButton4);
+            }else if(trip.getTripStatus().equals(TripConstant.halfTripStatus)){
+                materialDesignFAM.removeMenuButton(floatingActionButton3);
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         listPoints = new ArrayList<>();
         markers = new ArrayList<>();
         if (!haveNetworkConnection()) {
-            LinearLayout mapLayout = findViewById(R.id.map_layout);
+           /* LinearLayout mapLayout = findViewById(R.id.map_layout);
             LinearLayout.LayoutParams mapLayoutParams = new LinearLayout.LayoutParams(0, 0);
             mapLayout.setLayoutParams(mapLayoutParams);
-
+*/
 
         } else {
             mapFragment = (SupportMapFragment) getSupportFragmentManager()
                     .findFragmentById(R.id.map);
             mapFragment.getMapAsync(this);
         }
-        LinearLayout notesLayout = findViewById(R.id.notes_layout);
-        for (Note nNote : notes) {
+       // LinearLayout notesLayout = findViewById(R.id.notes_layout);
+        /*for (Note nNote : notes) {
             ImageView imageView = new ImageView(this);
             imageView.setImageResource(R.mipmap.wrong_icon);
             LinearLayout.LayoutParams imgLayoutParams = new LinearLayout.LayoutParams(30, 30);
@@ -150,32 +235,64 @@ public class ShowTripActivity extends FragmentActivity implements OnMapReadyCall
             notesLayout.addView(linearLayout);
 
 
-        }
+        }*/
         floatingActionButton1.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 //TODO something when floating action menu first item clicked
            //go to start Activity
-           Intent intent =new Intent();
+           Intent intent =new Intent(ShowTripActivity.this,StartTripActivity.class);
            intent.putExtra("trip_id",trip_id);
+           startActivity(intent);
 
-
-
-
-
-                Toast.makeText(ShowTripActivity.this, "start", Toast.LENGTH_SHORT).show();
             }
         });
         floatingActionButton2.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 //TODO something when floating action menu second item clicked
-                Toast.makeText(ShowTripActivity.this, "edit", Toast.LENGTH_SHORT).show();
+                Intent intent =new Intent(ShowTripActivity.this,UpdateTrip.class);
+                intent.putExtra("trip_id",trip_id);
+                startActivity(intent);
 
             }
         });
         floatingActionButton3.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 //TODO something when floating action menu third item clicked
-                Toast.makeText(ShowTripActivity.this, "done", Toast.LENGTH_SHORT).show();
+                trip.setTripStatus(TripConstant.DoneStatus);
+                tripTableOperations.updateTrip(trip);
+                tripStatus.setText(TripConstant.DoneStatus);
+
+                materialDesignFAM.removeMenuButton(floatingActionButton1);
+                materialDesignFAM.removeMenuButton(floatingActionButton2);
+                materialDesignFAM.removeMenuButton(floatingActionButton3);
+                materialDesignFAM.removeMenuButton(floatingActionButton4);
+                materialDesignFAM.close(false);
+
+            }
+        });
+        floatingActionButton4.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                //TODO something when floating action menu third item clicked
+                trip.setTripStatus(TripConstant.CancelledStatus);
+                tripTableOperations.updateTrip(trip);
+
+                tripStatus.setText(TripConstant.CancelledStatus);
+                materialDesignFAM.removeMenuButton(floatingActionButton1);
+                materialDesignFAM.removeMenuButton(floatingActionButton2);
+                materialDesignFAM.removeMenuButton(floatingActionButton3);
+                materialDesignFAM.removeMenuButton(floatingActionButton4);
+                materialDesignFAM.close(false);
+            }
+        });
+        floatingActionButton5.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                //TODO something when floating action menu third item clicked
+
+                tripTableOperations.deleteTrip(trip_id+"");
+                //Go Home Page
+               /* Intent intent =new Intent(ShowTripActivity.this,UpdateTrip.class);
+                intent.putExtra("trip_id",trip_id);
+                startActivity(intent);*/
             }
         });
     }
@@ -218,56 +335,13 @@ public class ShowTripActivity extends FragmentActivity implements OnMapReadyCall
             String url = getRequestUrl(listPoints.get(0), listPoints.get(1));
             ShowTripActivity.TaskRequestDirections taskRequestDirections = new ShowTripActivity.TaskRequestDirections();
             taskRequestDirections.execute(url);
-        /*mMap.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
-            @Override
-            public void onMapLongClick(LatLng latLng) {
-                //Reset marker when already 2
-                if (listPoints.size() == 2) {
-                    listPoints.clear();
-                    mMap.clear();
-                }
-                //Save first point select
-                listPoints.add(latLng);
-                //Create marker
-                MarkerOptions markerOptions = new MarkerOptions();
-                markerOptions.position(latLng);
 
-                if (listPoints.size() == 1) {
-                    //Add first marker to the map
-                    markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
-                } else {
-                    //Add second marker to the map
-                    markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
-                }
-                mMap.addMarker(markerOptions);
-
-                if (listPoints.size() == 2) {
-                    //Create the URL to get request from first marker to second marker
-                    String url = getRequestUrl(listPoints.get(0), listPoints.get(1));
-                    TaskRequestDirections taskRequestDirections = new TaskRequestDirections();
-                    taskRequestDirections.execute(url);
-                }
-            }
-        });*/
 
             //googleMap.animateCamera(cu);
             mMap.setOnMapLoadedCallback(new GoogleMap.OnMapLoadedCallback() {
                 @Override
                 public void onMapLoaded() {
-               /* if (mMap != null) {
-                    LatLngBounds.Builder builder = new LatLngBounds.Builder();
-                    for (MarkerOptions marker : markers) {
-                        builder.include(marker.getPosition());
-                    }
-                    // builder.include(markerOptions.getPosition());
-                    LatLngBounds bounds = builder.build();
-                    int padding = 50; // offset from edges of the map in pixels
-                    int width = getResources().getDisplayMetrics().widthPixels;
-                    int height = getResources().getDisplayMetrics().heightPixels;
-                    CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bounds, padding);
-                    mMap.animateCamera(cu);
 
-                }*/
                 }
             });
             mapFragment.getView().post(new Runnable() {
