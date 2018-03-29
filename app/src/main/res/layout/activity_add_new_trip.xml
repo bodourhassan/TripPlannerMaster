@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@drawable/n1"
     tools:context="com.ititeam.tripplannermaster.activity.AddNewTrip">
 
     <android.support.design.widget.AppBarLayout
@@ -12,12 +13,15 @@
         android:layout_height="wrap_content"
         android:theme="@style/AppTheme.AppBarOverlay">
 
+
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="@color/colorAccent"
-            app:popupTheme="@style/AppTheme.PopupOverlay" />
+            app:popupTheme="@style/AppTheme.PopupOverlay">
+
+        </android.support.v7.widget.Toolbar>
 
     </android.support.design.widget.AppBarLayout>
 
@@ -27,7 +31,7 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="1000dp"
+            android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true">
@@ -85,7 +89,7 @@
                 android:layout_alignLeft="@+id/AutoStart"
                 android:layout_alignStart="@+id/AutoStart"
                 android:layout_below="@+id/AutoStart"
-                android:layout_marginTop="32dp"
+                android:layout_marginTop="21dp"
                 android:hint="@string/EndPointhint" />
 
             <ImageView
@@ -121,8 +125,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignBottom="@+id/imageView2"
-                android:layout_alignEnd="@+id/AutoEnd"
-                android:layout_alignRight="@+id/AutoEnd"
+                android:layout_alignLeft="@+id/AutoEnd"
+                android:layout_alignStart="@+id/AutoEnd"
                 android:ems="10"
                 android:hint="@string/TroipDesc"
                 android:inputType="textMultiLine" />
@@ -134,7 +138,9 @@
                 android:layout_alignLeft="@+id/imageView2"
                 android:layout_alignStart="@+id/imageView2"
                 android:layout_below="@+id/imageView2"
-                android:layout_marginTop="37dp"
+                android:layout_marginLeft="6dp"
+                android:layout_marginStart="6dp"
+                android:layout_marginTop="40dp"
                 app:srcCompat="@mipmap/calender" />
 
             <TextView
@@ -259,17 +265,6 @@
                 android:hint="@string/AddnoteKey" />
 
 
-            <include
-                android:id="@+id/includeAdd"
-                layout="@layout/add_trip_list"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignLeft="@+id/SaveId"
-                android:layout_alignStart="@+id/SaveId"
-                android:layout_below="@+id/fab"
-                android:layout_marginTop="6dp" />
-
-
             <Button
                 android:id="@+id/CancleId"
                 android:layout_width="wrap_content"
@@ -305,6 +300,16 @@
                 android:onClick="onClicksave"
                 android:text="@string/SaveIdKey"
                 android:textColor="@color/cardview_light_background" />
+
+            <include
+                android:id="@+id/includeAdd"
+                layout="@layout/add_trip_list"
+                android:layout_width="match_parent"
+                android:layout_height="140dp"
+                android:layout_alignLeft="@+id/SaveId"
+                android:layout_alignStart="@+id/SaveId"
+                android:layout_below="@+id/fab"
+                android:layout_marginTop="6dp" />
 
         </RelativeLayout>
     </ScrollView>

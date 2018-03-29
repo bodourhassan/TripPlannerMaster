@@ -5,7 +5,7 @@
 
 
     <!--bodour section -->
-    <string name="title_activity_add_new_trip">AddNewTrip</string>
+    <string name="title_activity_add_new_trip">Add New Trip</string>
     <string name="tripNameHint">Trip Name</string>
     <string name="AppNameKey">Triplanno</string>
     <string name="StartPointHint">Start Point</string>
@@ -78,6 +78,7 @@
     <string name="tripDirection">Direction</string>
     <string name="minimum_password">Password too short, enter minimum 6 characters!</string>
     <string name="auth_failed">Authentication failed, check your email and password or sign up</string>
+    <string name="TitileKey">Add New Trip</string>
     <!-- end hanaa section-->
 
 

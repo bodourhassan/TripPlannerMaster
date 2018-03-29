@@ -7,9 +7,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.ititeam.tripplannermaster.R;
+
 import com.ititeam.tripplannermaster.DB.NoteTableOperations;
 import com.ititeam.tripplannermaster.DB.TripTableOperations;
-import com.ititeam.tripplannermaster.R;
+
 import com.ititeam.tripplannermaster.*;
 import com.ititeam.tripplannermaster.model.Note;
 import com.ititeam.tripplannermaster.model.Trip;
@@ -179,7 +181,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }else if(view == btnBdour)
         {
             ///////
-            Intent intent = new Intent(MainActivity.this, UpdateTrip.class);
+            Intent intent = new Intent(MainActivity.this, StartTripActivity.class);
             startActivity(intent);
 
 

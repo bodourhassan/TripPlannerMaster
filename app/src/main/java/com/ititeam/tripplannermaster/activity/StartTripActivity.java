@@ -64,13 +64,15 @@ public class StartTripActivity extends FragmentActivity implements OnMapReadyCal
     String EndPlace;
     FloatingActionButton fab;
     ImageView mycheckedImage;
+    FloatingActionButton mycancel;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start_trip);
         //  RelativeLayout myLayout= findViewById(R.id.mystartRoot);
         myList = findViewById(R.id.MyNoteCustomList);
-
+        fab = findViewById(R.id.MyDoneTripButton);
+        mycancel = findViewById(R.id.Cancelbutton);
 //        Intent intent =getIntent();
 //        int TripId= intent.getIntExtra("MyTripId",1);
         int TripId = 1;
@@ -110,7 +112,7 @@ public class StartTripActivity extends FragmentActivity implements OnMapReadyCal
 
             }
         });
-        fab = findViewById(R.id.MyDoneTripButton);
+
         fab.setOnClickListener(new View.OnClickListener() {
 
             /**
@@ -145,27 +147,21 @@ public class StartTripActivity extends FragmentActivity implements OnMapReadyCal
 //                Toast.makeText(StartTripActivity.this, allnote, Toast.LENGTH_LONG).show();
             }
         });
+        mycancel.setOnClickListener(new View.OnClickListener() {
+
+            /**
+             * Called when a view has been clicked.
+             *
+             * @param v The view that was clicked.
+             */
+            @Override
+            public void onClick(View v) {
+                myTrip.setTripStatus(TripConstant.CancelledStatus);
+            }
+        });
 
     }
 
-    //    public class CheckBoxClick implements AdapterView.OnItemClickListener{
-//
-//        @Override
-//        public void onItemClick(AdapterView<?> arg0, View arg1, int Position, long arg3) {
-//            // TODO Auto-generated method stub
-//            CheckedTextView ctv = (CheckedTextView)arg1;
-//            if(ctv.isChecked()){
-//                Toast.makeText(StartTripActivity.this, "now it is unchecked"+Position, Toast.LENGTH_SHORT).show();
-//                ctv.setChecked(false);
-//                ctv.setEnabled(true);
-//
-//            }else{
-//                Toast.makeText(StartTripActivity.this, "now it is checked"+Position, Toast.LENGTH_SHORT).show();
-//                ctv.setChecked(true);
-//                ctv.setEnabled(false);
-//            }
-//        }
-//    }
     @Override
     public void onMapReady(GoogleMap googleMap) {
         LatLng latLng1 = getLatLongFromGivenAddress(startplace);
