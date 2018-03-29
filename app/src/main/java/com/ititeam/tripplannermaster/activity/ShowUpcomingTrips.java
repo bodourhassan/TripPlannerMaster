@@ -23,6 +23,7 @@ import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
 import com.ititeam.tripplannermaster.R;
 import com.ititeam.tripplannermaster.classes.TripViewHolder;
+import com.ititeam.tripplannermaster.classes.User;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -121,6 +122,9 @@ public class ShowUpcomingTrips extends AppCompatActivity implements FragmentDraw
 
         // myAdapter = new TripAdapter();
         // recyclerView.setAdapter(myAdapter);
+        Intent intent=getIntent();
+        String email=intent.getStringExtra("login_user_email");
+        User.setEmail(email);
 
     }
 
