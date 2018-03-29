@@ -27,6 +27,7 @@ import com.github.clans.fab.FloatingActionMenu;
 import com.ititeam.tripplannermaster.DB.TripTableOperations;
 import com.ititeam.tripplannermaster.R;
 import com.ititeam.tripplannermaster.classes.TripViewHolder;
+import com.ititeam.tripplannermaster.classes.User;
 import com.ititeam.tripplannermaster.model.Trip;
 
 import android.support.v4.app.FragmentManager;
@@ -53,6 +54,10 @@ public class HomeFragment extends Fragment{
         tripTableOperations = new TripTableOperations(getActivity());
         upcommingTrips = tripTableOperations.selectUpcomingTripsUsingOnlyDate();
         Toast.makeText(getActivity(), "size array oncreate "+upcommingTrips.size(), Toast.LENGTH_SHORT).show();
+        Intent intent=getActivity().getIntent();
+        String email=intent.getStringExtra("login_user_email");
+        User.setEmail(email);
+        Toast.makeText(getActivity(), ""+email, Toast.LENGTH_SHORT).show();
     }
 
     public HomeFragment() {
