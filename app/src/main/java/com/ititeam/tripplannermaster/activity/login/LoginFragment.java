@@ -4,9 +4,11 @@ package com.ititeam.tripplannermaster.activity.login;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -127,6 +129,7 @@ public class LoginFragment extends Fragment implements OnLoginListener{
             uEmail = etEmail.getText().toString().trim();
             uPassword = etPassword.getText().toString().trim();
 
+
             if (TextUtils.isEmpty(uEmail)) {
                 Toast.makeText(getActivity(), "Enter email address!", Toast.LENGTH_SHORT).show();
                 return;
@@ -164,7 +167,14 @@ public class LoginFragment extends Fragment implements OnLoginListener{
                                     Log.i("myExce", "" + task.getException().getMessage());
                                 }
                             } else {
+
+                                SharedPreferences myprefrances = PreferenceManager.getDefaultSharedPreferences(getActivity());
+                                SharedPreferences.Editor editor = myprefrances.edit();
+                                editor.putString("user_email",uEmail);
+                                editor.putString("user_password",uPassword);
+
                                 Intent intent = new Intent(getActivity(), StartActivityDrawer.class);
+                                intent.putExtra("login_user_email", uEmail);
                                 startActivity(intent);
                             }
                         }
@@ -189,6 +199,9 @@ public class LoginFragment extends Fragment implements OnLoginListener{
             email=object.getString("email");
             id=object.getString("id");
             Toast.makeText(getContext(), first_name+last_name, Toast.LENGTH_SHORT).show();
+
+
+
         } catch (JSONException e) {
             e.printStackTrace();
         }
