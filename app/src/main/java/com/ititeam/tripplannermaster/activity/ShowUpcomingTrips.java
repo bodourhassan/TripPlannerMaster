@@ -122,9 +122,7 @@ public class ShowUpcomingTrips extends AppCompatActivity implements FragmentDraw
 
         // myAdapter = new TripAdapter();
         // recyclerView.setAdapter(myAdapter);
-        Intent intent=getIntent();
-        String email=intent.getStringExtra("login_user_email");
-        User.setEmail(email);
+
 
     }
 
