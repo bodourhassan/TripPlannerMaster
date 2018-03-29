@@ -282,10 +282,11 @@ public class TripTableOperations {
         String groupBy = null;
         String having = null;
         String orderBy = null;
-        Cursor cursor = AdapterDba.getAdapterDbaInstance(context)._select(AdapterDba.DbOpenHelper.TRIP_TABLE, result_columns, whereClause, selectArgs, groupBy, having, orderBy);
+        Trip trip =null;
+                Cursor cursor = AdapterDba.getAdapterDbaInstance(context)._select(AdapterDba.DbOpenHelper.TRIP_TABLE, result_columns, whereClause, selectArgs, groupBy, having, orderBy);
         ArrayList<Trip> returnedData = new ArrayList<>();
         while (cursor.moveToNext()) {
-            Trip trip = new Trip();
+             trip = new Trip();
             trip.setTripId(cursor.getInt(0));
             trip.setTripName(cursor.getString(1));
             trip.setTripStartPoint(cursor.getString(2));
