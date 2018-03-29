@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //        note2.setStatus("not determined");
 //        trip.getTripNotes().add(note2);
 
-        trip.setTripName("0");
+        /*trip.setTripName("0");
         trip.setTripStartPoint("cairo");
         trip.setTripEndPoint("alexandria");
         trip.setTripDate("12345");
@@ -152,7 +152,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         for (Trip pastTrip : pastTrips) {
           //  Toast.makeText(getApplicationContext(), pastTrip.getTripName(), Toast.LENGTH_SHORT).show();
-        }
+        }*/
     }
 
     @Override
@@ -179,7 +179,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }else if(view == btnHana)
         {
             //////////
-            Intent intent=new Intent(MainActivity.this,FirebaseActivity.class);
+            Intent intent=new Intent(MainActivity.this,ShowTripActivity.class);
             startActivity(intent);
 
         }

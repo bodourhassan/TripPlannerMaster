@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/n1"
     tools:context="com.ititeam.tripplannermaster.activity.UpdateTrip">
 
     <android.support.design.widget.AppBarLayout
@@ -268,9 +269,9 @@
                 android:layout_alignEnd="@+id/Ufab"
                 android:layout_alignRight="@+id/Ufab"
                 android:background="@color/colorAccent"
+                android:onClick="cancel"
                 android:text="@string/CanclebuttonKey"
-                android:textColor="@color/cardview_light_background"
-                android:onClick="cancel"/>
+                android:textColor="@color/cardview_light_background" />
 
             <TextView
                 android:id="@+id/UDateText"
@@ -291,9 +292,9 @@
                 android:layout_toLeftOf="@+id/UEditDescription"
                 android:layout_toStartOf="@+id/UEditDescription"
                 android:background="@color/colorAccent"
+                android:onClick="UpdateClick"
                 android:text="@string/UpdateKey"
-                android:textColor="@color/cardview_light_background"
-                android:onClick="UpdateClick"/>
+                android:textColor="@color/cardview_light_background" />
 
             <ListView
                 android:id="@+id/UNoteList"
@@ -305,7 +306,6 @@
                 android:layout_marginLeft="14dp"
                 android:layout_marginStart="14dp"
                 android:layout_marginTop="11dp"
-                android:background="@color/cardview_light_background"
                 android:scrollbars="vertical" />
 
         </RelativeLayout>
