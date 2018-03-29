@@ -341,10 +341,11 @@ public class TripTableOperations {
         String whereClause = AdapterDba.DbOpenHelper.TRIP_ID+"=?";
         String [] whereArgs = {trip.getTripId()+""};
         ContentValues newValues = new ContentValues();
+        newValues.put(AdapterDba.DbOpenHelper.TRIP_NAME, trip.getTripName());
         newValues.put(AdapterDba.DbOpenHelper.TRIP_START_POINT, trip.getTripStartPoint());
         newValues.put(AdapterDba.DbOpenHelper.TRIP_END_POINT, trip.getTripEndPoint());
         newValues.put(AdapterDba.DbOpenHelper.TRIP_DATE, trip.getTripDate());
-        newValues.put(AdapterDba.DbOpenHelper.TRIP_TIME, trip.getTripName());
+        newValues.put(AdapterDba.DbOpenHelper.TRIP_TIME, trip.getTripTime());
         newValues.put(AdapterDba.DbOpenHelper.TRIP_STATUS, trip.getTripStatus());
         newValues.put(AdapterDba.DbOpenHelper.TRIP_DIRECTION, trip.getTripDirection());
         newValues.put(AdapterDba.DbOpenHelper.TRIP_DESCRIPTION, trip.getTripDescription());
