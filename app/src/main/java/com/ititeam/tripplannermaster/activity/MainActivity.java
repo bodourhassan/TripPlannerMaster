@@ -146,7 +146,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         boolean flag6 = new TripTableOperations(getApplicationContext()).insertTrip(trip6);
         //Toast.makeText(getApplicationContext(), flag+"", Toast.LENGTH_LONG).show();
 
-       
+
     }
 
     @Override

@@ -105,8 +105,6 @@ public class HomeFragment extends Fragment{
                 //TODO something when floating action menu second item clicked
                 UploadDataToFirebase uploadDataToFirebase=new UploadDataToFirebase(getActivity());
                 uploadDataToFirebase.execute();
-                /*Intent intent=new Intent(getActivity(),FirebaseActivity.class);
-                startActivity(intent);*/
 
             }
         });

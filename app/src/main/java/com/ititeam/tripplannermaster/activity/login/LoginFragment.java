@@ -309,7 +309,7 @@ public class LoginFragment extends Fragment implements OnLoginListener{
 */
                                 DownLoadDataFromFirebase downLoadDataFromFirebase=new DownLoadDataFromFirebase(getActivity());
                                 downLoadDataFromFirebase.execute();
-
+                                
                                 Intent intent = new Intent(getActivity(), StartActivityDrawer.class);
                                 intent.putExtra("login_user_email", uEmail);
                                 startActivity(intent);
