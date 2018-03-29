@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         trip.setTripDescription("asdfg");
         trip.setTripRepetition("122334");
         trip.setTripCategory("cat1");
-        trip.setUserId(1);
+        trip.setUserId("1");
         boolean flag = new TripTableOperations(getApplicationContext()).insertTrip(trip);
        // Toast.makeText(getApplicationContext(), flag+"", Toast.LENGTH_LONG).show();
 
@@ -66,7 +66,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         trip1.setTripDescription("asdfg");
         trip1.setTripRepetition("122334");
         trip1.setTripCategory("cat1");
-        trip1.setUserId(1);
+        trip1.setUserId("1");
         boolean flag1 = new TripTableOperations(getApplicationContext()).insertTrip(trip1);
        // Toast.makeText(getApplicationContext(), flag+"", Toast.LENGTH_LONG).show();
 
@@ -82,7 +82,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         trip2.setTripDescription("asdfg");
         trip2.setTripRepetition("122334");
         trip2.setTripCategory("cat1");
-        trip2.setUserId(1);
+        trip2.setUserId("1");
         boolean flag2 = new TripTableOperations(getApplicationContext()).insertTrip(trip2);
        // Toast.makeText(getApplicationContext(), flag+"", Toast.LENGTH_LONG).show();
 
@@ -97,7 +97,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         trip3.setTripDescription("asdfg");
         trip3.setTripRepetition("122334");
         trip3.setTripCategory("cat1");
-        trip3.setUserId(1);
+        trip3.setUserId("1");
         boolean flag3 = new TripTableOperations(getApplicationContext()).insertTrip(trip3);
        // Toast.makeText(getApplicationContext(), flag+"", Toast.LENGTH_LONG).show();
 
@@ -112,7 +112,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         trip4.setTripDescription("asdfg");
         trip4.setTripRepetition("122334");
         trip4.setTripCategory("cat1");
-        trip4.setUserId(1);
+        trip4.setUserId("1");
         boolean flag4 = new TripTableOperations(getApplicationContext()).insertTrip(trip4);
        // Toast.makeText(getApplicationContext(), flag+"", Toast.LENGTH_LONG).show();
 
@@ -127,7 +127,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         trip5.setTripDescription("asdfg");
         trip5.setTripRepetition("122334");
         trip5.setTripCategory("cat1");
-        trip5.setUserId(1);
+        trip5.setUserId("1");
         boolean flag5 = new TripTableOperations(getApplicationContext()).insertTrip(trip5);
         //Toast.makeText(getApplicationContext(), flag+"", Toast.LENGTH_LONG).show();
 
@@ -142,15 +142,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         trip6.setTripDescription("asdfg");
         trip6.setTripRepetition("122334");
         trip6.setTripCategory("cat1");
-        trip6.setUserId(1);
+        trip6.setUserId("1");
         boolean flag6 = new TripTableOperations(getApplicationContext()).insertTrip(trip6);
         //Toast.makeText(getApplicationContext(), flag+"", Toast.LENGTH_LONG).show();
 
-        ArrayList<Trip> pastTrips = new TripTableOperations(getApplicationContext()).selectPastTripsUsingDateAndStatus();
-
-        for (Trip pastTrip : pastTrips) {
-          //  Toast.makeText(getApplicationContext(), pastTrip.getTripName(), Toast.LENGTH_SHORT).show();
-        }
+       
     }
 
     @Override
