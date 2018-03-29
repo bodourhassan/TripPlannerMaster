@@ -6,6 +6,21 @@
     android:layout_height="wrap_content"
     tools:context="com.ititeam.tripplannermaster.activity.StartTripActivity">
 
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/SappBarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/Stoolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/colorAccent"
+            app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+    </android.support.design.widget.AppBarLayout>
+
     <include
         android:id="@+id/myinclude"
         layout="@layout/note_custom_list"
@@ -13,28 +28,25 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/Mymap"
-        android:layout_marginTop="50dp" />
+        android:layout_below="@+id/MyDoneTripButton"
+        android:layout_marginTop="44dp" />
 
     <fragment
         android:id="@+id/Mymap"
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
         android:layout_height="350dp"
-        android:layout_above="@+id/show_trip_name"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginBottom="10dp" />
+        android:layout_below="@+id/SappBarLayout" />
 
     <TextView
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
         android:layout_below="@+id/Mymap"
-        android:layout_marginLeft="14dp"
-        android:layout_marginStart="14dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="26dp"
         android:fontFamily="sans-serif"
         android:text="@string/NoteListMap"
         android:textAlignment="center"
@@ -48,11 +60,23 @@
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:layout_below="@+id/Mymap"
+        android:layout_alignTop="@+id/textView2"
         android:layout_marginEnd="34dp"
         android:layout_marginRight="34dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="6dp"
         android:clickable="true"
         android:src="@drawable/com_facebook_button_like_icon_selected" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/Cancelbutton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignTop="@+id/MyDoneTripButton"
+        android:layout_marginLeft="34dp"
+        android:layout_marginStart="34dp"
+        android:clickable="true"
+        android:src="@android:drawable/ic_menu_close_clear_cancel" />
 
 </RelativeLayout>

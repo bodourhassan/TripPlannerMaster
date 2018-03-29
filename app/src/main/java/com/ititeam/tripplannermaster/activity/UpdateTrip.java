@@ -11,6 +11,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -122,7 +123,15 @@ public class UpdateTrip extends AppCompatActivity implements GoogleApiClient.Con
         }
         NoteListadapter=new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,listItems);
         MyNoteList.setAdapter(NoteListadapter);
-
+        MyNoteList.setOnTouchListener(new View.OnTouchListener() {
+            // Setting on Touch Listener for handling the touch inside ScrollView
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                // Disallow the touch request for parent scroll on touch of child view
+                v.getParent().requestDisallowInterceptTouchEvent(true);
+                return false;
+            }
+        });
         //get the spinner from the xml.
         //create a list of items for the spinner.
         String[] items = new String[]{"Work", "School", "Shooping"};
@@ -200,7 +209,7 @@ public class UpdateTrip extends AppCompatActivity implements GoogleApiClient.Con
 
                         TimeView.setText(hourOfDay+" : "+minute+" "+format);
                     }
-                },hour,minute,true);
+                }, hour, minute, false);
                 timePickerDialog.show();
             }
         });
@@ -311,10 +320,10 @@ public class UpdateTrip extends AppCompatActivity implements GoogleApiClient.Con
             UpdateTrip.setTripDescription(TripDirection);
             UpdateTrip.setTripDescription(Desc);
             UpdateTrip.setTripCategory(TripCatagory);
-            for (int i = 0; i < NmyNoteList.size(); i++) {
-                Log.e("uuuuuuuuuuuuuuu", "Note" + i + NmyNoteList.get(i).getNoteBody());
-
-            }
+//            for (int i = 0; i < NmyNoteList.size(); i++) {
+//                Log.e("uuuuuuuuuuuuuuu", "Note" + i + NmyNoteList.get(i).getNoteBody());
+//
+//            }
             UpdateTrip.setTripNotes(NmyNoteList);
             /*boolean test = tripTableOperations.updateTrip(UpdateTrip);
             Toast.makeText(getBaseContext(), test + "",

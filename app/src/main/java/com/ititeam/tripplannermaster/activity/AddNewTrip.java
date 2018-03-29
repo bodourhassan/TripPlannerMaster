@@ -12,6 +12,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -87,6 +88,16 @@ public class AddNewTrip extends AppCompatActivity implements ConnectionCallbacks
                 android.R.layout.simple_list_item_1,
                 listItems);
 
+        MyNoteList.setOnTouchListener(new View.OnTouchListener() {
+            // Setting on Touch Listener for handling the touch inside ScrollView
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                // Disallow the touch request for parent scroll on touch of child view
+                v.getParent().requestDisallowInterceptTouchEvent(true);
+                return false;
+            }
+        });
+
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -160,7 +171,7 @@ public class AddNewTrip extends AppCompatActivity implements ConnectionCallbacks
 
                        TimeView.setText(hourOfDay+" : "+minute+" "+format);
                    }
-               },hour,minute,true);
+               }, hour, minute, false);
                timePickerDialog.show();
            }
        });
