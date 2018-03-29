@@ -86,9 +86,9 @@ public class HomeFragment extends Fragment{
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 ////////////////////////////////////////////////////////////////////////////////////////////
-      //  drawerFragment = (FragmentDrawer) getActivity().getSupportFragmentManager().findFragmentById(R.id.fragment_navigation_drawer);
-      //  drawerFragment.setUp(R.id.fragment_navigation_drawer, (DrawerLayout) rootView.findViewById(R.id.drawer_layout), mToolbar);
-      //  drawerFragment.setDrawerListener((FragmentDrawer.FragmentDrawerListener) getActivity());
+        //  drawerFragment = (FragmentDrawer) getActivity().getSupportFragmentManager().findFragmentById(R.id.fragment_navigation_drawer);
+        //  drawerFragment.setUp(R.id.fragment_navigation_drawer, (DrawerLayout) rootView.findViewById(R.id.drawer_layout), mToolbar);
+        //  drawerFragment.setDrawerListener((FragmentDrawer.FragmentDrawerListener) getActivity());
 
 
 
@@ -100,7 +100,7 @@ public class HomeFragment extends Fragment{
                 // Intent i = new Intent(ShowUpcomingTrips.this , AddTrip.class);
                 // startActivity(i);
                 Toast.makeText(getActivity(), "clicked", Toast.LENGTH_SHORT).show();
-                Intent i = new Intent(getActivity() , AuthenticationActivity.class);
+                Intent i = new Intent(getActivity() , AddNewTrip.class);
                 startActivity(i);
             }
         });
@@ -219,14 +219,21 @@ public class HomeFragment extends Fragment{
             viewHolder.swipeLayout.getSurfaceView().setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(getActivity(), "position is "+upcommingTrips.get(position).toString(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "position is "+upcommingTrips.get(position).getTripId(), Toast.LENGTH_SHORT).show();
+                    Intent i = new Intent(getActivity() , ShowTripActivity.class);
+                    i.putExtra("user_id" , String.valueOf(upcommingTrips.get(position).getTripId()));
+                    startActivity(i);
                 }
             });
 
             viewHolder.btnLocation.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(v.getContext(), "Clicked on Information " + upcommingTrips.get(position).toString(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(v.getContext(), "Clicked on Information " + upcommingTrips.get(position).getTripId(), Toast.LENGTH_SHORT).show();
+                    Intent i = new Intent(getActivity() , ShowTripActivity.class);
+                    i.putExtra("user_id" , String.valueOf(upcommingTrips.get(position).getTripId()));
+                    startActivity(i);
+
                 }
             });
 
@@ -242,7 +249,11 @@ public class HomeFragment extends Fragment{
                 @Override
                 public void onClick(View view) {
 
-                    Toast.makeText(view.getContext(), "Clicked on Edit  " + viewHolder.Name.getText().toString(), Toast.LENGTH_SHORT).show();
+
+                    Toast.makeText(view.getContext(), "Clicked on Edit  " + upcommingTrips.get(position).getTripId(), Toast.LENGTH_SHORT).show();
+                    Intent i = new Intent(getActivity() , UpdateTrip.class);
+                    i.putExtra("user_id", String.valueOf(upcommingTrips.get(position).getTripId()));
+                    startActivity(i);
                 }
             });
 
