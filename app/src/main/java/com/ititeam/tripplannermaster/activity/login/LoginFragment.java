@@ -299,17 +299,17 @@ public class LoginFragment extends Fragment implements OnLoginListener{
                                 trip6.setTripDirection(TripConstant.OneDirection);
                                 trip6.setTripDescription("asdfg");
                                 trip6.setTripRepetition("122334");
-                                trip6.setTripCategory("cat1");
+                                trip6.setTripCategory("work");
                                 trip6.setUserId(User.getEmail());
                                 Note note=new Note();
                                 note.setStatus(TripConstant.NoteLater);
                                 note.setNoteBody("bring cheese");
                                 trip6.getTripNotes().add(note);
-                                new TripTableOperations(getContext()).insertTrip(trip6);
-*/
+                                new TripTableOperations(getContext()).insertTrip(trip6);*/
+
                                 DownLoadDataFromFirebase downLoadDataFromFirebase=new DownLoadDataFromFirebase(getActivity());
                                 downLoadDataFromFirebase.execute();
-                                
+
                                 Intent intent = new Intent(getActivity(), StartActivityDrawer.class);
                                 intent.putExtra("login_user_email", uEmail);
                                 startActivity(intent);

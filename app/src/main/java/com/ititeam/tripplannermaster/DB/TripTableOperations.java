@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.util.Log;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -380,10 +381,14 @@ public class TripTableOperations {
         for (Trip trip : trips) {
             Trip localTrip = selectSingleTrips(trip.getTripId() + "");
             if (localTrip == null) {
+
+                Toast.makeText(context, "enter", Toast.LENGTH_SHORT).show();
                 insertTrip(trip);
             }else{
                 updateTrip(trip);
+                Toast.makeText(context, "update", Toast.LENGTH_SHORT).show();
             }
+            
         }
     }
     //end  Hanaa Section
