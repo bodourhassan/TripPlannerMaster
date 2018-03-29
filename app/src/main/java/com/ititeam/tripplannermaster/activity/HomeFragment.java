@@ -1,7 +1,6 @@
 package com.ititeam.tripplannermaster.activity;
 
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -10,7 +9,6 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -21,17 +19,15 @@ import android.view.ViewGroup;
 
 import com.daimajia.swipe.SwipeLayout;
 import com.daimajia.swipe.adapters.RecyclerSwipeAdapter;
-import com.daimajia.swipe.implments.SwipeItemRecyclerMangerImpl;
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
 import com.ititeam.tripplannermaster.DB.TripTableOperations;
 import com.ititeam.tripplannermaster.R;
 import com.ititeam.tripplannermaster.classes.TripViewHolder;
-import com.ititeam.tripplannermaster.classes.User;
+import com.ititeam.tripplannermaster.classes.UploadDataToFirebase;
+import com.ititeam.tripplannermaster.model.User;
 import com.ititeam.tripplannermaster.model.Trip;
 
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -107,7 +103,11 @@ public class HomeFragment extends Fragment{
         floatingActionButton2.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 //TODO something when floating action menu second item clicked
-                Toast.makeText(getActivity(), "mashy", Toast.LENGTH_SHORT).show();
+                UploadDataToFirebase uploadDataToFirebase=new UploadDataToFirebase(getActivity());
+                uploadDataToFirebase.execute();
+                /*Intent intent=new Intent(getActivity(),FirebaseActivity.class);
+                startActivity(intent);*/
+
             }
         });
         floatingActionButton3.setOnClickListener(new View.OnClickListener() {

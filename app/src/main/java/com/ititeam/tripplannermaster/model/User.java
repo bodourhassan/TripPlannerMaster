@@ -1,13 +1,22 @@
-package com.ititeam.tripplannermaster.classes;
+package com.ititeam.tripplannermaster.model;
 
 /**
  * Created by Hanaa on 3/29/2018.
  */
 
 public class User {
-    public static String email;
-    public static String name;
-    public static String password;
+    private static String email;
+    private static String name;
+    private static String password;
+    private static String firebasePath;
+
+    public static String getFirebasePath() {
+        return firebasePath;
+    }
+
+    public static void setFirebasePath(String firebasePath) {
+        User.firebasePath = firebasePath;
+    }
 
     public static String getEmail() {
         return email;

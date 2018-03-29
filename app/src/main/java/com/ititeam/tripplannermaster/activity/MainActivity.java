@@ -9,11 +9,9 @@ import android.widget.Toast;
 
 import com.ititeam.tripplannermaster.DB.TripTableOperations;
 import com.ititeam.tripplannermaster.R;
-import com.ititeam.tripplannermaster.*;
 import com.ititeam.tripplannermaster.model.Note;
+import com.ititeam.tripplannermaster.model.User;
 import com.ititeam.tripplannermaster.model.Trip;
-
-import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -179,6 +177,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }else if(view == btnHana)
         {
             //////////
+            Trip trip6 = new Trip();
+            trip6.setTripName("Relax");
+            trip6.setTripStartPoint("cairo");
+            trip6.setTripEndPoint("Aswan");
+            trip6.setTripDate("2018-05-10");
+            trip6.setTripTime("mon");
+            trip6.setTripStatus(TripConstant.UpcomingStatus);
+            trip6.setTripDirection(TripConstant.OneDirection);
+            trip6.setTripDescription("asdfg");
+            trip6.setTripRepetition("122334");
+            trip6.setTripCategory("cat1");
+            trip6.setUserId(User.getEmail());
+            Note note=new Note();
+            note.setStatus(TripConstant.NoteLater);
+            note.setNoteBody("bring cheese");
+            new TripTableOperations(getApplicationContext()).insertTrip(trip6);
             Intent intent=new Intent(MainActivity.this,ShowTripActivity.class);
             startActivity(intent);
 

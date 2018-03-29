@@ -57,7 +57,7 @@ public class TripTableOperations {
             trip.setTripDescription(cursor.getString(8));
             trip.setTripRepetition(cursor.getString(9));
             trip.setTripCategory(cursor.getString(10));
-            trip.setUserId(cursor.getInt(11));
+            trip.setUserId(cursor.getString(11));
             ArrayList<Note> notes = new NoteTableOperations(context).selectNoteWithTripFk(trip.getTripId() + "");
             for (Note note : notes) {
                 trip.getTripNotes().add(note);
@@ -100,7 +100,7 @@ public class TripTableOperations {
             trip.setTripDescription(cursor.getString(8));
             trip.setTripRepetition(cursor.getString(9));
             trip.setTripCategory(cursor.getString(10));
-            trip.setUserId(cursor.getInt(11));
+            trip.setUserId(cursor.getString(11));
 
             ArrayList<Note> notes = new NoteTableOperations(context).selectNoteWithTripFk(trip.getTripId() + "");
             for (Note note : notes) {
@@ -144,7 +144,7 @@ public class TripTableOperations {
             trip.setTripDescription(cursor.getString(8));
             trip.setTripRepetition(cursor.getString(9));
             trip.setTripCategory(cursor.getString(10));
-            trip.setUserId(cursor.getInt(11));
+            trip.setUserId(cursor.getString(11));
 
             ArrayList<Note> notes = new NoteTableOperations(context).selectNoteWithTripFk(trip.getTripId() + "");
             for (Note note : notes) {
@@ -188,7 +188,7 @@ public class TripTableOperations {
             trip.setTripDescription(cursor.getString(8));
             trip.setTripRepetition(cursor.getString(9));
             trip.setTripCategory(cursor.getString(10));
-            trip.setUserId(cursor.getInt(11));
+            trip.setUserId(cursor.getString(11));
 
             ArrayList<Note> notes = new NoteTableOperations(context).selectNoteWithTripFk(trip.getTripId() + "");
             for (Note note : notes) {
@@ -249,7 +249,7 @@ public class TripTableOperations {
             trip.setTripDirection(cursor.getString(7));
             trip.setTripDescription(cursor.getString(8));
             trip.setTripCategory(cursor.getString(10));
-            trip.setUserId(cursor.getInt(11));
+            trip.setUserId(cursor.getString(11));
 
         }
 
@@ -296,7 +296,7 @@ public class TripTableOperations {
             trip.setTripDescription(cursor.getString(8));
             trip.setTripRepetition(cursor.getString(9));
             trip.setTripCategory(cursor.getString(10));
-            trip.setUserId(cursor.getInt(11));
+            trip.setUserId(cursor.getString(11));
 
             ArrayList<Note> notes = new NoteTableOperations(context).selectNoteWithTripFk(trip.getTripId() + "");
             for (Note note : notes) {

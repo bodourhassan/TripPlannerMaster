@@ -12,6 +12,7 @@ import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.ValueEventListener;
 import com.ititeam.tripplannermaster.DB.TripTableOperations;
 import com.ititeam.tripplannermaster.model.Trip;
+import com.ititeam.tripplannermaster.model.User;
 
 import java.util.ArrayList;
 
@@ -25,6 +26,7 @@ public class UploadDataToFirebase extends AsyncTask<String, Integer, Object> {
 
     private DatabaseReference databaseReference, getDatabaseReference;
     Context context;
+    ArrayList<Trip> trips=new ArrayList<>();
 
     public UploadDataToFirebase(Context context) {
         this.context = context;
@@ -33,9 +35,10 @@ public class UploadDataToFirebase extends AsyncTask<String, Integer, Object> {
     protected Object doInBackground(String... strings) {
         databaseReference = FirebaseDatabase.getInstance().getReference();
         TripTableOperations tripTableOperations = new TripTableOperations(context);
-        String user_id = "1";
-        ArrayList<Trip> trips = tripTableOperations.selectTripsUsingUserId(user_id);
-        getDatabaseReference = databaseReference.child("User" + user_id);
+        String user_id = User.getEmail();
+
+        trips = tripTableOperations.selectTripsUsingUserId(user_id);
+        getDatabaseReference = databaseReference.child(User.getFirebasePath());
         getDatabaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -63,8 +66,8 @@ public class UploadDataToFirebase extends AsyncTask<String, Integer, Object> {
         });
         if (trips != null) {
             if (trips.size() > 0) {
-
-                databaseReference.child("User" + trips.get(0).getUserId()).setValue(trips);
+                databaseReference = FirebaseDatabase.getInstance().getReference();
+                databaseReference.child(User.getFirebasePath()).setValue(trips);
                 databaseReference.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
