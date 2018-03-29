@@ -219,7 +219,8 @@ public class HomeFragment extends Fragment{
                 public void onClick(View v) {
                     Toast.makeText(getActivity(), "position is "+upcommingTrips.get(position).getTripId(), Toast.LENGTH_SHORT).show();
                     Intent i = new Intent(getActivity() , ShowTripActivity.class);
-                    i.putExtra("user_id" , String.valueOf(upcommingTrips.get(position).getTripId()));
+                    i.putExtra("trip_id" , String.valueOf(upcommingTrips.get(position).getTripId()));
+                    Toast.makeText(getActivity(), ""+ String.valueOf(upcommingTrips.get(position).getTripId()), Toast.LENGTH_SHORT).show();
                     startActivity(i);
                 }
             });
@@ -229,7 +230,7 @@ public class HomeFragment extends Fragment{
                 public void onClick(View v) {
                     Toast.makeText(v.getContext(), "Clicked on Information " + upcommingTrips.get(position).getTripId(), Toast.LENGTH_SHORT).show();
                     Intent i = new Intent(getActivity() , ShowTripActivity.class);
-                    i.putExtra("user_id" , String.valueOf(upcommingTrips.get(position).getTripId()));
+                    i.putExtra("trip_id" , String.valueOf(upcommingTrips.get(position).getTripId()));
                     startActivity(i);
 
                 }
@@ -250,7 +251,7 @@ public class HomeFragment extends Fragment{
 
                     Toast.makeText(view.getContext(), "Clicked on Edit  " + upcommingTrips.get(position).getTripId(), Toast.LENGTH_SHORT).show();
                     Intent i = new Intent(getActivity() , UpdateTrip.class);
-                    i.putExtra("user_id", String.valueOf(upcommingTrips.get(position).getTripId()));
+                    i.putExtra("trip_id", String.valueOf(upcommingTrips.get(position).getTripId()));
                     startActivity(i);
                 }
             });
@@ -310,6 +311,15 @@ public class HomeFragment extends Fragment{
         }
     }
 
-
+    @Override
+    public void onResume()
+    {  // After a pause OR at startup
+        super.onResume();
+        Toast.makeText(getActivity(), "refresh", Toast.LENGTH_SHORT).show();
+        upcommingTrips = tripTableOperations.selectUpcomingTripsUsingOnlyDate();
+        myAdapter = new TripAdapterFragment();
+        recyclerView.setAdapter(myAdapter);
+        //Refresh your stuff here
+    }
 
 }

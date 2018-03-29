@@ -2,6 +2,7 @@ package com.ititeam.tripplannermaster.activity;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
@@ -74,10 +75,12 @@ public class ShowHistoryActivity extends AppCompatActivity implements OnMapReady
         trip.setTripStartPoint("cairo");
         trip.setTripEndPoint("Alexandria,egypt");*/
         trips = new TripTableOperations(this).selectPastTripsUsingDateAndStatus();
-        if (haveNetworkConnection()) {
+        if (isConnected()) {
             mapFragment = (SupportMapFragment) getSupportFragmentManager()
                     .findFragmentById(R.id.history_map);
             mapFragment.getMapAsync(this);
+        }else {
+            Toast.makeText(this, "No internet connection", Toast.LENGTH_SHORT).show();
         }
     }
     /**
@@ -93,7 +96,7 @@ public class ShowHistoryActivity extends AppCompatActivity implements OnMapReady
     @Override
     public void onMapReady(GoogleMap googleMap) {
         if (trips.size() > 0) {
-            if (haveNetworkConnection()) {
+            if (isConnected()) {
                 mMap = googleMap;
                 mMap.getUiSettings().setZoomControlsEnabled(true);
                 if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -377,23 +380,12 @@ public class ShowHistoryActivity extends AppCompatActivity implements OnMapReady
         }
         return latLng;
     }
-    private boolean haveNetworkConnection() {
-        boolean haveConnectedWifi = false;
-        boolean haveConnectedMobile = false;
-
-        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        /*NetworkInfo[] netInfo = cm.getAllNetworkInfo();
-        for (NetworkInfo ni : netInfo) {
-            if (ni.getTypeName().equalsIgnoreCase("WIFI"))
-                if (ni.isConnected())
-                    haveConnectedWifi = true;
-            if (ni.getTypeName().equalsIgnoreCase("MOBILE"))
-                if (ni.isConnected())
-                    haveConnectedMobile = true;
-        }*/
-        NetworkInfo networkInfo = cm.getActiveNetworkInfo();
-        boolean connected = networkInfo != null && networkInfo.isAvailable() &&
-                networkInfo.isConnected();
-        return connected;
+    public boolean isConnected() {
+        ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Activity.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+        if (networkInfo != null && networkInfo.isConnected())
+            return true;
+        else
+            return false;
     }
 }

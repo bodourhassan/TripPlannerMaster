@@ -44,9 +44,9 @@ public class FirebaseActivity extends AppCompatActivity {
         downlaodBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+/*
                 DownLoadDataFromFirebase downLoadDataFromFirebase = new DownLoadDataFromFirebase(FirebaseActivity.this);
-                downLoadDataFromFirebase.execute();
+                downLoadDataFromFirebase.execute();*/
             }
         });
     }

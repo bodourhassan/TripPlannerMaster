@@ -216,9 +216,8 @@ public class TripTableOperations {
         return trip;
     }
 
-    public Trip selectSingleTrips (String id)
-    {
-        String [] result_columns = {AdapterDba.DbOpenHelper.TRIP_ID,
+    public Trip selectSingleTrips (String id) {
+        String[] result_columns = {AdapterDba.DbOpenHelper.TRIP_ID,
                 AdapterDba.DbOpenHelper.TRIP_NAME,
                 AdapterDba.DbOpenHelper.TRIP_START_POINT,
                 AdapterDba.DbOpenHelper.TRIP_END_POINT,
@@ -230,16 +229,16 @@ public class TripTableOperations {
                 AdapterDba.DbOpenHelper.TRIP_REPITITION,
                 AdapterDba.DbOpenHelper.TRIP_CATEGORY,
                 AdapterDba.DbOpenHelper.USER_ID};
-        String whereClause = AdapterDba.DbOpenHelper.TRIP_ID+"=?";
-        String [] selectArgs = {id};
-        String groupBy  = null;
+        String whereClause = AdapterDba.DbOpenHelper.TRIP_ID + "=?";
+        String[] selectArgs = {id};
+        String groupBy = null;
         String having = null;
         String orderBy = null;
-        Cursor cursor = AdapterDba.getAdapterDbaInstance(context)._select(AdapterDba.DbOpenHelper.TRIP_TABLE ,result_columns , whereClause, selectArgs, groupBy , having , orderBy);
+        Cursor cursor = AdapterDba.getAdapterDbaInstance(context)._select(AdapterDba.DbOpenHelper.TRIP_TABLE, result_columns, whereClause, selectArgs, groupBy, having, orderBy);
 
-        Trip trip = new Trip();
-        if (cursor.moveToNext())
-        {
+        Trip trip = null;
+        if (cursor.moveToNext()) {
+            trip = new Trip();
             trip.setTripId(cursor.getInt(0));
             trip.setTripName(cursor.getString(1));
             trip.setTripStartPoint(cursor.getString(2));
@@ -253,16 +252,15 @@ public class TripTableOperations {
             trip.setUserId(cursor.getString(11));
 
         }
-
-        ArrayList<Note> notes =  new NoteTableOperations(context).selectNoteWithTripFk(trip.getTripId()+"");
-        for (Note note : notes)
-        {
-            Log.i(TAG, note.getNoteBody());
-            trip.getTripNotes().add(note);
+        if (trip != null) {
+            ArrayList<Note> notes = new NoteTableOperations(context).selectNoteWithTripFk(trip.getTripId() + "");
+            for (Note note : notes) {
+                Log.i(TAG, note.getNoteBody());
+                trip.getTripNotes().add(note);
+            }
         }
-
-        return trip;
-    }
+            return trip;
+        }
 
     public ArrayList<Trip> selectTripsUsingUserId(String id) {
         String[] result_columns = {AdapterDba.DbOpenHelper.TRIP_ID,
@@ -282,11 +280,10 @@ public class TripTableOperations {
         String groupBy = null;
         String having = null;
         String orderBy = null;
-        Trip trip =null;
-                Cursor cursor = AdapterDba.getAdapterDbaInstance(context)._select(AdapterDba.DbOpenHelper.TRIP_TABLE, result_columns, whereClause, selectArgs, groupBy, having, orderBy);
+        Cursor cursor = AdapterDba.getAdapterDbaInstance(context)._select(AdapterDba.DbOpenHelper.TRIP_TABLE, result_columns, whereClause, selectArgs, groupBy, having, orderBy);
         ArrayList<Trip> returnedData = new ArrayList<>();
         while (cursor.moveToNext()) {
-             trip = new Trip();
+            Trip trip = new Trip();
             trip.setTripId(cursor.getInt(0));
             trip.setTripName(cursor.getString(1));
             trip.setTripStartPoint(cursor.getString(2));

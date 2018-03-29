@@ -3,10 +3,12 @@ package com.ititeam.tripplannermaster.activity.login;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
@@ -30,6 +32,12 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.GenericTypeIndicator;
+import com.google.firebase.database.ValueEventListener;
 import com.ititeam.tripplannermaster.DB.TripTableOperations;
 import com.ititeam.tripplannermaster.R;
 import com.ititeam.tripplannermaster.activity.StartActivityDrawer;
@@ -41,6 +49,10 @@ import com.ititeam.tripplannermaster.model.User;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+
+import static com.facebook.FacebookSdk.getApplicationContext;
+
 
 public class LoginFragment extends Fragment implements OnLoginListener{
     private static final String TAG = "LoginFragment";
@@ -49,9 +61,12 @@ public class LoginFragment extends Fragment implements OnLoginListener{
     EditText etEmail, etPassword;
     String uEmail, uPassword;
     private FirebaseAuth auth;
+     ProgressDialog   prog;
+
 
     public LoginFragment() {
         // Required empty public constructor
+
     }
 
     @Override
@@ -261,7 +276,7 @@ public class LoginFragment extends Fragment implements OnLoginListener{
             Log.i("userdatalogin", "" + uEmail);
             Log.i("userdatalogin", "" + uPassword);
             //authenticate user
-            final ProgressDialog prog = new ProgressDialog(getActivity());
+               prog = new ProgressDialog(getActivity());
             prog.setMessage("signing up !!!!!!");
             prog.setCancelable(false);
             prog.show();
@@ -272,7 +287,7 @@ public class LoginFragment extends Fragment implements OnLoginListener{
                             // If sign in fails, display a message to the user. If sign in succeeds
                             // the auth state listener will be notified and logic to handle the
                             // signed in user can be handled in the listener.
-                            prog.dismiss();
+
                             if (!task.isSuccessful()) {
                                 // there was an error
                                 if (uPassword.length() < 6) {
@@ -289,7 +304,7 @@ public class LoginFragment extends Fragment implements OnLoginListener{
                                 editor.putString("user_email",uEmail);
                                 editor.putString("user_password",uPassword);
                                 User.setEmail(uEmail);
-                               /* Trip trip6 = new Trip();
+                              /* Trip trip6 = new Trip();
                                 trip6.setTripName("Relax");
                                 trip6.setTripStartPoint("cairo");
                                 trip6.setTripEndPoint("Aswan");
@@ -307,12 +322,10 @@ public class LoginFragment extends Fragment implements OnLoginListener{
                                 trip6.getTripNotes().add(note);
                                 new TripTableOperations(getContext()).insertTrip(trip6);*/
 
-                                DownLoadDataFromFirebase downLoadDataFromFirebase=new DownLoadDataFromFirebase(getActivity());
+                                DownLoadDataFromFirebase2 downLoadDataFromFirebase=new DownLoadDataFromFirebase2(getActivity());
                                 downLoadDataFromFirebase.execute();
 
-                                Intent intent = new Intent(getActivity(), StartActivityDrawer.class);
-                                intent.putExtra("login_user_email", uEmail);
-                                startActivity(intent);
+
                             }
                         }
                     });
@@ -345,4 +358,61 @@ public class LoginFragment extends Fragment implements OnLoginListener{
 
 
     }
+
+
+    public class DownLoadDataFromFirebase2 extends AsyncTask<String, Integer, Object> {
+
+        private DatabaseReference databaseReference, getDatabaseReference;
+        Context context;
+        OnTaskComplete onTaskComplete=null;
+
+        public DownLoadDataFromFirebase2(Context context) {
+            this.context=context;
+        }
+
+        @Override
+        protected void onPostExecute(Object o) {
+          // prog.dismiss();
+        }
+
+        @Override
+        protected Object doInBackground(String... strings) {
+            databaseReference = FirebaseDatabase.getInstance().getReference();
+            String path= User.getEmail().replace(".","_");
+            path=path.replace("#","_");
+            path=path.replace("$","_");
+            path=path.replace("[","_");
+            path=path.replace("]","_");
+            User.setFirebasePath(path);
+            if ((getDatabaseReference = databaseReference.child(User.getFirebasePath())) != null) {
+                getDatabaseReference.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        ArrayList<Trip> trips = null;
+                        GenericTypeIndicator<ArrayList<Trip>> genericTypeIndicator = new GenericTypeIndicator<ArrayList<Trip>>() {
+                        };
+                        trips = dataSnapshot.getValue(genericTypeIndicator);
+                        if (trips != null) {
+                            Toast.makeText(getApplicationContext(), "download" + trips.size(), Toast.LENGTH_SHORT).show();
+                            new TripTableOperations(getApplicationContext()).getTripFromFirebase(trips);
+                           prog.dismiss();
+
+                            Intent intent = new Intent(context, StartActivityDrawer.class);
+                            intent.putExtra("login_user_email", User.getEmail());
+                            context.startActivity(intent);
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        Toast.makeText(context, "Download Error", Toast.LENGTH_SHORT).show();
+
+                    }
+
+                });
+            }
+            return null;
+        }
+    }
+
 }
