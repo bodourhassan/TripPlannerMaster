@@ -381,6 +381,8 @@ public class TripTableOperations {
             Trip localTrip = selectSingleTrips(trip.getTripId() + "");
             if (localTrip == null) {
                 insertTrip(trip);
+            }else{
+                updateTrip(trip);
             }
         }
     }

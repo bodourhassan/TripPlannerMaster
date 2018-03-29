@@ -2,7 +2,9 @@ package com.ititeam.tripplannermaster.activity;
 
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -34,7 +36,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 
-public class HomeFragment extends Fragment {
+public class HomeFragment extends Fragment{
     FloatingActionMenu materialDesignFAM;
     FloatingActionButton floatingActionButton1, floatingActionButton2, floatingActionButton3;
     RecyclerView recyclerView;
@@ -50,7 +52,7 @@ public class HomeFragment extends Fragment {
         super.onCreate(savedInstanceState);
         tripTableOperations = new TripTableOperations(getActivity());
         upcommingTrips = tripTableOperations.selectUpcomingTripsUsingOnlyDate();
-        Toast.makeText(getActivity(), "size array oncreate " + upcommingTrips.size(), Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), "size array oncreate "+upcommingTrips.size(), Toast.LENGTH_SHORT).show();
     }
 
     public HomeFragment() {
@@ -79,9 +81,12 @@ public class HomeFragment extends Fragment {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 ////////////////////////////////////////////////////////////////////////////////////////////
-        //  drawerFragment = (FragmentDrawer) getActivity().getSupportFragmentManager().findFragmentById(R.id.fragment_navigation_drawer);
-        //  drawerFragment.setUp(R.id.fragment_navigation_drawer, (DrawerLayout) rootView.findViewById(R.id.drawer_layout), mToolbar);
-        //  drawerFragment.setDrawerListener((FragmentDrawer.FragmentDrawerListener) getActivity());
+      //  drawerFragment = (FragmentDrawer) getActivity().getSupportFragmentManager().findFragmentById(R.id.fragment_navigation_drawer);
+      //  drawerFragment.setUp(R.id.fragment_navigation_drawer, (DrawerLayout) rootView.findViewById(R.id.drawer_layout), mToolbar);
+      //  drawerFragment.setDrawerListener((FragmentDrawer.FragmentDrawerListener) getActivity());
+
+
+
 
 
         floatingActionButton1.setOnClickListener(new View.OnClickListener() {
@@ -90,7 +95,7 @@ public class HomeFragment extends Fragment {
                 // Intent i = new Intent(ShowUpcomingTrips.this , AddTrip.class);
                 // startActivity(i);
                 Toast.makeText(getActivity(), "clicked", Toast.LENGTH_SHORT).show();
-                Intent i = new Intent(getActivity(), AuthenticationActivity.class);
+                Intent i = new Intent(getActivity() , AuthenticationActivity.class);
                 startActivity(i);
             }
         });
@@ -102,7 +107,7 @@ public class HomeFragment extends Fragment {
         });
         floatingActionButton3.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                //TODO something when floating action menu third item clicked
+                //TODO something when floating action menu third item clicke
 
             }
         });
@@ -116,21 +121,22 @@ public class HomeFragment extends Fragment {
 
 
 
+
     public class TripAdapterFragment extends RecyclerSwipeAdapter<TripViewHolder> {
 
         private LayoutInflater inflater;
         TripViewHolder viewHolder;
 
-        public TripAdapterFragment() {
-            Log.e("ADAPTER", "TripAdapterFragment: Is here");
+        public TripAdapterFragment(){
+            Log.e("ADAPTER", "TripAdapterFragment: Is here" );
         }
         @Override
         public TripViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
             inflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            View view = inflater.inflate(R.layout.swip_layout, null);
+            View view = inflater.inflate(R.layout.swip_layout ,null);
             viewHolder = new TripViewHolder(view);
-            return viewHolder;
+            return  viewHolder;
         }
 
         @Override
@@ -152,6 +158,8 @@ public class HomeFragment extends Fragment {
                 }
             });
 */
+
+
 
 
             viewHolder.Name.setText(upcommingTrips.get(position).getTripName());
@@ -207,7 +215,7 @@ public class HomeFragment extends Fragment {
             viewHolder.swipeLayout.getSurfaceView().setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(getActivity(), "position is " + upcommingTrips.get(position).toString(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "position is "+upcommingTrips.get(position).toString(), Toast.LENGTH_SHORT).show();
                 }
             });
 
@@ -237,14 +245,37 @@ public class HomeFragment extends Fragment {
             viewHolder.Delete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    tripTableOperations.deleteTrip(String.valueOf(upcommingTrips.get(position).getTripId()));
-                    mItemManger.removeShownLayouts(viewHolder.swipeLayout);
-                    upcommingTrips.remove(position);
-                    notifyItemRemoved(position);
-                    notifyItemRangeChanged(position, upcommingTrips.size());
-                    mItemManger.closeAllItems();
+                    AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
+                    alert.setTitle("Delete Trip "+upcommingTrips.get(position).getTripName());
+                    alert.setMessage("Are you sure you want to delete "+upcommingTrips.get(position).getTripName()+" ?");
+
+                    alert.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+
+
+                        public void onClick(DialogInterface dialog, int which) {
+                            // continue with delete
+                            tripTableOperations.deleteTrip(String.valueOf(upcommingTrips.get(position).getTripId()));
+                            mItemManger.removeShownLayouts(viewHolder.swipeLayout);
+                            upcommingTrips.remove(position);
+                            notifyItemRemoved(position);
+                            notifyItemRangeChanged(position, upcommingTrips.size());
+                            mItemManger.closeAllItems();
+                            Toast.makeText(getActivity(), "here in delete", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+
+                    alert.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            // close dialog
+                            dialog.cancel();
+                        }
+                    });
+                    alert.show();
+
+
+
                     //Toast.makeText(v.getContext(), "Deleted " + upcommingTrips.get(position).getTripId(), Toast.LENGTH_SHORT).show();
-                    Toast.makeText(getActivity(), "array size" + upcommingTrips.size(), Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getActivity(), "array size"+ upcommingTrips.size(), Toast.LENGTH_SHORT).show();
                 }
             });
 
@@ -265,6 +296,7 @@ public class HomeFragment extends Fragment {
             return R.id.swipe;
         }
     }
+
 
 
 }

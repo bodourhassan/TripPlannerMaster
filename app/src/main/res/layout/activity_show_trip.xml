@@ -5,7 +5,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context="com.ititeam.tripplannermaster.activity.ShowTripActivity">
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appBarLayout"
@@ -43,7 +42,9 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/map_layout">
+        android:layout_below="@+id/map_layout"
+        android:fillViewport="true"
+        android:nestedScrollingEnabled="true">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -99,18 +100,36 @@
                 android:id="@+id/imageView6"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:layout_alignBottom="@+id/show_trip_start_point"
+                android:layout_alignBottom="@+id/show_trip_status"
                 android:layout_alignLeft="@+id/description_img"
                 android:layout_alignStart="@+id/description_img"
+                android:src="@mipmap/start" />
+
+            <com.github.clans.fab.Label
+                android:id="@+id/show_trip_status"
+                android:layout_width="220dp"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/show_trip_description"
+                android:layout_alignStart="@+id/show_trip_description"
+                android:layout_below="@+id/show_trip_description"
+                android:layout_marginTop="38dp"
+                android:hint="@string/StartPointhint" />
+            <ImageView
+                android:id="@+id/imageView12"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignBottom="@+id/show_trip_start_point"
+                android:layout_alignLeft="@+id/imageView6"
+                android:layout_alignStart="@+id/imageView6"
                 android:src="@mipmap/start" />
 
             <com.github.clans.fab.Label
                 android:id="@+id/show_trip_start_point"
                 android:layout_width="220dp"
                 android:layout_height="wrap_content"
-                android:layout_alignLeft="@+id/show_trip_description"
-                android:layout_alignStart="@+id/show_trip_description"
-                android:layout_below="@+id/show_trip_description"
+                android:layout_alignLeft="@+id/show_trip_status"
+                android:layout_alignStart="@+id/show_trip_status"
+                android:layout_below="@+id/show_trip_status"
                 android:layout_marginTop="38dp"
                 android:hint="@string/StartPointhint" />
 
@@ -162,9 +181,19 @@
                 android:layout_marginLeft="12dp"
                 android:layout_marginStart="12dp"
                 android:layout_marginTop="22dp"
-                android:text="@string/DateValue"
                 android:textColor="@color/common_google_signin_btn_text_dark_focused" />
 
+            <TextView
+                android:id="@+id/DateText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/show_trip_date"
+                android:layout_alignBottom="@+id/show_trip_date"
+                android:layout_marginLeft="68dp"
+                android:layout_marginStart="68dp"
+                android:layout_toEndOf="@+id/show_trip_date"
+                android:layout_toRightOf="@+id/show_trip_date"
+                 />
 
             <ImageView
                 android:id="@+id/imageView8"
@@ -185,9 +214,19 @@
                 android:layout_marginLeft="0dp"
                 android:layout_marginStart="0dp"
                 android:layout_marginTop="22dp"
-                android:text="@string/TimeValue"
                 android:textColor="@color/common_google_signin_btn_text_dark_focused" />
 
+            <TextView
+                android:id="@+id/TimeText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/show_trip_time"
+                android:layout_alignBottom="@+id/show_trip_time"
+                android:layout_marginLeft="68dp"
+                android:layout_marginStart="68dp"
+                android:layout_toEndOf="@+id/show_trip_time"
+                android:layout_toRightOf="@+id/show_trip_time"
+                 />
 
             <ImageView
                 android:id="@+id/imageView9"
@@ -198,28 +237,39 @@
                 android:layout_alignTop="@+id/show_trip_time"
                 android:src="@mipmap/clock" />
 
-            <ImageView
+            <TextView
                 android:id="@+id/imageView11"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:layout_alignLeft="@+id/imageView9"
                 android:layout_alignStart="@+id/imageView9"
                 android:layout_alignTop="@+id/notes_layout"
-                android:src="@mipmap/clock" />
+                android:text="Notes :" />
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:id="@+id/notes_layout"
                 android:layout_alignLeft="@+id/show_trip_time"
                 android:layout_alignStart="@+id/show_trip_time"
-                android:layout_below="@+id/show_trip_time"
-                android:layout_marginTop="34dp"
-                >
+                android:layout_below="@+id/TimeText"
+                android:layout_marginTop="34dp">
 
+                <ListView
+                    xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:id="@+id/show_trip_note_custom_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:layout_centerHorizontal="true"
+                    android:animationCache="false"
+                    android:divider="@null"
+                    android:scrollingCache="false"
+                    android:smoothScrollbar="true"/>
             </LinearLayout>
-
         </RelativeLayout>
     </ScrollView>
 
@@ -267,23 +317,35 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/cloud"
-            fab:fab_label="Start Trip"
+            fab:fab_label="Start"
             fab:fab_size="mini" />
-
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/show_trip_done"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/plus"
+            fab:fab_label="Done"
+            fab:fab_size="mini" />
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/show_trip_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/edit"
+            fab:fab_label="Cancel"
+            fab:fab_size="mini" />
         <com.github.clans.fab.FloatingActionButton
             android:id="@+id/show_trip_edit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/edit"
-            fab:fab_label="edit Trip"
+            fab:fab_label="Update"
             fab:fab_size="mini" />
-
         <com.github.clans.fab.FloatingActionButton
-            android:id="@+id/show_trip_done"
+            android:id="@+id/show_trip_delete"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/rubbish"
             fab:fab_label="Delete"
-            fab:fab_size="mini" />
+            fab:fab_size="mini" />;8
     </com.github.clans.fab.FloatingActionMenu>
 </RelativeLayout>

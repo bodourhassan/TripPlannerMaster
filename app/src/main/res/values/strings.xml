@@ -47,11 +47,12 @@
     <string name="buttonStart">"start "</string>
     <string name="drawer_open">Open</string>
     <string name="drawer_close">Close</string>
-    <string name="nav_item_home">Home</string>
-    <string name="nav_item_friends">Friends</string>
-    <string name="nav_item_notifications">Messages</string>
+    <string name="nav_item_home">Up Comming Trips</string>
+    <string name="nav_item_friends">History Trips</string>
+    <string name="nav_item_notifications">Log out</string>
     <string name="title_home">Home</string>
 
+    <string name="StartTrip">start trip</string>
     <!-- navigation drawer item labels  -->
     <string-array name="nav_drawer_labels">
         <item>@string/nav_item_home</item>

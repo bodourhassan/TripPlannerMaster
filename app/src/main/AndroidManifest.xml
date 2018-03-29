@@ -103,7 +103,7 @@
         <activity android:name=".activity.ShowUpcomingTrips" />
         <activity
             android:name=".activity.StartActivityDrawer"
-            android:theme="@style/AppTheme" />
+            android:theme="@style/MyMaterialTheme.Base" />
 
         <!-- end hesham section -->
 
