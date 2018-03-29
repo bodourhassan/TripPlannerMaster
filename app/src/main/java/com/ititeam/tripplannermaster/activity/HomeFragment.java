@@ -107,7 +107,7 @@ public class HomeFragment extends Fragment{
         });
         floatingActionButton3.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                //TODO something when floating action menu third item clicked
+                //TODO something when floating action menu third item clicke
 
             }
         });
@@ -118,6 +118,7 @@ public class HomeFragment extends Fragment{
         // Inflate the layout for this fragment
         return rootView;
     }
+
 
 
 
