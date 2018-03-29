@@ -23,6 +23,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
 import com.ititeam.tripplannermaster.R;
+import com.ititeam.tripplannermaster.activity.HomeFragment;
 import com.ititeam.tripplannermaster.activity.MainActivity;
 
 
@@ -112,7 +113,7 @@ public class SignUpFragment extends Fragment implements OnSignUpListener{
                     } else {
                         prog.dismiss();
                         Toast.makeText(getActivity(), "succefull", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(getActivity(), MainActivity.class));
+                        startActivity(new Intent(getActivity(), HomeFragment.class));
                     }
                 }
 

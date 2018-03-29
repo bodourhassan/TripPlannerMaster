@@ -84,7 +84,10 @@ public class UpdateTrip extends AppCompatActivity implements GoogleApiClient.Con
         Spinner dropdown = findViewById(R.id.UTripCatId);
 //        Intent intent = getIntent();
 //        int TripId = intent.getIntExtra("TripId",1);
-        int TripId=1;
+        Intent intent=this.getIntent();
+        //String email=intent.getStringExtra("login_user_email");
+        String TripId=intent.getStringExtra("user_id");
+        Toast.makeText(this, "in update   "+TripId, Toast.LENGTH_SHORT).show();
         /***************************Get TRip Data***************************/
          tripTableOperations =new TripTableOperations(this);
         UpdateTrip = tripTableOperations.selectSingleTrips(TripId + "");
