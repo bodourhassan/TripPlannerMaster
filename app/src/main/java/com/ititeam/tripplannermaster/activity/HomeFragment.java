@@ -50,7 +50,7 @@ public class HomeFragment extends Fragment{
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         tripTableOperations = new TripTableOperations(getActivity());
-        upcommingTrips = tripTableOperations.selectUpcomingTripsUsingOnlyDate();
+        upcommingTrips = tripTableOperations.selectUpcomingTripsUsingOnlyDate(User.getEmail());
         Toast.makeText(getActivity(), "size array oncreate "+upcommingTrips.size(), Toast.LENGTH_SHORT).show();
         Intent intent=getActivity().getIntent();
         String email=intent.getStringExtra("login_user_email");
@@ -317,11 +317,19 @@ public class HomeFragment extends Fragment{
     public void onResume()
     {  // After a pause OR at startup
         super.onResume();
-        Toast.makeText(getActivity(), "refresh", Toast.LENGTH_SHORT).show();
-        upcommingTrips = tripTableOperations.selectUpcomingTripsUsingOnlyDate();
+       /* Toast.makeText(getActivity(), "email in Resume"+User.getEmail(), Toast.LENGTH_SHORT).show();
+        upcommingTrips = tripTableOperations.selectUpcomingTripsUsingOnlyDate(User.getEmail());
         myAdapter = new TripAdapterFragment();
-        recyclerView.setAdapter(myAdapter);
+        recyclerView.setAdapter(myAdapter);*/
         //Refresh your stuff here
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        Toast.makeText(getActivity(), "email in restart"+User.getEmail(), Toast.LENGTH_SHORT).show();
+/*        upcommingTrips = tripTableOperations.selectUpcomingTripsUsingOnlyDate(User.getEmail());
+        myAdapter = new TripAdapterFragment();
+        recyclerView.setAdapter(myAdapter);*/
+    }
 }

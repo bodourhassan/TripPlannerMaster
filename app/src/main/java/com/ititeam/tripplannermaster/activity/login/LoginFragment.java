@@ -66,7 +66,8 @@ public class LoginFragment extends Fragment implements OnLoginListener , View.On
     CheckBox checkBoxRememberMe;
     String uEmail, uPassword;
     private FirebaseAuth auth;
-     ProgressDialog   prog;
+    ProgressDialog   prog;
+    String first_name,last_name,email,id;
 
 
     public LoginFragment() {
@@ -77,6 +78,8 @@ public class LoginFragment extends Fragment implements OnLoginListener , View.On
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        auth = FirebaseAuth.getInstance();
+        prog = new ProgressDialog(getActivity());
         //Get Firebase auth instance
         //auth = FirebaseAuth.getInstance();
         /*
@@ -223,6 +226,86 @@ public class LoginFragment extends Fragment implements OnLoginListener , View.On
                     @Override
                     public void onCompleted(JSONObject object, GraphResponse response) {
                         getUserInfo(object);
+                        ///////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+                        auth.signInWithEmailAndPassword(email, id)
+                                .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<AuthResult> task) {
+                                        User.setEmail(email);
+                                        // If sign in fails, display a message to the user. If sign in succeeds
+                                        // the auth state listener will be notified and logic to handle the
+                                        // signed in user can be handled in the listener.
+                                        prog.dismiss();
+                                        if (!task.isSuccessful()) {
+                                            // there was an error
+                                            //Toast.makeText(getActivity(), getString(R.string.auth_failed), Toast.LENGTH_LONG).show();
+                                            //////////////////////////////////////////////////////////////////////////////////////////////////
+
+                                            auth.createUserWithEmailAndPassword(email, id).addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
+                                                @Override
+                                                public void onComplete(@NonNull Task<AuthResult> task) {
+                                                    Toast.makeText(getActivity(), "createUserWithEmail:onComplete:" + task.isSuccessful(), Toast.LENGTH_SHORT).show();
+
+                                                    if (!task.isSuccessful()) {
+                                                        prog.dismiss();
+                                                        Toast.makeText(getActivity(), "Authentication failed." + task.getException(),
+                                                                Toast.LENGTH_SHORT).show();
+
+                                                        Log.i("exceptionis", "" + task.getException());
+                                                    } else {
+                                                        User.setEmail(email);
+                                                        prog.dismiss();
+                                                        Toast.makeText(getActivity(), "sign up", Toast.LENGTH_SHORT).show();
+                                                        startActivity(new Intent(getActivity(), StartActivityDrawer.class));
+                                                    }
+                                                }
+
+
+                                            });
+
+
+                                            ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                                            Toast.makeText(getActivity(), task.getException().getMessage(), Toast.LENGTH_LONG).show();
+                                            Log.i("myExce", "" + task.getException().getMessage());
+
+                                        } else {
+                                            /*
+                                            if(checkBoxRememberMe.isChecked())
+                                            {
+                                                SharedPreferences myprefrances = PreferenceManager.getDefaultSharedPreferences(getActivity());
+                                                SharedPreferences.Editor editor = myprefrances.edit();
+                                                editor.putString("user_email",uEmail);
+                                                editor.putString("user_password",uPassword);
+                                                User.setEmail(uEmail);
+                                                editor.commit();
+                                            }else{
+
+                                            }
+                                                PreferenceManager.getDefaultSharedPreferences(getActivity()).
+                                                        edit().clear().apply();
+                                                        */
+                                            User.setEmail(email);
+                                            Toast.makeText(getActivity(), "login", Toast.LENGTH_SHORT).show();
+
+
+
+                                            DownLoadDataFromFirebase2 downLoadDataFromFirebase=new DownLoadDataFromFirebase2(getActivity());
+                                            downLoadDataFromFirebase.execute();
+
+
+                                        }
+                                    }
+                                });
+
+
+
+
+
+                        //////////////////////////////////////////////////////////////////////////////////////////
                     }
                 });
                 Bundle bundle=new Bundle();
@@ -261,7 +344,6 @@ public class LoginFragment extends Fragment implements OnLoginListener , View.On
     @Override
     public void login() {
         if (isConnected()) {
-            auth = FirebaseAuth.getInstance();
 
             Toast.makeText(getContext(), "Login", Toast.LENGTH_SHORT).show();
             uEmail = etEmail.getText().toString().trim();
@@ -283,56 +365,61 @@ public class LoginFragment extends Fragment implements OnLoginListener , View.On
             Log.i("userdatalogin", "" + uEmail);
             Log.i("userdatalogin", "" + uPassword);
             //authenticate user
-            prog = new ProgressDialog(getActivity());
+
             prog.setMessage("signing up !!!!!!");
             prog.setCancelable(false);
             prog.show();
-            auth.signInWithEmailAndPassword(uEmail, uPassword)
-                    .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            // If sign in fails, display a message to the user. If sign in succeeds
-                            // the auth state listener will be notified and logic to handle the
-                            // signed in user can be handled in the listener.
-                            prog.dismiss();
-                            if (!task.isSuccessful()) {
-                                // there was an error
-                                if (uPassword.length() < 6) {
-                                    etPassword.setError(getString(R.string.minimum_password));
-                                } else {
-                                    //Toast.makeText(getActivity(), getString(R.string.auth_failed), Toast.LENGTH_LONG).show();
-                                    Toast.makeText(getActivity(), task.getException().getMessage(), Toast.LENGTH_LONG).show();
-                                    Log.i("myExce", "" + task.getException().getMessage());
-                                }
-                            } else {
-                                if(checkBoxRememberMe.isChecked())
-                                {
-                                    SharedPreferences myprefrances = PreferenceManager.getDefaultSharedPreferences(getActivity());
-                                    SharedPreferences.Editor editor = myprefrances.edit();
-                                    editor.putString("user_email",uEmail);
-                                    editor.putString("user_password",uPassword);
-                                    User.setEmail(uEmail);
-                                    editor.commit();
-                                }else{
-                                    PreferenceManager.getDefaultSharedPreferences(getActivity()).
-                                            edit().clear().apply();
-                                    User.setEmail(uEmail);
-                                    Toast.makeText(getActivity(), "remove prefrences", Toast.LENGTH_SHORT).show();
-                                }
 
-
-                                DownLoadDataFromFirebase2 downLoadDataFromFirebase=new DownLoadDataFromFirebase2(getActivity());
-                                downLoadDataFromFirebase.execute();
-
-
-                            }
-                        }
-                    });
+            loginUser(uEmail , uPassword);
         } else {
             Toast.makeText(getActivity(), "No internet connection", Toast.LENGTH_SHORT).show();
         }
 
 
+    }
+    private void loginUser(String uEmail , String uPassword)
+    {
+        auth.signInWithEmailAndPassword(uEmail, uPassword)
+                .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        // If sign in fails, display a message to the user. If sign in succeeds
+                        // the auth state listener will be notified and logic to handle the
+                        // signed in user can be handled in the listener.
+                        prog.dismiss();
+                        if (!task.isSuccessful()) {
+                            // there was an error
+                            if (uPassword.length() < 6) {
+                                etPassword.setError(getString(R.string.minimum_password));
+                            } else {
+                                //Toast.makeText(getActivity(), getString(R.string.auth_failed), Toast.LENGTH_LONG).show();
+                                Toast.makeText(getActivity(), task.getException().getMessage(), Toast.LENGTH_LONG).show();
+                                Log.i("myExce", "" + task.getException().getMessage());
+                            }
+                        } else {
+                            if(checkBoxRememberMe.isChecked())
+                            {
+                                SharedPreferences myprefrances = PreferenceManager.getDefaultSharedPreferences(getActivity());
+                                SharedPreferences.Editor editor = myprefrances.edit();
+                                editor.putString("user_email",uEmail);
+                                editor.putString("user_password",uPassword);
+                                User.setEmail(uEmail);
+                                editor.commit();
+                            }else{
+                                PreferenceManager.getDefaultSharedPreferences(getActivity()).
+                                        edit().clear().apply();
+                                User.setEmail(uEmail);
+                                Toast.makeText(getActivity(), "remove prefrences", Toast.LENGTH_SHORT).show();
+                            }
+
+
+                            DownLoadDataFromFirebase2 downLoadDataFromFirebase=new DownLoadDataFromFirebase2(getActivity());
+                            downLoadDataFromFirebase.execute();
+
+
+                        }
+                    }
+                });
     }
 
     @Override
@@ -341,13 +428,13 @@ public class LoginFragment extends Fragment implements OnLoginListener , View.On
         super.onActivityResult(requestCode, resultCode, data);
     }
     public void getUserInfo(JSONObject object){
-        String first_name,last_name,email,id;
+
         try {
             first_name=object.getString("first_name");
             last_name=object.getString("last_name");
             email=object.getString("email");
             id=object.getString("id");
-            Toast.makeText(getContext(), first_name+last_name, Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), id.toString(), Toast.LENGTH_SHORT).show();
 
 
 
@@ -363,6 +450,10 @@ public class LoginFragment extends Fragment implements OnLoginListener , View.On
 
     }
 
+    public void signOut() {
+        auth.signOut();
+    }
+
 
     public class DownLoadDataFromFirebase2 extends AsyncTask<String, Integer, Object> {
 
@@ -376,7 +467,7 @@ public class LoginFragment extends Fragment implements OnLoginListener , View.On
 
         @Override
         protected void onPostExecute(Object o) {
-          // prog.dismiss();
+            // prog.dismiss();
         }
 
         @Override

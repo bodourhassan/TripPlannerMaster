@@ -32,6 +32,7 @@ import com.ititeam.tripplannermaster.DB.TripTableOperations;
 import com.ititeam.tripplannermaster.R;
 import com.ititeam.tripplannermaster.classes.DirectionsParser;
 import com.ititeam.tripplannermaster.model.Trip;
+import com.ititeam.tripplannermaster.model.User;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -74,7 +75,7 @@ public class ShowHistoryActivity extends AppCompatActivity implements OnMapReady
         trip=new Trip();
         trip.setTripStartPoint("cairo");
         trip.setTripEndPoint("Alexandria,egypt");*/
-        trips = new TripTableOperations(this).selectPastTripsUsingDateAndStatus();
+        trips = new TripTableOperations(this).selectPastTripsUsingDateAndStatus(User.getEmail());
         if (isConnected()) {
             mapFragment = (SupportMapFragment) getSupportFragmentManager()
                     .findFragmentById(R.id.history_map);

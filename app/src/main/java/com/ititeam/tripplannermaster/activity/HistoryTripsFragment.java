@@ -22,6 +22,7 @@ import com.ititeam.tripplannermaster.DB.TripTableOperations;
 import com.ititeam.tripplannermaster.R;
 import com.ititeam.tripplannermaster.classes.TripViewHistoryHolder;
 import com.ititeam.tripplannermaster.model.Trip;
+import com.ititeam.tripplannermaster.model.User;
 
 import java.util.ArrayList;
 
@@ -50,7 +51,7 @@ public class HistoryTripsFragment extends Fragment {
         super.onCreate(savedInstanceState);
         historyTrip = new ArrayList<>();
         tripTableOperations = new TripTableOperations(getActivity());
-        historyTrip = tripTableOperations.selectPastTripsUsingOnlyDate();
+        historyTrip = tripTableOperations.selectPastTripsUsingOnlyDate(User.getEmail());
     }
 
     @Override

@@ -17,6 +17,7 @@ import com.ititeam.tripplannermaster.activity.AuthenticationActivity;
 import com.ititeam.tripplannermaster.activity.HomeFragment;
 import com.ititeam.tripplannermaster.activity.MainActivity;
 import com.ititeam.tripplannermaster.activity.StartActivityDrawer;
+import com.ititeam.tripplannermaster.model.User;
 
 public class SplashScreenActivity extends Activity {
     String emailpref;
@@ -81,6 +82,7 @@ public class SplashScreenActivity extends Activity {
                                         } else {
                                             //succecfull
                                             Log.i("heshammm","succefull");
+                                            User.setEmail(emailpref);
                                             Intent i = new Intent(SplashScreenActivity.this , StartActivityDrawer.class);
                                             i.putExtra("login_user_email", emailpref);
                                             startActivity(i);
