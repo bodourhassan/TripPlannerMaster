@@ -13,6 +13,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.DatePicker;
@@ -46,6 +47,7 @@ public class UpdateTrip extends AppCompatActivity implements GoogleApiClient.Con
     private GeoDataClient geoDataClient ;
     ArrayList<String> listItems=new ArrayList<String>();
     ArrayAdapter<String> NoteListadapter;
+     MyUpdateAdapter myUpdateAdapter;
     AutoCompleteTextView TripNameView;
     AutoCompleteTextView mylocationStart;
     AutoCompleteTextView mylocationEnd;
@@ -87,8 +89,8 @@ public class UpdateTrip extends AppCompatActivity implements GoogleApiClient.Con
         dropdown = findViewById(R.id.UTripCatId);
         Intent intent = this.getIntent();
         String TripId = 1+"";
-        //String TripId = intent.getStringExtra("trip_id");
-        //Toast.makeText(this, "in update   " + TripId, Toast.LENGTH_SHORT).show();
+      //  String TripId = intent.getStringExtra("trip_id");
+       // Toast.makeText(this, "in update   " + TripId, Toast.LENGTH_SHORT).show();
         /***************************Get TRip Data***************************/
         tripTableOperations = new TripTableOperations(this);
         noteTableOperations=new NoteTableOperations(this);
@@ -127,8 +129,22 @@ public class UpdateTrip extends AppCompatActivity implements GoogleApiClient.Con
             listItems.add(NmyNoteList.get(i).getNoteBody());
             // listItems.add("listItem");
         }
-        NoteListadapter=new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,listItems);
-        MyNoteList.setAdapter(NoteListadapter);
+       // NoteListadapter=new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,listItems);
+        myUpdateAdapter=new MyUpdateAdapter(this,R.layout.my_update_item,listItems);
+       // MyNoteList.setAdapter(NoteListadapter);
+        MyNoteList.setAdapter(myUpdateAdapter);
+        MyNoteList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                FloatingActionButton myfloatDalet = view.findViewById(R.id.MyDelet);
+                myfloatDalet.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Toast.makeText(getBaseContext(),"DeletedClicked",Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+        });
         MyNoteList.setOnTouchListener(new View.OnTouchListener() {
             // Setting on Touch Listener for handling the touch inside ScrollView
             @Override

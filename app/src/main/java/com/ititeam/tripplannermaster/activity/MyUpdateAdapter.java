@@ -23,8 +23,8 @@ import java.util.ArrayList;
 
 public class MyUpdateAdapter extends ArrayAdapter {
      Context mycontext;
-     ArrayList<Note> notes;
-    public MyUpdateAdapter(@NonNull Context context, int resource, @NonNull ArrayList<Note> myNote) {
+     ArrayList<String> notes;
+    public MyUpdateAdapter(@NonNull Context context, int resource, @NonNull ArrayList<String> myNote) {
         super(context, resource, myNote);
         mycontext=context;
         notes=myNote;
@@ -35,7 +35,7 @@ public class MyUpdateAdapter extends ArrayAdapter {
         LayoutInflater inflater= (LayoutInflater)  mycontext.getSystemService(mycontext.LAYOUT_INFLATER_SERVICE);
         View myView = inflater.inflate(R.layout.my_update_item,parent,false);
        EditText myNote=myView.findViewById(R.id.MyNoteU);
-        myNote.setText(notes.get(position).getNoteBody().toString());
+        myNote.setText(notes.get(position).toString());
         return myView;
     }
 
