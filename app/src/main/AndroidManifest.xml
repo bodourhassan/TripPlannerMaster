@@ -19,6 +19,7 @@
 
     <!-- end bodour section -->
     <!-- mark section -->
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
     <!-- end mark section -->
     <!-- hesham section -->
     <!-- end hesham section -->
@@ -99,6 +100,23 @@
 
 
         <!-- mark section -->
+        <activity
+            android:name=".activity.alarmhandler.AlarmActivity"
+            android:excludeFromRecents="true"
+            android:theme="@style/Theme.AppCompat.Dialog">
+        </activity>
+
+        <!-- Declare  Alarm Broadcast receiver here -->
+        <receiver android:name=".activity.alarmhandler.AlarmReceiver" />
+
+        <!-- Declare  Alarm Notification Service here -->
+        <service android:name=".activity.alarmhandler.AlarmNotificationService" />
+
+        <!-- Declare  Alarm Sound Service here -->
+        <service android:name=".activity.alarmhandler.AlarmSoundService" />
+        <service
+            android:name=".activity.alarmhandler.AlarmScheduleService"
+            android:exported="false" />
         <!-- end mark section -->
 
 
