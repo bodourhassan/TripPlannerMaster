@@ -32,6 +32,7 @@ import com.google.android.gms.location.places.GeoDataClient;
 import com.google.android.gms.location.places.Places;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
+import com.ititeam.tripplannermaster.DB.NoteTableOperations;
 import com.ititeam.tripplannermaster.DB.TripTableOperations;
 import com.ititeam.tripplannermaster.R;
 import com.ititeam.tripplannermaster.model.Note;
@@ -55,15 +56,17 @@ public class UpdateTrip extends AppCompatActivity implements GoogleApiClient.Con
     RadioButton myRadiobutton;
     MultiAutoCompleteTextView NoteItem;
     RadioGroup mytripGroup;
-    Spinner Tripcatagory;
+    // Spinner Tripcatagory;
+    Spinner dropdown;
     ArrayList<Note> NmyNoteList =new ArrayList<>();
     Calendar myCalender;
     int day,month,year;
     int hour,minute;
-    String format;
+    //String format;
     int userid=1;
     Trip UpdateTrip;
     TripTableOperations tripTableOperations;
+    NoteTableOperations noteTableOperations;
     public  static final LatLngBounds LatLangBounds =new LatLngBounds(new LatLng(-40,-168),new LatLng(71,163));
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,20 +80,20 @@ public class UpdateTrip extends AppCompatActivity implements GoogleApiClient.Con
         TripNameView = findViewById(R.id.UAutTripName);
         DescriptipnView=findViewById(R.id.UEditDescription);
         mytripGroup= findViewById(R.id.UGroupType);
-        Tripcatagory= findViewById(R.id.UTripCatId);
+        // Tripcatagory= findViewById(R.id.UTripCatId);
         DateView =findViewById(R.id.UDate);
         TimeView =findViewById(R.id.UTime);
         MyNoteList=findViewById(R.id.UNoteList);
-        Spinner dropdown = findViewById(R.id.UTripCatId);
-//        Intent intent = getIntent();
-//        int TripId = intent.getIntExtra("TripId",1);
-        Intent intent=this.getIntent();
-        //String email=intent.getStringExtra("login_user_email");
-        String TripId=intent.getStringExtra("trip_id");
-        Toast.makeText(this, "in update   "+TripId, Toast.LENGTH_SHORT).show();
+        dropdown = findViewById(R.id.UTripCatId);
+        Intent intent = this.getIntent();
+        String TripId = 1+"";
+        //String TripId = intent.getStringExtra("trip_id");
+        //Toast.makeText(this, "in update   " + TripId, Toast.LENGTH_SHORT).show();
         /***************************Get TRip Data***************************/
-         tripTableOperations =new TripTableOperations(this);
-        UpdateTrip = tripTableOperations.selectSingleTrips(TripId + "");
+        tripTableOperations = new TripTableOperations(this);
+        noteTableOperations=new NoteTableOperations(this);
+        UpdateTrip = tripTableOperations.selectSingleTrips(TripId);
+        //UpdateTrip = tripTableOperations.selectSingleTrips(1 + "");
         TripNameView.setText(UpdateTrip.getTripName());
         // TripNameView.setText("My Trip");
         mylocationStart.setText(UpdateTrip.getTripStartPoint());
@@ -108,13 +111,13 @@ public class UpdateTrip extends AppCompatActivity implements GoogleApiClient.Con
         for(int i=0;i<mytripGroup.getChildCount();i++)
         {
 
-             RadiobuttonGet = (RadioButton) mytripGroup.getChildAt(i);
+            RadiobuttonGet = (RadioButton) mytripGroup.getChildAt(i);
             if (RadiobuttonGet.getText().toString().equals(RadiobuttonValue))
             //  if(RadiobuttonGet.getText().toString().equals("Round Trip"))
             {
-                 mytripGroup.check(RadiobuttonGet.getId());
-               //  RadiobuttonGet.setChecked(true);
-             }
+                mytripGroup.check(RadiobuttonGet.getId());
+                //  RadiobuttonGet.setChecked(true);
+            }
 
         }
         NmyNoteList = UpdateTrip.getTripNotes();
@@ -135,16 +138,18 @@ public class UpdateTrip extends AppCompatActivity implements GoogleApiClient.Con
                 return false;
             }
         });
+
+
         //get the spinner from the xml.
         //create a list of items for the spinner.
-        String[] items = new String[]{"Work", "School", "Shooping"};
+        String[] items = new String[]{"Work", "School", "Shopping"};
         //create an adapter to describe how the items are displayed, adapters are used in several places in android
         // There are multiple variations of this, but this is the basic variant.
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, items);
         //set the spinners adapter to the previously created one.
         dropdown.setAdapter(adapter);
-       // dropdown.setSelection(NoteListadapter.getPosition(UpdateTrip.getTripCategory()));
-        dropdown.setSelection(adapter.getPosition("Shooping"));
+        dropdown.setSelection(adapter.getPosition(UpdateTrip.getTripCategory()));
+        // dropdown.setSelection(adapter.getPosition("Shooping"));
         /************************** Note List Part ************************/
 
         FloatingActionButton fab =  findViewById(R.id.Ufab);
@@ -162,6 +167,11 @@ public class UpdateTrip extends AppCompatActivity implements GoogleApiClient.Con
 
                     //  addItems(Notebody);
                     listItems.add(Notebody);
+                    Note myNewNote= new Note();
+                    myNewNote.setNoteBody(Notebody);
+                    myNewNote.setStatus(TripConstant.NoteLater);
+                    myNewNote.setTripIdFk(Integer.parseInt(TripId));
+                    noteTableOperations.insertNote(myNewNote);
                     NoteListadapter.notifyDataSetChanged();
                     NoteItem.setText("".toString());
                     // NoteListadapter.setNotifyOnChange(true);
@@ -170,10 +180,10 @@ public class UpdateTrip extends AppCompatActivity implements GoogleApiClient.Con
                 }
             }
         });
-        geoDataClient = Places.getGeoDataClient(this, null);
-        MapPlacesAdapter mapPlacesAdapter=new MapPlacesAdapter(this , geoDataClient , LatLangBounds,null);
-        mylocationStart.setAdapter(mapPlacesAdapter);
-        mylocationEnd.setAdapter(mapPlacesAdapter);
+         geoDataClient = Places.getGeoDataClient(this, null);
+         MapPlacesAdapter mapPlacesAdapter=new MapPlacesAdapter(this , geoDataClient , LatLangBounds,null);
+          mylocationStart.setAdapter(mapPlacesAdapter);
+          mylocationEnd.setAdapter(mapPlacesAdapter);
         myCalender= Calendar.getInstance();
         day=myCalender.get(Calendar.DAY_OF_MONTH);
         month=myCalender.get(Calendar.MONTH);
@@ -182,12 +192,12 @@ public class UpdateTrip extends AppCompatActivity implements GoogleApiClient.Con
         minute=myCalender.get(Calendar.MINUTE);
         month=month+1;
 
-      //  DateView.setText(day+"/"+month+"/"+year);
+        //  DateView.setText(day+"/"+month+"/"+year);
 
         DateView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DatePickerDialog datePickerDialog = new DatePickerDialog(UpdateTrip.this, new DatePickerDialog.OnDateSetListener() {
+                DatePickerDialog datePickerDialog = new DatePickerDialog(UpdateTrip.this, R.style.TimePickerTheme, new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                         month=month+1;
@@ -199,20 +209,27 @@ public class UpdateTrip extends AppCompatActivity implements GoogleApiClient.Con
             }
         });
 
-        hourFormat(hour);
 
-     //   TimeView.setText(hour+" : "+minute+" "+format);
         TimeView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                TimePickerDialog timePickerDialog=new TimePickerDialog(UpdateTrip.this, new TimePickerDialog.OnTimeSetListener() {
+                TimePickerDialog timePickerDialog = new TimePickerDialog(UpdateTrip.this, R.style.TimePickerTheme, new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                        hourFormat(hour);
+                        // hourFormat(hour);
 
-                        TimeView.setText(hourOfDay+" : "+minute+" "+format);
+                        String myhourin = "" + hourOfDay;
+                        String myminutein = "" + minute;
+                        if (hourOfDay < 10) {
+                            myhourin = "0" + hourOfDay;
+                        }
+                        if (minute < 10) {
+                            myminutein = "0" + minute;
+
+                        }
+                        TimeView.setText(myhourin + " : " + myminutein);
                     }
-                }, hour, minute, false);
+                }, hour, minute, true);
                 timePickerDialog.show();
             }
         });
@@ -228,28 +245,28 @@ public class UpdateTrip extends AppCompatActivity implements GoogleApiClient.Con
         NoteListadapter.notifyDataSetChanged();
     }
 
-    public void hourFormat(int hour)
-    {
-        if(hour==0)
-        {
-            hour+=12;
-            format="AM";
-        }
-        else if(hour==12)
-        {
-
-            format="PM";
-        }
-        else if(hour>12)
-        {
-            hour-=12;
-            format="PM";
-        }
-        else {
-
-            format="AM";
-        }
-    }
+//    public void hourFormat(int hour)
+//    {
+//        if(hour==0)
+//        {
+//            hour+=12;
+//            format="AM";
+//        }
+//        else if(hour==12)
+//        {
+//
+//            format="PM";
+//        }
+//        else if(hour>12)
+//        {
+//            hour-=12;
+//            format="PM";
+//        }
+//        else {
+//
+//            format="AM";
+//        }
+//    }
 
 
     @Override
@@ -306,12 +323,12 @@ public class UpdateTrip extends AppCompatActivity implements GoogleApiClient.Con
             String TripDirection = myRadiobutton.getText().toString();
             NmyNoteList.clear();
             for (int i = 0; i < listItems.size(); i++) {
-                Note note = new Note(listItems.get(i), "Later");
+                Note note = new Note(listItems.get(i), TripConstant.NoteLater);
 
                 NmyNoteList.add(note);
 
             }
-            String TripCatagory = Tripcatagory.getSelectedItem().toString();
+            String TripCatagory = dropdown.getSelectedItem().toString();
 
             // Toast.makeText(getBaseContext(),all.size(),
             //        Toast.LENGTH_SHORT).show();
@@ -320,26 +337,33 @@ public class UpdateTrip extends AppCompatActivity implements GoogleApiClient.Con
             UpdateTrip.setTripEndPoint(Endloc);
             UpdateTrip.setTripDate(Date);
             UpdateTrip.setTripTime(Time);
-            UpdateTrip.setTripDescription(TripDirection);
+            UpdateTrip.setTripDirection(TripDirection);
             UpdateTrip.setTripDescription(Desc);
             UpdateTrip.setTripCategory(TripCatagory);
-//            for (int i = 0; i < NmyNoteList.size(); i++) {
-//                Log.e("uuuuuuuuuuuuuuu", "Note" + i + NmyNoteList.get(i).getNoteBody());
-//
-//            }
-            UpdateTrip.setTripNotes(NmyNoteList);
-            /*boolean test = tripTableOperations.updateTrip(UpdateTrip);
-            Toast.makeText(getBaseContext(), test + "",
-                    Toast.LENGTH_SHORT).show();*/
-            Intent intent = new Intent(UpdateTrip.this, StartTripActivity.class);
-            startActivity(intent);
+            for (int i = 0; i < NmyNoteList.size(); i++) {
+                Log.e("uuuuuuuuuuuuuuu", "Note" + i + NmyNoteList.get(i).getNoteBody());
 
+            }
+            UpdateTrip.setTripNotes(NmyNoteList);
+            boolean test = tripTableOperations.updateTrip(UpdateTrip);
+            Toast.makeText(getBaseContext(), test + "",
+                    Toast.LENGTH_SHORT).show();
+            Trip my = tripTableOperations.selectSingleTrips(1 + "");
+            for (int i = 0; i < my.getTripNotes().size(); i++) {
+                Log.e("afteruuuuu", "Note" + i + my.getTripNotes().get(i).getNoteBody());
+
+            }
+
+//            Intent intent = new Intent(UpdateTrip.this, StartActivityDrawer.class);
+//            startActivity(intent);
+                 finish();
         }
 
     }
 
     public void cancel(View view) {
-        Intent intent = new Intent(UpdateTrip.this,MainActivity.class);
-        startActivity(intent);
+//        Intent intent = new Intent(UpdateTrip.this, StartActivityDrawer.class);
+//        startActivity(intent);
+        finish();
     }
 }
