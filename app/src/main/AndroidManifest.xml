@@ -19,7 +19,7 @@
 
     <!-- end bodour section -->
     <!-- mark section -->
-
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
     <!-- end mark section -->
     <!-- hesham section -->
     <!-- end hesham section -->
