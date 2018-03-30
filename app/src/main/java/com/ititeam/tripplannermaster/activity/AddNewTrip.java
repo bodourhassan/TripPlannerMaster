@@ -45,6 +45,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.ititeam.tripplannermaster.DB.TripTableOperations;
 import com.ititeam.tripplannermaster.R;
+import com.ititeam.tripplannermaster.activity.alarmhandler.AlarmScheduleService;
 import com.ititeam.tripplannermaster.model.User;
 import com.ititeam.tripplannermaster.model.Note;
 import com.ititeam.tripplannermaster.model.Trip;
@@ -313,6 +314,15 @@ public class AddNewTrip extends AppCompatActivity implements ConnectionCallbacks
             Trip NewTrip = new Trip(NameofTrip, StartLoc, Endloc, Date, Time, TripConstant.UpcomingStatus, TripDirection, Desc, "none", TripCatagory, User.getEmail(), myNoteList);
             TripTableOperations myTripTable = new TripTableOperations(this);
             boolean test = myTripTable.insertTrip(NewTrip);
+            if(test){
+                Trip lastTrip=myTripTable.selectAllTripsForGettingLastId();
+                Intent intent=new Intent(AddNewTrip.this, AlarmScheduleService.class);
+                intent.putExtra("trip_id",lastTrip.getTripId());
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                startService(intent);
+
+            }
             for (int i = 0; i < NewTrip.getTripNotes().size(); i++) {
                 Log.e("Trip before", NewTrip.getTripNotes().get(i).getNoteBody());
             }
@@ -342,6 +352,7 @@ public class AddNewTrip extends AppCompatActivity implements ConnectionCallbacks
             }
 //            Intent intent = new Intent(AddNewTrip.this, StartActivityDrawer.class);
 //            startActivity(intent);
+
             finish();
         }
 

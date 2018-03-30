@@ -1,7 +1,10 @@
 package com.ititeam.tripplannermaster.activity;
 
+import android.app.AlarmManager;
 import android.app.DatePickerDialog;
+import android.app.PendingIntent;
 import android.app.TimePickerDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -35,6 +38,9 @@ import com.google.android.gms.maps.model.LatLngBounds;
 import com.ititeam.tripplannermaster.DB.NoteTableOperations;
 import com.ititeam.tripplannermaster.DB.TripTableOperations;
 import com.ititeam.tripplannermaster.R;
+import com.ititeam.tripplannermaster.activity.alarmhandler.AlarmActivity;
+import com.ititeam.tripplannermaster.activity.alarmhandler.AlarmScheduleService;
+import com.ititeam.tripplannermaster.classes.UploadDataToFirebase;
 import com.ititeam.tripplannermaster.model.Note;
 import com.ititeam.tripplannermaster.model.Trip;
 
@@ -67,6 +73,13 @@ public class UpdateTrip extends AppCompatActivity implements GoogleApiClient.Con
     Trip UpdateTrip;
     TripTableOperations tripTableOperations;
     NoteTableOperations noteTableOperations;
+
+    //Pending intent instance
+    private PendingIntent pendingIntent;
+
+    //Alarm Request Code
+    private static final int ALARM_REQUEST_CODE = 133;
+
     public  static final LatLngBounds LatLangBounds =new LatLngBounds(new LatLng(-40,-168),new LatLng(71,163));
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,9 +99,9 @@ public class UpdateTrip extends AppCompatActivity implements GoogleApiClient.Con
         MyNoteList=findViewById(R.id.UNoteList);
         dropdown = findViewById(R.id.UTripCatId);
         Intent intent = this.getIntent();
-        String TripId = 1+"";
-        //String TripId = intent.getStringExtra("trip_id");
-        //Toast.makeText(this, "in update   " + TripId, Toast.LENGTH_SHORT).show();
+        //String TripId = 1+"";
+        String TripId = intent.getStringExtra("trip_id");
+        Toast.makeText(this, "in update   " + TripId, Toast.LENGTH_SHORT).show();
         /***************************Get TRip Data***************************/
         tripTableOperations = new TripTableOperations(this);
         noteTableOperations=new NoteTableOperations(this);
@@ -346,6 +359,20 @@ public class UpdateTrip extends AppCompatActivity implements GoogleApiClient.Con
             }
             UpdateTrip.setTripNotes(NmyNoteList);
             boolean test = tripTableOperations.updateTrip(UpdateTrip);
+            if(test){
+                AlarmManager manager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+                Intent alarmIntent = new Intent(UpdateTrip.this, MainActivity.class);
+                pendingIntent = PendingIntent.getBroadcast(getBaseContext(),UpdateTrip.getTripId() , alarmIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+                manager.cancel(pendingIntent);//cancel the alarm manager of the pending intent
+
+                Trip lastTrip=tripTableOperations.selectAllTripsForGettingLastId();
+                Intent intent=new Intent(UpdateTrip.this, AlarmScheduleService.class);
+                intent.putExtra("trip_id",lastTrip.getTripId());
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                startService(intent);
+            }
             Toast.makeText(getBaseContext(), test + "",
                     Toast.LENGTH_SHORT).show();
             Trip my = tripTableOperations.selectSingleTrips(1 + "");
