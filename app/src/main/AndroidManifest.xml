@@ -10,12 +10,13 @@
     <!-- end hanaa section -->
     <!-- bodour section -->
     <supports-screens
+        android:anyDensity="true"
+        android:largeScreens="true"
+        android:normalScreens="true"
         android:resizeable="true"
         android:smallScreens="true"
-        android:normalScreens="true"
-        android:largeScreens="true"
-        android:xlargeScreens="true"
-        android:anyDensity="true" />
+        android:xlargeScreens="true" />
+
     <!-- end bodour section -->
     <!-- mark section -->
     <!-- end mark section -->
@@ -30,20 +31,13 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".activity.MainActivity"
-            android:screenOrientation="portrait">
-
-        </activity>
+            android:screenOrientation="portrait"></activity>
         <!-- hanaa section -->
         <activity
             android:name=".activity.AuthenticationActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar" >
+            android:theme="@style/AppTheme.NoActionBar">
 
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
 
         <meta-data
@@ -69,7 +63,7 @@
         <activity android:name=".activity.ShowTripActivity" />
         <activity android:name=".activity.ShowHistoryActivity" />
         <activity android:name=".activity.MapActivity" />
-        <activity android:name=".activity.FirebaseActivity"></activity>
+        <activity android:name=".activity.FirebaseActivity" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
@@ -87,14 +81,14 @@
         <activity
             android:name=".activity.AddNewTrip"
             android:label="@string/title_activity_add_new_trip"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activity.UpdateTrip"
             android:label="@string/title_activity_update_trip"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activity.StartTripActivity"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <!-- end boudour section -->
 
 
@@ -110,7 +104,14 @@
 
         <!-- end hesham section -->
 
+        <activity android:name=".SplashScreenActivity"
+            android:noHistory="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

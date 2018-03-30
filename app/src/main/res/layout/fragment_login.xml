@@ -5,6 +5,7 @@
     android:orientation="vertical"
     tools:context="com.ititeam.tripplannermaster.activity.login.SignUpFragment">
 
+
     <EditText
         android:id="@+id/FragmentSignInEmail"
         android:layout_width="300dp"
@@ -34,13 +35,27 @@
         android:paddingStart="32dp"
         android:textColor="#ffffff"
         android:textColorHint="#8effffff" />
+<LinearLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <CheckBox
+        android:id="@+id/FragmentLoginKeepMeLoggedIn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="20dp"
+        android:layout_marginLeft="40dp"
+        android:text="keep me logged in" />
+</LinearLayout>
+
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="48dp"
         android:layout_gravity="center_horizontal"
         android:id="@+id/forgot_password"
-        android:layout_marginTop="64dp"
+        android:layout_marginTop="27dp"
         android:gravity="center"
         android:text="@string/forgot_password"
         android:textColor="#ffffff" />
@@ -50,6 +65,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="10dp"
         android:layout_marginBottom="30dp" />
+
+
 </LinearLayout>

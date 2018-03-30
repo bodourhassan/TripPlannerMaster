@@ -17,6 +17,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -44,11 +45,12 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 
-public class LoginFragment extends Fragment implements OnLoginListener{
+public class LoginFragment extends Fragment implements OnLoginListener , View.OnClickListener{
     private static final String TAG = "LoginFragment";
     com.facebook.login.widget.LoginButton facebook_login_button;
     CallbackManager callbackManager;
     EditText etEmail, etPassword;
+    CheckBox checkBoxRememberMe;
     String uEmail, uPassword;
     private FirebaseAuth auth;
 
@@ -185,6 +187,8 @@ public class LoginFragment extends Fragment implements OnLoginListener{
         View inflate = inflater.inflate(R.layout.fragment_login, container, false);
         etEmail = inflate.findViewById(R.id.FragmentSignInEmail);
         etPassword = inflate.findViewById(R.id.fragmentSignInPassword);
+        checkBoxRememberMe = inflate.findViewById(R.id.FragmentLoginKeepMeLoggedIn);
+        checkBoxRememberMe.setChecked(true);
         inflate.findViewById(R.id.forgot_password).setOnClickListener(v ->
                 Toast.makeText(getContext(), "Forgot password clicked", Toast.LENGTH_SHORT).show());
 
@@ -285,11 +289,18 @@ public class LoginFragment extends Fragment implements OnLoginListener{
                                     Log.i("myExce", "" + task.getException().getMessage());
                                 }
                             } else {
-
-                                SharedPreferences myprefrances = PreferenceManager.getDefaultSharedPreferences(getActivity());
-                                SharedPreferences.Editor editor = myprefrances.edit();
-                                editor.putString("user_email",uEmail);
-                                editor.putString("user_password",uPassword);
+                                if(checkBoxRememberMe.isChecked())
+                                {
+                                    SharedPreferences myprefrances = PreferenceManager.getDefaultSharedPreferences(getActivity());
+                                    SharedPreferences.Editor editor = myprefrances.edit();
+                                    editor.putString("user_email",uEmail);
+                                    editor.putString("user_password",uPassword);
+                                    editor.commit();
+                                }else{
+                                    PreferenceManager.getDefaultSharedPreferences(getActivity()).
+                                            edit().clear().apply();
+                                    Toast.makeText(getActivity(), "remove prefrences", Toast.LENGTH_SHORT).show();
+                                }
 
                                 Intent intent = new Intent(getActivity(), StartActivityDrawer.class);
                                 intent.putExtra("login_user_email", uEmail);
@@ -324,6 +335,11 @@ public class LoginFragment extends Fragment implements OnLoginListener{
             e.printStackTrace();
         }
 
+
+    }
+
+    @Override
+    public void onClick(View view) {
 
     }
 }

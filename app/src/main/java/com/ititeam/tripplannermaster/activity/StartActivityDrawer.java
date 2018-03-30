@@ -1,5 +1,6 @@
 package com.ititeam.tripplannermaster.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -62,9 +63,11 @@ public class StartActivityDrawer extends AppCompatActivity implements FragmentDr
                 Toast.makeText(this, "jjjjjj", Toast.LENGTH_SHORT).show();
                 break;
             case 2:
-                fragment = new LoginFragment();
+                //fragment = new LoginFragment();
                 //title = getString(R.string.title_messages);
-                Toast.makeText(this, "lllllllllllllll", Toast.LENGTH_SHORT).show();
+                Intent i = new Intent(this , AuthenticationActivity.class);
+                startActivity(i);
+                Toast.makeText(this, "LOGOUT", Toast.LENGTH_SHORT).show();
                 break;
             default:
                 break;
