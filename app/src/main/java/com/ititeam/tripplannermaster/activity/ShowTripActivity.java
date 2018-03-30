@@ -2,7 +2,10 @@ package com.ititeam.tripplannermaster.activity;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
@@ -27,6 +30,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -103,60 +107,10 @@ public class ShowTripActivity extends FragmentActivity implements OnMapReadyCall
         floatingActionButton4 = findViewById(R.id.show_trip_cancel);
         floatingActionButton5 = findViewById(R.id.show_trip_delete);
          tripTableOperations=new TripTableOperations(getBaseContext());
-        int trip_id=1;
-        trip = tripTableOperations.selectSingleTrips(trip_id + "");
-
-        notes = trip.getTripNotes();
-        notes.get(0).setStatus(TripConstant.NoteLater);
-        Note n=new Note();
-        n.setNoteBody("kkkk");
-        n.setStatus(TripConstant.NoteDone);
-        notes.add(n);
-        Note n1=new Note();
-        n1.setNoteBody("kkkk");
-        n1.setStatus(TripConstant.NoteDone);
-        notes.add(n1);
-        Note n2=new Note();
-        n2.setNoteBody("kkkk");
-        n2.setStatus(TripConstant.NoteDone);
-        notes.add(n2);
-        Note n3=new Note();
-        n3.setNoteBody("kkkk");
-        n3.setStatus(TripConstant.NoteDone);
-        notes.add(n3);
-        Note n4=new Note();
-        n4.setNoteBody("kkkk");
-        n4.setStatus(TripConstant.NoteDone);
-        notes.add(n4);
-        Note n5=new Note();
-        n5.setNoteBody("kkkk");
-        n5.setStatus(TripConstant.NoteDone);
-        notes.add(n5);
-        Note n6=new Note();
-        n6.setNoteBody("kkkk");
-        n6.setStatus(TripConstant.NoteDone);
-        notes.add(n6);
-        Note n7=new Note();
-        n7.setNoteBody("kkkk");
-        n7.setStatus(TripConstant.NoteDone);
-        notes.add(n7);
-        Note n8=new Note();
-        n8.setNoteBody("kkkk");
-        n8.setStatus(TripConstant.NoteDone);
-        notes.add(n8);
-        Note n9=new Note();
-        n9.setNoteBody("kkkk");
-        n9.setStatus(TripConstant.NoteDone);
-        notes.add(n9);
-        Note n10=new Note();
-        n10.setNoteBody("kkkk");
-        n10.setStatus(TripConstant.NoteDone);
-        notes.add(n10);
-        Note n11=new Note();
-        n11.setNoteBody("kkkk");
-        n11.setStatus(TripConstant.NoteDone);
-        notes.add(n11);
-        Toast.makeText(this, ""+notes.size(), Toast.LENGTH_SHORT).show();
+         Intent intent=getIntent();
+        String trip_id=intent.getStringExtra("trip_id");
+        trip = tripTableOperations.selectSingleTrips(trip_id );
+        notes=trip.getTripNotes();
          ListView myList = findViewById(R.id.show_trip_note_custom_list);
         ShowTripNotesAdapter myadapter = new ShowTripNotesAdapter(this, R.layout.show_trip_notes_layout, notes);
          myList.setAdapter(myadapter);
@@ -198,15 +152,19 @@ public class ShowTripActivity extends FragmentActivity implements OnMapReadyCall
         }
         listPoints = new ArrayList<>();
         markers = new ArrayList<>();
-        if (!haveNetworkConnection()) {
-           /* LinearLayout mapLayout = findViewById(R.id.map_layout);
-            LinearLayout.LayoutParams mapLayoutParams = new LinearLayout.LayoutParams(0, 0);
+        mapFragment = (SupportMapFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.map);
+        if (!isConnected()) {
+            LinearLayout mapLayout = findViewById(R.id.map_layout);
+            RelativeLayout.LayoutParams mapLayoutParams = new RelativeLayout.LayoutParams(0, 0);
+            mapLayoutParams.setMargins(0,0,0,100);
             mapLayout.setLayoutParams(mapLayoutParams);
-*/
+
+
+
 
         } else {
-            mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                    .findFragmentById(R.id.map);
+
             mapFragment.getMapAsync(this);
         }
        // LinearLayout notesLayout = findViewById(R.id.notes_layout);
@@ -267,6 +225,7 @@ public class ShowTripActivity extends FragmentActivity implements OnMapReadyCall
                 materialDesignFAM.removeMenuButton(floatingActionButton3);
                 materialDesignFAM.removeMenuButton(floatingActionButton4);
                 materialDesignFAM.close(false);
+                Toast.makeText(ShowTripActivity.this, "trip has Done", Toast.LENGTH_SHORT).show();
 
             }
         });
@@ -282,14 +241,43 @@ public class ShowTripActivity extends FragmentActivity implements OnMapReadyCall
                 materialDesignFAM.removeMenuButton(floatingActionButton3);
                 materialDesignFAM.removeMenuButton(floatingActionButton4);
                 materialDesignFAM.close(false);
+                Toast.makeText(ShowTripActivity.this, "trip has Cancelled", Toast.LENGTH_SHORT).show();
             }
         });
         floatingActionButton5.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 //TODO something when floating action menu third item clicked
 
-                tripTableOperations.deleteTrip(trip_id+"");
-                //Go Home Page
+                AlertDialog.Builder alert = new AlertDialog.Builder(ShowTripActivity.this);
+                alert.setTitle("Delete Trip "+trip.getTripName());
+                alert.setMessage("Are you sure you want to delete "+trip.getTripName()+" ?");
+
+                alert.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+
+
+                    public void onClick(DialogInterface dialog, int which) {
+                        // continue with delete
+                        tripTableOperations.deleteTrip(String.valueOf(trip.getTripId()));
+                        /*mItemManger.removeShownLayouts(viewHolder.swipeLayout);
+                        upcommingTrips.remove(position);
+                        notifyItemRemoved(position);
+                        notifyItemRangeChanged(position, upcommingTrips.size());
+                        mItemManger.closeAllItems();*/
+                        Toast.makeText(getApplicationContext(), "here in delete", Toast.LENGTH_SHORT).show();
+                        /*Intent intent = new Intent(ShowTripActivity.this, StartActivityDrawer.class);
+
+                        startActivity(intent);*/
+                        finish();
+                    }
+                });
+
+                alert.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // close dialog
+                        dialog.cancel();
+                    }
+                });
+                alert.show();
                /* Intent intent =new Intent(ShowTripActivity.this,UpdateTrip.class);
                 intent.putExtra("trip_id",trip_id);
                 startActivity(intent);*/
@@ -309,7 +297,7 @@ public class ShowTripActivity extends FragmentActivity implements OnMapReadyCall
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        if (haveNetworkConnection()) {
+        if (isConnected()) {
             LatLng latLng1 = getLatLongFromGivenAddress(trip.getTripStartPoint());
             LatLng latLng2 = getLatLongFromGivenAddress(trip.getTripEndPoint());
             mMap = googleMap;
@@ -525,20 +513,12 @@ public class ShowTripActivity extends FragmentActivity implements OnMapReadyCall
         }
         return latLng;
     }
-    private boolean haveNetworkConnection() {
-        boolean haveConnectedWifi = false;
-        boolean haveConnectedMobile = false;
-
-        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo[] netInfo = cm.getAllNetworkInfo();
-        for (NetworkInfo ni : netInfo) {
-            if (ni.getTypeName().equalsIgnoreCase("WIFI"))
-                if (ni.isConnected())
-                    haveConnectedWifi = true;
-            if (ni.getTypeName().equalsIgnoreCase("MOBILE"))
-                if (ni.isConnected())
-                    haveConnectedMobile = true;
-        }
-        return haveConnectedWifi || haveConnectedMobile;
+    public boolean isConnected() {
+        ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Activity.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+        if (networkInfo != null && networkInfo.isConnected())
+            return true;
+        else
+            return false;
     }
 }

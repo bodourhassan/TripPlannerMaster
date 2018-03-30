@@ -17,7 +17,7 @@ public class Trip {
     String tripDate;
     String tripTime;
 
-    public Trip(String tripName, String tripStartPoint, String tripEndPoint, String tripDate, String tripTime, String tripStatus, String tripDirection, String tripDescription, String tripRepetition, String tripCategory, int userId, ArrayList<Note> tripNodes) {
+    public Trip(String tripName, String tripStartPoint, String tripEndPoint, String tripDate, String tripTime, String tripStatus, String tripDirection, String tripDescription, String tripRepetition, String tripCategory, String userId, ArrayList<Note> tripNodes) {
         this.tripName = tripName;
         this.tripStartPoint = tripStartPoint;
         this.tripEndPoint = tripEndPoint;
@@ -37,7 +37,7 @@ public class Trip {
     String tripDescription;
     String tripRepetition;
     String tripCategory;
-    int userId;
+    String userId;
 
     public void setTripNotes(ArrayList<Note> tripNotes) {
         this.tripNotes = tripNotes;
@@ -48,7 +48,7 @@ public class Trip {
     public Trip() {
     }
 
-    public Trip(int tripId, String tripName, String tripStartPoint, String tripEndPoint, String tripDate, String tripTime, String tripStatus, String tripDirection, String tripDescription, String tripRepetition, String tripCategory, int userId, ArrayList<Note> tripNotes) {
+    public Trip(int tripId, String tripName, String tripStartPoint, String tripEndPoint, String tripDate, String tripTime, String tripStatus, String tripDirection, String tripDescription, String tripRepetition, String tripCategory, String userId, ArrayList<Note> tripNotes) {
         this.tripId = tripId;
         this.tripName = tripName;
         this.tripStartPoint = tripStartPoint;
@@ -144,11 +144,11 @@ public class Trip {
         this.tripRepetition = tripRepetition;
     }
 
-    public int getUserId() {
+    public String getUserId() {
         return userId;
     }
 
-    public void setUserId(int userId) {this.userId = userId;}
+    public void setUserId(String userId) {this.userId = userId;}
 
     public ArrayList<Note> getTripNotes() {
         if (tripNotes == null)

@@ -3,8 +3,6 @@ package com.ititeam.tripplannermaster.activity;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
-import android.location.Address;
-import android.location.Geocoder;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -28,7 +26,6 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.GoogleApiClient.ConnectionCallbacks;
 import com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListener;
 import com.google.android.gms.location.places.GeoDataClient;
@@ -37,13 +34,12 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.ititeam.tripplannermaster.DB.TripTableOperations;
 import com.ititeam.tripplannermaster.R;
+import com.ititeam.tripplannermaster.model.User;
 import com.ititeam.tripplannermaster.model.Note;
 import com.ititeam.tripplannermaster.model.Trip;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
-import java.util.Locale;
 
 public class AddNewTrip extends AppCompatActivity implements ConnectionCallbacks,OnConnectionFailedListener {
 
@@ -287,7 +283,7 @@ public class AddNewTrip extends AppCompatActivity implements ConnectionCallbacks
 
               }
               String TripCatagory = Tripcatagory.getSelectedItem().toString();
-              Trip NewTrip = new Trip(NameofTrip, StartLoc, Endloc, Date, Time, "Upcomming", TripDirection, Desc, "none", TripCatagory, userid, myNoteList);
+              Trip NewTrip = new Trip(NameofTrip, StartLoc, Endloc, Date, Time, "Upcomming", TripDirection, Desc, "none", TripCatagory, User.getEmail(), myNoteList);
               TripTableOperations myTripTable = new TripTableOperations(this);
               boolean test = myTripTable.insertTrip(NewTrip);
               for (int i = 0; i < NewTrip.getTripNotes().size(); i++) {

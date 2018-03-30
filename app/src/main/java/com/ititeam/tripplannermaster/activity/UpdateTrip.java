@@ -86,7 +86,7 @@ public class UpdateTrip extends AppCompatActivity implements GoogleApiClient.Con
 //        int TripId = intent.getIntExtra("TripId",1);
         Intent intent=this.getIntent();
         //String email=intent.getStringExtra("login_user_email");
-        String TripId=intent.getStringExtra("user_id");
+        String TripId=intent.getStringExtra("trip_id");
         Toast.makeText(this, "in update   "+TripId, Toast.LENGTH_SHORT).show();
         /***************************Get TRip Data***************************/
          tripTableOperations =new TripTableOperations(this);

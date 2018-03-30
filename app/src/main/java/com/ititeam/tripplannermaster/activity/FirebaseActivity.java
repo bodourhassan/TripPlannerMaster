@@ -3,6 +3,7 @@ package com.ititeam.tripplannermaster.activity;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -16,6 +17,7 @@ import com.ititeam.tripplannermaster.R;
 import com.ititeam.tripplannermaster.classes.DownLoadDataFromFirebase;
 import com.ititeam.tripplannermaster.classes.UploadDataToFirebase;
 import com.ititeam.tripplannermaster.model.Trip;
+import com.ititeam.tripplannermaster.model.User;
 
 import java.util.ArrayList;
 
@@ -42,9 +44,9 @@ public class FirebaseActivity extends AppCompatActivity {
         downlaodBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+/*
                 DownLoadDataFromFirebase downLoadDataFromFirebase = new DownLoadDataFromFirebase(FirebaseActivity.this);
-                downLoadDataFromFirebase.execute();
+                downLoadDataFromFirebase.execute();*/
             }
         });
     }
