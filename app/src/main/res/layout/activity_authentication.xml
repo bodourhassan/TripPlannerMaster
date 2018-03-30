@@ -8,6 +8,9 @@
         android:background="#131A56"
         android:fitsSystemWindows="true"
         tools:context=".activity.AuthenticationActivity">
+        <android.support.design.widget.CoordinatorLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
         <FrameLayout
             android:id="@+id/bottom_login"
@@ -39,6 +42,9 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+        </android.support.design.widget.CoordinatorLayout>
+
 
     </android.support.design.widget.CoordinatorLayout>
 </layout>

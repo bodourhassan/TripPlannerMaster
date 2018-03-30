@@ -68,7 +68,7 @@ public class TripTableOperations {
         return returnedData;
     }
 
-    public ArrayList<Trip> selectPastTripsUsingOnlyDate() {
+    public ArrayList<Trip> selectPastTripsUsingOnlyDate(String user_id) {
         String[] result_columns = {AdapterDba.DbOpenHelper.TRIP_ID,
                 AdapterDba.DbOpenHelper.TRIP_NAME,
                 AdapterDba.DbOpenHelper.TRIP_START_POINT,
@@ -81,8 +81,8 @@ public class TripTableOperations {
                 AdapterDba.DbOpenHelper.TRIP_REPITITION,
                 AdapterDba.DbOpenHelper.TRIP_CATEGORY,
                 AdapterDba.DbOpenHelper.USER_ID};
-        String whereClause = "date(" + AdapterDba.DbOpenHelper.TRIP_DATE + ") < date('now')";
-        String[] selectArgs = null;
+        String whereClause = "date(" + AdapterDba.DbOpenHelper.TRIP_DATE + ") < date('now') AND "+AdapterDba.DbOpenHelper.USER_ID+"=?";
+        String[] selectArgs = {user_id};
         String groupBy = null;
         String having = null;
         String orderBy = null;
@@ -112,7 +112,7 @@ public class TripTableOperations {
         return returnedData;
     }
 
-    public ArrayList<Trip> selectPastTripsUsingDateAndStatus() {
+    public ArrayList<Trip> selectPastTripsUsingDateAndStatus(String userId) {
         String[] result_columns = {AdapterDba.DbOpenHelper.TRIP_ID,
                 AdapterDba.DbOpenHelper.TRIP_NAME,
                 AdapterDba.DbOpenHelper.TRIP_START_POINT,
@@ -125,8 +125,8 @@ public class TripTableOperations {
                 AdapterDba.DbOpenHelper.TRIP_REPITITION,
                 AdapterDba.DbOpenHelper.TRIP_CATEGORY,
                 AdapterDba.DbOpenHelper.USER_ID};
-        String whereClause = "date(" + AdapterDba.DbOpenHelper.TRIP_DATE + ") < date('now') AND " + AdapterDba.DbOpenHelper.TRIP_STATUS + "=?";
-        String[] selectArgs = {TripConstant.DoneStatus};
+        String whereClause = "date(" + AdapterDba.DbOpenHelper.TRIP_DATE + ") < date('now') AND " + AdapterDba.DbOpenHelper.TRIP_STATUS + "=? AND "+AdapterDba.DbOpenHelper.USER_ID+"=?";
+        String[] selectArgs = {TripConstant.DoneStatus,userId};
         String groupBy = null;
         String having = null;
         String orderBy = null;
@@ -156,7 +156,7 @@ public class TripTableOperations {
         return returnedData;
     }
 
-    public ArrayList<Trip> selectUpcomingTripsUsingOnlyDate() {
+    public ArrayList<Trip> selectUpcomingTripsUsingOnlyDate(String userId) {
         String[] result_columns = {AdapterDba.DbOpenHelper.TRIP_ID,
                 AdapterDba.DbOpenHelper.TRIP_NAME,
                 AdapterDba.DbOpenHelper.TRIP_START_POINT,
@@ -169,8 +169,8 @@ public class TripTableOperations {
                 AdapterDba.DbOpenHelper.TRIP_REPITITION,
                 AdapterDba.DbOpenHelper.TRIP_CATEGORY,
                 AdapterDba.DbOpenHelper.USER_ID};
-        String whereClause = "date(" + AdapterDba.DbOpenHelper.TRIP_DATE + ") > date('now')";
-        String[] selectArgs = null;
+        String whereClause = "date(" + AdapterDba.DbOpenHelper.TRIP_DATE + ") > date('now') AND "+AdapterDba.DbOpenHelper.USER_ID+"=?";
+        String[] selectArgs = {userId};
         String groupBy = null;
         String having = null;
         String orderBy = null;

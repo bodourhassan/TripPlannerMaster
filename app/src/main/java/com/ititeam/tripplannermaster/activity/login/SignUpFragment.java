@@ -26,6 +26,7 @@ import com.ititeam.tripplannermaster.R;
 import com.ititeam.tripplannermaster.activity.HomeFragment;
 import com.ititeam.tripplannermaster.activity.MainActivity;
 import com.ititeam.tripplannermaster.activity.StartActivityDrawer;
+import com.ititeam.tripplannermaster.model.User;
 
 
 public class SignUpFragment extends Fragment implements OnSignUpListener{
@@ -76,6 +77,7 @@ public class SignUpFragment extends Fragment implements OnSignUpListener{
             uEmail = email.getText().toString().trim();
             uPassword = password.getText().toString().trim();
             uConformPassword = confirmPassword.getText().toString().trim();
+            User.setEmail(uEmail);
 
             if (TextUtils.isEmpty(uName)) {
                 Toast.makeText(getActivity(), "Enter email address!", Toast.LENGTH_SHORT).show();
@@ -112,8 +114,10 @@ public class SignUpFragment extends Fragment implements OnSignUpListener{
 
                         Log.i("exceptionis", "" + task.getException());
                     } else {
+                        User.setEmail(uEmail);
                         prog.dismiss();
                         Toast.makeText(getActivity(), "succefull", Toast.LENGTH_SHORT).show();
+
                         startActivity(new Intent(getActivity(), StartActivityDrawer.class));
                     }
                 }

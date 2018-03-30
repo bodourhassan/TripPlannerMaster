@@ -3,7 +3,9 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/TripPlannerMaster.iml" filepath="$PROJECT_DIR$/TripPlannerMaster.iml" />
+      <module fileurl="file://F:\ITI\android project last\last2\TripPlannerMaster\TripPlannerMaster.iml" filepath="F:\ITI\android project last\last2\TripPlannerMaster\TripPlannerMaster.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://F:\ITI\android project last\last2\TripPlannerMaster\app\app.iml" filepath="F:\ITI\android project last\last2\TripPlannerMaster\app\app.iml" />
     </modules>
   </component>
 </project>

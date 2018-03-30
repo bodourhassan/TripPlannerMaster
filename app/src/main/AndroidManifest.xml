@@ -20,6 +20,7 @@
     <!-- end bodour section -->
     <!-- mark section -->
     <uses-permission android:name="android.permission.WAKE_LOCK" />
+
     <!-- end mark section -->
     <!-- hesham section -->
     <!-- end hesham section -->
@@ -32,14 +33,12 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".activity.MainActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <!-- hanaa section -->
         <activity
             android:name=".activity.AuthenticationActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar">
-
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar"></activity>
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
@@ -86,13 +85,7 @@
         <activity
             android:name=".activity.UpdateTrip"
             android:label="@string/title_activity_update_trip"
-            android:theme="@style/AppTheme.NoActionBar" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
             android:name=".activity.StartTripActivity"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -103,8 +96,7 @@
         <activity
             android:name=".activity.alarmhandler.AlarmActivity"
             android:excludeFromRecents="true"
-            android:theme="@style/Theme.AppCompat.Dialog">
-        </activity>
+            android:theme="@style/Theme.AppCompat.Dialog"></activity>
 
         <!-- Declare  Alarm Broadcast receiver here -->
         <receiver android:name=".activity.alarmhandler.AlarmReceiver" />
@@ -128,10 +120,16 @@
 
         <!-- end hesham section -->
 
-        <activity android:name=".SplashScreenActivity"
+        <activity
+            android:name=".SplashScreenActivity"
             android:noHistory="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
+        <activity android:name=".activity.ResetPasswordActivity"></activity>
     </application>
 
 </manifest>

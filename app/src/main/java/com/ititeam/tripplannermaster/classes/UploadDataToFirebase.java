@@ -37,6 +37,12 @@ public class UploadDataToFirebase extends AsyncTask<String, Integer, Object> {
         TripTableOperations tripTableOperations = new TripTableOperations(context);
         String user_id = User.getEmail();
         trips = tripTableOperations.selectTripsUsingUserId(user_id);
+        String path= User.getEmail().replace(".","_");
+        path=path.replace("#","_");
+        path=path.replace("$","_");
+        path=path.replace("[","_");
+        path=path.replace("]","_");
+        User.setFirebasePath(path);
         getDatabaseReference = databaseReference.child(User.getFirebasePath());
         getDatabaseReference.addValueEventListener(new ValueEventListener() {
             @Override

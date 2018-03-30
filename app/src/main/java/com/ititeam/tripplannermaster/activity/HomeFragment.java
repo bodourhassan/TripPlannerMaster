@@ -1,7 +1,9 @@
 package com.ititeam.tripplannermaster.activity;
 
 
+import android.app.AlarmManager;
 import android.app.AlertDialog;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -27,6 +29,7 @@ import com.ititeam.tripplannermaster.DB.TripTableOperations;
 import com.ititeam.tripplannermaster.R;
 import com.ititeam.tripplannermaster.classes.TripViewHolder;
 import com.ititeam.tripplannermaster.classes.UploadDataToFirebase;
+import com.ititeam.tripplannermaster.model.Note;
 import com.ititeam.tripplannermaster.model.User;
 import com.ititeam.tripplannermaster.model.Trip;
 
@@ -45,12 +48,16 @@ public class HomeFragment extends Fragment{
 
     ArrayList<Trip> upcommingTrips = new ArrayList<>();
 
+    //Pending intent instance
+    private PendingIntent pendingIntent;
 
+    //Alarm Request Code
+    private static final int ALARM_REQUEST_CODE = 133;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         tripTableOperations = new TripTableOperations(getActivity());
-        upcommingTrips = tripTableOperations.selectUpcomingTripsUsingOnlyDate();
+        upcommingTrips = tripTableOperations.selectUpcomingTripsUsingOnlyDate(User.getEmail());
         Toast.makeText(getActivity(), "size array oncreate "+upcommingTrips.size(), Toast.LENGTH_SHORT).show();
         Intent intent=getActivity().getIntent();
         String email=intent.getStringExtra("login_user_email");
@@ -270,12 +277,16 @@ public class HomeFragment extends Fragment{
 
                         public void onClick(DialogInterface dialog, int which) {
                             // continue with delete
+                            AlarmManager manager = (AlarmManager) getActivity().getSystemService(Context.ALARM_SERVICE);
+                            Intent alarmIntent = new Intent(getActivity(), MainActivity.class);
+                            pendingIntent = PendingIntent.getBroadcast(getActivity().getBaseContext(),upcommingTrips.get(position).getTripId() , alarmIntent, PendingIntent.FLAG_UPDATE_CURRENT);
                             tripTableOperations.deleteTrip(String.valueOf(upcommingTrips.get(position).getTripId()));
                             mItemManger.removeShownLayouts(viewHolder.swipeLayout);
                             upcommingTrips.remove(position);
                             notifyItemRemoved(position);
                             notifyItemRangeChanged(position, upcommingTrips.size());
                             mItemManger.closeAllItems();
+                            manager.cancel(pendingIntent);//cancel the alarm manager of the pending intent
                             Toast.makeText(getActivity(), "here in delete", Toast.LENGTH_SHORT).show();
                         }
                     });
@@ -317,11 +328,19 @@ public class HomeFragment extends Fragment{
     public void onResume()
     {  // After a pause OR at startup
         super.onResume();
-        Toast.makeText(getActivity(), "refresh", Toast.LENGTH_SHORT).show();
-        upcommingTrips = tripTableOperations.selectUpcomingTripsUsingOnlyDate();
+       /* Toast.makeText(getActivity(), "email in Resume"+User.getEmail(), Toast.LENGTH_SHORT).show();
+        upcommingTrips = tripTableOperations.selectUpcomingTripsUsingOnlyDate(User.getEmail());
         myAdapter = new TripAdapterFragment();
-        recyclerView.setAdapter(myAdapter);
+        recyclerView.setAdapter(myAdapter);*/
         //Refresh your stuff here
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        Toast.makeText(getActivity(), "email in restart"+User.getEmail(), Toast.LENGTH_SHORT).show();
+/*        upcommingTrips = tripTableOperations.selectUpcomingTripsUsingOnlyDate(User.getEmail());
+        myAdapter = new TripAdapterFragment();
+        recyclerView.setAdapter(myAdapter);*/
+    }
 }
