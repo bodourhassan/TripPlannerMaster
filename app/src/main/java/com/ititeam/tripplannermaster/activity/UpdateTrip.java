@@ -231,7 +231,7 @@ public class UpdateTrip extends AppCompatActivity implements GoogleApiClient.Con
                     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                         month=month+1;
 
-                        DateView.setText(dayOfMonth+"/"+month+"/"+year);
+                        DateView.setText(dayOfMonth+"-"+month+"-"+year);
                     }
                 },year,month,day);
                 datePickerDialog.show();

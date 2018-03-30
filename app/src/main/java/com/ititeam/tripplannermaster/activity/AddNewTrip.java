@@ -149,7 +149,7 @@ public class AddNewTrip extends AppCompatActivity implements ConnectionCallbacks
         minute=myCalender.get(Calendar.MINUTE);
         month=month+1;
 
-        DateView.setText(day+"/"+month+"/"+year);
+        DateView.setText(day+"-"+month+"-"+year);
 
         DateView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -159,7 +159,7 @@ public class AddNewTrip extends AppCompatActivity implements ConnectionCallbacks
                     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                         month=month+1;
 
-                        DateView.setText(dayOfMonth+"/"+month+"/"+year);
+                        DateView.setText(dayOfMonth+"-"+month+"-"+year);
                     }
                 },year,month,day);
                 datePickerDialog.show();
