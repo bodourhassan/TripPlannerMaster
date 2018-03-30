@@ -1,7 +1,11 @@
 package com.ititeam.tripplannermaster.activity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.support.design.widget.Snackbar;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 
@@ -28,6 +32,13 @@ public class StartActivityDrawer extends AppCompatActivity implements FragmentDr
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start_drawer);
+
+        Snackbar snackbar = Snackbar
+                .make(findViewById(android.R.id.content), "Swip the trip left and right to edit,delete or view details", Snackbar.LENGTH_LONG).setActionTextColor(Color.YELLOW);
+        View sbView = snackbar.getView();
+        sbView.setBackgroundColor(getResources().getColor(R.color.colorAccent));
+        snackbar.show();
+
 
         mToolbar = findViewById(R.id.toolbar);
 
@@ -65,9 +76,12 @@ public class StartActivityDrawer extends AppCompatActivity implements FragmentDr
             case 2:
                 //fragment = new LoginFragment();
                 //title = getString(R.string.title_messages);
+                PreferenceManager.getDefaultSharedPreferences(StartActivityDrawer.this).
+                        edit().clear().apply();
                 Intent i = new Intent(this , AuthenticationActivity.class);
                 startActivity(i);
                 Toast.makeText(this, "LOGOUT", Toast.LENGTH_SHORT).show();
+                finish();
                 break;
             default:
                 break;

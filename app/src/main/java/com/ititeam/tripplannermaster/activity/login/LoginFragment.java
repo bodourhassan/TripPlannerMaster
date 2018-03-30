@@ -6,6 +6,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
@@ -16,11 +17,13 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.facebook.CallbackManager;
@@ -43,6 +46,7 @@ import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.ValueEventListener;
 import com.ititeam.tripplannermaster.DB.TripTableOperations;
 import com.ititeam.tripplannermaster.R;
+import com.ititeam.tripplannermaster.activity.ResetPasswordActivity;
 import com.ititeam.tripplannermaster.activity.StartActivityDrawer;
 import com.ititeam.tripplannermaster.activity.TripConstant;
 import com.ititeam.tripplannermaster.classes.DownLoadDataFromFirebase;
@@ -68,6 +72,7 @@ public class LoginFragment extends Fragment implements OnLoginListener , View.On
     private FirebaseAuth auth;
     ProgressDialog   prog;
     String first_name,last_name,email,id;
+    TextView tbForget ;
 
 
     public LoginFragment() {
@@ -208,8 +213,19 @@ public class LoginFragment extends Fragment implements OnLoginListener , View.On
         etPassword = inflate.findViewById(R.id.fragmentSignInPassword);
         checkBoxRememberMe = inflate.findViewById(R.id.FragmentLoginKeepMeLoggedIn);
         checkBoxRememberMe.setChecked(true);
-        inflate.findViewById(R.id.forgot_password).setOnClickListener(v ->
-                Toast.makeText(getContext(), "Forgot password clicked", Toast.LENGTH_SHORT).show());
+        tbForget = inflate.findViewById(R.id.forgot_password);
+
+        tbForget.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent;
+                intent = new Intent(getActivity(), ResetPasswordActivity.class);
+                startActivity(intent);
+                Toast.makeText(getContext(), "Forgot password clicked", Toast.LENGTH_SHORT).show();
+
+            }
+        });
+
 
         facebook_login_button=inflate.findViewById(R.id.facebook_login_button);
         facebook_login_button.setFragment(this);
@@ -372,7 +388,19 @@ public class LoginFragment extends Fragment implements OnLoginListener , View.On
 
             loginUser(uEmail , uPassword);
         } else {
-            Toast.makeText(getActivity(), "No internet connection", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getActivity(), "No internet connection", Toast.LENGTH_SHORT).show();
+
+
+            //int gravity = Gravity.CENTER; // the position of toast
+            //int xOffset = 0; // horizontal offset from current gravity
+            //int yOffset = 0; // vertical offset from current gravity
+
+            Toast toast= Toast.makeText(getActivity(), "no internet connection", Toast.LENGTH_SHORT);
+            TextView textView= (TextView) toast.getView().findViewById(android.R.id.message);
+            textView.setTextColor(Color.YELLOW);
+            toast.getView().setBackgroundColor(getResources().getColor(R.color.com_facebook_blue));
+           // toast.setGravity(gravity, xOffset, yOffset);
+            toast.show();
         }
 
 
