@@ -3,6 +3,7 @@ package com.ititeam.tripplannermaster.activity.login;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
@@ -47,6 +48,7 @@ import com.ititeam.tripplannermaster.activity.TripConstant;
 import com.ititeam.tripplannermaster.classes.DownLoadDataFromFirebase;
 import com.ititeam.tripplannermaster.model.Note;
 import com.ititeam.tripplannermaster.model.Trip;
+import com.ititeam.tripplannermaster.model.User;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -201,6 +203,8 @@ public class LoginFragment extends Fragment implements OnLoginListener , View.On
         View inflate = inflater.inflate(R.layout.fragment_login, container, false);
         etEmail = inflate.findViewById(R.id.FragmentSignInEmail);
         etPassword = inflate.findViewById(R.id.fragmentSignInPassword);
+        checkBoxRememberMe = inflate.findViewById(R.id.FragmentLoginKeepMeLoggedIn);
+        checkBoxRememberMe.setChecked(true);
         inflate.findViewById(R.id.forgot_password).setOnClickListener(v ->
                 Toast.makeText(getContext(), "Forgot password clicked", Toast.LENGTH_SHORT).show());
 
@@ -279,7 +283,7 @@ public class LoginFragment extends Fragment implements OnLoginListener , View.On
             Log.i("userdatalogin", "" + uEmail);
             Log.i("userdatalogin", "" + uPassword);
             //authenticate user
-            final ProgressDialog prog = new ProgressDialog(getActivity());
+            prog = new ProgressDialog(getActivity());
             prog.setMessage("signing up !!!!!!");
             prog.setCancelable(false);
             prog.show();
@@ -307,12 +311,15 @@ public class LoginFragment extends Fragment implements OnLoginListener , View.On
                                     SharedPreferences.Editor editor = myprefrances.edit();
                                     editor.putString("user_email",uEmail);
                                     editor.putString("user_password",uPassword);
+                                    User.setEmail(uEmail);
                                     editor.commit();
                                 }else{
                                     PreferenceManager.getDefaultSharedPreferences(getActivity()).
                                             edit().clear().apply();
+                                    User.setEmail(uEmail);
                                     Toast.makeText(getActivity(), "remove prefrences", Toast.LENGTH_SHORT).show();
                                 }
+
 
                                 DownLoadDataFromFirebase2 downLoadDataFromFirebase=new DownLoadDataFromFirebase2(getActivity());
                                 downLoadDataFromFirebase.execute();
@@ -348,6 +355,11 @@ public class LoginFragment extends Fragment implements OnLoginListener , View.On
             e.printStackTrace();
         }
 
+
+    }
+
+    @Override
+    public void onClick(View view) {
 
     }
 
@@ -387,12 +399,14 @@ public class LoginFragment extends Fragment implements OnLoginListener , View.On
                         if (trips != null) {
                             Toast.makeText(getApplicationContext(), "download" + trips.size(), Toast.LENGTH_SHORT).show();
                             new TripTableOperations(getApplicationContext()).getTripFromFirebase(trips);
-                           prog.dismiss();
 
-                            Intent intent = new Intent(context, StartActivityDrawer.class);
-                            intent.putExtra("login_user_email", User.getEmail());
-                            context.startActivity(intent);
                         }
+                        prog.dismiss();
+
+                        Intent intent = new Intent(context, StartActivityDrawer.class);
+                        intent.putExtra("login_user_email", User.getEmail());
+                        Toast.makeText(context, "enter taskansk", Toast.LENGTH_SHORT).show();
+                        context.startActivity(intent);
                     }
 
                     @Override
