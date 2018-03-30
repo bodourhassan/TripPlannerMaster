@@ -15,6 +15,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.CheckBox;
@@ -75,9 +76,12 @@ public class StartTripActivity extends FragmentActivity implements OnMapReadyCal
         mycancel = findViewById(R.id.Cancelbutton);
 //        Intent intent =getIntent();
 //        int TripId= intent.getIntExtra("MyTripId",1);
-        int TripId = 1;
+        Intent intent = this.getIntent();
+        //String email=intent.getStringExtra("login_user_email");
+        String TripId = intent.getStringExtra("trip_id");
+        Toast.makeText(this, "in update   " + TripId, Toast.LENGTH_SHORT).show();
         TripTableOperations myOperation = new TripTableOperations(this);
-        Trip myTrip = myOperation.selectSingleTrips(TripId + "");
+        Trip myTrip = myOperation.selectSingleTrips(TripId);
         ArrayList<Note> myNotes = myTrip.getTripNotes();
 
         startplace = myTrip.getTripStartPoint();
@@ -89,6 +93,15 @@ public class StartTripActivity extends FragmentActivity implements OnMapReadyCal
         markers = new ArrayList<>();
         mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.Mymap);
         mapFragment.getMapAsync(this);
+        myList.setOnTouchListener(new View.OnTouchListener() {
+            // Setting on Touch Listener for handling the touch inside ScrollView
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                // Disallow the touch request for parent scroll on touch of child view
+                v.getParent().requestDisallowInterceptTouchEvent(true);
+                return false;
+            }
+        });
         myList.setAdapter(myadapter);
         myList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -139,12 +152,11 @@ public class StartTripActivity extends FragmentActivity implements OnMapReadyCal
                 }
 
                 boolean tset = myOperation.updateTrip(myTrip);
-//                Trip myTrip2 = myOperation.selectSingleTrips(TripId + "");
-//                for(int i=0;i<myTrip2.getTripNotes().size();i++)
-//                {
-//                    allnote+=i+":"+myTrip2.getTripNotes().get(i).getStatus()+",";
-//                }
-//                Toast.makeText(StartTripActivity.this, allnote, Toast.LENGTH_LONG).show();
+                Trip myTrip2 = myOperation.selectSingleTrips(TripId);
+                for (int i = 0; i < myTrip2.getTripNotes().size(); i++) {
+                    allnote += i + ":" + myTrip2.getTripNotes().get(i).getStatus() + ",";
+                }
+                Toast.makeText(StartTripActivity.this, allnote, Toast.LENGTH_LONG).show();
             }
         });
         mycancel.setOnClickListener(new View.OnClickListener() {
@@ -157,6 +169,7 @@ public class StartTripActivity extends FragmentActivity implements OnMapReadyCal
             @Override
             public void onClick(View v) {
                 myTrip.setTripStatus(TripConstant.CancelledStatus);
+                Toast.makeText(StartTripActivity.this, myTrip.getTripStatus(), Toast.LENGTH_LONG).show();
             }
         });
 
@@ -262,8 +275,6 @@ public class StartTripActivity extends FragmentActivity implements OnMapReadyCal
             }
         });
     }
-
-
     private String getRequestUrl(LatLng origin, LatLng dest) {
         //Value of origin
         String str_org = "origin=" + origin.latitude + "," + origin.longitude;
