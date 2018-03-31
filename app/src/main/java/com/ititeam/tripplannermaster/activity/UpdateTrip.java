@@ -59,7 +59,7 @@ public class UpdateTrip extends AppCompatActivity implements GoogleApiClient.Con
     private GeoDataClient geoDataClient ;
     ArrayList<String> listItems=new ArrayList<String>();
     ArrayAdapter<String> NoteListadapter;
-     MyUpdateAdapter myUpdateAdapter;
+    MyUpdateAdapter myUpdateAdapter;
     AutoCompleteTextView TripNameView;
     AutoCompleteTextView mylocationStart;
     AutoCompleteTextView mylocationEnd;
