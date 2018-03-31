@@ -133,7 +133,7 @@ public class ShowTripActivity extends FragmentActivity implements OnMapReadyCall
          tripName.setText(trip.getTripName());
         tripStartPoint.setText(trip.getTripStartPoint());
         tripEndPoint.setText(trip.getTripEndPoint());
-        tripTime.setText(trip.getTripName());
+        tripTime.setText(trip.getTripTime());
         tripDate.setText(trip.getTripDate());
         tripDirection.setText(trip.getTripDirection());
         tripDescription.setText(trip.getTripDescription());
