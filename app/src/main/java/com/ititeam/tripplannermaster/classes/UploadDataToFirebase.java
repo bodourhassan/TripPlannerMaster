@@ -53,7 +53,7 @@ public class UploadDataToFirebase extends AsyncTask<String, Integer, Object> {
                 firebaseTrips = dataSnapshot.getValue(genericTypeIndicator);
                 if (firebaseTrips != null) {
                     for (Trip trip : firebaseTrips) {
-                        Trip trip1 = new TripTableOperations(getApplicationContext()).selectSingleTrips(trip.getTripId() + "");
+                        Trip trip1 = new TripTableOperations(context).selectSingleTrips(trip.getTripId() + "");
                         if (trip1 == null) {
                             trips.add(trip1);
                         }

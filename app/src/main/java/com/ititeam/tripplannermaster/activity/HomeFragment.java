@@ -45,7 +45,7 @@ public class HomeFragment extends Fragment{
     TripAdapterFragment myAdapter;
     private Toolbar mToolbar;
     TripTableOperations tripTableOperations;
-
+    String email;
     ArrayList<Trip> upcommingTrips = new ArrayList<>();
 
     //Pending intent instance
@@ -57,11 +57,12 @@ public class HomeFragment extends Fragment{
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         tripTableOperations = new TripTableOperations(getActivity());
-        upcommingTrips = tripTableOperations.selectUpcomingTripsUsingOnlyDate(User.getEmail());
+        email=User.getEmail();
+       /* upcommingTrips = tripTableOperations.selectAllTrips();
         Toast.makeText(getActivity(), "size array oncreate "+upcommingTrips.size(), Toast.LENGTH_SHORT).show();
         Intent intent=getActivity().getIntent();
         String email=intent.getStringExtra("login_user_email");
-        User.setEmail(email);
+        User.setEmail(email);*/
         Toast.makeText(getActivity(), ""+email, Toast.LENGTH_SHORT).show();
     }
 
@@ -338,9 +339,10 @@ public class HomeFragment extends Fragment{
     @Override
     public void onStart() {
         super.onStart();
-        Toast.makeText(getActivity(), "email in restart"+User.getEmail(), Toast.LENGTH_SHORT).show();
-/*        upcommingTrips = tripTableOperations.selectUpcomingTripsUsingOnlyDate(User.getEmail());
+        Toast.makeText(getActivity(), "email in restart"+email, Toast.LENGTH_SHORT).show();
+        //upcommingTrips = tripTableOperations.selectUpcomingTripsUsingOnlyDate(email);
+        upcommingTrips = tripTableOperations.selectAllTrips();
         myAdapter = new TripAdapterFragment();
-        recyclerView.setAdapter(myAdapter);*/
+        recyclerView.setAdapter(myAdapter);
     }
 }

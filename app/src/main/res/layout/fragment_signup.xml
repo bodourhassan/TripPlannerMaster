@@ -9,7 +9,13 @@
         android:layout_gravity="center"
         android:layout_height="match_parent"
         android:orientation="vertical">
-
+<!--<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">-->
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
         <EditText
             android:id="@+id/Fragment_SignUp_UserName"
             android:layout_width="300dp"
@@ -73,5 +79,9 @@
             android:paddingStart="32dp"
             android:textColor="#ffffff"
             android:textColorHint="#8effffff" />
+
+</LinearLayout>
+<!--</ScrollView>-->
     </LinearLayout>
+
 </FrameLayout>
