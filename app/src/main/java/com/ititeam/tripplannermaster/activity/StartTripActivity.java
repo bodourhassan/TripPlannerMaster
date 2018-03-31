@@ -81,9 +81,9 @@ public class StartTripActivity extends FragmentActivity implements OnMapReadyCal
 //        int TripId= intent.getIntExtra("MyTripId",1);
         Intent intent = this.getIntent();
         //String email=intent.getStringExtra("login_user_email");
-        String TripId=1+"";
-       // String TripId = intent.getStringExtra("trip_id");
-        //Toast.makeText(this, "in update   " + TripId, Toast.LENGTH_SHORT).show();
+        //String TripId=1+"";
+       String TripId = intent.getStringExtra("trip_id");
+        Toast.makeText(this, "in update   " + TripId, Toast.LENGTH_SHORT).show();
         TripTableOperations myOperation = new TripTableOperations(this);
         Trip myTrip = myOperation.selectSingleTrips(TripId);
         ArrayList<Note> myNotes = myTrip.getTripNotes();
