@@ -1,7 +1,11 @@
 package com.ititeam.tripplannermaster.activity;
 
+import android.app.AlarmManager;
 import android.app.DatePickerDialog;
+import android.app.LauncherActivity;
+import android.app.PendingIntent;
 import android.app.TimePickerDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -13,6 +17,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.DatePicker;
@@ -35,6 +40,9 @@ import com.google.android.gms.maps.model.LatLngBounds;
 import com.ititeam.tripplannermaster.DB.NoteTableOperations;
 import com.ititeam.tripplannermaster.DB.TripTableOperations;
 import com.ititeam.tripplannermaster.R;
+import com.ititeam.tripplannermaster.activity.alarmhandler.AlarmActivity;
+import com.ititeam.tripplannermaster.activity.alarmhandler.AlarmScheduleService;
+import com.ititeam.tripplannermaster.classes.UploadDataToFirebase;
 import com.ititeam.tripplannermaster.model.Note;
 import com.ititeam.tripplannermaster.model.Trip;
 
@@ -46,6 +54,7 @@ public class UpdateTrip extends AppCompatActivity implements GoogleApiClient.Con
     private GeoDataClient geoDataClient ;
     ArrayList<String> listItems=new ArrayList<String>();
     ArrayAdapter<String> NoteListadapter;
+     MyUpdateAdapter myUpdateAdapter;
     AutoCompleteTextView TripNameView;
     AutoCompleteTextView mylocationStart;
     AutoCompleteTextView mylocationEnd;
@@ -67,6 +76,13 @@ public class UpdateTrip extends AppCompatActivity implements GoogleApiClient.Con
     Trip UpdateTrip;
     TripTableOperations tripTableOperations;
     NoteTableOperations noteTableOperations;
+
+    //Pending intent instance
+    private PendingIntent pendingIntent;
+
+    //Alarm Request Code
+    private static final int ALARM_REQUEST_CODE = 133;
+
     public  static final LatLngBounds LatLangBounds =new LatLngBounds(new LatLng(-40,-168),new LatLng(71,163));
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,9 +102,9 @@ public class UpdateTrip extends AppCompatActivity implements GoogleApiClient.Con
         MyNoteList=findViewById(R.id.UNoteList);
         dropdown = findViewById(R.id.UTripCatId);
         Intent intent = this.getIntent();
-        String TripId = 1+"";
-        //String TripId = intent.getStringExtra("trip_id");
-        //Toast.makeText(this, "in update   " + TripId, Toast.LENGTH_SHORT).show();
+       // String TripId = 1+"";
+        String TripId = intent.getStringExtra("trip_id");
+        Toast.makeText(this, "in update   " + TripId, Toast.LENGTH_SHORT).show();
         /***************************Get TRip Data***************************/
         tripTableOperations = new TripTableOperations(this);
         noteTableOperations=new NoteTableOperations(this);
@@ -127,8 +143,22 @@ public class UpdateTrip extends AppCompatActivity implements GoogleApiClient.Con
             listItems.add(NmyNoteList.get(i).getNoteBody());
             // listItems.add("listItem");
         }
-        NoteListadapter=new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,listItems);
-        MyNoteList.setAdapter(NoteListadapter);
+       // NoteListadapter=new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,listItems);
+        myUpdateAdapter=new MyUpdateAdapter(this,R.layout.my_update_item,listItems);
+       // MyNoteList.setAdapter(NoteListadapter);
+        MyNoteList.setAdapter(myUpdateAdapter);
+        MyNoteList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                FloatingActionButton myfloatDalet = view.findViewById(R.id.MyDelet);
+                myfloatDalet.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Toast.makeText(getBaseContext(),"DeletedClicked",Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+        });
         MyNoteList.setOnTouchListener(new View.OnTouchListener() {
             // Setting on Touch Listener for handling the touch inside ScrollView
             @Override
@@ -142,7 +172,8 @@ public class UpdateTrip extends AppCompatActivity implements GoogleApiClient.Con
 
         //get the spinner from the xml.
         //create a list of items for the spinner.
-        String[] items = new String[]{"Work", "School", "Shopping"};
+        String[] items = new String[]{TripConstant.FriendCatagory,TripConstant.FamilyCatagory, TripConstant.bussinessCatagory,TripConstant.meetingCatagory,TripConstant.vacationCatagory,TripConstant.otherCatagory};
+
         //create an adapter to describe how the items are displayed, adapters are used in several places in android
         // There are multiple variations of this, but this is the basic variant.
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, items);
@@ -172,7 +203,7 @@ public class UpdateTrip extends AppCompatActivity implements GoogleApiClient.Con
                     myNewNote.setStatus(TripConstant.NoteLater);
                     myNewNote.setTripIdFk(Integer.parseInt(TripId));
                     noteTableOperations.insertNote(myNewNote);
-                    NoteListadapter.notifyDataSetChanged();
+                    myUpdateAdapter.notifyDataSetChanged();
                     NoteItem.setText("".toString());
                     // NoteListadapter.setNotifyOnChange(true);
                     // MyNoteList.notifyAll();
@@ -202,12 +233,15 @@ public class UpdateTrip extends AppCompatActivity implements GoogleApiClient.Con
                     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                         month=month+1;
 
-                        DateView.setText(dayOfMonth+"/"+month+"/"+year);
+                      //  DateView.setText(dayOfMonth+"-"+month+"-"+year);
+                        DateView.setText(year+"-"+month+"-"+dayOfMonth);
+
                     }
                 },year,month,day);
                 datePickerDialog.show();
             }
         });
+
 
 
         TimeView.setOnClickListener(new View.OnClickListener() {
@@ -321,10 +355,17 @@ public class UpdateTrip extends AppCompatActivity implements GoogleApiClient.Con
             // find the radiobutton by returned id
             myRadiobutton = findViewById(selectedId);
             String TripDirection = myRadiobutton.getText().toString();
+
+            for(int i=0;i< MyNoteList.getChildCount();i++)
+            {
+                View myView = MyNoteList.getChildAt(i);
+                EditText myEditNote= myView.findViewById(R.id.MyNoteU);
+                listItems.set(i,myEditNote.getText().toString());
+
+            }
             NmyNoteList.clear();
             for (int i = 0; i < listItems.size(); i++) {
                 Note note = new Note(listItems.get(i), TripConstant.NoteLater);
-
                 NmyNoteList.add(note);
 
             }
@@ -340,12 +381,28 @@ public class UpdateTrip extends AppCompatActivity implements GoogleApiClient.Con
             UpdateTrip.setTripDirection(TripDirection);
             UpdateTrip.setTripDescription(Desc);
             UpdateTrip.setTripCategory(TripCatagory);
+
+
             for (int i = 0; i < NmyNoteList.size(); i++) {
                 Log.e("uuuuuuuuuuuuuuu", "Note" + i + NmyNoteList.get(i).getNoteBody());
 
             }
             UpdateTrip.setTripNotes(NmyNoteList);
             boolean test = tripTableOperations.updateTrip(UpdateTrip);
+            if(test){
+                AlarmManager manager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+                Intent alarmIntent = new Intent(UpdateTrip.this, MainActivity.class);
+                pendingIntent = PendingIntent.getBroadcast(getBaseContext(),UpdateTrip.getTripId() , alarmIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+                manager.cancel(pendingIntent);//cancel the alarm manager of the pending intent
+
+                Trip lastTrip=tripTableOperations.selectAllTripsForGettingLastId();
+                Intent intent=new Intent(UpdateTrip.this, AlarmScheduleService.class);
+                intent.putExtra("trip_id",lastTrip.getTripId());
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                startService(intent);
+            }
             Toast.makeText(getBaseContext(), test + "",
                     Toast.LENGTH_SHORT).show();
             Trip my = tripTableOperations.selectSingleTrips(1 + "");

@@ -45,6 +45,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.ititeam.tripplannermaster.DB.TripTableOperations;
 import com.ititeam.tripplannermaster.R;
+import com.ititeam.tripplannermaster.activity.alarmhandler.AlarmScheduleService;
 import com.ititeam.tripplannermaster.model.User;
 import com.ititeam.tripplannermaster.model.Note;
 import com.ititeam.tripplannermaster.model.Trip;
@@ -148,7 +149,8 @@ public class AddNewTrip extends AppCompatActivity implements ConnectionCallbacks
         minute=myCalender.get(Calendar.MINUTE);
         month=month+1;
 
-        DateView.setText(day+"/"+month+"/"+year);
+       // DateView.setText(day+"-"+month+"-"+year);
+        DateView.setText(year+"-"+month+"-"+day);
 
         DateView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -158,7 +160,9 @@ public class AddNewTrip extends AppCompatActivity implements ConnectionCallbacks
                     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                         month=month+1;
 
-                        DateView.setText(dayOfMonth+"/"+month+"/"+year);
+                       // DateView.setText(dayOfMonth+"-"+month+"-"+year);
+                        DateView.setText(year+"-"+month+"-"+dayOfMonth);
+
                     }
                 },year,month,day);
                 datePickerDialog.show();
@@ -202,13 +206,13 @@ public class AddNewTrip extends AppCompatActivity implements ConnectionCallbacks
         //get the spinner from the xml.
         dropdown = findViewById(R.id.TripCatId);
         //create a list of items for the spinner.
-        String[] items = new String[]{"Work", "School", "Shopping"};
+        String[] items = new String[]{TripConstant.FriendCatagory,TripConstant.FamilyCatagory, TripConstant.bussinessCatagory,TripConstant.meetingCatagory,TripConstant.vacationCatagory,TripConstant.otherCatagory};
         //create an adapter to describe how the items are displayed, adapters are used in several places in android
         // There are multiple variations of this, but this is the basic variant.
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, items);
         //set the spinners adapter to the previously created one.
         dropdown.setAdapter(adapter);
-
+        dropdown.setSelection(adapter.getPosition(TripConstant.otherCatagory));
 
 
     }
@@ -313,6 +317,15 @@ public class AddNewTrip extends AppCompatActivity implements ConnectionCallbacks
             Trip NewTrip = new Trip(NameofTrip, StartLoc, Endloc, Date, Time, TripConstant.UpcomingStatus, TripDirection, Desc, "none", TripCatagory, User.getEmail(), myNoteList);
             TripTableOperations myTripTable = new TripTableOperations(this);
             boolean test = myTripTable.insertTrip(NewTrip);
+            if(test){
+                Trip lastTrip=myTripTable.selectAllTripsForGettingLastId();
+                Intent intent=new Intent(AddNewTrip.this, AlarmScheduleService.class);
+                intent.putExtra("trip_id",lastTrip.getTripId());
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                startService(intent);
+
+            }
             for (int i = 0; i < NewTrip.getTripNotes().size(); i++) {
                 Log.e("Trip before", NewTrip.getTripNotes().get(i).getNoteBody());
             }
@@ -342,6 +355,7 @@ public class AddNewTrip extends AppCompatActivity implements ConnectionCallbacks
             }
 //            Intent intent = new Intent(AddNewTrip.this, StartActivityDrawer.class);
 //            startActivity(intent);
+
             finish();
         }
 

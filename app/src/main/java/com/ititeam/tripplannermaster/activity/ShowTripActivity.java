@@ -3,7 +3,9 @@ package com.ititeam.tripplannermaster.activity;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlarmManager;
 import android.app.AlertDialog;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -87,6 +89,11 @@ public class ShowTripActivity extends FragmentActivity implements OnMapReadyCall
     ArrayList<Note> notes = new ArrayList<>();
     Trip trip = null;
     TripTableOperations tripTableOperations=null;
+    //Pending intent instance
+    private PendingIntent pendingIntent;
+
+    //Alarm Request Code
+    private static final int ALARM_REQUEST_CODE = 133;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -126,7 +133,7 @@ public class ShowTripActivity extends FragmentActivity implements OnMapReadyCall
          tripName.setText(trip.getTripName());
         tripStartPoint.setText(trip.getTripStartPoint());
         tripEndPoint.setText(trip.getTripEndPoint());
-        tripTime.setText(trip.getTripName());
+        tripTime.setText(trip.getTripTime());
         tripDate.setText(trip.getTripDate());
         tripDirection.setText(trip.getTripDirection());
         tripDescription.setText(trip.getTripDescription());
@@ -257,7 +264,13 @@ public class ShowTripActivity extends FragmentActivity implements OnMapReadyCall
 
                     public void onClick(DialogInterface dialog, int which) {
                         // continue with delete
+                        AlarmManager manager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+                        Intent alarmIntent = new Intent(ShowTripActivity.this, MainActivity.class);
+                        pendingIntent = PendingIntent.getBroadcast(getBaseContext(),trip.getTripId() , alarmIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+                        //cancel the alarm manager of the pending intent
                         tripTableOperations.deleteTrip(String.valueOf(trip.getTripId()));
+                        manager.cancel(pendingIntent);
                         /*mItemManger.removeShownLayouts(viewHolder.swipeLayout);
                         upcommingTrips.remove(position);
                         notifyItemRemoved(position);

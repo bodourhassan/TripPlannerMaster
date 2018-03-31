@@ -15,5 +15,13 @@ public class TripConstant {
     /*************************Trip Note Stats***********************/
     public static String NoteDone = "Done";
     public static String NoteLater = "Later";
+    /*************************Trip Catagory***********************/
+    public static String FriendCatagory = "friends";
+    public static String FamilyCatagory = "family";
+    public static String bussinessCatagory = "business";
+    public static String meetingCatagory = "meeting";
+    public static String vacationCatagory = "vacation";
+    public static String otherCatagory = "other";
+
 }
 

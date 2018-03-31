@@ -60,8 +60,10 @@
                 <data android:scheme="@string/fb_login_protocol_scheme" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.ShowTripActivity" />
-        <activity android:name=".activity.ShowHistoryActivity" />
+        <activity android:name=".activity.ShowTripActivity" android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".activity.ShowHistoryActivity" android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".activity.MapActivity" />
         <activity android:name=".activity.FirebaseActivity" />
 
@@ -85,7 +87,8 @@
         <activity
             android:name=".activity.UpdateTrip"
             android:label="@string/title_activity_update_trip"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
         <activity
             android:name=".activity.StartTripActivity"
             android:theme="@style/AppTheme.NoActionBar" />
