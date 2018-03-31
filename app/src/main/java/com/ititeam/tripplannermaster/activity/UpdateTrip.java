@@ -102,9 +102,9 @@ public class UpdateTrip extends AppCompatActivity implements GoogleApiClient.Con
         MyNoteList=findViewById(R.id.UNoteList);
         dropdown = findViewById(R.id.UTripCatId);
         Intent intent = this.getIntent();
-        String TripId = 1+"";
-        //String TripId = intent.getStringExtra("trip_id");
-        //Toast.makeText(this, "in update   " + TripId, Toast.LENGTH_SHORT).show();
+        //String TripId = 1+"";
+        String TripId = intent.getStringExtra("trip_id");
+        Toast.makeText(this, "in update   " + TripId, Toast.LENGTH_SHORT).show();
         /***************************Get TRip Data***************************/
         tripTableOperations = new TripTableOperations(this);
         noteTableOperations=new NoteTableOperations(this);
