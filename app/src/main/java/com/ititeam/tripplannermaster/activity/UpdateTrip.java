@@ -365,15 +365,18 @@ public class UpdateTrip extends AppCompatActivity implements GoogleApiClient.Con
             Toast.makeText(getBaseContext(), " Enter Your Description  ",
                     Toast.LENGTH_SHORT).show();
 
-        }else if (userDate.compareTo(nowDate)<=0) {
-            Toast.makeText(getBaseContext(), " Enter Upcomming Date ",
-                    Toast.LENGTH_SHORT).show();
+        }else if (userDate.compareTo(nowDate)==0) {
+            if (CurrentTime.after(myTime)) {
+                Toast.makeText(getBaseContext(), " Enter Upcomming Time ",
+                        Toast.LENGTH_SHORT).show();
+
+            }
+
 
         }
-        else if (CurrentTime.after(myTime)) {
-            Toast.makeText(getBaseContext(), " Enter Upcomming Time ",
+        else if (userDate.compareTo(nowDate)<0) {
+            Toast.makeText(getBaseContext(), " Enter Upcomming Date ",
                     Toast.LENGTH_SHORT).show();
-
         }
         else {
             String NameofTrip = TripNameView.getText().toString();

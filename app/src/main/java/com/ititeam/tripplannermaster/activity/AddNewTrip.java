@@ -286,12 +286,14 @@ public class AddNewTrip extends AppCompatActivity implements ConnectionCallbacks
 
     public void onClicksave(View view) {
         Date nowDate = new Date();
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-DD", Locale.ENGLISH);
         SimpleDateFormat TimeFormat = new SimpleDateFormat("HH:mm");
-        sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
+      //  sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
 
         try {
             Date userDate= sdf.parse(DateView.getText().toString());
+            Log.e("Dateeeeeeeeeee", DateView.getText().toString());
+            Log.e("Dateeeeeeeeeee", String.valueOf(userDate));
             Date myTime = TimeFormat.parse(TimeView.getText().toString());
             Date CurrentTime = TimeFormat.parse(TimeFormat.format(new Date()));
         if (TripNameView.getText().toString().trim().equals("")) {
@@ -309,16 +311,16 @@ public class AddNewTrip extends AppCompatActivity implements ConnectionCallbacks
             Toast.makeText(getBaseContext(), " Enter Your Description  ",
                     Toast.LENGTH_SHORT).show();
 
-        } else if (userDate.compareTo(nowDate)<=0) {
-            Toast.makeText(getBaseContext(), " Enter Upcomming Date ",
-                    Toast.LENGTH_SHORT).show();
-
+        } else if (userDate.compareTo(nowDate)==0) {
+            if (CurrentTime.after(myTime)) {
+                Toast.makeText(getBaseContext(), " Enter Upcomming Time ",
+                        Toast.LENGTH_SHORT).show();
+            }
         }
-        else if (CurrentTime.after(myTime)) {
-            Toast.makeText(getBaseContext(), " Enter Upcomming Time ",
-                    Toast.LENGTH_SHORT).show();
-
-        }
+          else if (userDate.compareTo(nowDate)<0) {
+                Toast.makeText(getBaseContext(), " Enter Upcomming Date ",
+                        Toast.LENGTH_SHORT).show();
+            }
         else {
             String NameofTrip = TripNameView.getText().toString();
             String StartLoc = mylocationStart.getText().toString();
