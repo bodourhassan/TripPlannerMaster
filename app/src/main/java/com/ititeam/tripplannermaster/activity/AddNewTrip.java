@@ -150,7 +150,16 @@ public class AddNewTrip extends AppCompatActivity implements ConnectionCallbacks
         month=month+1;
 
        // DateView.setText(day+"-"+month+"-"+year);
-        DateView.setText(year+"-"+month+"-"+day);
+        String Smonth=month+"";
+        String sDay =day+"";
+        if (month < 10) {
+            Smonth = "0" + month;
+        }
+        if (day < 10) {
+            sDay = "0" + day;
+
+        }
+        DateView.setText(year+"-"+Smonth+"-"+sDay);
 
         DateView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -161,7 +170,16 @@ public class AddNewTrip extends AppCompatActivity implements ConnectionCallbacks
                         month=month+1;
 
                        // DateView.setText(dayOfMonth+"-"+month+"-"+year);
-                        DateView.setText(year+"-"+month+"-"+dayOfMonth);
+                        String Smonthin=month+"";
+                        String sDayin =dayOfMonth+"";
+                        if (month < 10) {
+                            Smonthin = "0" + month;
+                        }
+                        if (dayOfMonth < 10) {
+                            sDayin = "0" + dayOfMonth;
+
+                        }
+                        DateView.setText(year+"-"+Smonthin+"-"+sDayin);
 
                     }
                 },year,month,day);
