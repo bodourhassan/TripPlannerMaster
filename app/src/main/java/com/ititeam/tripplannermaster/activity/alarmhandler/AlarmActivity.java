@@ -80,7 +80,8 @@ public class AlarmActivity extends AppCompatActivity {
 
         AlarmManager manager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         Intent alarmIntent = new Intent(AlarmActivity.this, MainActivity.class);
-        pendingIntent = PendingIntent.getBroadcast(getBaseContext(), ALARM_REQUEST_CODE, alarmIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        int trip_id = getIntent().getIntExtra("trip_id" , 0);
+        pendingIntent = PendingIntent.getBroadcast(getBaseContext(), trip_id, alarmIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         manager.cancel(pendingIntent);//cancel the alarm manager of the pending intent
 
