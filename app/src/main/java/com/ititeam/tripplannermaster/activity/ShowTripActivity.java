@@ -371,8 +371,20 @@ public class ShowTripActivity extends FragmentActivity implements OnMapReadyCall
                 }
             });
         }
+        else
+            {
+                Toast.makeText(getBaseContext(),"Your Satart Or End Location isn’t on Map",Toast.LENGTH_SHORT).show();
 
-    }}
+            }
+
+
+    }
+        else
+        {
+            Toast.makeText(getBaseContext(),"connect To Network",Toast.LENGTH_SHORT).show();
+
+        }
+    }
     private String getRequestUrl(LatLng origin, LatLng dest) {
         //Value of origin
         String str_org = "origin=" + origin.latitude + "," + origin.longitude;

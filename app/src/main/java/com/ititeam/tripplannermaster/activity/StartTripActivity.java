@@ -81,9 +81,9 @@ public class StartTripActivity extends FragmentActivity implements OnMapReadyCal
 //        int TripId= intent.getIntExtra("MyTripId",1);
         Intent intent = this.getIntent();
         //String email=intent.getStringExtra("login_user_email");
-        //String TripId=1+"";
-       String TripId = intent.getStringExtra("trip_id");
-        Toast.makeText(this, "in update   " + TripId, Toast.LENGTH_SHORT).show();
+        String TripId=1+"";
+       //String TripId = intent.getStringExtra("trip_id");
+       // Toast.makeText(this, "in update   " + TripId, Toast.LENGTH_SHORT).show();
         TripTableOperations myOperation = new TripTableOperations(this);
         Trip myTrip = myOperation.selectSingleTrips(TripId);
         ArrayList<Note> myNotes = myTrip.getTripNotes();
@@ -195,55 +195,66 @@ public class StartTripActivity extends FragmentActivity implements OnMapReadyCal
         if(isConnected()) {
             LatLng latLng1 = getLatLongFromGivenAddress(startplace);
             LatLng latLng2 = getLatLongFromGivenAddress(EndPlace);
+            if (latLng1 != null && latLng2!=null) {
 //        LatLng latLng1 = getLatLongFromGivenAddress("Cairo,Egypt");
 //        LatLng latLng2 = getLatLongFromGivenAddress("Tanata,Egypt");
-            mMap = googleMap;
-            mMap.getUiSettings().setZoomControlsEnabled(true);
-            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, LOCATION_REQUEST);
-                return;
-            }
-            mMap.setMyLocationEnabled(true);
-            listPoints.add(latLng1);
-            MarkerOptions markerOptions = new MarkerOptions();
-            markerOptions.position(latLng1);
-            markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
-            markers.add(markerOptions);
-            mMap.addMarker(markerOptions);
-            listPoints.add(latLng2);
-            // markerOptions = new MarkerOptions();
-            MarkerOptions markerOptions2 = new MarkerOptions();
-            markerOptions2.position(latLng2);
-            markerOptions2.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
-            mMap.addMarker(markerOptions2);
-            markers.add(markerOptions2);
-            String url = getRequestUrl(listPoints.get(0), listPoints.get(1));
-            StartTripActivity.TaskRequestDirections taskRequestDirections = new StartTripActivity.TaskRequestDirections();
-            taskRequestDirections.execute(url);
-            mMap.setOnMapLoadedCallback(new GoogleMap.OnMapLoadedCallback() {
-                @Override
-                public void onMapLoaded() {
-
-
+                mMap = googleMap;
+                mMap.getUiSettings().setZoomControlsEnabled(true);
+                if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, LOCATION_REQUEST);
+                    return;
                 }
-            });
-            mapFragment.getView().post(new Runnable() {
-                @Override
-                public void run() {
-                    if (mMap != null) {
-                        LatLngBounds.Builder builder = new LatLngBounds.Builder();
-                        for (MarkerOptions marker : markers) {
-                            builder.include(marker.getPosition());
-                        }
-                        LatLngBounds bounds = builder.build();
-                        int padding = 50; // offset from edges of the map in pixels
-                        int width = getResources().getDisplayMetrics().widthPixels;
-                        int height = getResources().getDisplayMetrics().heightPixels;
-                        CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bounds, padding);
-                        mMap.animateCamera(cu);
+                mMap.setMyLocationEnabled(true);
+                listPoints.add(latLng1);
+                MarkerOptions markerOptions = new MarkerOptions();
+                markerOptions.position(latLng1);
+                markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
+                markers.add(markerOptions);
+                mMap.addMarker(markerOptions);
+                listPoints.add(latLng2);
+                // markerOptions = new MarkerOptions();
+                MarkerOptions markerOptions2 = new MarkerOptions();
+                markerOptions2.position(latLng2);
+                markerOptions2.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
+                mMap.addMarker(markerOptions2);
+                markers.add(markerOptions2);
+                String url = getRequestUrl(listPoints.get(0), listPoints.get(1));
+                StartTripActivity.TaskRequestDirections taskRequestDirections = new StartTripActivity.TaskRequestDirections();
+                taskRequestDirections.execute(url);
+                mMap.setOnMapLoadedCallback(new GoogleMap.OnMapLoadedCallback() {
+                    @Override
+                    public void onMapLoaded() {
+
+
                     }
-                }
-            });
+                });
+                mapFragment.getView().post(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (mMap != null) {
+                            LatLngBounds.Builder builder = new LatLngBounds.Builder();
+                            for (MarkerOptions marker : markers) {
+                                builder.include(marker.getPosition());
+                            }
+                            LatLngBounds bounds = builder.build();
+                            int padding = 50; // offset from edges of the map in pixels
+                            int width = getResources().getDisplayMetrics().widthPixels;
+                            int height = getResources().getDisplayMetrics().heightPixels;
+                            CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bounds, padding);
+                            mMap.animateCamera(cu);
+                        }
+                    }
+                });
+            }
+            else
+            {
+                Toast.makeText(getBaseContext(),"Your Satart Or End Location isn’t on Map",Toast.LENGTH_SHORT).show();
+
+            }
+        }
+        else {
+
+            Toast.makeText(getBaseContext(),"connect To Network To Start",Toast.LENGTH_SHORT).show();
         }
     }
     private String getRequestUrl(LatLng origin, LatLng dest) {

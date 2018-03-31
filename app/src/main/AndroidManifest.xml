@@ -93,7 +93,14 @@
         </activity>
         <activity
             android:name=".activity.StartTripActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar" >
+            <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+
+            <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+        </activity>
         <!-- end boudour section -->
 
 
@@ -128,11 +135,7 @@
         <activity
             android:name=".SplashScreenActivity"
             android:noHistory="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity android:name=".activity.ResetPasswordActivity"></activity>
     </application>
