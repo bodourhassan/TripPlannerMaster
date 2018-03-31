@@ -182,9 +182,9 @@ public class HomeFragment extends Fragment{
             viewHolder.btnStart.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Toast.makeText(getActivity(), "btn start", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), ""+upcommingTrips.get(position).getTripId(), Toast.LENGTH_SHORT).show();
                     Intent intent =new Intent(getActivity(),StartTripActivity.class);
-                    intent.putExtra("trip_id",upcommingTrips.get(position).getTripId());
+                    intent.putExtra("trip_id",String.valueOf(upcommingTrips.get(position).getTripId()));
                     startActivity(intent);
                 }
             });
