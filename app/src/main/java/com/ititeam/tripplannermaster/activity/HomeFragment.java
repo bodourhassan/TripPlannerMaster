@@ -366,6 +366,7 @@ public class HomeFragment extends Fragment{
     public void onStart() {
         super.onStart();
         Toast.makeText(getActivity(), "email in restart"+email, Toast.LENGTH_SHORT).show();
+
         upcommingTrips = tripTableOperations.selectUpcomingTripsUsingOnlyDate(email);
         //upcommingTrips = tripTableOperations.selectAllTrips();
         myAdapter = new TripAdapterFragment();

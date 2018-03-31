@@ -359,7 +359,7 @@ public class AddNewTrip extends AppCompatActivity implements ConnectionCallbacks
             Log.e("My Data:", "direction : " + TripDirection);
             Log.e("My Data:", "cate : " + TripCatagory);
 
-            Trip my = myTripTable.selectSingleTrips(1 + "");
+          /*  Trip my = myTripTable.selectSingleTrips(1 + "");
             Log.e("dataaaaaaaaaaaaa:", "Name : " + my.getTripName());
             Log.e("dataaaaaaaaaaaaaa:", "start : " + my.getTripStartPoint());
             Log.e("dataaaaaaaaaaaaaa:", "end : " + my.getTripEndPoint());
@@ -368,9 +368,10 @@ public class AddNewTrip extends AppCompatActivity implements ConnectionCallbacks
             Log.e("dataaaaaaaaaaaaaa:", "time : " + my.getTripTime());
             Log.e("dataaaaaaaaaaaaaa:", "direction : " + my.getTripDirection());
             Log.e("dataaaaaaaaaaaaaa:", "cate : " + my.getTripCategory());
+
             for (int i = 0; i < my.getTripNotes().size(); i++) {
                 Log.e("Trip after", my.getTripNotes().get(i).getNoteBody());
-            }
+            }*/
 //            Intent intent = new Intent(AddNewTrip.this, StartActivityDrawer.class);
 //            startActivity(intent);
 
