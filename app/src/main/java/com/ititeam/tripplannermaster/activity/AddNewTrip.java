@@ -341,6 +341,7 @@ public class AddNewTrip extends AppCompatActivity implements ConnectionCallbacks
                 intent.putExtra("trip_id",lastTrip.getTripId());
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                Toast.makeText(getApplicationContext(), lastTrip.getTripId()+"", Toast.LENGTH_SHORT).show();
                 startService(intent);
 
             }
