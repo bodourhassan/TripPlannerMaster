@@ -173,7 +173,7 @@ public class TripTableOperations {
         String[] selectArgs = {userId};
         String groupBy = null;
         String having = null;
-        String orderBy = null;
+        String orderBy = AdapterDba.DbOpenHelper.TRIP_ID;
         Cursor cursor = AdapterDba.getAdapterDbaInstance(context)._select(AdapterDba.DbOpenHelper.TRIP_TABLE, result_columns, whereClause, selectArgs, groupBy, having, orderBy);
         ArrayList<Trip> returnedData = new ArrayList<>();
         while (cursor.moveToNext()) {

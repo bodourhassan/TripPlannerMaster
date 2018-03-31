@@ -26,6 +26,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.daimajia.androidanimations.library.Techniques;
+import com.daimajia.androidanimations.library.YoYo;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
@@ -81,128 +83,31 @@ public class LoginFragment extends Fragment implements OnLoginListener , View.On
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        YoYo.with(Techniques.RotateIn)
+                .duration(2000)
+                .playOn(etEmail);
+
+        YoYo.with(Techniques.FadeIn)
+                .duration(2000)
+                .playOn(etPassword);
+
+        YoYo.with(Techniques.FadeIn)
+                .duration(2000)
+                .playOn(checkBoxRememberMe);
+
+        YoYo.with(Techniques.FadeIn)
+                .duration(2000)
+                .playOn(tbForget);
+    }
+
+    @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         auth = FirebaseAuth.getInstance();
         prog = new ProgressDialog(getActivity());
-        //Get Firebase auth instance
-        //auth = FirebaseAuth.getInstance();
-        /*
-        Trip trip = new Trip();
 
-        Note note1 = new Note();
-        note1.setNoteBody("any note1");
-        note1.setStatus("not determined");
-        trip.getTripNotes().add(note1);
-        Note note2 = new Note();
-        note2.setNoteBody("any note2");
-        note2.setStatus("not determined");
-        trip.getTripNotes().add(note2);
-
-        trip.setTripName("0");
-        trip.setTripStartPoint("cairo");
-        trip.setTripEndPoint("alexandria");
-        trip.setTripDate("12345");
-        trip.setTripTime("mon");
-        trip.setTripStatus("Done");
-        trip.setTripDirection("qwo");
-        trip.setTripDescription("asdfg");
-        trip.setTripRepetition("122334");
-        trip.setTripCategory("cat1");
-        trip.setUserId(1);
-        boolean flag = new TripTableOperations(getActivity()).insertTrip(trip);
-        // Toast.makeText(getApplicationContext(), flag+"", Toast.LENGTH_LONG).show();
-
-        Trip trip1 = new Trip();
-        trip1.setTripName("1");
-        trip1.setTripStartPoint("cairo");
-        trip1.setTripEndPoint("alexandria");
-        trip1.setTripDate("2018-01-14");
-        trip1.setTripTime("mon");
-        trip1.setTripStatus("Done");
-        trip1.setTripDirection("qwo");
-        trip1.setTripDescription("asdfg");
-        trip1.setTripRepetition("122334");
-        trip1.setTripCategory("cat1");
-        trip1.setUserId(1);
-        boolean flag1 = new TripTableOperations(getActivity()).insertTrip(trip1);
-        // Toast.makeText(getApplicationContext(), flag+"", Toast.LENGTH_LONG).show();
-
-
-        Trip trip2 = new Trip();
-        trip2.setTripName("2");
-        trip2.setTripStartPoint("cairo");
-        trip2.setTripEndPoint("alexandria");
-        trip2.setTripDate("2018-01-23");
-        trip2.setTripTime("mon");
-        trip2.setTripStatus("qwertyui");
-        trip2.setTripDirection("qwo");
-        trip2.setTripDescription("asdfg");
-        trip2.setTripRepetition("122334");
-        trip2.setTripCategory("cat1");
-        trip2.setUserId(1);
-        boolean flag2 = new TripTableOperations(getActivity()).insertTrip(trip2);
-        // Toast.makeText(getApplicationContext(), flag+"", Toast.LENGTH_LONG).show();
-
-        Trip trip3 = new Trip();
-        trip3.setTripName("3");
-        trip3.setTripStartPoint("cairo");
-        trip3.setTripEndPoint("alexandria");
-        trip3.setTripDate("2018-02-01");
-        trip3.setTripTime("mon");
-        trip3.setTripStatus("qwertyui");
-        trip3.setTripDirection("qwo");
-        trip3.setTripDescription("asdfg");
-        trip3.setTripRepetition("122334");
-        trip3.setTripCategory("cat1");
-        trip3.setUserId(1);
-        boolean flag3 = new TripTableOperations(getActivity()).insertTrip(trip3);
-        // Toast.makeText(getApplicationContext(), flag+"", Toast.LENGTH_LONG).show();
-
-        Trip trip4 = new Trip();
-        trip4.setTripName("4");
-        trip4.setTripStartPoint("cairo");
-        trip4.setTripEndPoint("alexandria");
-        trip4.setTripDate("2018-02-23");
-        trip4.setTripTime("mon");
-        trip4.setTripStatus("qwertyui");
-        trip4.setTripDirection("qwo");
-        trip4.setTripDescription("asdfg");
-        trip4.setTripRepetition("122334");
-        trip4.setTripCategory("cat1");
-        trip4.setUserId(1);
-        boolean flag4 = new TripTableOperations(getActivity()).insertTrip(trip4);
-        // Toast.makeText(getApplicationContext(), flag+"", Toast.LENGTH_LONG).show();
-
-        Trip trip5 = new Trip();
-        trip5.setTripName("5");
-        trip5.setTripStartPoint("cairo");
-        trip5.setTripEndPoint("alexandria");
-        trip5.setTripDate("2018-04-12");
-        trip5.setTripTime("mon");
-        trip5.setTripStatus("qwertyui");
-        trip5.setTripDirection("qwo");
-        trip5.setTripDescription("asdfg");
-        trip5.setTripRepetition("122334");
-        trip5.setTripCategory("cat1");
-        trip5.setUserId(1);
-        boolean flag5 = new TripTableOperations(getActivity()).insertTrip(trip5);
-        //Toast.makeText(getApplicationContext(), flag+"", Toast.LENGTH_LONG).show();
-
-        Trip trip6 = new Trip();
-        trip6.setTripName("6");
-        trip6.setTripStartPoint("cairo");
-        trip6.setTripEndPoint("alexandria");
-        trip6.setTripDate("2018-05-10");
-        trip6.setTripTime("mon");
-        trip6.setTripStatus("qwertyui");
-        trip6.setTripDirection("qwo");
-        trip6.setTripDescription("asdfg");
-        trip6.setTripRepetition("122334");
-        trip6.setTripCategory("cat1");
-        trip6.setUserId(1);
-        boolean flag6 = new TripTableOperations(getActivity()).insertTrip(trip6);
-*/
     }
 
     @Override
@@ -214,6 +119,23 @@ public class LoginFragment extends Fragment implements OnLoginListener , View.On
         checkBoxRememberMe = inflate.findViewById(R.id.FragmentLoginKeepMeLoggedIn);
         checkBoxRememberMe.setChecked(true);
         tbForget = inflate.findViewById(R.id.forgot_password);
+
+
+        YoYo.with(Techniques.RotateIn)
+                .duration(3000)
+                .playOn(etEmail);
+
+        YoYo.with(Techniques.FadeIn)
+                .duration(3000)
+                .playOn(etPassword);
+
+        YoYo.with(Techniques.FadeIn)
+                .duration(3000)
+                .playOn(checkBoxRememberMe);
+
+        YoYo.with(Techniques.FadeIn)
+                .duration(3000)
+                .playOn(tbForget);
 
         tbForget.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -366,15 +288,24 @@ public class LoginFragment extends Fragment implements OnLoginListener , View.On
             uPassword = etPassword.getText().toString().trim();
 
 
-            if (TextUtils.isEmpty(uEmail)) {
-                Toast.makeText(getActivity(), "Enter email address!", Toast.LENGTH_SHORT).show();
+            if (TextUtils.isEmpty(uEmail) || TextUtils.isEmpty(uPassword)) {
+                YoYo.with(Techniques.Tada)
+                        .duration(1500)
+                        .playOn(etEmail);
+                YoYo.with(Techniques.Tada)
+                        .duration(1500)
+                        .playOn(etPassword);
+                YoYo.with(Techniques.Tada)
+                        .duration(1500)
+                        .playOn(checkBoxRememberMe);
+                YoYo.with(Techniques.Tada)
+                        .duration(1500)
+                        .playOn(tbForget);
+                Toast.makeText(getActivity(), "missing Data !", Toast.LENGTH_SHORT).show();
+
                 return;
             }
 
-            if (TextUtils.isEmpty(uPassword)) {
-                Toast.makeText(getActivity(), "Enter password!", Toast.LENGTH_SHORT).show();
-                return;
-            }
             //f@yah.com
             //12345678
 

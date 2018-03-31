@@ -178,7 +178,33 @@ public class HomeFragment extends Fragment{
             viewHolder.Name.setTypeface(null, Typeface.BOLD);
             viewHolder.EmailId.setText(upcommingTrips.get(position).getTripDescription());
             viewHolder.startDate.setText(upcommingTrips.get(position).getTripDate());
-            holder.imgViewIcon.setImageDrawable(getResources().getDrawable(R.drawable.see));
+            viewHolder.dropOff.setText(upcommingTrips.get(position).getTripEndPoint());
+
+
+            if(upcommingTrips.get(position).getTripCategory().equals("friends"))
+            {
+                holder.imgViewIcon.setImageDrawable(getResources().getDrawable(R.drawable.friends1));
+            }else if (upcommingTrips.get(position).getTripCategory().equals(TripConstant.FamilyCatagory))
+            {
+                holder.imgViewIcon.setImageDrawable(getResources().getDrawable(R.drawable.family));
+            }else if(upcommingTrips.get(position).getTripCategory().equals(TripConstant.bussinessCatagory))
+            {
+                holder.imgViewIcon.setImageDrawable(getResources().getDrawable(R.drawable.business3));
+            }else if(upcommingTrips.get(position).getTripCategory().equals(TripConstant.meetingCatagory))
+            {
+                holder.imgViewIcon.setImageDrawable(getResources().getDrawable(R.drawable.meeting));
+            }else if(upcommingTrips.get(position).getTripCategory().equals(TripConstant.vacationCatagory))
+            {
+                holder.imgViewIcon.setImageDrawable(getResources().getDrawable(R.drawable.vacation));
+            }else if(upcommingTrips.get(position).getTripCategory().equals(TripConstant.otherCatagory))
+            {
+                holder.imgViewIcon.setImageDrawable(getResources().getDrawable(R.drawable.other));
+            }else{
+                holder.imgViewIcon.setImageDrawable(getResources().getDrawable(R.drawable.other));
+            }
+
+           // holder.imgViewIcon.setImageDrawable(getResources().getDrawable(R.drawable.see));
+
 
 
 
@@ -341,6 +367,7 @@ public class HomeFragment extends Fragment{
         super.onStart();
         Toast.makeText(getActivity(), "email in restart"+email, Toast.LENGTH_SHORT).show();
        upcommingTrips = tripTableOperations.selectUpcomingTripsUsingOnlyDate(email);
+
         //upcommingTrips = tripTableOperations.selectAllTrips();
         myAdapter = new TripAdapterFragment();
         recyclerView.setAdapter(myAdapter);
