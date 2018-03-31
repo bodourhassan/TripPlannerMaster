@@ -93,7 +93,8 @@
         </activity>
         <activity
             android:name=".activity.StartTripActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar" >
+        </activity>
         <!-- end boudour section -->
 
 
