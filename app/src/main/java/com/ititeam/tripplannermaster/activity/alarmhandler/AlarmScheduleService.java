@@ -28,9 +28,15 @@ public class AlarmScheduleService extends IntentService {
     protected void onHandleIntent(Intent intent) {
         if (intent != null)
         {
+            int trip_id = intent.getIntExtra("trip_id" , 0);
+            Toast.makeText(this,trip_id+"", Toast.LENGTH_SHORT).show();
             Intent alarmIntent = new Intent(AlarmScheduleService.this, AlarmReceiver.class);
-            pendingIntent = PendingIntent.getBroadcast(getBaseContext(), ALARM_REQUEST_CODE, alarmIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-            triggerAlarmManager(5);
+            alarmIntent.putExtra("trip_id" , trip_id);
+            pendingIntent = PendingIntent.getBroadcast(getBaseContext(), trip_id, alarmIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+                triggerAlarmManager(5);
+
+
         }
     }
 
@@ -39,6 +45,7 @@ public class AlarmScheduleService extends IntentService {
         // get a Calendar object with current time
         Calendar cal = Calendar.getInstance();
         // add alarmTriggerTime seconds to the calendar object
+        cal.add(Calendar.MINUTE , 1);
         cal.add(Calendar.SECOND, alarmTriggerTime);
 
         AlarmManager manager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);//get instance of alarm manager

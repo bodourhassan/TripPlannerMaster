@@ -39,7 +39,7 @@ public class TripViewHolder extends RecyclerView.ViewHolder
     public TextView EmailId;
     public TextView Delete, startDate;
     public TextView Edit;
-    public TextView Share;
+    public TextView Share , dropOff;
     public ImageButton btnLocation;
     public ImageView imgViewIcon;
 
@@ -56,6 +56,7 @@ public class TripViewHolder extends RecyclerView.ViewHolder
         Share = itemView.findViewById(R.id.Share);
         btnLocation = itemView.findViewById(R.id.btnLocation);
         imgViewIcon = itemView.findViewById(R.id.SwipLayout_ImageView);
+        dropOff = itemView.findViewById(R.id.TextViewDropOff);
     }
 
 }

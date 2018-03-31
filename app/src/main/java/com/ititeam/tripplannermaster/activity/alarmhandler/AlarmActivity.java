@@ -15,6 +15,8 @@ import android.widget.Toast;
 
 import com.ititeam.tripplannermaster.R;
 import com.ititeam.tripplannermaster.activity.MainActivity;
+import com.ititeam.tripplannermaster.activity.ShowTripActivity;
+import com.ititeam.tripplannermaster.activity.StartTripActivity;
 
 public class AlarmActivity extends AppCompatActivity {
 
@@ -38,6 +40,11 @@ public class AlarmActivity extends AppCompatActivity {
         findViewById(R.id.start_alarm_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                int trip_id = getIntent().getIntExtra("trip_id" , 0);
+                Intent intent =new Intent(AlarmActivity.this,StartTripActivity.class);
+                intent.putExtra("trip_id",trip_id);
+                stopAlarmManager();
+                startActivity(intent);
 
             }
         });
@@ -80,7 +87,9 @@ public class AlarmActivity extends AppCompatActivity {
 
         AlarmManager manager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         Intent alarmIntent = new Intent(AlarmActivity.this, MainActivity.class);
-        pendingIntent = PendingIntent.getBroadcast(getBaseContext(), ALARM_REQUEST_CODE, alarmIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        int trip_id = getIntent().getIntExtra("trip_id" , 0);
+        Toast.makeText(getApplicationContext(), trip_id+"", Toast.LENGTH_SHORT).show();
+        pendingIntent = PendingIntent.getBroadcast(getBaseContext(), trip_id, alarmIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         manager.cancel(pendingIntent);//cancel the alarm manager of the pending intent
 

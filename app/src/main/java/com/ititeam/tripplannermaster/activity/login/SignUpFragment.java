@@ -17,6 +17,8 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.daimajia.androidanimations.library.Techniques;
+import com.daimajia.androidanimations.library.YoYo;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -67,6 +69,23 @@ public class SignUpFragment extends Fragment implements OnSignUpListener{
         password = inflate.findViewById(R.id.Fragment_SignUp_Password);
         confirmPassword = inflate.findViewById(R.id.Fragment_SignUp_ConformPassword);
 
+
+        YoYo.with(Techniques.RotateIn)
+                .duration(3000)
+                .playOn(userName);
+
+        YoYo.with(Techniques.FadeIn)
+                .duration(3000)
+                .playOn(email);
+
+        YoYo.with(Techniques.FadeIn)
+                .duration(3000)
+                .playOn(password);
+
+        YoYo.with(Techniques.FadeIn)
+                .duration(3000)
+                .playOn(confirmPassword);
+
         return inflate;
     }
 
@@ -79,20 +98,20 @@ public class SignUpFragment extends Fragment implements OnSignUpListener{
             uConformPassword = confirmPassword.getText().toString().trim();
             User.setEmail(uEmail);
 
-            if (TextUtils.isEmpty(uName)) {
-                Toast.makeText(getActivity(), "Enter email address!", Toast.LENGTH_SHORT).show();
+            if (TextUtils.isEmpty(uName) || TextUtils.isEmpty(uEmail) || uPassword.length() < 6) {
+                YoYo.with(Techniques.Tada)
+                        .duration(1500)
+                        .playOn(userName);
+                YoYo.with(Techniques.Tada)
+                        .duration(1500)
+                        .playOn(email);
+                YoYo.with(Techniques.Tada)
+                        .duration(1500)
+                        .playOn(password);
+                Toast.makeText(getActivity(), "missing data !", Toast.LENGTH_SHORT).show();
                 return;
             }
 
-            if (TextUtils.isEmpty(uEmail)) {
-                Toast.makeText(getActivity(), "Enter email Email!", Toast.LENGTH_SHORT).show();
-                return;
-            }
-
-            if (uPassword.length() < 6) {
-                Toast.makeText(getActivity(), "Password too short, enter minimum 6 characters!", Toast.LENGTH_SHORT).show();
-                return;
-            }
 
 
             final ProgressDialog prog = new ProgressDialog(getActivity());

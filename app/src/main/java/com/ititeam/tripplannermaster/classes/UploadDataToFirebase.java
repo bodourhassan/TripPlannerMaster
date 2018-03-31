@@ -43,7 +43,7 @@ public class UploadDataToFirebase extends AsyncTask<String, Integer, Object> {
         path=path.replace("[","_");
         path=path.replace("]","_");
         User.setFirebasePath(path);
-        getDatabaseReference = databaseReference.child(User.getFirebasePath());
+      /*  getDatabaseReference = databaseReference.child(User.getFirebasePath());
         getDatabaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -68,9 +68,9 @@ public class UploadDataToFirebase extends AsyncTask<String, Integer, Object> {
                 Toast.makeText(context, "Download Error", Toast.LENGTH_SHORT).show();
 
             }
-        });
-        if (trips != null) {
-            if (trips.size() > 0) {
+        });*/
+       /* if (trips != null) {
+            if (trips.size() > 0) {*/
                 databaseReference = FirebaseDatabase.getInstance().getReference();
                 databaseReference.child(User.getFirebasePath()).setValue(trips);
                 databaseReference.addValueEventListener(new ValueEventListener() {
@@ -86,8 +86,8 @@ public class UploadDataToFirebase extends AsyncTask<String, Integer, Object> {
                 });
                 //Toast.makeText(context, "done"+trips.size(), Toast.LENGTH_SHORT).show();
 
-            }
-        }
+     /*       }
+        }*/
         return null;
     }
     protected void onPostExecute(Object result) {
