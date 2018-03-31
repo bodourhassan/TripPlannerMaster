@@ -2,6 +2,7 @@ package com.ititeam.tripplannermaster.activity;
 
 import android.app.AlarmManager;
 import android.app.DatePickerDialog;
+import android.app.LauncherActivity;
 import android.app.PendingIntent;
 import android.app.TimePickerDialog;
 import android.content.Context;
@@ -101,9 +102,9 @@ public class UpdateTrip extends AppCompatActivity implements GoogleApiClient.Con
         MyNoteList=findViewById(R.id.UNoteList);
         dropdown = findViewById(R.id.UTripCatId);
         Intent intent = this.getIntent();
-        //String TripId = 1+"";
-        String TripId = intent.getStringExtra("trip_id");
-        Toast.makeText(this, "in update   " + TripId, Toast.LENGTH_SHORT).show();
+        String TripId = 1+"";
+        //String TripId = intent.getStringExtra("trip_id");
+        //Toast.makeText(this, "in update   " + TripId, Toast.LENGTH_SHORT).show();
         /***************************Get TRip Data***************************/
         tripTableOperations = new TripTableOperations(this);
         noteTableOperations=new NoteTableOperations(this);
@@ -201,7 +202,7 @@ public class UpdateTrip extends AppCompatActivity implements GoogleApiClient.Con
                     myNewNote.setStatus(TripConstant.NoteLater);
                     myNewNote.setTripIdFk(Integer.parseInt(TripId));
                     noteTableOperations.insertNote(myNewNote);
-                    NoteListadapter.notifyDataSetChanged();
+                    myUpdateAdapter.notifyDataSetChanged();
                     NoteItem.setText("".toString());
                     // NoteListadapter.setNotifyOnChange(true);
                     // MyNoteList.notifyAll();
@@ -231,12 +232,15 @@ public class UpdateTrip extends AppCompatActivity implements GoogleApiClient.Con
                     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                         month=month+1;
 
-                        DateView.setText(dayOfMonth+"-"+month+"-"+year);
+                      //  DateView.setText(dayOfMonth+"-"+month+"-"+year);
+                        DateView.setText(year+"-"+month+"-"+dayOfMonth);
+
                     }
                 },year,month,day);
                 datePickerDialog.show();
             }
         });
+
 
 
         TimeView.setOnClickListener(new View.OnClickListener() {
@@ -350,10 +354,17 @@ public class UpdateTrip extends AppCompatActivity implements GoogleApiClient.Con
             // find the radiobutton by returned id
             myRadiobutton = findViewById(selectedId);
             String TripDirection = myRadiobutton.getText().toString();
+
+            for(int i=0;i< MyNoteList.getChildCount();i++)
+            {
+                View myView = MyNoteList.getChildAt(i);
+                EditText myEditNote= myView.findViewById(R.id.MyNoteU);
+                listItems.set(i,myEditNote.getText().toString());
+
+            }
             NmyNoteList.clear();
             for (int i = 0; i < listItems.size(); i++) {
                 Note note = new Note(listItems.get(i), TripConstant.NoteLater);
-
                 NmyNoteList.add(note);
 
             }
@@ -369,6 +380,8 @@ public class UpdateTrip extends AppCompatActivity implements GoogleApiClient.Con
             UpdateTrip.setTripDirection(TripDirection);
             UpdateTrip.setTripDescription(Desc);
             UpdateTrip.setTripCategory(TripCatagory);
+
+
             for (int i = 0; i < NmyNoteList.size(); i++) {
                 Log.e("uuuuuuuuuuuuuuu", "Note" + i + NmyNoteList.get(i).getNoteBody());
 
