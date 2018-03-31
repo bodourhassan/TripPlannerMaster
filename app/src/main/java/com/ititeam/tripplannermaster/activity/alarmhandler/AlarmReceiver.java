@@ -24,6 +24,7 @@ public class AlarmReceiver extends BroadcastReceiver {
         int trip_id = intent.getIntExtra("trip_id" , 0);
         Intent alarmActivityIntent = new Intent(context, AlarmActivity.class);
         alarmActivityIntent.putExtra("trip_id" , trip_id);
+        alarmActivityIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(alarmActivityIntent);
 
     }
