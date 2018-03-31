@@ -58,9 +58,9 @@ public class HomeFragment extends Fragment{
         super.onCreate(savedInstanceState);
         tripTableOperations = new TripTableOperations(getActivity());
         email=User.getEmail();
-       /* upcommingTrips = tripTableOperations.selectAllTrips();
-        Toast.makeText(getActivity(), "size array oncreate "+upcommingTrips.size(), Toast.LENGTH_SHORT).show();
-        Intent intent=getActivity().getIntent();
+       //upcommingTrips = tripTableOperations.selectUpcomingTripsUsingOnlyDate(email);
+     //   Toast.makeText(getActivity(), "size array oncreate "+upcommingTrips.size(), Toast.LENGTH_SHORT).show();
+       /* Intent intent=getActivity().getIntent();
         String email=intent.getStringExtra("login_user_email");
         User.setEmail(email);*/
         Toast.makeText(getActivity(), ""+email, Toast.LENGTH_SHORT).show();
@@ -323,7 +323,7 @@ public class HomeFragment extends Fragment{
                             notifyItemRangeChanged(position, upcommingTrips.size());
                             mItemManger.closeAllItems();
                             manager.cancel(pendingIntent);//cancel the alarm manager of the pending intent
-                            Toast.makeText(getActivity(), "here in delete", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity(), "here "+upcommingTrips.get(position).getTripId()+"in delete"+position, Toast.LENGTH_SHORT).show();
                         }
                     });
 
@@ -375,8 +375,8 @@ public class HomeFragment extends Fragment{
     public void onStart() {
         super.onStart();
         Toast.makeText(getActivity(), "email in restart"+email, Toast.LENGTH_SHORT).show();
+       upcommingTrips = tripTableOperations.selectUpcomingTripsUsingOnlyDate(email);
 
-        upcommingTrips = tripTableOperations.selectUpcomingTripsUsingOnlyDate(email);
         //upcommingTrips = tripTableOperations.selectAllTrips();
         myAdapter = new TripAdapterFragment();
         recyclerView.setAdapter(myAdapter);

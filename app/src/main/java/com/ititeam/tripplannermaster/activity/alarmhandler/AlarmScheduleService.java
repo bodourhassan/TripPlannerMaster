@@ -45,6 +45,7 @@ public class AlarmScheduleService extends IntentService {
         // get a Calendar object with current time
         Calendar cal = Calendar.getInstance();
         // add alarmTriggerTime seconds to the calendar object
+        cal.add(Calendar.MINUTE , 1);
         cal.add(Calendar.SECOND, alarmTriggerTime);
 
         AlarmManager manager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);//get instance of alarm manager
