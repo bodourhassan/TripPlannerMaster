@@ -58,6 +58,7 @@ public class HomeFragment extends Fragment{
         super.onCreate(savedInstanceState);
         tripTableOperations = new TripTableOperations(getActivity());
         email=User.getEmail();
+        Toast.makeText(getActivity(), "all trips"+tripTableOperations.selectTripsUsingUserId(email).size(), Toast.LENGTH_SHORT).show();
        //upcommingTrips = tripTableOperations.selectUpcomingTripsUsingOnlyDate(email);
      //   Toast.makeText(getActivity(), "size array oncreate "+upcommingTrips.size(), Toast.LENGTH_SHORT).show();
        /* Intent intent=getActivity().getIntent();
