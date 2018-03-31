@@ -179,6 +179,15 @@ public class HomeFragment extends Fragment{
             viewHolder.EmailId.setText(upcommingTrips.get(position).getTripDescription());
             viewHolder.startDate.setText(upcommingTrips.get(position).getTripDate());
             viewHolder.dropOff.setText(upcommingTrips.get(position).getTripEndPoint());
+            viewHolder.btnStart.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Toast.makeText(getActivity(), "btn start", Toast.LENGTH_SHORT).show();
+                    Intent intent =new Intent(getActivity(),StartTripActivity.class);
+                    intent.putExtra("trip_id",upcommingTrips.get(position).getTripId());
+                    startActivity(intent);
+                }
+            });
 
 
             if(upcommingTrips.get(position).getTripCategory().equals("friends"))
