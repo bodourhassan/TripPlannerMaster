@@ -201,7 +201,7 @@ public class AddNewTrip extends AppCompatActivity implements ConnectionCallbacks
             myminute = "0" + minute;
 
         }
-        TimeView.setText(myhour + " : " + myminute);
+        TimeView.setText(myhour + ":" + myminute);
         TimeView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -218,7 +218,7 @@ public class AddNewTrip extends AppCompatActivity implements ConnectionCallbacks
                             myminutein = "0" + minute;
 
                         }
-                        TimeView.setText(myhourin + " : " + myminutein);
+                        TimeView.setText(myhourin + ":" + myminutein);
                     }
                 }, hour, minute, true);
                 timePickerDialog.show();
@@ -286,11 +286,13 @@ public class AddNewTrip extends AppCompatActivity implements ConnectionCallbacks
     public void onClicksave(View view) {
         Date nowDate = new Date();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
-        SimpleDateFormat TimeFormat = new SimpleDateFormat("hh.mm");
+        SimpleDateFormat TimeFormat = new SimpleDateFormat("HH:mm");
         sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
+
         try {
             Date userDate= sdf.parse(DateView.getText().toString());
             Date myTime = TimeFormat.parse(TimeView.getText().toString());
+            Date CurrentTime = TimeFormat.parse(TimeFormat.format(new Date()));
         if (TripNameView.getText().toString().trim().equals("")) {
             Toast.makeText(getBaseContext(), " Enter Trip Name ",
                     Toast.LENGTH_SHORT).show();
@@ -306,12 +308,12 @@ public class AddNewTrip extends AppCompatActivity implements ConnectionCallbacks
             Toast.makeText(getBaseContext(), " Enter Your Description  ",
                     Toast.LENGTH_SHORT).show();
 
-        } else if (userDate.compareTo(nowDate)<0) {
+        } else if (userDate.compareTo(nowDate)<=0) {
             Toast.makeText(getBaseContext(), " Enter Upcomming Date ",
                     Toast.LENGTH_SHORT).show();
 
         }
-        else if (myTime.compareTo(nowDate)<0) {
+        else if (CurrentTime.after(myTime)) {
             Toast.makeText(getBaseContext(), " Enter Upcomming Time ",
                     Toast.LENGTH_SHORT).show();
 
