@@ -102,7 +102,7 @@ public class UpdateTrip extends AppCompatActivity implements GoogleApiClient.Con
         MyNoteList=findViewById(R.id.UNoteList);
         dropdown = findViewById(R.id.UTripCatId);
         Intent intent = this.getIntent();
-        //String TripId = 1+"";
+       // String TripId = 1+"";
         String TripId = intent.getStringExtra("trip_id");
         Toast.makeText(this, "in update   " + TripId, Toast.LENGTH_SHORT).show();
         /***************************Get TRip Data***************************/
@@ -172,7 +172,8 @@ public class UpdateTrip extends AppCompatActivity implements GoogleApiClient.Con
 
         //get the spinner from the xml.
         //create a list of items for the spinner.
-        String[] items = new String[]{"Work", "School", "Shopping"};
+        String[] items = new String[]{TripConstant.FriendCatagory,TripConstant.FamilyCatagory, TripConstant.bussinessCatagory,TripConstant.meetingCatagory,TripConstant.vacationCatagory,TripConstant.otherCatagory};
+
         //create an adapter to describe how the items are displayed, adapters are used in several places in android
         // There are multiple variations of this, but this is the basic variant.
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, items);
