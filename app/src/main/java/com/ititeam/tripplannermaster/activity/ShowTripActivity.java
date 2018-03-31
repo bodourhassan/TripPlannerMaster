@@ -313,6 +313,7 @@ public class ShowTripActivity extends FragmentActivity implements OnMapReadyCall
         if (isConnected()) {
             LatLng latLng1 = getLatLongFromGivenAddress(trip.getTripStartPoint());
             LatLng latLng2 = getLatLongFromGivenAddress(trip.getTripEndPoint());
+            if (latLng1 != null && latLng2!=null) {
             mMap = googleMap;
             mMap.getUiSettings().setZoomControlsEnabled(true);
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -320,12 +321,16 @@ public class ShowTripActivity extends FragmentActivity implements OnMapReadyCall
                 return;
             }
             mMap.setMyLocationEnabled(true);
-            listPoints.add(latLng1);
-            MarkerOptions markerOptions = new MarkerOptions();
-            markerOptions.position(latLng1);
-            markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
-            markers.add(markerOptions);
-            mMap.addMarker(markerOptions);
+
+                listPoints.add(latLng1);
+                MarkerOptions markerOptions = new MarkerOptions();
+                markerOptions.position(latLng1);
+                markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
+                markers.add(markerOptions);
+
+                mMap.addMarker(markerOptions);
+
+
             listPoints.add(latLng2);
             // markerOptions = new MarkerOptions();
             MarkerOptions markerOptions2 = new MarkerOptions();
@@ -333,6 +338,8 @@ public class ShowTripActivity extends FragmentActivity implements OnMapReadyCall
             markerOptions2.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
             mMap.addMarker(markerOptions2);
             markers.add(markerOptions2);
+
+
             String url = getRequestUrl(listPoints.get(0), listPoints.get(1));
             ShowTripActivity.TaskRequestDirections taskRequestDirections = new ShowTripActivity.TaskRequestDirections();
             taskRequestDirections.execute(url);
@@ -365,7 +372,7 @@ public class ShowTripActivity extends FragmentActivity implements OnMapReadyCall
             });
         }
 
-    }
+    }}
     private String getRequestUrl(LatLng origin, LatLng dest) {
         //Value of origin
         String str_org = "origin=" + origin.latitude + "," + origin.longitude;
