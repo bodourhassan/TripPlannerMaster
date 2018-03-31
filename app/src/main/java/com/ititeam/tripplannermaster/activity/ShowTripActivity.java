@@ -162,12 +162,12 @@ public class ShowTripActivity extends FragmentActivity implements OnMapReadyCall
         mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         if (!isConnected()) {
-            LinearLayout mapLayout = findViewById(R.id.map_layout);
-            RelativeLayout.LayoutParams mapLayoutParams = new RelativeLayout.LayoutParams(0, 0);
+/*            LinearLayout mapLayout = findViewById(R.id.map_layout);
+            LinearLayout.LayoutParams mapLayoutParams = new LinearLayout.LayoutParams(0, 0);
             mapLayoutParams.setMargins(0,0,0,100);
             mapLayout.setLayoutParams(mapLayoutParams);
 
-
+*/
 
 
         } else {
