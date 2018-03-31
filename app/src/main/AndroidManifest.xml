@@ -85,7 +85,8 @@
         <activity
             android:name=".activity.AddNewTrip"
             android:label="@string/title_activity_add_new_trip"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar" >
+        </activity>
         <activity
             android:name=".activity.UpdateTrip"
             android:label="@string/title_activity_update_trip"

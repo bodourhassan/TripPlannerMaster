@@ -333,16 +333,21 @@ public class UpdateTrip extends AppCompatActivity implements GoogleApiClient.Con
 
 
     public void UpdateClick(View view) {
-        Date nowDate = new Date();
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+        Date nowDate=null ;
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         SimpleDateFormat TimeFormat = new SimpleDateFormat("HH:mm");
-        sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
+        Date userDate=null;
+        Date myTime=null;
+        Date CurrentTime=null;
         try {
-            Date userDate= sdf.parse(DateView.getText().toString());
-
-        Date myTime = TimeFormat.parse(TimeView.getText().toString());
-        Date CurrentTime = TimeFormat.parse(TimeFormat.format(new Date()));
-
+            userDate = sdf.parse(DateView.getText().toString());
+            nowDate = sdf.parse(sdf.format(new Date()));
+            myTime = TimeFormat.parse(TimeView.getText().toString());
+            CurrentTime = TimeFormat.parse(TimeFormat.format(new Date()));
+        }
+        catch (ParseException e) {
+            e.printStackTrace();
+        }
         if (TripNameView.getText().toString().trim().equals(""))
         {
             Toast.makeText(getBaseContext(), " Enter Trip Name ",
@@ -365,19 +370,19 @@ public class UpdateTrip extends AppCompatActivity implements GoogleApiClient.Con
             Toast.makeText(getBaseContext(), " Enter Your Description  ",
                     Toast.LENGTH_SHORT).show();
 
-        }else if (userDate.compareTo(nowDate)==0) {
-            if (CurrentTime.after(myTime)) {
-                Toast.makeText(getBaseContext(), " Enter Upcomming Time ",
-                        Toast.LENGTH_SHORT).show();
+        }   else if (userDate.compareTo(nowDate)==0 && myTime.compareTo(CurrentTime)<0) {
 
-            }
 
+            Toast.makeText(getBaseContext(), " Enter Upcomming Time ",
+                    Toast.LENGTH_SHORT).show();
 
         }
-        else if (userDate.compareTo(nowDate)<0) {
+        else if(userDate.compareTo(nowDate)<0 ){
             Toast.makeText(getBaseContext(), " Enter Upcomming Date ",
                     Toast.LENGTH_SHORT).show();
         }
+
+
         else {
             String NameofTrip = TripNameView.getText().toString();
             String StartLoc = mylocationStart.getText().toString();
@@ -416,12 +421,6 @@ public class UpdateTrip extends AppCompatActivity implements GoogleApiClient.Con
             UpdateTrip.setTripDirection(TripDirection);
             UpdateTrip.setTripDescription(Desc);
             UpdateTrip.setTripCategory(TripCatagory);
-
-
-            for (int i = 0; i < NmyNoteList.size(); i++) {
-                Log.e("uuuuuuuuuuuuuuu", "Note" + i + NmyNoteList.get(i).getNoteBody());
-
-            }
             UpdateTrip.setTripNotes(NmyNoteList);
             boolean test = tripTableOperations.updateTrip(UpdateTrip);
             if(test){
@@ -440,27 +439,14 @@ public class UpdateTrip extends AppCompatActivity implements GoogleApiClient.Con
                 intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 startService(intent);
             }
-            Toast.makeText(getBaseContext(), test + "",
-                    Toast.LENGTH_SHORT).show();
-            Trip my = tripTableOperations.selectSingleTrips(1 + "");
-            for (int i = 0; i < my.getTripNotes().size(); i++) {
-                Log.e("afteruuuuu", "Note" + i + my.getTripNotes().get(i).getNoteBody());
 
-            }
-
-//            Intent intent = new Intent(UpdateTrip.this, StartActivityDrawer.class);
-//            startActivity(intent);
                  finish();
-        }
-        } catch (ParseException e) {
-            e.printStackTrace();
         }
 
     }
 
     public void cancel(View view) {
-//        Intent intent = new Intent(UpdateTrip.this, StartActivityDrawer.class);
-//        startActivity(intent);
+
         finish();
     }
 }
