@@ -180,28 +180,30 @@ public class HomeFragment extends Fragment{
             viewHolder.startDate.setText(upcommingTrips.get(position).getTripDate());
             viewHolder.dropOff.setText(upcommingTrips.get(position).getTripEndPoint());
 
-/*
+
             if(upcommingTrips.get(position).getTripCategory().equals("friends"))
             {
                 holder.imgViewIcon.setImageDrawable(getResources().getDrawable(R.drawable.friends1));
-            }else if (upcommingTrips.get(position).getTripCategory().equals("family"))
+            }else if (upcommingTrips.get(position).getTripCategory().equals(TripConstant.FamilyCatagory))
             {
                 holder.imgViewIcon.setImageDrawable(getResources().getDrawable(R.drawable.family));
-            }else if(upcommingTrips.get(position).getTripCategory().equals("business"))
+            }else if(upcommingTrips.get(position).getTripCategory().equals(TripConstant.bussinessCatagory))
             {
                 holder.imgViewIcon.setImageDrawable(getResources().getDrawable(R.drawable.business3));
-            }else if(upcommingTrips.get(position).getTripCategory().equals("meeting"))
+            }else if(upcommingTrips.get(position).getTripCategory().equals(TripConstant.meetingCatagory))
             {
                 holder.imgViewIcon.setImageDrawable(getResources().getDrawable(R.drawable.meeting));
-            }else if(upcommingTrips.get(position).getTripCategory().equals("vacation"))
+            }else if(upcommingTrips.get(position).getTripCategory().equals(TripConstant.vacationCatagory))
             {
                 holder.imgViewIcon.setImageDrawable(getResources().getDrawable(R.drawable.vacation));
-            }else if(upcommingTrips.get(position).getTripCategory().equals("other"))
+            }else if(upcommingTrips.get(position).getTripCategory().equals(TripConstant.otherCatagory))
             {
                 holder.imgViewIcon.setImageDrawable(getResources().getDrawable(R.drawable.other));
+            }else{
+                holder.imgViewIcon.setImageDrawable(getResources().getDrawable(R.drawable.other));
             }
-*/
-            holder.imgViewIcon.setImageDrawable(getResources().getDrawable(R.drawable.see));
+
+           // holder.imgViewIcon.setImageDrawable(getResources().getDrawable(R.drawable.see));
 
 
 

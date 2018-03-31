@@ -144,8 +144,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignBottom="@+id/textView3"
+            android:layout_alignEnd="@+id/EmailId"
+            android:layout_alignRight="@+id/EmailId"
             android:layout_toEndOf="@+id/textView3"
             android:layout_toRightOf="@+id/textView3"
+            android:ellipsize="end"
+            android:maxLines="1"
             android:text="TextView" />
     </RelativeLayout>
 
