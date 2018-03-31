@@ -328,8 +328,9 @@ public class TripTableOperations {
         {
             note.setTripIdFk(tripWithId.getTripId());
             new NoteTableOperations(context).insertNote(note);
-            flag = true;
+
         }
+        flag = true;
         return flag;
     }
 
