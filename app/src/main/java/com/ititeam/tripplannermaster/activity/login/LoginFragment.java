@@ -374,6 +374,12 @@ public class LoginFragment extends Fragment implements OnLoginListener , View.On
 
                             DownLoadDataFromFirebase2 downLoadDataFromFirebase=new DownLoadDataFromFirebase2(getActivity());
                             downLoadDataFromFirebase.execute();
+                            prog.dismiss();
+
+                            Intent intent = new Intent(getActivity(), StartActivityDrawer.class);
+                            intent.putExtra("login_user_email", User.getEmail());
+
+                            getActivity().startActivity(intent);
 
 
                         }
@@ -451,12 +457,7 @@ public class LoginFragment extends Fragment implements OnLoginListener , View.On
                             new TripTableOperations(getApplicationContext()).getTripFromFirebase(trips);
 
                         }
-                        prog.dismiss();
-
-                        Intent intent = new Intent(context, StartActivityDrawer.class);
-                        intent.putExtra("login_user_email", User.getEmail());
-                        Toast.makeText(context, "enter taskansk", Toast.LENGTH_SHORT).show();
-                        context.startActivity(intent);
+                     ;
                     }
 
                     @Override

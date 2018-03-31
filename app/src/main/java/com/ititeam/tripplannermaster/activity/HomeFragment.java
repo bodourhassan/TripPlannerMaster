@@ -324,7 +324,7 @@ public class HomeFragment extends Fragment{
                             notifyItemRangeChanged(position, upcommingTrips.size());
                             mItemManger.closeAllItems();
                             manager.cancel(pendingIntent);//cancel the alarm manager of the pending intent
-                            Toast.makeText(getActivity(), "here "+upcommingTrips.get(position).getTripId()+"in delete"+position, Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(getActivity(), "here "+upcommingTrips.get(position).getTripId()+"in delete"+position, Toast.LENGTH_SHORT).show();
                         }
                     });
 

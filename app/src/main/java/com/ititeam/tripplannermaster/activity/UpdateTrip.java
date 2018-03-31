@@ -422,8 +422,6 @@ public class UpdateTrip extends AppCompatActivity implements GoogleApiClient.Con
             UpdateTrip.setTripNotes(NmyNoteList);
             boolean test = tripTableOperations.updateTrip(UpdateTrip);
             if(test){
-                UploadDataToFirebase uploadDataToFirebase=new UploadDataToFirebase(getApplication());
-                uploadDataToFirebase.execute();
                 AlarmManager manager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
                 Intent alarmIntent = new Intent(UpdateTrip.this, MainActivity.class);
                 pendingIntent = PendingIntent.getBroadcast(getBaseContext(),UpdateTrip.getTripId() , alarmIntent, PendingIntent.FLAG_UPDATE_CURRENT);
@@ -432,7 +430,7 @@ public class UpdateTrip extends AppCompatActivity implements GoogleApiClient.Con
 
                 Trip lastTrip=tripTableOperations.selectAllTripsForGettingLastId();
                 Intent intent=new Intent(UpdateTrip.this, AlarmScheduleService.class);
-                intent.putExtra("trip_id",lastTrip.getTripId());
+                intent.putExtra("trip_id",UpdateTrip.getTripId());
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 startService(intent);
