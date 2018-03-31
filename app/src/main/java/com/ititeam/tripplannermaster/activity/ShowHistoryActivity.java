@@ -111,7 +111,7 @@ public class ShowHistoryActivity extends AppCompatActivity implements OnMapReady
 
                     LatLng latLng1 = getLatLongFromGivenAddress(trip.getTripStartPoint());
                     LatLng latLng2 = getLatLongFromGivenAddress(trip.getTripEndPoint());
-
+                    if (latLng1 != null && latLng2!=null) {
                     listPoints.add(latLng1);
                     MarkerOptions markerOptions = new MarkerOptions();
                     markerOptions.position(latLng1);
@@ -132,6 +132,7 @@ public class ShowHistoryActivity extends AppCompatActivity implements OnMapReady
 
                     tripIndex++;
                 }
+            }
         /*mMap.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
             @Override
             public void onMapLongClick(LatLng latLng) {

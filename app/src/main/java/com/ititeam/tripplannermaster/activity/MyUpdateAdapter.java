@@ -14,6 +14,7 @@ import android.widget.MultiAutoCompleteTextView;
 import android.widget.TextView;
 
 import com.ititeam.tripplannermaster.DB.NoteTableOperations;
+import com.ititeam.tripplannermaster.DB.TripTableOperations;
 import com.ititeam.tripplannermaster.R;
 import com.ititeam.tripplannermaster.model.Note;
 
@@ -27,12 +28,15 @@ public class MyUpdateAdapter extends ArrayAdapter {
      Context mycontext;
      ArrayList<String> notes;
      NoteTableOperations noteTableOperations;
-
-    public MyUpdateAdapter(@NonNull Context context, int resource, @NonNull ArrayList<String> myNote) {
+     TripTableOperations tripTableOperations;
+       String myTripId;
+    public MyUpdateAdapter(@NonNull Context context, int resource, @NonNull ArrayList<String> myNote,String TripId) {
         super(context, resource, myNote);
         mycontext=context;
         notes=myNote;
         noteTableOperations=new NoteTableOperations(mycontext);
+        tripTableOperations=new TripTableOperations(mycontext);
+         myTripId=TripId;
     }
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
@@ -47,6 +51,10 @@ public class MyUpdateAdapter extends ArrayAdapter {
                 notes.remove(position);
                 notifyDataSetChanged();
                 notifyDataSetInvalidated();
+
+            int noteid=tripTableOperations.selectSingleTrips(myTripId).getTripNotes().get(position).getNoteId();
+                noteTableOperations.deleteNote(noteid+"");
+
             }
         });
        myNote.setOnFocusChangeListener(new View.OnFocusChangeListener() {

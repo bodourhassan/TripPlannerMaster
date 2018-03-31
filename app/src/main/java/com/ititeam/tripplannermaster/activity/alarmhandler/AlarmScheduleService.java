@@ -28,8 +28,10 @@ public class AlarmScheduleService extends IntentService {
     protected void onHandleIntent(Intent intent) {
         if (intent != null)
         {
+            int trip_id = intent.getIntExtra("trip_id" , 0);
             Intent alarmIntent = new Intent(AlarmScheduleService.this, AlarmReceiver.class);
-            pendingIntent = PendingIntent.getBroadcast(getBaseContext(), ALARM_REQUEST_CODE, alarmIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+            alarmIntent.putExtra("trip_id" , trip_id);
+            pendingIntent = PendingIntent.getBroadcast(getBaseContext(), trip_id, alarmIntent, PendingIntent.FLAG_UPDATE_CURRENT);
             triggerAlarmManager(5);
         }
     }

@@ -102,7 +102,7 @@ public class UpdateTrip extends AppCompatActivity implements GoogleApiClient.Con
         MyNoteList=findViewById(R.id.UNoteList);
         dropdown = findViewById(R.id.UTripCatId);
         Intent intent = this.getIntent();
-       // String TripId = 1+"";
+       //String TripId = 1+"";
         String TripId = intent.getStringExtra("trip_id");
         Toast.makeText(this, "in update   " + TripId, Toast.LENGTH_SHORT).show();
         /***************************Get TRip Data***************************/
@@ -144,7 +144,7 @@ public class UpdateTrip extends AppCompatActivity implements GoogleApiClient.Con
             // listItems.add("listItem");
         }
        // NoteListadapter=new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,listItems);
-        myUpdateAdapter=new MyUpdateAdapter(this,R.layout.my_update_item,listItems);
+        myUpdateAdapter=new MyUpdateAdapter(this,R.layout.my_update_item,listItems,TripId);
        // MyNoteList.setAdapter(NoteListadapter);
         MyNoteList.setAdapter(myUpdateAdapter);
         MyNoteList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -232,9 +232,17 @@ public class UpdateTrip extends AppCompatActivity implements GoogleApiClient.Con
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                         month=month+1;
+                        String Smonthin=month+"";
+                        String sDayin =dayOfMonth+"";
+                        if (month < 10) {
+                            Smonthin = "0" + month;
+                        }
+                        if (dayOfMonth < 10) {
+                            sDayin = "0" + dayOfMonth;
 
+                        }
                       //  DateView.setText(dayOfMonth+"-"+month+"-"+year);
-                        DateView.setText(year+"-"+month+"-"+dayOfMonth);
+                        DateView.setText(year+"-"+Smonthin+"-"+sDayin);
 
                     }
                 },year,month,day);
