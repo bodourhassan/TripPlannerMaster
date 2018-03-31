@@ -46,8 +46,13 @@ import com.ititeam.tripplannermaster.classes.UploadDataToFirebase;
 import com.ititeam.tripplannermaster.model.Note;
 import com.ititeam.tripplannermaster.model.Trip;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
+import java.util.TimeZone;
 
 public class UpdateTrip extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks,GoogleApiClient.OnConnectionFailedListener {
     private GoogleApiClient googleApiClient;
@@ -328,6 +333,16 @@ public class UpdateTrip extends AppCompatActivity implements GoogleApiClient.Con
 
 
     public void UpdateClick(View view) {
+        Date nowDate = new Date();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+        SimpleDateFormat TimeFormat = new SimpleDateFormat("HH:mm");
+        sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
+        try {
+            Date userDate= sdf.parse(DateView.getText().toString());
+
+        Date myTime = TimeFormat.parse(TimeView.getText().toString());
+        Date CurrentTime = TimeFormat.parse(TimeFormat.format(new Date()));
+
         if (TripNameView.getText().toString().trim().equals(""))
         {
             Toast.makeText(getBaseContext(), " Enter Trip Name ",
@@ -348,6 +363,15 @@ public class UpdateTrip extends AppCompatActivity implements GoogleApiClient.Con
         else if(DescriptipnView.getText().toString().trim().equals(""))
         {
             Toast.makeText(getBaseContext(), " Enter Your Description  ",
+                    Toast.LENGTH_SHORT).show();
+
+        }else if (userDate.compareTo(nowDate)<=0) {
+            Toast.makeText(getBaseContext(), " Enter Upcomming Date ",
+                    Toast.LENGTH_SHORT).show();
+
+        }
+        else if (CurrentTime.after(myTime)) {
+            Toast.makeText(getBaseContext(), " Enter Upcomming Time ",
                     Toast.LENGTH_SHORT).show();
 
         }
@@ -422,6 +446,9 @@ public class UpdateTrip extends AppCompatActivity implements GoogleApiClient.Con
 //            Intent intent = new Intent(UpdateTrip.this, StartActivityDrawer.class);
 //            startActivity(intent);
                  finish();
+        }
+        } catch (ParseException e) {
+            e.printStackTrace();
         }
 
     }
