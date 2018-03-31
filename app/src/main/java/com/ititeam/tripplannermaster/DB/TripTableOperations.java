@@ -328,8 +328,9 @@ public class TripTableOperations {
         {
             note.setTripIdFk(tripWithId.getTripId());
             new NoteTableOperations(context).insertNote(note);
-            flag = true;
+
         }
+        flag = true;
         return flag;
     }
 
@@ -379,14 +380,14 @@ public class TripTableOperations {
 
         for (Trip trip : trips) {
             Trip localTrip = selectSingleTrips(trip.getTripId() + "");
-            if (localTrip == null) {
+           /* if (localTrip == null) {
 
                 Toast.makeText(context, "enter", Toast.LENGTH_SHORT).show();
                 insertTrip(trip);
-            }else{
+            }else{*/
                 updateTrip(trip);
-                Toast.makeText(context, "update", Toast.LENGTH_SHORT).show();
-            }
+              /*  Toast.makeText(context, "update", Toast.LENGTH_SHORT).show();
+            }*/
             
         }
     }

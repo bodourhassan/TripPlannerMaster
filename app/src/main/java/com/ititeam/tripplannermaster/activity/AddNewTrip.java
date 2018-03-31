@@ -46,6 +46,7 @@ import com.google.android.gms.maps.model.LatLngBounds;
 import com.ititeam.tripplannermaster.DB.TripTableOperations;
 import com.ititeam.tripplannermaster.R;
 import com.ititeam.tripplannermaster.activity.alarmhandler.AlarmScheduleService;
+import com.ititeam.tripplannermaster.classes.UploadDataToFirebase;
 import com.ititeam.tripplannermaster.model.User;
 import com.ititeam.tripplannermaster.model.Note;
 import com.ititeam.tripplannermaster.model.Trip;
@@ -341,6 +342,8 @@ public class AddNewTrip extends AppCompatActivity implements ConnectionCallbacks
             TripTableOperations myTripTable = new TripTableOperations(this);
             boolean test = myTripTable.insertTrip(NewTrip);
             if(test){
+                UploadDataToFirebase uploadDataToFirebase=new UploadDataToFirebase(getApplication());
+                uploadDataToFirebase.execute();
                 Trip lastTrip=myTripTable.selectAllTripsForGettingLastId();
                 Intent intent=new Intent(AddNewTrip.this, AlarmScheduleService.class);
                 intent.putExtra("trip_id",lastTrip.getTripId());

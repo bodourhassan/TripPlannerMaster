@@ -58,6 +58,7 @@ public class HomeFragment extends Fragment{
         super.onCreate(savedInstanceState);
         tripTableOperations = new TripTableOperations(getActivity());
         email=User.getEmail();
+        Toast.makeText(getActivity(), "all trips"+tripTableOperations.selectTripsUsingUserId(email).size(), Toast.LENGTH_SHORT).show();
        //upcommingTrips = tripTableOperations.selectUpcomingTripsUsingOnlyDate(email);
      //   Toast.makeText(getActivity(), "size array oncreate "+upcommingTrips.size(), Toast.LENGTH_SHORT).show();
        /* Intent intent=getActivity().getIntent();
@@ -179,6 +180,15 @@ public class HomeFragment extends Fragment{
             viewHolder.EmailId.setText(upcommingTrips.get(position).getTripDescription());
             viewHolder.startDate.setText(upcommingTrips.get(position).getTripDate());
             viewHolder.dropOff.setText(upcommingTrips.get(position).getTripEndPoint());
+            viewHolder.btnStart.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Toast.makeText(getActivity(), ""+upcommingTrips.get(position).getTripId(), Toast.LENGTH_SHORT).show();
+                    Intent intent =new Intent(getActivity(),StartTripActivity.class);
+                    intent.putExtra("trip_id",String.valueOf(upcommingTrips.get(position).getTripId()));
+                    startActivity(intent);
+                }
+            });
 
 
             if(upcommingTrips.get(position).getTripCategory().equals("friends"))

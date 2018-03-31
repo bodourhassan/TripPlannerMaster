@@ -53,6 +53,7 @@
     <string name="drawer_close">Close</string>
     <string name="nav_item_home">Up Comming Trips</string>
     <string name="nav_item_friends">History Trips</string>
+    <string name="nav_item_history_trip">History Trips map</string>
     <string name="nav_item_notifications">Log out</string>
     <string name="title_home">Home</string>
     <string name="title_activity_reset_password">ResetPasswordActivity</string>
@@ -74,6 +75,7 @@
     <string-array name="nav_drawer_labels">
         <item>@string/nav_item_home</item>
         <item>@string/nav_item_friends</item>
+        <item>@string/nav_item_history_trip</item>
         <item>@string/nav_item_notifications</item>
     </string-array>
     <!-- end hesham section-->
