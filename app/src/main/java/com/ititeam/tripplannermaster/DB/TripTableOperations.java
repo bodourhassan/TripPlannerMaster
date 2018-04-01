@@ -393,12 +393,32 @@ public class TripTableOperations {
 
     //Start Hanaa Section
     public void getTripFromFirebase(ArrayList<Trip> trips) {
-        insertTrip(trips.get(trips.size()-1));
-        /*for (Trip trip : trips) {
 
-            Trip localTrip = selectSingleTrips(trip.getTripId() + "");
-            if (!trip.getUserId().equals(User.getEmail())) {
-              //  if(localTrip==null) {
+       /* Trip localTrip = trips.get(trips.size()-1);
+        Trip lastTrip = selectAllTripsForGettingLastId();
+        if(localTrip!=null) {
+            if (localTrip.getUserId() != lastTrip.getUserId()) {
+                insertTrip(trips.get(trips.size() - 1));
+            }
+        }*/
+        deleteAllTrips();
+        for (Trip trip : trips) {
+
+            insertTrip(trip);
+            AlarmManager manager = (AlarmManager) this.context.getSystemService(Context.ALARM_SERVICE);
+            Intent alarmIntent = new Intent(this.context, MainActivity.class);
+            PendingIntent  pendingIntent = PendingIntent.getBroadcast(this.context,trip.getTripId() , alarmIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+            manager.cancel(pendingIntent);//cancel the alarm manager of the pending intent
+            Intent intent=new Intent(this.context, AlarmScheduleService.class);
+            intent.putExtra("trip_id",trip.getTripId());
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            this.context.startService(intent);
+
+          /*  Trip localTrip = selectSingleTrips(trip.getTripId() + "");
+
+               if(localTrip==null) {
                     Toast.makeText(context, "enter", Toast.LENGTH_SHORT).show();
                     insertTrip(trip);
                     Intent intent = new Intent(this.context, AlarmScheduleService.class);
@@ -406,7 +426,7 @@ public class TripTableOperations {
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                     this.context.startService(intent);
-               /* }
+
             }else{
 
                 if(updateTrip(trip)) {
@@ -430,10 +450,11 @@ public class TripTableOperations {
                     intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                     this.context.startService(intent);
                 }
-                Toast.makeText(context, "update", Toast.LENGTH_SHORT).show();*/
+                Toast.makeText(context, "update", Toast.LENGTH_SHORT).show();
 
 
-        //}}
+
+        }*/}
     }
     //end  Hanaa Section
 }

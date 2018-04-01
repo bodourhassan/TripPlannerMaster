@@ -9,6 +9,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
@@ -25,8 +26,16 @@ import com.daimajia.swipe.SwipeLayout;
 import com.daimajia.swipe.adapters.RecyclerSwipeAdapter;
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.GenericTypeIndicator;
+import com.google.firebase.database.ValueEventListener;
 import com.ititeam.tripplannermaster.DB.TripTableOperations;
 import com.ititeam.tripplannermaster.R;
+import com.ititeam.tripplannermaster.activity.login.LoginFragment;
+import com.ititeam.tripplannermaster.activity.login.OnTaskComplete;
 import com.ititeam.tripplannermaster.classes.TripViewHolder;
 import com.ititeam.tripplannermaster.classes.UploadDataToFirebase;
 import com.ititeam.tripplannermaster.model.Note;
@@ -36,6 +45,8 @@ import com.ititeam.tripplannermaster.model.Trip;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+
+import static com.facebook.FacebookSdk.getApplicationContext;
 
 
 public class HomeFragment extends Fragment{
@@ -56,6 +67,8 @@ public class HomeFragment extends Fragment{
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        DownLoadDataFromFirebase2 downLoadDataFromFirebase=new DownLoadDataFromFirebase2(getActivity());
+        downLoadDataFromFirebase.execute();
         tripTableOperations = new TripTableOperations(getActivity());
         email=User.getEmail();
         Toast.makeText(getActivity(), "all trips"+tripTableOperations.selectTripsUsingUserId(email).size(), Toast.LENGTH_SHORT).show();
@@ -384,5 +397,63 @@ public class HomeFragment extends Fragment{
         //upcommingTrips = tripTableOperations.selectAllTrips();
         myAdapter = new TripAdapterFragment();
         recyclerView.setAdapter(myAdapter);
+    }
+    public class DownLoadDataFromFirebase2 extends AsyncTask<String, Integer, Object> {
+
+        private DatabaseReference databaseReference, getDatabaseReference;
+        Context context;
+        OnTaskComplete onTaskComplete=null;
+
+        public DownLoadDataFromFirebase2(Context context) {
+            this.context=context;
+        }
+
+        @Override
+        protected void onPostExecute(Object o) {
+            // prog.dismiss();
+        }
+
+        @Override
+        protected Object doInBackground(String... strings) {
+            databaseReference = FirebaseDatabase.getInstance().getReference();
+            String path= User.getEmail().replace(".","_");
+            path=path.replace("#","_");
+            path=path.replace("$","_");
+            path=path.replace("[","_");
+            path=path.replace("]","_");
+            User.setFirebasePath(path);
+            if ((getDatabaseReference = databaseReference.child(User.getFirebasePath())) != null) {
+                getDatabaseReference.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        ArrayList<Trip> trips = null;
+                        GenericTypeIndicator<ArrayList<Trip>> genericTypeIndicator = new GenericTypeIndicator<ArrayList<Trip>>() {
+                        };
+                        trips = dataSnapshot.getValue(genericTypeIndicator);
+                        if (trips != null) {
+                            Toast.makeText(getApplicationContext(), "download" + trips.size(), Toast.LENGTH_SHORT).show();
+                            TripTableOperations tripTableOperations =new TripTableOperations(getActivity());
+                            // tripTableOperations.deleteAllTrips();
+                            tripTableOperations.getTripFromFirebase(trips);
+                            upcommingTrips = tripTableOperations.selectUpcomingTripsUsingOnlyDate(email);
+
+                            //upcommingTrips = tripTableOperations.selectAllTrips();
+                            myAdapter = new TripAdapterFragment();
+                            recyclerView.setAdapter(myAdapter);
+
+                        }
+                        ;
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        Toast.makeText(context, "Download Error", Toast.LENGTH_SHORT).show();
+
+                    }
+
+                });
+            }
+            return null;
+        }
     }
 }

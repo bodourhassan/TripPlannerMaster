@@ -230,11 +230,11 @@ public class LoginFragment extends Fragment implements OnLoginListener , View.On
                                             Toast.makeText(getActivity(), "login", Toast.LENGTH_SHORT).show();
 
 
-
+/*
                                             DownLoadDataFromFirebase2 downLoadDataFromFirebase=new DownLoadDataFromFirebase2(getActivity());
                                             downLoadDataFromFirebase.execute();
 
-
+*/
                                         }
                                     }
                                 });
@@ -372,8 +372,7 @@ public class LoginFragment extends Fragment implements OnLoginListener , View.On
                             }
 
 
-                            DownLoadDataFromFirebase2 downLoadDataFromFirebase=new DownLoadDataFromFirebase2(getActivity());
-                            downLoadDataFromFirebase.execute();
+
                             prog.dismiss();
 
                             Intent intent = new Intent(getActivity(), StartActivityDrawer.class);
