@@ -401,20 +401,21 @@ public class TripTableOperations {
                 insertTrip(trips.get(trips.size() - 1));
             }
         }*/
-        deleteAllTrips();
+        //deleteAllTrips();
         for (Trip trip : trips) {
 
-            insertTrip(trip);
-            AlarmManager manager = (AlarmManager) this.context.getSystemService(Context.ALARM_SERVICE);
-            Intent alarmIntent = new Intent(this.context, MainActivity.class);
-            PendingIntent  pendingIntent = PendingIntent.getBroadcast(this.context,trip.getTripId() , alarmIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+            Trip localTrip = selectSingleTrips(trip.getTripId() + "");
 
-            manager.cancel(pendingIntent);//cancel the alarm manager of the pending intent
-            Intent intent=new Intent(this.context, AlarmScheduleService.class);
-            intent.putExtra("trip_id",trip.getTripId());
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-            this.context.startService(intent);
+            if(localTrip==null) {
+             //   Toast.makeText(context, "enter", Toast.LENGTH_SHORT).show();
+                insertTrip(trip);
+                Intent intent = new Intent(this.context, AlarmScheduleService.class);
+                intent.putExtra("trip_id", trip.getTripId());
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                this.context.startService(intent);
+
+            }
 
           /*  Trip localTrip = selectSingleTrips(trip.getTripId() + "");
 
