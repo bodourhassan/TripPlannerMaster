@@ -78,7 +78,7 @@ public class UploadDataToFirebase extends AsyncTask<String, Integer, Object> {
                 databaseReference.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        Toast.makeText(context, "done" + trips.size(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, "Data has been sync" + trips.size(), Toast.LENGTH_SHORT).show();
                     }
 
                     @Override

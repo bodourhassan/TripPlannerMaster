@@ -391,7 +391,6 @@ public class HomeFragment extends Fragment{
     @Override
     public void onStart() {
         super.onStart();
-        Toast.makeText(getActivity(), "email in restart"+email, Toast.LENGTH_SHORT).show();
        upcommingTrips = tripTableOperations.selectUpcomingTripsUsingOnlyDate(email);
 
         //upcommingTrips = tripTableOperations.selectAllTrips();
@@ -431,7 +430,7 @@ public class HomeFragment extends Fragment{
                         };
                         trips = dataSnapshot.getValue(genericTypeIndicator);
                         if (trips != null) {
-                            Toast.makeText(getApplicationContext(), "download" + trips.size(), Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(getApplicationContext(), "download" + trips.size(), Toast.LENGTH_SHORT).show();
                             TripTableOperations tripTableOperations =new TripTableOperations(getActivity());
                             // tripTableOperations.deleteAllTrips();
                             tripTableOperations.getTripFromFirebase(trips);
