@@ -91,7 +91,9 @@ public class ShowTripActivity extends FragmentActivity implements OnMapReadyCall
     TripTableOperations tripTableOperations=null;
     //Pending intent instance
     private PendingIntent pendingIntent;
-
+    boolean flag=false;
+    boolean flag1=false;
+    boolean flag3=false;
     //Alarm Request Code
     private static final int ALARM_REQUEST_CODE = 133;
 
@@ -139,21 +141,34 @@ public class ShowTripActivity extends FragmentActivity implements OnMapReadyCall
             tripDirection.setText(trip.getTripDirection());
             tripDescription.setText(trip.getTripDescription());
             tripStatus.setText(trip.getTripStatus());
-            Date nowDate = new Date();
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
-            sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
+            Date nowDate=null ;
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            SimpleDateFormat TimeFormat = new SimpleDateFormat("HH:mm");
+            Date userDate=null;
+            Date myTime=null;
+            Date CurrentTime=null;
             try {
-                Date tripDate = sdf.parse(trip.getTripDate());
-                if (nowDate.compareTo(tripDate) > 0 || trip.getTripStatus().equals(TripConstant.DoneStatus) || trip.getTripStatus().equals(TripConstant.CancelledStatus)) {
+                userDate = sdf.parse(trip.getTripDate());
+                nowDate = sdf.parse(sdf.format(new Date()));
+                myTime = TimeFormat.parse(trip.getTripTime());
+                CurrentTime = TimeFormat.parse(TimeFormat.format(new Date()));
+            }
+            catch (ParseException e) {
+                e.printStackTrace();
+            }
+            try {
+                if ((userDate.compareTo(nowDate)==0 && myTime.compareTo(CurrentTime)<=0) ||userDate.compareTo(nowDate)<0|| trip.getTripStatus().equals(TripConstant.DoneStatus) || trip.getTripStatus().equals(TripConstant.CancelledStatus)) {
                     materialDesignFAM.removeMenuButton(floatingActionButton1);
                     materialDesignFAM.removeMenuButton(floatingActionButton2);
-
+                    flag3=true;
                 }
                 if (trip.getTripStatus().equals(TripConstant.DoneStatus) || trip.getTripStatus().equals(TripConstant.CancelledStatus)) {
                     materialDesignFAM.removeMenuButton(floatingActionButton3);
                     materialDesignFAM.removeMenuButton(floatingActionButton4);
+                    flag=true;
                 } else if (trip.getTripStatus().equals(TripConstant.halfTripStatus)) {
                     materialDesignFAM.removeMenuButton(floatingActionButton3);
+                    flag1=true;
                 }
             } catch (ParseException e) {
                 e.printStackTrace();
@@ -205,11 +220,18 @@ public class ShowTripActivity extends FragmentActivity implements OnMapReadyCall
                     trip.setTripStatus(TripConstant.DoneStatus);
                     tripTableOperations.updateTrip(trip);
                     tripStatus.setText(TripConstant.DoneStatus);
-
-                    materialDesignFAM.removeMenuButton(floatingActionButton1);
-                    materialDesignFAM.removeMenuButton(floatingActionButton2);
-                    materialDesignFAM.removeMenuButton(floatingActionButton3);
-                    materialDesignFAM.removeMenuButton(floatingActionButton4);
+                    if(!flag3) {
+                     materialDesignFAM.removeMenuButton(floatingActionButton1);
+                     materialDesignFAM.removeMenuButton(floatingActionButton2);
+}
+                    if(!flag) {
+                        materialDesignFAM.removeMenuButton(floatingActionButton3);
+                        materialDesignFAM.removeMenuButton(floatingActionButton4);
+                    }else{
+                        if(!flag1){
+                            materialDesignFAM.removeMenuButton(floatingActionButton4);
+                        }
+                    }
                     materialDesignFAM.close(false);
                     Toast.makeText(ShowTripActivity.this, "trip has Done", Toast.LENGTH_SHORT).show();
 
@@ -226,10 +248,18 @@ public class ShowTripActivity extends FragmentActivity implements OnMapReadyCall
                     tripTableOperations.updateTrip(trip);
 
                     tripStatus.setText(TripConstant.CancelledStatus);
-                    materialDesignFAM.removeMenuButton(floatingActionButton1);
-                    materialDesignFAM.removeMenuButton(floatingActionButton2);
-                    materialDesignFAM.removeMenuButton(floatingActionButton3);
-                    materialDesignFAM.removeMenuButton(floatingActionButton4);
+                    if(!flag3) {
+                        materialDesignFAM.removeMenuButton(floatingActionButton1);
+                        materialDesignFAM.removeMenuButton(floatingActionButton2);
+                    }
+                    if(!flag) {
+                        materialDesignFAM.removeMenuButton(floatingActionButton3);
+                        materialDesignFAM.removeMenuButton(floatingActionButton4);
+                    }else{
+                        if(!flag1){
+                            materialDesignFAM.removeMenuButton(floatingActionButton4);
+                        }
+                    }
                     materialDesignFAM.close(false);
                     Toast.makeText(ShowTripActivity.this, "trip has Cancelled", Toast.LENGTH_SHORT).show();
                 }
