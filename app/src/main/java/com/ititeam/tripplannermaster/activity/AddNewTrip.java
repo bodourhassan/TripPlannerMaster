@@ -245,29 +245,6 @@ public class AddNewTrip extends AppCompatActivity implements ConnectionCallbacks
         NoteListadapter.notifyDataSetChanged();
     }
 
-//    public void hourFormat(int hour)
-//    {
-//        if(hour==0)
-//        {
-//            hour+=12;
-//            format="AM";
-//        }
-//        else if(hour==12)
-//        {
-//
-//            format="PM";
-//        }
-//        else if(hour>12)
-//        {
-//           hour-=12;
-//            format="PM";
-//        }
-//        else {
-//
-//            format="AM";
-//        }
-//    }
-
 
     @Override
     public void onConnected(@Nullable Bundle bundle) {
@@ -316,7 +293,7 @@ public class AddNewTrip extends AppCompatActivity implements ConnectionCallbacks
                     Toast.LENGTH_SHORT).show();
 
         }
-        else if (userDate.compareTo(nowDate)==0 && myTime.compareTo(CurrentTime)<0) {
+        else if (userDate.compareTo(nowDate)==0 && myTime.compareTo(CurrentTime)<=0) {
 
 
                     Toast.makeText(getBaseContext(), " Enter Upcomming Time ",
