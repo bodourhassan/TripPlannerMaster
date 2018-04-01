@@ -71,16 +71,18 @@ public class StartActivityDrawer extends AppCompatActivity implements FragmentDr
             case 1:
                 fragment = new HistoryTripsFragment();
                 title = "History";
-                Toast.makeText(this, "jjjjjj", Toast.LENGTH_SHORT).show();
                 break;
             case 2:
+                Intent i = new Intent(this , ShowHistoryActivity.class);
+                startActivity(i);
+                break;
+            case 3:
                 //fragment = new LoginFragment();
                 //title = getString(R.string.title_messages);
                 PreferenceManager.getDefaultSharedPreferences(StartActivityDrawer.this).
                         edit().clear().apply();
-                Intent i = new Intent(this , AuthenticationActivity.class);
-                startActivity(i);
-                Toast.makeText(this, "LOGOUT", Toast.LENGTH_SHORT).show();
+                Intent j = new Intent(this , AuthenticationActivity.class);
+                startActivity(j);
                 finish();
                 break;
             default:

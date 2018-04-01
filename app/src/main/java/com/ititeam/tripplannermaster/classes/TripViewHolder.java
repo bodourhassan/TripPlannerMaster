@@ -42,6 +42,7 @@ public class TripViewHolder extends RecyclerView.ViewHolder
     public TextView Share , dropOff;
     public ImageButton btnLocation;
     public ImageView imgViewIcon;
+    public  Button btnStart;
 
 
     public TripViewHolder(View itemView) {
@@ -57,6 +58,7 @@ public class TripViewHolder extends RecyclerView.ViewHolder
         btnLocation = itemView.findViewById(R.id.btnLocation);
         imgViewIcon = itemView.findViewById(R.id.SwipLayout_ImageView);
         dropOff = itemView.findViewById(R.id.TextViewDropOff);
+        btnStart = itemView.findViewById(R.id.Button_Start);
     }
 
 }

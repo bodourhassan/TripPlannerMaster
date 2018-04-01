@@ -46,12 +46,18 @@ import com.google.android.gms.maps.model.LatLngBounds;
 import com.ititeam.tripplannermaster.DB.TripTableOperations;
 import com.ititeam.tripplannermaster.R;
 import com.ititeam.tripplannermaster.activity.alarmhandler.AlarmScheduleService;
+import com.ititeam.tripplannermaster.classes.UploadDataToFirebase;
 import com.ititeam.tripplannermaster.model.User;
 import com.ititeam.tripplannermaster.model.Note;
 import com.ititeam.tripplannermaster.model.Trip;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
+import java.util.TimeZone;
 
 public class AddNewTrip extends AppCompatActivity implements ConnectionCallbacks,OnConnectionFailedListener {
 
@@ -160,7 +166,6 @@ public class AddNewTrip extends AppCompatActivity implements ConnectionCallbacks
 
         }
         DateView.setText(year+"-"+Smonth+"-"+sDay);
-
         DateView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -197,7 +202,7 @@ public class AddNewTrip extends AppCompatActivity implements ConnectionCallbacks
             myminute = "0" + minute;
 
         }
-        TimeView.setText(myhour + " : " + myminute);
+        TimeView.setText(myhour + ":" + myminute);
         TimeView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -214,7 +219,7 @@ public class AddNewTrip extends AppCompatActivity implements ConnectionCallbacks
                             myminutein = "0" + minute;
 
                         }
-                        TimeView.setText(myhourin + " : " + myminutein);
+                        TimeView.setText(myhourin + ":" + myminutein);
                     }
                 }, hour, minute, true);
                 timePickerDialog.show();
@@ -240,29 +245,6 @@ public class AddNewTrip extends AppCompatActivity implements ConnectionCallbacks
         NoteListadapter.notifyDataSetChanged();
     }
 
-//    public void hourFormat(int hour)
-//    {
-//        if(hour==0)
-//        {
-//            hour+=12;
-//            format="AM";
-//        }
-//        else if(hour==12)
-//        {
-//
-//            format="PM";
-//        }
-//        else if(hour>12)
-//        {
-//           hour-=12;
-//            format="PM";
-//        }
-//        else {
-//
-//            format="AM";
-//        }
-//    }
-
 
     @Override
     public void onConnected(@Nullable Bundle bundle) {
@@ -280,39 +262,52 @@ public class AddNewTrip extends AppCompatActivity implements ConnectionCallbacks
     }
 
     public void onClicksave(View view) {
-        if (TripNameView.getText().toString().trim().equals(""))
-        {
+        Date nowDate=null ;
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat TimeFormat = new SimpleDateFormat("HH:mm");
+        Date userDate=null;
+        Date myTime=null;
+        Date CurrentTime=null;
+        try {
+             userDate = sdf.parse(DateView.getText().toString());
+            nowDate = sdf.parse(sdf.format(new Date()));
+             myTime = TimeFormat.parse(TimeView.getText().toString());
+            CurrentTime = TimeFormat.parse(TimeFormat.format(new Date()));
+        }
+        catch (ParseException e) {
+            e.printStackTrace();
+        }
+        if (TripNameView.getText().toString().trim().equals("")) {
             Toast.makeText(getBaseContext(), " Enter Trip Name ",
                     Toast.LENGTH_SHORT).show();
-        }
-        else if(mylocationStart.getText().toString().trim().equals(""))
-        {
+        } else if (mylocationStart.getText().toString().trim().equals("")) {
             Toast.makeText(getBaseContext(), " Enter Your Start Location ",
                     Toast.LENGTH_SHORT).show();
 
-        }
-        else if(mylocationEnd.getText().toString().trim().equals(""))
-        {
+        } else if (mylocationEnd.getText().toString().trim().equals("")) {
             Toast.makeText(getBaseContext(), " Enter Your End Location ",
                     Toast.LENGTH_SHORT).show();
 
-        }
-        else if(DescriptipnView.getText().toString().trim().equals(""))
-        {
+        } else if (DescriptipnView.getText().toString().trim().equals("")) {
             Toast.makeText(getBaseContext(), " Enter Your Description  ",
                     Toast.LENGTH_SHORT).show();
 
         }
-//          else if(getLatLongFromGivenAddress(mylocationStart.getText().toString())==null){
-//
-//              Toast.makeText(getBaseContext(), " Enter a valid Start point ",
-//                      Toast.LENGTH_SHORT).show();
-//          }
-//          else if(getLatLongFromGivenAddress(mylocationEnd.getText().toString())==null){
-//
-//              Toast.makeText(getBaseContext(), " Enter a valid End point ",
-//                      Toast.LENGTH_SHORT).show();
-//          }
+        else if (userDate.compareTo(nowDate)==0 && myTime.compareTo(CurrentTime)<=0) {
+
+
+                    Toast.makeText(getBaseContext(), " Enter Upcomming Time ",
+                            Toast.LENGTH_SHORT).show();
+
+
+            }
+            else if(userDate.compareTo(nowDate)<0 ){
+                Toast.makeText(getBaseContext(), " Enter Upcomming Date ",
+                        Toast.LENGTH_SHORT).show();
+
+            }
+
+
         else {
             String NameofTrip = TripNameView.getText().toString();
             String StartLoc = mylocationStart.getText().toString();
@@ -328,7 +323,6 @@ public class AddNewTrip extends AppCompatActivity implements ConnectionCallbacks
             String TripDirection = myRadiobutton.getText().toString();
             myNoteList.clear();
             for (int i = 0; i < listItems.size(); i++) {
-                Log.e("When Add", listItems.get(i));
                 Note note = new Note(listItems.get(i), TripConstant.NoteLater);
                 myNoteList.add(note);
             }
@@ -337,6 +331,8 @@ public class AddNewTrip extends AppCompatActivity implements ConnectionCallbacks
             TripTableOperations myTripTable = new TripTableOperations(this);
             boolean test = myTripTable.insertTrip(NewTrip);
             if(test){
+              /*  UploadDataToFirebase uploadDataToFirebase=new UploadDataToFirebase(getApplication());
+                uploadDataToFirebase.execute();*/
                 Trip lastTrip=myTripTable.selectAllTripsForGettingLastId();
                 Log.i("Mark" , lastTrip.getTripDate()+"");
 
@@ -344,216 +340,19 @@ public class AddNewTrip extends AppCompatActivity implements ConnectionCallbacks
                 intent.putExtra("trip",lastTrip);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                Toast.makeText(getApplicationContext(), lastTrip.getTripId()+"", Toast.LENGTH_SHORT).show();
                 startService(intent);
 
             }
-            for (int i = 0; i < NewTrip.getTripNotes().size(); i++) {
-                Log.e("Trip before", NewTrip.getTripNotes().get(i).getNoteBody());
-            }
-            ArrayList<Trip> all = myTripTable.selectAllTrips();
-            Toast.makeText(getBaseContext(), all.size() + "," + test,
-                    Toast.LENGTH_SHORT).show();
-            Log.e("My Data:", "Name : " + NameofTrip);
-            Log.e("My Data:", "start : " + StartLoc);
-            Log.e("My Data:", "end : " + Endloc);
-            Log.e("My Data:", "desc : " + Desc);
-            Log.e("My Data:", "date : " + Date);
-            Log.e("My Data:", "time : " + Time);
-            Log.e("My Data:", "direction : " + TripDirection);
-            Log.e("My Data:", "cate : " + TripCatagory);
-
-          /*  Trip my = myTripTable.selectSingleTrips(1 + "");
-            Log.e("dataaaaaaaaaaaaa:", "Name : " + my.getTripName());
-            Log.e("dataaaaaaaaaaaaaa:", "start : " + my.getTripStartPoint());
-            Log.e("dataaaaaaaaaaaaaa:", "end : " + my.getTripEndPoint());
-            Log.e("dataaaaaaaaaaaaaa:", "desc : " + my.getTripDescription());
-            Log.e("dataaaaaaaaaaaaaa:", "date : " + my.getTripDate());
-            Log.e("dataaaaaaaaaaaaaa:", "time : " + my.getTripTime());
-            Log.e("dataaaaaaaaaaaaaa:", "direction : " + my.getTripDirection());
-            Log.e("dataaaaaaaaaaaaaa:", "cate : " + my.getTripCategory());
-
-            for (int i = 0; i < my.getTripNotes().size(); i++) {
-                Log.e("Trip after", my.getTripNotes().get(i).getNoteBody());
-            }*/
-//            Intent intent = new Intent(AddNewTrip.this, StartActivityDrawer.class);
-//            startActivity(intent);
-
-            finish();
+           finish();
         }
 
+
     }
+
 
     public void cancleClick(View view) {
-//        Intent intent = new Intent(AddNewTrip.this, StartActivityDrawer.class);
-//        startActivity(intent);
+
         finish();
     }
-  /*  public class TripAdapterFragment extends RecyclerSwipeAdapter<ViewHolder> {
 
-        private LayoutInflater inflater;
-        ViewHolder viewHolder;
-
-        public TripAdapterFragment() {
-            Log.e("ADAPTER", "TripAdapterFragment: Is here");
-        }
-        @Override
-        public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-
-            inflater = (LayoutInflater) AddNewTrip.this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            View view = inflater.inflate(R.layout.item_layout, null);
-            viewHolder = new ViewHolder(view);
-            return viewHolder;
-        }
-
-        @Override
-        public void onBindViewHolder(ViewHolder holder, final int position) {
-            //intialize array
-            //trip trip = array.get(position);
-
-            ///////old carddddd
-            /*
-            holder.tvTitle.setText(myTrip.get(position));
-            holder.tvTitle.setTypeface(null, Typeface.BOLD);
-            holder.imgViewIcon.setImageDrawable(getResources().getDrawable(R.drawable.see));
-            holder.tvDescription.setText(desc.get(position));
-
-            holder.btnStart.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Toast.makeText(ShowUpcomingTrips.this, "position is "+myTrip.get(position).toString(), Toast.LENGTH_SHORT).show();
-                }
-            });
-*/
-/*
-
-            viewHolder.getheader().setText(listItems.get(position));
-
-
-            viewHolder.swipeLayout.setShowMode(SwipeLayout.ShowMode.PullOut);
-
-            //dari kiri
-            viewHolder.swipeLayout.addDrag(SwipeLayout.DragEdge.Left, viewHolder.swipeLayout.findViewById(R.id.bottom_wrapper1));
-
-            //dari kanan
-            viewHolder.swipeLayout.addDrag(SwipeLayout.DragEdge.Right, viewHolder.swipeLayout.findViewById(R.id.bottom_wraper));
-
-
-
-            viewHolder.swipeLayout.addSwipeListener(new SwipeLayout.SwipeListener() {
-                @Override
-                public void onStartOpen(SwipeLayout layout) {
-
-                }
-
-                @Override
-                public void onOpen(SwipeLayout layout) {
-
-                }
-
-                @Override
-                public void onStartClose(SwipeLayout layout) {
-
-                }
-
-                @Override
-                public void onClose(SwipeLayout layout) {
-
-                }
-
-                @Override
-                public void onUpdate(SwipeLayout layout, int leftOffset, int topOffset) {
-
-                }
-
-                @Override
-                public void onHandRelease(SwipeLayout layout, float xvel, float yvel) {
-
-                }
-            });
-
-            viewHolder.swipeLayout.getSurfaceView().setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Toast.makeText(getActivity(), "position is " + upcommingTrips.get(position).toString(), Toast.LENGTH_SHORT).show();
-                }
-            });
-
-            viewHolder.btnLocation.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Toast.makeText(v.getContext(), "Clicked on Information " + upcommingTrips.get(position).toString(), Toast.LENGTH_SHORT).show();
-                }
-            });
-
-            viewHolder.Share.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-
-                    Toast.makeText(view.getContext(), "Clicked on Share " + upcommingTrips.get(position).toString().toString(), Toast.LENGTH_SHORT).show();
-                }
-            });
-
-            viewHolder.Edit.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-
-                    Toast.makeText(view.getContext(), "Clicked on Edit  " + viewHolder.Name.getText().toString(), Toast.LENGTH_SHORT).show();
-                }
-            });
-
-            viewHolder.Delete.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
-                    alert.setTitle("Delete Trip " + upcommingTrips.get(position).getTripName());
-                    alert.setMessage("Are you sure you want to delete " + upcommingTrips.get(position).getTripName() + " ?");
-
-                    alert.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-
-
-                        public void onClick(DialogInterface dialog, int which) {
-                            // continue with delete
-                            tripTableOperations.deleteTrip(String.valueOf(upcommingTrips.get(position).getTripId()));
-                            mItemManger.removeShownLayouts(viewHolder.swipeLayout);
-                            upcommingTrips.remove(position);
-                            notifyItemRemoved(position);
-                            notifyItemRangeChanged(position, upcommingTrips.size());
-                            mItemManger.closeAllItems();
-                            Toast.makeText(getActivity(), "here in delete", Toast.LENGTH_SHORT).show();
-                        }
-                    });
-
-                    alert.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int which) {
-                            // close dialog
-                            dialog.cancel();
-                        }
-                    });
-                    alert.show();
-
-
-
-                    //Toast.makeText(v.getContext(), "Deleted " + upcommingTrips.get(position).getTripId(), Toast.LENGTH_SHORT).show();
-                    //Toast.makeText(getActivity(), "array size"+ upcommingTrips.size(), Toast.LENGTH_SHORT).show();
-                }
-            });
-
-            mItemManger.bindView(viewHolder.itemView, position);
-
-
-        }
-
-        @Override
-        public int getItemCount() {
-            return upcommingTrips.size();
-            //return size of array  // array.size
-        }
-
-
-        @Override
-        public int getSwipeLayoutResourceId(int position) {
-            return R.id.swipe;
-        }
-    }*/
 }
