@@ -17,6 +17,7 @@ import com.ititeam.tripplannermaster.R;
 import com.ititeam.tripplannermaster.activity.MainActivity;
 import com.ititeam.tripplannermaster.activity.ShowTripActivity;
 import com.ititeam.tripplannermaster.activity.StartTripActivity;
+import com.ititeam.tripplannermaster.model.ParcelableUtil;
 import com.ititeam.tripplannermaster.model.Trip;
 
 public class AlarmActivity extends AppCompatActivity {
@@ -26,13 +27,14 @@ public class AlarmActivity extends AppCompatActivity {
 
     //Alarm Request Code
     private static final int ALARM_REQUEST_CODE = 133;
-
+    private Intent openingIntent = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
          this.supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_alarm);
+        this.openingIntent = getIntent();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
             this.setFinishOnTouchOutside(false);
         }
@@ -41,7 +43,9 @@ public class AlarmActivity extends AppCompatActivity {
         findViewById(R.id.start_alarm_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Trip trip = (Trip) getIntent().getSerializableExtra("trip");
+                //Trip trip = (Trip) getIntent().getSerializableExtra("trip");
+                //Trip trip= (Trip) openingIntent.getSerializableExtra("trip");
+                Trip trip =(Trip) ParcelableUtil.unmarshall(openingIntent.getByteArrayExtra("trip") , Trip.CREATOR);
                 Intent intent =new Intent(AlarmActivity.this,StartTripActivity.class);
                 intent.putExtra("trip",trip);
                 stopAlarmManager();
@@ -88,7 +92,9 @@ public class AlarmActivity extends AppCompatActivity {
 
         AlarmManager manager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         Intent alarmIntent = new Intent(AlarmActivity.this, MainActivity.class);
-        Trip trip = (Trip) getIntent().getSerializableExtra("trip");
+        //Trip trip = (Trip) getIntent().getSerializableExtra("trip");
+        //Trip trip= (Trip) openingIntent.getSerializableExtra("trip");
+        Trip trip =(Trip) ParcelableUtil.unmarshall(openingIntent.getByteArrayExtra("trip") , Trip.CREATOR);
         Toast.makeText(getApplicationContext(), trip.getTripId()+"", Toast.LENGTH_SHORT).show();
         pendingIntent = PendingIntent.getBroadcast(getBaseContext(), trip.getTripId(), alarmIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 

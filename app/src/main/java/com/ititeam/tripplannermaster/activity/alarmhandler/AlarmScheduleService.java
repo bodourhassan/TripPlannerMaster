@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.util.Log;
 import android.widget.Toast;
 import com.ititeam.tripplannermaster.DB.*;
+import com.ititeam.tripplannermaster.model.ParcelableUtil;
 import com.ititeam.tripplannermaster.model.Trip;
 
 import java.util.Calendar;
@@ -32,14 +33,18 @@ public class AlarmScheduleService extends IntentService {
     protected void onHandleIntent(Intent intent) {
         if (intent != null)
         {
-            Trip trip = (Trip) intent.getSerializableExtra("trip");
+//            Trip trip = (Trip) intent.getSerializableExtra("trip");
+            byte[] last = intent.getByteArrayExtra("trip");
+            Trip trip =(Trip) ParcelableUtil.unmarshall(last , Trip.CREATOR);
+
             Log.i("Mark" , trip.getTripDate()+"");
 
             //Trip trip =  new TripTableOperations(getApplicationContext()).selectSingleTrips(trip_id+"");
             Toast.makeText(this,trip.getTripId()+"", Toast.LENGTH_SHORT).show();
             Intent alarmIntent = new Intent(AlarmScheduleService.this, AlarmReceiver.class);
             //alarmIntent.putExtra("trip_id" , trip_id);
-            alarmIntent.putExtra("trip" , trip);
+
+            alarmIntent.putExtra("trip" , last);
             pendingIntent = PendingIntent.getBroadcast(getBaseContext(), trip.getTripId(), alarmIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
                 triggerAlarmManager(trip);

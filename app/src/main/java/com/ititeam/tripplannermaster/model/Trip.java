@@ -1,6 +1,8 @@
 package com.ititeam.tripplannermaster.model;
 
-import java.io.Serializable;
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.ArrayList;
 
 import com.ititeam.tripplannermaster.model.Note;
@@ -9,7 +11,7 @@ import com.ititeam.tripplannermaster.model.Note;
  * Created by MARK on 3/18/2018.
  */
 
-public class Trip implements Serializable{
+public class Trip implements Parcelable {
 
     int tripId;
     String tripName;
@@ -164,4 +166,65 @@ public class Trip implements Serializable{
     public void setTripCategory(String tripCategory) {
         this.tripCategory = tripCategory;
     }
+
+    protected Trip(Parcel in) {
+        tripId = in.readInt();
+        tripName = in.readString();
+        tripStartPoint = in.readString();
+        tripEndPoint = in.readString();
+        tripDate = in.readString();
+        tripTime = in.readString();
+        tripStatus = in.readString();
+        tripDirection = in.readString();
+        tripDescription = in.readString();
+        tripRepetition = in.readString();
+        tripCategory = in.readString();
+        userId = in.readString();
+        if (in.readByte() == 0x01) {
+            tripNotes = new ArrayList<Note>();
+            in.readList(tripNotes, Note.class.getClassLoader());
+        } else {
+            tripNotes = null;
+        }
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(tripId);
+        dest.writeString(tripName);
+        dest.writeString(tripStartPoint);
+        dest.writeString(tripEndPoint);
+        dest.writeString(tripDate);
+        dest.writeString(tripTime);
+        dest.writeString(tripStatus);
+        dest.writeString(tripDirection);
+        dest.writeString(tripDescription);
+        dest.writeString(tripRepetition);
+        dest.writeString(tripCategory);
+        dest.writeString(userId);
+        if (tripNotes == null) {
+            dest.writeByte((byte) (0x00));
+        } else {
+            dest.writeByte((byte) (0x01));
+            dest.writeList(tripNotes);
+        }
+    }
+
+    @SuppressWarnings("unused")
+    public static final Parcelable.Creator<Trip> CREATOR = new Parcelable.Creator<Trip>() {
+        @Override
+        public Trip createFromParcel(Parcel in) {
+            return new Trip(in);
+        }
+
+        @Override
+        public Trip[] newArray(int size) {
+            return new Trip[size];
+        }
+    };
 }

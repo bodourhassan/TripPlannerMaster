@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import com.ititeam.tripplannermaster.DB.TripTableOperations;
 import com.ititeam.tripplannermaster.activity.AddNewTrip;
+import com.ititeam.tripplannermaster.model.ParcelableUtil;
 import com.ititeam.tripplannermaster.model.Trip;
 
 import java.util.ArrayList;
@@ -25,29 +26,31 @@ public class BootReciever extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         this.context = context;
         // TODO: This method is called when the BroadcastReceiver is receiving
-        if (intent.getAction().equals("android.intent.action.BOOT_COMPLETED")) {
+      //  if (intent.getAction().equals("android.intent.action.BOOT_COMPLETED")||intent.getAction().equals("android.intent.action.BOOT_COMPLETED")) {
             // Set the alarm here.
             ArrayList<Trip> trips = new TripTableOperations(context).selectUpcomingTripsUsingOnlyDate();
             for (Trip trip : trips)
             {
-//                Intent bootIntent=new Intent(context, AlarmScheduleService.class);
-//                intent.putExtra("trip",trip);
-//                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-//                intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-//                Toast.makeText(context,trip.getTripId()+"", Toast.LENGTH_SHORT).show();
-//                ComponentName comp = new ComponentName(context.getPackageName(),
-//                AlarmScheduleService.class.getName());
-//                 startWakefulService(context, (intent.setComponent(comp)));
+                Intent bootIntent=new Intent(context, AlarmScheduleService.class);
+                byte[] last = ParcelableUtil.marshall(trip);
+                intent.putExtra("trip",last);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                Toast.makeText(context,trip.getTripId()+"", Toast.LENGTH_SHORT).show();
+                ComponentName comp = new ComponentName(context.getPackageName(),
+                AlarmScheduleService.class.getName());
+                startWakefulService(context, (intent.setComponent(comp)));
 
-                //Trip trip =  new TripTableOperations(getApplicationContext()).selectSingleTrips(trip_id+"");
-                Intent alarmIntent = new Intent(context, AlarmReceiver.class);
-                //alarmIntent.putExtra("trip_id" , trip_id);
-                alarmIntent.putExtra("trip" , trip);
-                pendingIntent = PendingIntent.getBroadcast(context, trip.getTripId(), alarmIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-
-                triggerAlarmManager(trip);
+//                //Trip trip =  new TripTableOperations(getApplicationContext()).selectSingleTrips(trip_id+"");
+//                Intent alarmIntent = new Intent(context, AlarmReceiver.class);
+//                //alarmIntent.putExtra("trip_id" , trip_id);
+//                Toast.makeText(context, "from reciever", Toast.LENGTH_SHORT).show();
+//                alarmIntent.putExtra("trip" , trip);
+//                pendingIntent = PendingIntent.getBroadcast(context, trip.getTripId(), alarmIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+//
+//                triggerAlarmManager(trip);
             }
-        }
+        //}
     }
 
     public void triggerAlarmManager(Trip trip) {

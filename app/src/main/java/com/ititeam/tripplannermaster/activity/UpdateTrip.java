@@ -44,6 +44,7 @@ import com.ititeam.tripplannermaster.activity.alarmhandler.AlarmActivity;
 import com.ititeam.tripplannermaster.activity.alarmhandler.AlarmScheduleService;
 import com.ititeam.tripplannermaster.classes.UploadDataToFirebase;
 import com.ititeam.tripplannermaster.model.Note;
+import com.ititeam.tripplannermaster.model.ParcelableUtil;
 import com.ititeam.tripplannermaster.model.Trip;
 
 import java.text.ParseException;
@@ -370,8 +371,9 @@ public class UpdateTrip extends AppCompatActivity implements GoogleApiClient.Con
                 manager.cancel(pendingIntent);//cancel the alarm manager of the pending intent
 
                 Trip lastTrip=tripTableOperations.selectAllTripsForGettingLastId();
+                byte[] last = ParcelableUtil.marshall(lastTrip);
                 Intent intent=new Intent(UpdateTrip.this, AlarmScheduleService.class);
-                intent.putExtra("trip",lastTrip);
+                intent.putExtra("trip",last);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 startService(intent);

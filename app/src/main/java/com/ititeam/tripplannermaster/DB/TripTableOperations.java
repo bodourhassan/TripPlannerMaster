@@ -220,7 +220,7 @@ public class TripTableOperations {
                 AdapterDba.DbOpenHelper.TRIP_REPITITION,
                 AdapterDba.DbOpenHelper.TRIP_CATEGORY,
                 AdapterDba.DbOpenHelper.USER_ID};
-        String whereClause = "date(" + AdapterDba.DbOpenHelper.TRIP_DATE + ") > date('now')";
+        String whereClause = "date(" + AdapterDba.DbOpenHelper.TRIP_DATE + ") >= date('now')";
         String[] selectArgs = null;
         String groupBy = null;
         String having = null;

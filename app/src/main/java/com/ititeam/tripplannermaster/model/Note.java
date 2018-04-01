@@ -1,10 +1,12 @@
 package com.ititeam.tripplannermaster.model;
 
+import java.io.Serializable;
+
 /**
  * Created by MARK on 3/18/2018.
  */
 
-public class Note {
+public class Note implements Serializable{
 
     int noteId;
     String noteBody;

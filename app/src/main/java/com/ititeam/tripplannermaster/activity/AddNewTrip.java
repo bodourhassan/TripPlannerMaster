@@ -58,7 +58,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
-
+import com.ititeam.tripplannermaster.model.ParcelableUtil;
 public class AddNewTrip extends AppCompatActivity implements ConnectionCallbacks,OnConnectionFailedListener {
 
     private GeoDataClient geoDataClient ;
@@ -334,10 +334,11 @@ public class AddNewTrip extends AppCompatActivity implements ConnectionCallbacks
               /*  UploadDataToFirebase uploadDataToFirebase=new UploadDataToFirebase(getApplication());
                 uploadDataToFirebase.execute();*/
                 Trip lastTrip=myTripTable.selectAllTripsForGettingLastId();
+                byte[] last = ParcelableUtil.marshall(lastTrip);
                 Log.i("Mark" , lastTrip.getTripDate()+"");
 
                 Intent intent=new Intent(AddNewTrip.this, AlarmScheduleService.class);
-                intent.putExtra("trip",lastTrip);
+                intent.putExtra("trip",last);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 startService(intent);
