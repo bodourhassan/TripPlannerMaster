@@ -101,7 +101,6 @@ public class UpdateTrip extends AppCompatActivity implements GoogleApiClient.Con
         TripNameView = findViewById(R.id.UAutTripName);
         DescriptipnView=findViewById(R.id.UEditDescription);
         mytripGroup= findViewById(R.id.UGroupType);
-        // Tripcatagory= findViewById(R.id.UTripCatId);
         DateView =findViewById(R.id.UDate);
         TimeView =findViewById(R.id.UTime);
         MyNoteList=findViewById(R.id.UNoteList);
@@ -177,7 +176,7 @@ public class UpdateTrip extends AppCompatActivity implements GoogleApiClient.Con
                 }
                 else {
 
-                    //  addItems(Notebody);
+
                     listItems.add(Notebody);
                     Note myNewNote= new Note();
                     myNewNote.setNoteBody(Notebody);
@@ -377,7 +376,7 @@ public class UpdateTrip extends AppCompatActivity implements GoogleApiClient.Con
                 startService(intent);
             }
 
-              //   finish();
+                 finish();
         }
 
     }

@@ -74,13 +74,11 @@ public class AddNewTrip extends AppCompatActivity implements ConnectionCallbacks
     RadioButton myRadiobutton;
     MultiAutoCompleteTextView NoteItem;
     RadioGroup mytripGroup;
-    // Spinner Tripcatagory;
     ArrayList<Note> myNoteList = new ArrayList<>();
     Calendar myCalender;
     int day,month,year;
     int hour,minute;
     Spinner dropdown;
-    //String format;
     String Notebody;
     public  static final LatLngBounds LatLangBounds =new LatLngBounds(new LatLng(-40,-168),new LatLng(71,163));
     @Override
@@ -95,7 +93,6 @@ public class AddNewTrip extends AppCompatActivity implements ConnectionCallbacks
         TripNameView = findViewById(R.id.AutTripName);
         DescriptipnView=findViewById(R.id.EditDescription);
         mytripGroup= findViewById(R.id.GroupType);
-        // Tripcatagory= findViewById(R.id.TripCatId);
         /************************** Note List Part ************************/
         MyNoteList=findViewById(R.id.NoteList);
         NoteListadapter=new ArrayAdapter<String>(this,
@@ -126,13 +123,11 @@ public class AddNewTrip extends AppCompatActivity implements ConnectionCallbacks
                 }
                 else {
 
-                    //  addItems(Notebody);
-                    Log.e("Add", Notebody);
+
                     listItems.add(Notebody);
                     NoteListadapter.notifyDataSetChanged();
                     NoteItem.setText("".toString());
-                    // NoteListadapter.setNotifyOnChange(true);
-                    // MyNoteList.notifyAll();
+
 
                 }
             }
@@ -155,8 +150,7 @@ public class AddNewTrip extends AppCompatActivity implements ConnectionCallbacks
         minute=myCalender.get(Calendar.MINUTE);
         month=month+1;
 
-       // DateView.setText(day+"-"+month+"-"+year);
-        String Smonth=month+"";
+       String Smonth=month+"";
         String sDay =day+"";
         if (month < 10) {
             Smonth = "0" + month;
@@ -174,7 +168,6 @@ public class AddNewTrip extends AppCompatActivity implements ConnectionCallbacks
                     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                         month=month+1;
 
-                       // DateView.setText(dayOfMonth+"-"+month+"-"+year);
                         String Smonthin=month+"";
                         String sDayin =dayOfMonth+"";
                         if (month < 10) {
@@ -315,7 +308,6 @@ public class AddNewTrip extends AppCompatActivity implements ConnectionCallbacks
             String Desc = DescriptipnView.getText().toString();
             String Date = DateView.getText().toString();
             String Time = TimeView.getText().toString();
-            Log.i("nhnh" , Time);
             // get selected radio button from radioGroup
             int selectedId = mytripGroup.getCheckedRadioButtonId();
             // find the radiobutton by returned id
@@ -331,11 +323,8 @@ public class AddNewTrip extends AppCompatActivity implements ConnectionCallbacks
             TripTableOperations myTripTable = new TripTableOperations(this);
             boolean test = myTripTable.insertTrip(NewTrip);
             if(test){
-              /*  UploadDataToFirebase uploadDataToFirebase=new UploadDataToFirebase(getApplication());
-                uploadDataToFirebase.execute();*/
-                Trip lastTrip=myTripTable.selectAllTripsForGettingLastId();
-                Log.i("Mark" , lastTrip.getTripDate()+"");
 
+                Trip lastTrip=myTripTable.selectAllTripsForGettingLastId();
                 Intent intent=new Intent(AddNewTrip.this, AlarmScheduleService.class);
                 intent.putExtra("trip",lastTrip);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

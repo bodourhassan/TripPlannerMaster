@@ -58,25 +58,6 @@ public class MyUpdateAdapter extends ArrayAdapter {
 
             }
         });
-//       myNote.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-//           /**
-//            * Called when the focus state of a view has changed.
-//            *
-//            * @param v        The view whose state has changed.
-//            * @param hasFocus The new focus state of v.
-//            */
-//           @Override
-//           public void onFocusChange(View v, boolean hasFocus) {
-//               if(hasFocus)
-//               {
-//                   Log.e("focuse", "note"+position );
-//                   notes.set(position,myNote.getText().toString());
-//                   //notifyDataSetChanged();
-//                  // notifyDataSetInvalidated();
-//               }
-//
-//           }
-//       });
         myNote.setText(notes.get(position).toString());
 
         return myView;
