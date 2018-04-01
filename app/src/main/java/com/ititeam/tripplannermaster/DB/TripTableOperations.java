@@ -431,6 +431,11 @@ public class TripTableOperations {
             if(localTrip==null) {
              //   Toast.makeText(context, "enter", Toast.LENGTH_SHORT).show();
                 insertTrip(trip);
+                Intent intent=new Intent(this.context, AlarmScheduleService.class);
+                intent.putExtra("trip",trip);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                this.context.startService(intent);
               /*  Intent intent = new Intent(this.context, AlarmScheduleService.class);
                 intent.putExtra("trip_id", trip.getTripId());
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

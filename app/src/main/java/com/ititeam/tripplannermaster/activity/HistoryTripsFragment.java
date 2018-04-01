@@ -3,6 +3,7 @@ package com.ititeam.tripplannermaster.activity;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -188,14 +189,19 @@ public class HistoryTripsFragment extends Fragment {
             viewHolder.swipeLayout2.getSurfaceView().setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(getActivity(), "position is " + myTrip.get(position).toString(), Toast.LENGTH_SHORT).show();
+                    Intent i = new Intent(getActivity() , ShowTripActivity.class);
+                    i.putExtra("trip_id" , String.valueOf(historyTrip.get(position).getTripId()));
+                    startActivity(i);
                 }
             });
 
             viewHolder.btnLocation.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(v.getContext(), "Clicked on Information " + myTrip.get(position).toString(), Toast.LENGTH_SHORT).show();
+
+                    Intent i = new Intent(getActivity() , ShowTripActivity.class);
+                    i.putExtra("trip_id" , String.valueOf(historyTrip.get(position).getTripId()));
+                    startActivity(i);
                 }
             });
 
