@@ -120,4 +120,10 @@ public class NoteTableOperations {
         String [] whereArgs = {id};
         AdapterDba.getAdapterDbaInstance(context)._delete(AdapterDba.DbOpenHelper.NOTES_TABLE ,whereClause ,whereArgs);
     }
+    public void deleteAllNote ()
+    {
+        String whereClause = AdapterDba.DbOpenHelper.NOTE_ID+"=?";
+        String [] whereArgs = null;
+        AdapterDba.getAdapterDbaInstance(context)._delete(AdapterDba.DbOpenHelper.NOTES_TABLE ,whereClause ,null);
+    }
 }

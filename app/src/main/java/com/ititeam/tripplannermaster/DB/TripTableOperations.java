@@ -380,7 +380,16 @@ public class TripTableOperations {
         String [] whereArgs = {id};
         AdapterDba.getAdapterDbaInstance(context)._delete(AdapterDba.DbOpenHelper.TRIP_TABLE ,whereClause ,whereArgs);
     }
+    public void deleteAllTrips ()
+    {
 
+            new NoteTableOperations(context).deleteAllNote();
+
+
+        String whereClause = null;
+        String [] whereArgs = null;
+        AdapterDba.getAdapterDbaInstance(context)._delete(AdapterDba.DbOpenHelper.TRIP_TABLE ,whereClause ,whereArgs);
+    }
 
     //Start Hanaa Section
     public void getTripFromFirebase(ArrayList<Trip> trips) {
@@ -388,7 +397,7 @@ public class TripTableOperations {
         for (Trip trip : trips) {
             Trip localTrip = selectSingleTrips(trip.getTripId() + "");
             if (!trip.getUserId().equals(User.getEmail())) {
-                if(localTrip==null) {
+              //  if(localTrip==null) {
                     Toast.makeText(context, "enter", Toast.LENGTH_SHORT).show();
                     insertTrip(trip);
                     Intent intent = new Intent(this.context, AlarmScheduleService.class);
@@ -396,7 +405,7 @@ public class TripTableOperations {
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                     this.context.startService(intent);
-                }
+               /* }
             }else{
 
                 if(updateTrip(trip)) {
@@ -420,9 +429,9 @@ public class TripTableOperations {
                     intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                     this.context.startService(intent);
                 }
-                Toast.makeText(context, "update", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "update", Toast.LENGTH_SHORT).show();*/
             }
-            
+
         }
     }
     //end  Hanaa Section

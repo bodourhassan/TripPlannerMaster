@@ -454,7 +454,9 @@ public class LoginFragment extends Fragment implements OnLoginListener , View.On
                         trips = dataSnapshot.getValue(genericTypeIndicator);
                         if (trips != null) {
                             Toast.makeText(getApplicationContext(), "download" + trips.size(), Toast.LENGTH_SHORT).show();
-                            new TripTableOperations(getApplicationContext()).getTripFromFirebase(trips);
+                            TripTableOperations tripTableOperations =new TripTableOperations(getApplicationContext());
+                           // tripTableOperations.deleteAllTrips();
+                            tripTableOperations.getTripFromFirebase(trips);
 
                         }
                      ;

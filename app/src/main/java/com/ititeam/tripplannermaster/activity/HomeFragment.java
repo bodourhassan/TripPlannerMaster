@@ -317,10 +317,13 @@ public class HomeFragment extends Fragment{
                             AlarmManager manager = (AlarmManager) getActivity().getSystemService(Context.ALARM_SERVICE);
                             Intent alarmIntent = new Intent(getActivity(), MainActivity.class);
                             pendingIntent = PendingIntent.getBroadcast(getActivity().getBaseContext(),upcommingTrips.get(position).getTripId() , alarmIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+                            Toast.makeText(getActivity(), "here "+upcommingTrips.get(position).getTripId()+"in delete"+position, Toast.LENGTH_SHORT).show();
+
                             tripTableOperations.deleteTrip(String.valueOf(upcommingTrips.get(position).getTripId()));
                             mItemManger.removeShownLayouts(viewHolder.swipeLayout);
                             upcommingTrips.remove(position);
                             notifyItemRemoved(position);
+                            Toast.makeText(getActivity(), "here size"+upcommingTrips.size(), Toast.LENGTH_SHORT).show();
                             notifyItemRangeChanged(position, upcommingTrips.size());
                             mItemManger.closeAllItems();
                             manager.cancel(pendingIntent);//cancel the alarm manager of the pending intent
