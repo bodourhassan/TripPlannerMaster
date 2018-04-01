@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.ititeam.tripplannermaster.activity.MainActivity">
+
+
+    <Button
+        android:id="@+id/MainActivity_ButtonHesham"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="51dp"
+        android:text="Hesham" />
+
+    <Button
+        android:id="@+id/buttMainActivity_ButtonHana"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/MainActivity_ButtonHesham"
+        android:layout_alignStart="@+id/MainActivity_ButtonHesham"
+        android:layout_below="@+id/MainActivity_ButtonHesham"
+        android:layout_marginTop="75dp"
+        android:text="Hana" />
+
+    <Button
+        android:id="@+id/MainActivity_ButtonBdour"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/buttMainActivity_ButtonHana"
+        android:layout_alignStart="@+id/buttMainActivity_ButtonHana"
+        android:layout_below="@+id/buttMainActivity_ButtonHana"
+        android:layout_marginTop="56dp"
+        android:text="Bdour" />
+
+    <Button
+        android:id="@+id/MainActivity_ButtonMark"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/MainActivity_ButtonBdour"
+        android:layout_alignParentBottom="true"
+        android:layout_alignStart="@+id/MainActivity_ButtonBdour"
+        android:layout_marginBottom="67dp"
+        android:text="Mark" />
+</RelativeLayout>
