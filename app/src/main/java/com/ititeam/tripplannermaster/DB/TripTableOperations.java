@@ -1,13 +1,20 @@
 package com.ititeam.tripplannermaster.DB;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.util.Log;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 
+import com.ititeam.tripplannermaster.activity.AddNewTrip;
+import com.ititeam.tripplannermaster.activity.MainActivity;
+import com.ititeam.tripplannermaster.activity.UpdateTrip;
+import com.ititeam.tripplannermaster.activity.alarmhandler.AlarmScheduleService;
 import com.ititeam.tripplannermaster.model.*;
 import com.ititeam.tripplannermaster.activity.TripConstant;
 /**
@@ -373,23 +380,82 @@ public class TripTableOperations {
         String [] whereArgs = {id};
         AdapterDba.getAdapterDbaInstance(context)._delete(AdapterDba.DbOpenHelper.TRIP_TABLE ,whereClause ,whereArgs);
     }
+    public void deleteAllTrips ()
+    {
 
+            new NoteTableOperations(context).deleteAllNote();
+
+
+        String whereClause = null;
+        String [] whereArgs = null;
+        AdapterDba.getAdapterDbaInstance(context)._delete(AdapterDba.DbOpenHelper.TRIP_TABLE ,whereClause ,whereArgs);
+    }
 
     //Start Hanaa Section
     public void getTripFromFirebase(ArrayList<Trip> trips) {
 
+       /* Trip localTrip = trips.get(trips.size()-1);
+        Trip lastTrip = selectAllTripsForGettingLastId();
+        if(localTrip!=null) {
+            if (localTrip.getUserId() != lastTrip.getUserId()) {
+                insertTrip(trips.get(trips.size() - 1));
+            }
+        }*/
+        //deleteAllTrips();
         for (Trip trip : trips) {
-            Trip localTrip = selectSingleTrips(trip.getTripId() + "");
-           /* if (localTrip == null) {
 
-                Toast.makeText(context, "enter", Toast.LENGTH_SHORT).show();
+            Trip localTrip = selectSingleTrips(trip.getTripId() + "");
+
+            if(localTrip==null) {
+             //   Toast.makeText(context, "enter", Toast.LENGTH_SHORT).show();
                 insertTrip(trip);
-            }else{*/
-                updateTrip(trip);
-              /*  Toast.makeText(context, "update", Toast.LENGTH_SHORT).show();
-            }*/
-            
-        }
+               /* Intent intent = new Intent(this.context, AlarmScheduleService.class);
+                intent.putExtra("trip_id", trip.getTripId());
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                this.context.startService(intent);*/
+
+            }
+
+          /*  Trip localTrip = selectSingleTrips(trip.getTripId() + "");
+
+               if(localTrip==null) {
+                    Toast.makeText(context, "enter", Toast.LENGTH_SHORT).show();
+                    insertTrip(trip);
+                    Intent intent = new Intent(this.context, AlarmScheduleService.class);
+                    intent.putExtra("trip_id", trip.getTripId());
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                    this.context.startService(intent);
+
+            }else{
+
+                if(updateTrip(trip)) {
+                    AlarmManager manager = (AlarmManager) this.context.getSystemService(Context.ALARM_SERVICE);
+                    Intent alarmIntent = new Intent(this.context, MainActivity.class);
+                     PendingIntent  pendingIntent = PendingIntent.getBroadcast(this.context,trip.getTripId() , alarmIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+                    manager.cancel(pendingIntent);//cancel the alarm manager of the pending intent
+
+                    Intent intent=new Intent(this.context, AlarmScheduleService.class);
+                    intent.putExtra("trip_id",trip.getTripId());
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                    this.context.startService(intent);
+                }
+                else {
+                    insertTrip(trip);
+                    Intent intent=new Intent(this.context, AlarmScheduleService.class);
+                    intent.putExtra("trip_id",trip.getTripId());
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                    this.context.startService(intent);
+                }
+                Toast.makeText(context, "update", Toast.LENGTH_SHORT).show();
+
+
+
+        }*/}
     }
     //end  Hanaa Section
 }

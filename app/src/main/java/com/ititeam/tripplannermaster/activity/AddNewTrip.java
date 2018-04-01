@@ -330,8 +330,8 @@ public class AddNewTrip extends AppCompatActivity implements ConnectionCallbacks
             TripTableOperations myTripTable = new TripTableOperations(this);
             boolean test = myTripTable.insertTrip(NewTrip);
             if(test){
-                UploadDataToFirebase uploadDataToFirebase=new UploadDataToFirebase(getApplication());
-                uploadDataToFirebase.execute();
+              /*  UploadDataToFirebase uploadDataToFirebase=new UploadDataToFirebase(getApplication());
+                uploadDataToFirebase.execute();*/
                 Trip lastTrip=myTripTable.selectAllTripsForGettingLastId();
                 Intent intent=new Intent(AddNewTrip.this, AlarmScheduleService.class);
                 intent.putExtra("trip_id",lastTrip.getTripId());
