@@ -40,11 +40,11 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
 
-                android:layout_alignBottom="@+id/NoteId"
-                android:layout_alignEnd="@+id/EditDescription"
-                android:layout_alignRight="@+id/EditDescription"
-                android:layout_marginEnd="10dp"
-                android:layout_marginRight="10dp"
+                android:layout_alignEnd="@+id/GroupType"
+                android:layout_alignRight="@+id/GroupType"
+                android:layout_alignTop="@+id/NoteId"
+                android:layout_marginEnd="21dp"
+                android:layout_marginRight="21dp"
                 app:backgroundTint="@color/colorAccent"
                 app:srcCompat="@drawable/fab_add" />
 
@@ -62,18 +62,16 @@
 
             <AutoCompleteTextView
                 android:id="@+id/AutTripName"
-                android:layout_width="220dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignBottom="@+id/TripName"
-                android:layout_marginLeft="61dp"
-                android:layout_marginStart="61dp"
-                android:layout_toEndOf="@+id/TripName"
-                android:layout_toRightOf="@+id/TripName"
+                android:layout_alignLeft="@+id/GroupType"
+                android:layout_alignStart="@+id/GroupType"
                 android:hint="@string/TripNamehint" />
 
             <AutoCompleteTextView
                 android:id="@+id/AutoStart"
-                android:layout_width="220dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignLeft="@+id/AutTripName"
                 android:layout_alignStart="@+id/AutTripName"
@@ -83,7 +81,7 @@
 
             <AutoCompleteTextView
                 android:id="@+id/AutoEnd"
-                android:layout_width="220dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignLeft="@+id/AutoStart"
                 android:layout_alignStart="@+id/AutoStart"
@@ -121,7 +119,7 @@
 
             <EditText
                 android:id="@+id/EditDescription"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignBottom="@+id/imageView2"
                 android:layout_alignLeft="@+id/AutoEnd"
@@ -136,10 +134,8 @@
                 android:layout_height="30dp"
                 android:layout_alignLeft="@+id/imageView2"
                 android:layout_alignStart="@+id/imageView2"
-                android:layout_below="@+id/imageView2"
-                android:layout_marginLeft="6dp"
-                android:layout_marginStart="6dp"
-                android:layout_marginTop="40dp"
+                android:layout_below="@+id/EditDescription"
+                android:layout_marginTop="38dp"
                 app:srcCompat="@mipmap/calender" />
 
             <TextView
@@ -224,11 +220,13 @@
 
             <Spinner
                 android:id="@+id/TripCatId"
-                android:layout_width="120dp"
+                android:layout_width="160dp"
                 android:layout_height="wrap_content"
-                android:layout_alignEnd="@+id/fab"
-                android:layout_alignRight="@+id/fab"
-                android:layout_alignTop="@+id/TripCat"
+                android:layout_alignBottom="@+id/TripCat"
+                android:layout_marginLeft="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_toEndOf="@+id/TimeText"
+                android:layout_toRightOf="@+id/TimeText"
                 android:entries="@string/WorkValue" />
 
             <TextView
@@ -257,10 +255,10 @@
                 android:id="@+id/NoteId"
                 android:layout_width="220dp"
                 android:layout_height="wrap_content"
-                android:layout_alignLeft="@+id/textView"
-                android:layout_alignStart="@+id/textView"
+                android:layout_alignLeft="@+id/includeAdd"
+                android:layout_alignStart="@+id/includeAdd"
                 android:layout_below="@+id/textView"
-                android:layout_marginTop="22dp"
+                android:layout_marginTop="23dp"
                 android:hint="@string/AddnoteKey" />
 
 
@@ -272,7 +270,7 @@
                 android:layout_alignBottom="@+id/SaveId"
                 android:layout_alignEnd="@+id/fab"
                 android:layout_alignRight="@+id/fab"
-                android:background="@color/colorAccent"
+                android:background="@drawable/my_button_dessign"
                 android:onClick="cancleClick"
                 android:text="@string/CanclebuttonKey"
                 android:textColor="@color/cardview_light_background" />
@@ -295,7 +293,7 @@
                 android:layout_alignRight="@+id/TripCat"
                 android:layout_below="@+id/includeAdd"
                 android:layout_marginTop="10dp"
-                android:background="@color/colorAccent"
+                android:background="@drawable/my_button_dessign"
                 android:onClick="onClicksave"
                 android:text="@string/SaveIdKey"
                 android:textColor="@color/cardview_light_background" />
