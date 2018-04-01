@@ -23,11 +23,11 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="1000dp">
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="1000dp"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true">
@@ -217,13 +217,11 @@
 
             <Spinner
                 android:id="@+id/UTripCatId"
-                android:layout_width="120dp"
+                android:layout_width="140dp"
                 android:layout_height="wrap_content"
-                android:layout_alignEnd="@+id/Ufab"
-                android:layout_alignRight="@+id/Ufab"
                 android:layout_alignTop="@+id/UTripCat"
-                android:layout_marginEnd="21dp"
-                android:layout_marginRight="21dp"
+                android:layout_toEndOf="@+id/UTimeText"
+                android:layout_toRightOf="@+id/UTimeText"
                 android:entries="@string/WorkValue" />
 
             <TextView
@@ -263,11 +261,11 @@
                 android:id="@+id/UCancleId"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignBaseline="@+id/UUpdate"
-                android:layout_alignBottom="@+id/UUpdate"
-                android:layout_alignEnd="@+id/Ufab"
-                android:layout_alignRight="@+id/Ufab"
-                android:background="@color/colorAccent"
+                android:layout_below="@+id/UNoteList"
+                android:layout_marginTop="44dp"
+                android:layout_toEndOf="@+id/UNoteId"
+                android:layout_toRightOf="@+id/UNoteId"
+                android:background="@drawable/my_button_dessign"
                 android:onClick="cancel"
                 android:text="@string/CanclebuttonKey"
                 android:textColor="@color/cardview_light_background" />
@@ -286,11 +284,11 @@
                 android:id="@+id/UUpdate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/UNoteList"
-                android:layout_marginTop="74dp"
-                android:layout_toLeftOf="@+id/UEditDescription"
-                android:layout_toStartOf="@+id/UEditDescription"
-                android:background="@color/colorAccent"
+                android:layout_alignTop="@+id/UCancleId"
+                android:layout_marginTop="9dp"
+                android:layout_toLeftOf="@+id/UDateText"
+                android:layout_toStartOf="@+id/UDateText"
+                android:background="@drawable/my_button_dessign"
                 android:onClick="UpdateClick"
                 android:text="@string/UpdateKey"
                 android:textColor="@color/cardview_light_background" />
@@ -298,13 +296,11 @@
             <ListView
                 android:id="@+id/UNoteList"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="170dp"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
                 android:layout_below="@+id/Ufab"
-                android:layout_marginLeft="14dp"
-                android:layout_marginStart="14dp"
-                android:layout_marginTop="11dp"
+                android:layout_marginTop="6dp"
                 android:scrollbars="vertical" />
 
         </RelativeLayout>

@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:context="com.ititeam.tripplannermaster.activity.StartTripActivity">
+    tools:context="com.ititeam.tripplannermaster.activity.StartTripActivity"
+    android:orientation="vertical">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/SappBarLayout"
@@ -21,62 +22,76 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <include
-        android:id="@+id/myinclude"
-        layout="@layout/note_custom_list"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/MyDoneTripButton"
-        android:layout_marginTop="44dp" />
-
-    <fragment
-        android:id="@+id/Mymap"
-        android:name="com.google.android.gms.maps.SupportMapFragment"
+    <LinearLayout
+        android:id="@+id/linearLayout2"
         android:layout_width="match_parent"
-        android:layout_height="350dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/SappBarLayout" />
+        android:layout_height="314dp"
+        android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/Mymap"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="26dp"
-        android:fontFamily="sans-serif"
-        android:text="@string/NoteListMap"
-        android:textAlignment="center"
-        android:textColor="@color/colorAccent"
-        android:textSize="24sp"
-        android:textStyle="bold" />
+        <fragment
+            android:id="@+id/Mymap"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
+            android:layout_width="match_parent"
+            android:layout_height="314dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/SappBarLayout" />
+    </LinearLayout>
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/MyDoneTripButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignTop="@+id/textView2"
-        android:layout_marginEnd="34dp"
-        android:layout_marginRight="34dp"
-        android:layout_marginTop="6dp"
-        android:clickable="true"
-        android:src="@drawable/com_facebook_button_like_icon_selected" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/Cancelbutton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignTop="@+id/MyDoneTripButton"
-        android:layout_marginLeft="34dp"
-        android:layout_marginStart="34dp"
-        android:clickable="true"
-        android:src="@android:drawable/ic_menu_close_clear_cancel" />
+        <include
+            android:id="@+id/myinclude"
+            layout="@layout/note_custom_list"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/MyDoneTripButton"
+            android:layout_marginTop="23dp" />
 
-</RelativeLayout>
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="69dp"
+            android:layout_marginStart="69dp"
+            android:layout_marginTop="34dp"
+            android:layout_toEndOf="@+id/Cancelbutton"
+            android:layout_toRightOf="@+id/Cancelbutton"
+            android:fontFamily="sans-serif"
+            android:text="@string/NoteListMap"
+            android:textAlignment="center"
+            android:textColor="@color/colorAccent"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/MyDoneTripButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignTop="@+id/textView2"
+            android:layout_marginEnd="34dp"
+            android:layout_marginRight="34dp"
+            android:layout_marginTop="6dp"
+            android:clickable="true"
+            android:src="@drawable/com_facebook_button_like_icon_selected" />
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/Cancelbutton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignTop="@+id/MyDoneTripButton"
+            android:layout_marginLeft="34dp"
+            android:layout_marginStart="34dp"
+            android:clickable="true"
+            android:src="@android:drawable/ic_menu_close_clear_cancel" />
+    </RelativeLayout>
+</LinearLayout>

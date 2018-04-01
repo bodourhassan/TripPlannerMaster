@@ -107,26 +107,18 @@ public class UpdateTrip extends AppCompatActivity implements GoogleApiClient.Con
         MyNoteList=findViewById(R.id.UNoteList);
         dropdown = findViewById(R.id.UTripCatId);
         Intent intent = this.getIntent();
-      // String TripId = 1+"";
         String TripId = intent.getStringExtra("trip_id");
        Toast.makeText(this, "in update   " + TripId, Toast.LENGTH_SHORT).show();
         /***************************Get TRip Data***************************/
         tripTableOperations = new TripTableOperations(this);
         noteTableOperations=new NoteTableOperations(this);
         UpdateTrip = tripTableOperations.selectSingleTrips(TripId);
-        //UpdateTrip = tripTableOperations.selectSingleTrips(1 + "");
         TripNameView.setText(UpdateTrip.getTripName());
-        // TripNameView.setText("My Trip");
         mylocationStart.setText(UpdateTrip.getTripStartPoint());
-        //   mylocationStart.setText("cairo");
         mylocationEnd.setText(UpdateTrip.getTripEndPoint());
-        //     mylocationEnd .setText("Alex");
         DescriptipnView.setText(UpdateTrip.getTripDescription());
-        //    DescriptipnView.setText("My first Trip");
         DateView.setText(UpdateTrip.getTripDate());
-        //   DateView.setText("17/5/1994");
         TimeView.setText(UpdateTrip.getTripTime());
-        //    TimeView.setText("15.30 Am");
         String RadiobuttonValue = UpdateTrip.getTripDirection();
         RadioButton RadiobuttonGet;
         for(int i=0;i<mytripGroup.getChildCount();i++)
@@ -134,19 +126,16 @@ public class UpdateTrip extends AppCompatActivity implements GoogleApiClient.Con
 
             RadiobuttonGet = (RadioButton) mytripGroup.getChildAt(i);
             if (RadiobuttonGet.getText().toString().equals(RadiobuttonValue))
-            //  if(RadiobuttonGet.getText().toString().equals("Round Trip"))
             {
                 mytripGroup.check(RadiobuttonGet.getId());
-                //  RadiobuttonGet.setChecked(true);
             }
 
         }
         NmyNoteList = UpdateTrip.getTripNotes();
         for (int i = 0; i < NmyNoteList.size(); i++)
-        //  for (int i=0 ;i<5 ;i++)
+
         {
             listItems.add(NmyNoteList.get(i).getNoteBody());
-            // listItems.add("listItem");
         }
         myUpdateAdapter=new MyUpdateAdapter(this,R.layout.my_update_item,listItems,TripId);
         MyNoteList.setItemsCanFocus(true);
@@ -197,8 +186,7 @@ public class UpdateTrip extends AppCompatActivity implements GoogleApiClient.Con
                     noteTableOperations.insertNote(myNewNote);
                     myUpdateAdapter.notifyDataSetChanged();
                     NoteItem.setText("".toString());
-                    // NoteListadapter.setNotifyOnChange(true);
-                    // MyNoteList.notifyAll();
+
 
                 }
             }
@@ -233,7 +221,6 @@ public class UpdateTrip extends AppCompatActivity implements GoogleApiClient.Con
                             sDayin = "0" + dayOfMonth;
 
                         }
-                      //  DateView.setText(dayOfMonth+"-"+month+"-"+year);
                         DateView.setText(year+"-"+Smonthin+"-"+sDayin);
 
                     }

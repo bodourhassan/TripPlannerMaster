@@ -73,15 +73,12 @@ public class StartTripActivity extends FragmentActivity implements OnMapReadyCal
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start_trip);
-        //  RelativeLayout myLayout= findViewById(R.id.mystartRoot);
         myList = findViewById(R.id.MyNoteCustomList);
         fab = findViewById(R.id.MyDoneTripButton);
         mycancel = findViewById(R.id.Cancelbutton);
-//        Intent intent =getIntent();
-//        int TripId= intent.getIntExtra("MyTripId",1);
+
         Intent intent = this.getIntent();
-        //String email=intent.getStringExtra("login_user_email");
-       // String TripId=1+"";
+
        String TripId = intent.getStringExtra("trip_id");
        Toast.makeText(this, "in update   " + TripId, Toast.LENGTH_SHORT).show();
         TripTableOperations myOperation = new TripTableOperations(this);
@@ -100,14 +97,7 @@ public class StartTripActivity extends FragmentActivity implements OnMapReadyCal
 
             mapFragment.getMapAsync(this);
 
-        } else {
-
-//            LinearLayout mapLayout = findViewById(R.id.map_layout);
-//            RelativeLayout.LayoutParams mapLayoutParams = new RelativeLayout.LayoutParams(0, 0);
-//            mapLayoutParams.setMargins(0,0,0,100);
-//            mapLayout.setLayoutParams(mapLayoutParams);
         }
-
         myList.setOnTouchListener(new View.OnTouchListener() {
             // Setting on Touch Listener for handling the touch inside ScrollView
             @Override
@@ -124,15 +114,13 @@ public class StartTripActivity extends FragmentActivity implements OnMapReadyCal
                 CheckedTextView ctv = view.findViewById(R.id.MycheckedTextView);
                 mycheckedImage = view.findViewById(R.id.imageCheck);
                 if (ctv.isChecked()) {
-                    // Toast.makeText(StartTripActivity.this, "now it is unchecked"+position, Toast.LENGTH_SHORT).show();
                     ctv.setChecked(false);
                     ctv.setEnabled(true);
                     mycheckedImage.setVisibility(View.INVISIBLE);
                     myNotes.get(position).setStatus(TripConstant.NoteLater);
 
                 } else {
-                    // Toast.makeText(StartTripActivity.this, "now it is checked"+position, Toast.LENGTH_SHORT).show();
-                    ctv.setChecked(true);
+                     ctv.setChecked(true);
                     ctv.setEnabled(false);
                     mycheckedImage.setVisibility(View.VISIBLE);
                     myNotes.get(position).setStatus(TripConstant.NoteDone);
@@ -196,8 +184,6 @@ public class StartTripActivity extends FragmentActivity implements OnMapReadyCal
             LatLng latLng1 = getLatLongFromGivenAddress(startplace);
             LatLng latLng2 = getLatLongFromGivenAddress(EndPlace);
             if (latLng1 != null && latLng2!=null) {
-//        LatLng latLng1 = getLatLongFromGivenAddress("Cairo,Egypt");
-//        LatLng latLng2 = getLatLongFromGivenAddress("Tanata,Egypt");
                 mMap = googleMap;
                 mMap.getUiSettings().setZoomControlsEnabled(true);
                 if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {

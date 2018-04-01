@@ -73,22 +73,6 @@ public class HomeFragment extends Fragment{
         email=User.getEmail();
 
         Toast.makeText(getActivity(), "all trips"+tripTableOperations.selectTripsUsingUserId(email).size(), Toast.LENGTH_SHORT).show();
-        Trip trip6 = new Trip();
-        trip6.setTripName("Relax");
-        trip6.setTripStartPoint("cairo");
-        trip6.setTripEndPoint("Aswan");
-        trip6.setTripDate("2017-01-01");
-        trip6.setTripTime("mon");
-        trip6.setTripStatus(TripConstant.UpcomingStatus);
-        trip6.setTripDirection(TripConstant.OneDirection);
-        trip6.setTripDescription("asdfg");
-        trip6.setTripRepetition("122334");
-        trip6.setTripCategory("cat1");
-        trip6.setUserId(User.getEmail());
-        Note note=new Note();
-        note.setStatus(TripConstant.NoteLater);
-        note.setNoteBody("bring cheese");
-        new TripTableOperations(getApplicationContext()).insertTrip(trip6);
     }
 
     public HomeFragment() {
