@@ -119,12 +119,25 @@
         <service
             android:name=".activity.alarmhandler.AlarmScheduleService"
             android:exported="false" />
-        <receiver
-            android:name=".activity.alarmhandler.BootReciever"
-            android:enabled="true"
-            android:exported="false">
+        <!--<receiver-->
+            <!--android:name=".activity.alarmhandler.BootReciever"-->
+            <!--android:enabled="true"-->
+            <!--android:exported="false">-->
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.BOOT_COMPLETED"/>-->
+            <!--</intent-filter>-->
+        <!--</receiver>-->
+        <receiver android:name=".activity.alarmhandler.BootReciever"  android:directBootAware="true" android:screenOrientation="portrait">
             <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+                <action android:name="android.intent.action.LOCKED_BOOT_COMPLETED" />
+                <!-- For pre-Nougat devices -->
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.QUICKBOOT_POWERON" />
+                <!-- For MIUI devices -->
+                <action android:name="android.intent.action.REBOOT" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <action android:name="android.intent.action.QUICKBOOT_POWERON"/>
             </intent-filter>
         </receiver>
         <!-- end mark section -->
