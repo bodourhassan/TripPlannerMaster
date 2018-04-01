@@ -276,7 +276,7 @@ public class ShowTripActivity extends FragmentActivity implements OnMapReadyCall
                         notifyItemRemoved(position);
                         notifyItemRangeChanged(position, upcommingTrips.size());
                         mItemManger.closeAllItems();*/
-                        Toast.makeText(getApplicationContext(), "here in delete", Toast.LENGTH_SHORT).show();
+                     //   Toast.makeText(getApplicationContext(), "here in delete", Toast.LENGTH_SHORT).show();
                         /*Intent intent = new Intent(ShowTripActivity.this, StartActivityDrawer.class);
 
                         startActivity(intent);*/
