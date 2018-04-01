@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.widget.Toast;
 
+import com.ititeam.tripplannermaster.model.Trip;
+
 /**
  * Created by MARK on 27/03/18.
  */
@@ -21,9 +23,9 @@ public class AlarmReceiver extends BroadcastReceiver {
 //        ComponentName comp = new ComponentName(context.getPackageName(),
 //                AlarmNotificationService.class.getName());
 //        startWakefulService(context, (intent.setComponent(comp)));
-        int trip_id = intent.getIntExtra("trip_id" , 0);
+        Trip trip = (Trip) intent.getSerializableExtra("trip");
         Intent alarmActivityIntent = new Intent(context, AlarmActivity.class);
-        alarmActivityIntent.putExtra("trip_id" , trip_id);
+        alarmActivityIntent.putExtra("trip_id" , trip);
         alarmActivityIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(alarmActivityIntent);
 
