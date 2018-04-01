@@ -156,7 +156,8 @@ public class ShowTripActivity extends FragmentActivity implements OnMapReadyCall
             catch (ParseException e) {
                 e.printStackTrace();
             }
-            try {
+            
+
                 if ((userDate.compareTo(nowDate)==0 && myTime.compareTo(CurrentTime)<=0) ||userDate.compareTo(nowDate)<0|| trip.getTripStatus().equals(TripConstant.DoneStatus) || trip.getTripStatus().equals(TripConstant.CancelledStatus)) {
                     materialDesignFAM.removeMenuButton(floatingActionButton1);
                     materialDesignFAM.removeMenuButton(floatingActionButton2);
@@ -170,9 +171,7 @@ public class ShowTripActivity extends FragmentActivity implements OnMapReadyCall
                     materialDesignFAM.removeMenuButton(floatingActionButton3);
                     flag1=true;
                 }
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
+
             listPoints = new ArrayList<>();
             markers = new ArrayList<>();
             mapFragment = (SupportMapFragment) getSupportFragmentManager()
