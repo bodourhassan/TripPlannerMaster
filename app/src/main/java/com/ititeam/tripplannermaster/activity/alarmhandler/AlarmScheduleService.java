@@ -57,7 +57,8 @@ public class AlarmScheduleService extends IntentService {
 //        {
 //            Log.i("jiji" , s);
 //        }
-        String [] time = trip.getTripTime().split(" : ");
+        String [] time = trip.getTripTime().split(":" +
+                "");
 //        for (String s : time)
 //        {
 //            Log.i("jiji" , s);
