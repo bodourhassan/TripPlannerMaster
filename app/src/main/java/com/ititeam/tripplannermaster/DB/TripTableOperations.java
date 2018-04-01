@@ -201,7 +201,18 @@ public class TripTableOperations {
     }
     public Trip selectAllTripsForGettingLastId ()
     {
-        String [] result_columns = {AdapterDba.DbOpenHelper.TRIP_ID,};
+        String[] result_columns = {AdapterDba.DbOpenHelper.TRIP_ID,
+                AdapterDba.DbOpenHelper.TRIP_NAME,
+                AdapterDba.DbOpenHelper.TRIP_START_POINT,
+                AdapterDba.DbOpenHelper.TRIP_END_POINT,
+                AdapterDba.DbOpenHelper.TRIP_DATE,
+                AdapterDba.DbOpenHelper.TRIP_TIME,
+                AdapterDba.DbOpenHelper.TRIP_STATUS,
+                AdapterDba.DbOpenHelper.TRIP_DIRECTION,
+                AdapterDba.DbOpenHelper.TRIP_DESCRIPTION,
+                AdapterDba.DbOpenHelper.TRIP_REPITITION,
+                AdapterDba.DbOpenHelper.TRIP_CATEGORY,
+                AdapterDba.DbOpenHelper.USER_ID};
         String whereClause = null;
         String [] selectArgs = null;
         String groupBy  = null;
@@ -212,6 +223,17 @@ public class TripTableOperations {
         while (cursor.moveToNext())
         {
             trip.setTripId(cursor.getInt(0));
+            trip.setTripName(cursor.getString(1));
+            trip.setTripStartPoint(cursor.getString(2));
+            trip.setTripEndPoint(cursor.getString(3));
+            trip.setTripDate(cursor.getString(4));
+            trip.setTripTime(cursor.getString(5));
+            trip.setTripStatus(cursor.getString(6));
+            trip.setTripDirection(cursor.getString(7));
+            trip.setTripDescription(cursor.getString(8));
+            trip.setTripRepetition(cursor.getString(9));
+            trip.setTripCategory(cursor.getString(10));
+            trip.setUserId(cursor.getString(11));
         }
         return trip;
     }

@@ -17,6 +17,7 @@ import com.ititeam.tripplannermaster.R;
 import com.ititeam.tripplannermaster.activity.MainActivity;
 import com.ititeam.tripplannermaster.activity.ShowTripActivity;
 import com.ititeam.tripplannermaster.activity.StartTripActivity;
+import com.ititeam.tripplannermaster.model.Trip;
 
 public class AlarmActivity extends AppCompatActivity {
 
@@ -40,9 +41,9 @@ public class AlarmActivity extends AppCompatActivity {
         findViewById(R.id.start_alarm_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int trip_id = getIntent().getIntExtra("trip_id" , 0);
+                Trip trip = (Trip) getIntent().getSerializableExtra("trip");
                 Intent intent =new Intent(AlarmActivity.this,StartTripActivity.class);
-                intent.putExtra("trip_id",trip_id);
+                intent.putExtra("trip",trip);
                 stopAlarmManager();
                 startActivity(intent);
 
@@ -87,15 +88,15 @@ public class AlarmActivity extends AppCompatActivity {
 
         AlarmManager manager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         Intent alarmIntent = new Intent(AlarmActivity.this, MainActivity.class);
-        int trip_id = getIntent().getIntExtra("trip_id" , 0);
-        Toast.makeText(getApplicationContext(), trip_id+"", Toast.LENGTH_SHORT).show();
-        pendingIntent = PendingIntent.getBroadcast(getBaseContext(), trip_id, alarmIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        Trip trip = (Trip) getIntent().getSerializableExtra("trip");
+        Toast.makeText(getApplicationContext(), trip.getTripId()+"", Toast.LENGTH_SHORT).show();
+        pendingIntent = PendingIntent.getBroadcast(getBaseContext(), trip.getTripId(), alarmIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         manager.cancel(pendingIntent);//cancel the alarm manager of the pending intent
 
 
         //Stop the Media Player Service to stop sound
-        stopService(new Intent(AlarmActivity.this, AlarmSoundService.class));
+        stopService(new Intent(getBaseContext(), AlarmSoundService.class));
 
         //remove the notification from notification tray
         NotificationManager notificationManager = (NotificationManager) this

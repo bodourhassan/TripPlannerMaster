@@ -320,6 +320,7 @@ public class AddNewTrip extends AppCompatActivity implements ConnectionCallbacks
             String Desc = DescriptipnView.getText().toString();
             String Date = DateView.getText().toString();
             String Time = TimeView.getText().toString();
+            Log.i("nhnh" , Time);
             // get selected radio button from radioGroup
             int selectedId = mytripGroup.getCheckedRadioButtonId();
             // find the radiobutton by returned id
@@ -337,8 +338,10 @@ public class AddNewTrip extends AppCompatActivity implements ConnectionCallbacks
             boolean test = myTripTable.insertTrip(NewTrip);
             if(test){
                 Trip lastTrip=myTripTable.selectAllTripsForGettingLastId();
+                Log.i("Mark" , lastTrip.getTripDate()+"");
+
                 Intent intent=new Intent(AddNewTrip.this, AlarmScheduleService.class);
-                intent.putExtra("trip_id",lastTrip.getTripId());
+                intent.putExtra("trip",lastTrip);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 Toast.makeText(getApplicationContext(), lastTrip.getTripId()+"", Toast.LENGTH_SHORT).show();
