@@ -107,9 +107,9 @@ public class UpdateTrip extends AppCompatActivity implements GoogleApiClient.Con
         MyNoteList=findViewById(R.id.UNoteList);
         dropdown = findViewById(R.id.UTripCatId);
         Intent intent = this.getIntent();
-       //String TripId = 1+"";
-        String TripId = intent.getStringExtra("trip_id");
-        Toast.makeText(this, "in update   " + TripId, Toast.LENGTH_SHORT).show();
+       String TripId = 1+"";
+       // String TripId = intent.getStringExtra("trip_id");
+       // Toast.makeText(this, "in update   " + TripId, Toast.LENGTH_SHORT).show();
         /***************************Get TRip Data***************************/
         tripTableOperations = new TripTableOperations(this);
         noteTableOperations=new NoteTableOperations(this);
@@ -148,22 +148,9 @@ public class UpdateTrip extends AppCompatActivity implements GoogleApiClient.Con
             listItems.add(NmyNoteList.get(i).getNoteBody());
             // listItems.add("listItem");
         }
-       // NoteListadapter=new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,listItems);
         myUpdateAdapter=new MyUpdateAdapter(this,R.layout.my_update_item,listItems,TripId);
-       // MyNoteList.setAdapter(NoteListadapter);
+        MyNoteList.setItemsCanFocus(true);
         MyNoteList.setAdapter(myUpdateAdapter);
-        MyNoteList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                FloatingActionButton myfloatDalet = view.findViewById(R.id.MyDelet);
-                myfloatDalet.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Toast.makeText(getBaseContext(),"DeletedClicked",Toast.LENGTH_SHORT).show();
-                    }
-                });
-            }
-        });
         MyNoteList.setOnTouchListener(new View.OnTouchListener() {
             // Setting on Touch Listener for handling the touch inside ScrollView
             @Override
@@ -228,7 +215,7 @@ public class UpdateTrip extends AppCompatActivity implements GoogleApiClient.Con
         minute=myCalender.get(Calendar.MINUTE);
         month=month+1;
 
-        //  DateView.setText(day+"/"+month+"/"+year);
+
 
         DateView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -274,7 +261,7 @@ public class UpdateTrip extends AppCompatActivity implements GoogleApiClient.Con
                             myminutein = "0" + minute;
 
                         }
-                        TimeView.setText(myhourin + " : " + myminutein);
+                        TimeView.setText(myhourin + ":" + myminutein);
                     }
                 }, hour, minute, true);
                 timePickerDialog.show();
@@ -291,30 +278,6 @@ public class UpdateTrip extends AppCompatActivity implements GoogleApiClient.Con
         listItems.add(newNoteList);
         NoteListadapter.notifyDataSetChanged();
     }
-
-//    public void hourFormat(int hour)
-//    {
-//        if(hour==0)
-//        {
-//            hour+=12;
-//            format="AM";
-//        }
-//        else if(hour==12)
-//        {
-//
-//            format="PM";
-//        }
-//        else if(hour>12)
-//        {
-//            hour-=12;
-//            format="PM";
-//        }
-//        else {
-//
-//            format="AM";
-//        }
-//    }
-
 
     @Override
     public void onConnected(@Nullable Bundle bundle) {
@@ -370,7 +333,7 @@ public class UpdateTrip extends AppCompatActivity implements GoogleApiClient.Con
             Toast.makeText(getBaseContext(), " Enter Your Description  ",
                     Toast.LENGTH_SHORT).show();
 
-        }   else if (userDate.compareTo(nowDate)==0 && myTime.compareTo(CurrentTime)<0) {
+        }   else if (userDate.compareTo(nowDate)==0 && myTime.compareTo(CurrentTime)<=0) {
 
 
             Toast.makeText(getBaseContext(), " Enter Upcomming Time ",
@@ -395,24 +358,13 @@ public class UpdateTrip extends AppCompatActivity implements GoogleApiClient.Con
             // find the radiobutton by returned id
             myRadiobutton = findViewById(selectedId);
             String TripDirection = myRadiobutton.getText().toString();
-
-            for(int i=0;i< MyNoteList.getChildCount();i++)
-            {
-                View myView = MyNoteList.getChildAt(i);
-                EditText myEditNote= myView.findViewById(R.id.MyNoteU);
-                listItems.set(i,myEditNote.getText().toString());
-
-            }
-            NmyNoteList.clear();
+          NmyNoteList.clear();
             for (int i = 0; i < listItems.size(); i++) {
                 Note note = new Note(listItems.get(i), TripConstant.NoteLater);
                 NmyNoteList.add(note);
 
             }
             String TripCatagory = dropdown.getSelectedItem().toString();
-
-            // Toast.makeText(getBaseContext(),all.size(),
-            //        Toast.LENGTH_SHORT).show();
             UpdateTrip.setTripName(NameofTrip);
             UpdateTrip.setTripStartPoint(StartLoc);
             UpdateTrip.setTripEndPoint(Endloc);
@@ -440,7 +392,7 @@ public class UpdateTrip extends AppCompatActivity implements GoogleApiClient.Con
                 startService(intent);
             }
 
-                 finish();
+              //   finish();
         }
 
     }
