@@ -371,7 +371,7 @@ public class UpdateTrip extends AppCompatActivity implements GoogleApiClient.Con
 
                 Trip lastTrip=tripTableOperations.selectAllTripsForGettingLastId();
                 Intent intent=new Intent(UpdateTrip.this, AlarmScheduleService.class);
-                intent.putExtra("trip_id",UpdateTrip.getTripId());
+                intent.putExtra("trip",lastTrip);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 startService(intent);

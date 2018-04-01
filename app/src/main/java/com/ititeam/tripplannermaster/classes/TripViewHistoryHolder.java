@@ -20,8 +20,8 @@ public class TripViewHistoryHolder extends RecyclerView.ViewHolder {
     public SwipeLayout swipeLayout2;
     public TextView Name;
     public TextView EmailId;
-    public TextView Delete;
-    public TextView Edit;
+    public TextView Delete , started , ended;
+    //public TextView Edit;
     //public TextView Share;
     //public TextView startDate;
     public ImageButton btnLocation;
@@ -35,10 +35,12 @@ public class TripViewHistoryHolder extends RecyclerView.ViewHolder {
         Name = itemView.findViewById(R.id.Name);
         EmailId = itemView.findViewById(R.id.EmailId);
         Delete = itemView.findViewById(R.id.Delete);
-        Edit = itemView.findViewById(R.id.Edit);
+        //Edit = itemView.findViewById(R.id.Edit);
         //startDate = itemView.findViewById(R.id.textView2);
         btnLocation = itemView.findViewById(R.id.btnLocation);
         imgViewIcon = itemView.findViewById(R.id.SwipLayout_ImageView);
+        started = itemView.findViewById(R.id.history_start_date);
+        ended = itemView.findViewById(R.id.history_end_date);
 
     }
 }

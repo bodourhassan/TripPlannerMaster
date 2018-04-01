@@ -1,5 +1,6 @@
 package com.ititeam.tripplannermaster.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import com.ititeam.tripplannermaster.model.Note;
@@ -8,7 +9,7 @@ import com.ititeam.tripplannermaster.model.Note;
  * Created by MARK on 3/18/2018.
  */
 
-public class Trip {
+public class Trip implements Serializable{
 
     int tripId;
     String tripName;

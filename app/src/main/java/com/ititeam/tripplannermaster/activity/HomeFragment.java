@@ -71,13 +71,24 @@ public class HomeFragment extends Fragment{
         downLoadDataFromFirebase.execute();
         tripTableOperations = new TripTableOperations(getActivity());
         email=User.getEmail();
+
         Toast.makeText(getActivity(), "all trips"+tripTableOperations.selectTripsUsingUserId(email).size(), Toast.LENGTH_SHORT).show();
-       //upcommingTrips = tripTableOperations.selectUpcomingTripsUsingOnlyDate(email);
-     //   Toast.makeText(getActivity(), "size array oncreate "+upcommingTrips.size(), Toast.LENGTH_SHORT).show();
-       /* Intent intent=getActivity().getIntent();
-        String email=intent.getStringExtra("login_user_email");
-        User.setEmail(email);*/
-        Toast.makeText(getActivity(), ""+email, Toast.LENGTH_SHORT).show();
+        Trip trip6 = new Trip();
+        trip6.setTripName("Relax");
+        trip6.setTripStartPoint("cairo");
+        trip6.setTripEndPoint("Aswan");
+        trip6.setTripDate("2017-01-01");
+        trip6.setTripTime("mon");
+        trip6.setTripStatus(TripConstant.UpcomingStatus);
+        trip6.setTripDirection(TripConstant.OneDirection);
+        trip6.setTripDescription("asdfg");
+        trip6.setTripRepetition("122334");
+        trip6.setTripCategory("cat1");
+        trip6.setUserId(User.getEmail());
+        Note note=new Note();
+        note.setStatus(TripConstant.NoteLater);
+        note.setNoteBody("bring cheese");
+        new TripTableOperations(getApplicationContext()).insertTrip(trip6);
     }
 
     public HomeFragment() {
@@ -138,7 +149,7 @@ public class HomeFragment extends Fragment{
 
             }
         });
-
+        materialDesignFAM.removeMenuButton(floatingActionButton3);
         myAdapter = new TripAdapterFragment();
         recyclerView.setAdapter(myAdapter);
         //displayView(0);
@@ -279,7 +290,6 @@ public class HomeFragment extends Fragment{
                     Toast.makeText(getActivity(), "position is "+upcommingTrips.get(position).getTripId(), Toast.LENGTH_SHORT).show();
                     Intent i = new Intent(getActivity() , ShowTripActivity.class);
                     i.putExtra("trip_id" , String.valueOf(upcommingTrips.get(position).getTripId()));
-                    Toast.makeText(getActivity(), ""+ String.valueOf(upcommingTrips.get(position).getTripId()), Toast.LENGTH_SHORT).show();
                     startActivity(i);
                 }
             });
@@ -299,7 +309,9 @@ public class HomeFragment extends Fragment{
                 @Override
                 public void onClick(View view) {
 
-                    Toast.makeText(view.getContext(), "Clicked on Share " + upcommingTrips.get(position).toString().toString(), Toast.LENGTH_SHORT).show();
+                    Intent intent =new Intent(getActivity(),StartTripActivity.class);
+                    intent.putExtra("trip_id",String.valueOf(upcommingTrips.get(position).getTripId()));
+                    startActivity(intent);
                 }
             });
 

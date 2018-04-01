@@ -3,6 +3,7 @@ package com.ititeam.tripplannermaster.activity;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -114,7 +115,34 @@ public class HistoryTripsFragment extends Fragment {
             viewHolder.Name.setText(historyTrip.get(position).getTripName());
             viewHolder.Name.setTypeface(null, Typeface.BOLD);
             viewHolder.EmailId.setText(historyTrip.get(position).getTripDescription());
-            holder.imgViewIcon.setImageDrawable(getResources().getDrawable(R.drawable.see));
+            //holder.imgViewIcon.setImageDrawable(getResources().getDrawable(R.drawable.see));
+            viewHolder.started.setText(historyTrip.get(position).getTripStartPoint());
+            viewHolder.started.setText(historyTrip.get(position).getTripEndPoint());
+
+
+
+            if(historyTrip.get(position).getTripCategory().equals(TripConstant.FriendCatagory))
+            {
+                holder.imgViewIcon.setImageDrawable(getResources().getDrawable(R.drawable.friends1));
+            }else if (historyTrip.get(position).getTripCategory().equals(TripConstant.FamilyCatagory))
+            {
+                holder.imgViewIcon.setImageDrawable(getResources().getDrawable(R.drawable.family));
+            }else if(historyTrip.get(position).getTripCategory().equals(TripConstant.bussinessCatagory))
+            {
+                holder.imgViewIcon.setImageDrawable(getResources().getDrawable(R.drawable.business3));
+            }else if(historyTrip.get(position).getTripCategory().equals(TripConstant.meetingCatagory))
+            {
+                holder.imgViewIcon.setImageDrawable(getResources().getDrawable(R.drawable.meeting));
+            }else if(historyTrip.get(position).getTripCategory().equals(TripConstant.vacationCatagory))
+            {
+                holder.imgViewIcon.setImageDrawable(getResources().getDrawable(R.drawable.vacation));
+            }else if(historyTrip.get(position).getTripCategory().equals(TripConstant.otherCatagory))
+            {
+                holder.imgViewIcon.setImageDrawable(getResources().getDrawable(R.drawable.other));
+            }else{
+                holder.imgViewIcon.setImageDrawable(getResources().getDrawable(R.drawable.other));
+            }
+
 
 
             viewHolder.swipeLayout2.setShowMode(SwipeLayout.ShowMode.PullOut);
@@ -161,18 +189,23 @@ public class HistoryTripsFragment extends Fragment {
             viewHolder.swipeLayout2.getSurfaceView().setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(getActivity(), "position is " + myTrip.get(position).toString(), Toast.LENGTH_SHORT).show();
+                    Intent i = new Intent(getActivity() , ShowTripActivity.class);
+                    i.putExtra("trip_id" , String.valueOf(historyTrip.get(position).getTripId()));
+                    startActivity(i);
                 }
             });
 
             viewHolder.btnLocation.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(v.getContext(), "Clicked on Information " + myTrip.get(position).toString(), Toast.LENGTH_SHORT).show();
+
+                    Intent i = new Intent(getActivity() , ShowTripActivity.class);
+                    i.putExtra("trip_id" , String.valueOf(historyTrip.get(position).getTripId()));
+                    startActivity(i);
                 }
             });
 
-
+            /*
             viewHolder.Edit.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -180,6 +213,7 @@ public class HistoryTripsFragment extends Fragment {
                     Toast.makeText(view.getContext(), "Clicked on Edit  " + viewHolder.Name.getText().toString(), Toast.LENGTH_SHORT).show();
                 }
             });
+            */
             /*
             viewHolder.Share.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -188,7 +222,8 @@ public class HistoryTripsFragment extends Fragment {
                     Toast.makeText(view.getContext(), "Clicked on Share " + myTrip.get(position).toString().toString(), Toast.LENGTH_SHORT).show();
                 }
             });
-*/
+            */
+            /*
             viewHolder.Edit.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -196,7 +231,7 @@ public class HistoryTripsFragment extends Fragment {
                     Toast.makeText(view.getContext(), "Clicked on Edit  " + viewHolder.Name.getText().toString(), Toast.LENGTH_SHORT).show();
                 }
             });
-
+            */
             viewHolder.Delete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
