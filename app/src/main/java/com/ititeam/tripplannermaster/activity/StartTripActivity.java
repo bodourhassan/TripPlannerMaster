@@ -76,9 +76,7 @@ public class StartTripActivity extends FragmentActivity implements OnMapReadyCal
         myList = findViewById(R.id.MyNoteCustomList);
         fab = findViewById(R.id.MyDoneTripButton);
         mycancel = findViewById(R.id.Cancelbutton);
-
         Intent intent = this.getIntent();
-
        String TripId = intent.getStringExtra("trip_id");
        Toast.makeText(this, "in update   " + TripId, Toast.LENGTH_SHORT).show();
         TripTableOperations myOperation = new TripTableOperations(this);
@@ -155,11 +153,7 @@ public class StartTripActivity extends FragmentActivity implements OnMapReadyCal
                 }
 
                 boolean tset = myOperation.updateTrip(myTrip);
-                Trip myTrip2 = myOperation.selectSingleTrips(TripId);
-                for (int i = 0; i < myTrip2.getTripNotes().size(); i++) {
-                    allnote += i + ":" + myTrip2.getTripNotes().get(i).getStatus() + ",";
-                }
-                Toast.makeText(StartTripActivity.this, allnote, Toast.LENGTH_LONG).show();
+                finish();
             }
         });
         mycancel.setOnClickListener(new View.OnClickListener() {
@@ -172,7 +166,7 @@ public class StartTripActivity extends FragmentActivity implements OnMapReadyCal
             @Override
             public void onClick(View v) {
                 myTrip.setTripStatus(TripConstant.CancelledStatus);
-                Toast.makeText(StartTripActivity.this, myTrip.getTripStatus(), Toast.LENGTH_LONG).show();
+               finish();
             }
         });
 

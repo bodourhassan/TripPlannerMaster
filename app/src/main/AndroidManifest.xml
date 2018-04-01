@@ -65,10 +65,12 @@
         <activity
             android:name=".activity.ShowTripActivity"
             android:screenOrientation="portrait"
+            android:label="Show Trip Details"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activity.ShowHistoryActivity"
             android:screenOrientation="portrait"
+            android:label="Show Trip History"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".activity.MapActivity" />
 
