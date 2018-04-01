@@ -299,7 +299,9 @@ public class HomeFragment extends Fragment{
                 @Override
                 public void onClick(View view) {
 
-                    Toast.makeText(view.getContext(), "Clicked on Share " + upcommingTrips.get(position).toString().toString(), Toast.LENGTH_SHORT).show();
+                    Intent intent =new Intent(getActivity(),StartTripActivity.class);
+                    intent.putExtra("trip_id",String.valueOf(upcommingTrips.get(position).getTripId()));
+                    startActivity(intent);
                 }
             });
 
