@@ -73,7 +73,7 @@ public class UploadDataToFirebase extends AsyncTask<String, Integer, Object> {
             if (trips.size() > 0) {
                 databaseReference = FirebaseDatabase.getInstance().getReference();
                 databaseReference.child(User.getFirebasePath()).setValue(trips);
-                tripTableOperations.deleteAllTrips();
+               // tripTableOperations.deleteAllTrips();
                 databaseReference.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {

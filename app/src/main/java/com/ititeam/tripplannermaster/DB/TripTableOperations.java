@@ -393,8 +393,9 @@ public class TripTableOperations {
 
     //Start Hanaa Section
     public void getTripFromFirebase(ArrayList<Trip> trips) {
+        insertTrip(trips.get(trips.size()-1));
+        /*for (Trip trip : trips) {
 
-        for (Trip trip : trips) {
             Trip localTrip = selectSingleTrips(trip.getTripId() + "");
             if (!trip.getUserId().equals(User.getEmail())) {
               //  if(localTrip==null) {
@@ -430,9 +431,9 @@ public class TripTableOperations {
                     this.context.startService(intent);
                 }
                 Toast.makeText(context, "update", Toast.LENGTH_SHORT).show();*/
-            }
 
-        }
+
+        //}}
     }
     //end  Hanaa Section
 }
