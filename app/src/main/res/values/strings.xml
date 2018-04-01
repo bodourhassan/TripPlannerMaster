@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">TripPlannerMaster</string>
+    <string name="app_name">Trip Planner</string>
     <!--mark section -->
     <string name="stop_alarm">Cancel</string>
     <string name="start_alarm">Start</string>
@@ -39,7 +39,7 @@
     <string name="TripDisc">Trip Description</string>
     <string name="RoundTripKey">Round Trip</string>
     <string name="TroipDesc">Trip Description</string>
-    <string name="title_activity_update_trip">UpdateTrip</string>
+    <string name="title_activity_update_trip">Update Trip</string>
     <string name="title_activity_x">x</string>
     <string name="UpdateKey">Update</string>
     <string name="NoteListMap">Note List :</string>
@@ -56,7 +56,7 @@
     <string name="nav_item_history_trip">History Trips map</string>
     <string name="nav_item_notifications">Log out</string>
     <string name="title_home">Home</string>
-    <string name="title_activity_reset_password">ResetPasswordActivity</string>
+    <string name="title_activity_reset_password">Reset Password Activity</string>
     <string name="btn_forgot_password">Forgot your password?</string>
     <string name="btn_reset_password">Reset Password</string>
     <string name="btn_back"><![CDATA[<< Back]]></string>

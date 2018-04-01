@@ -63,11 +63,12 @@
             </intent-filter>
         </activity>
         <activity android:name=".activity.ShowTripActivity" android:screenOrientation="portrait"
+            android:label="Trip Detail"
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".activity.ShowHistoryActivity" android:screenOrientation="portrait"
+            android:label="Trip History "
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".activity.MapActivity" />
-        <activity android:name=".activity.FirebaseActivity" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
@@ -94,6 +95,7 @@
         </activity>
         <activity
             android:name=".activity.StartTripActivity"
+            android:label="Start Trip"
             android:theme="@style/AppTheme.NoActionBar" >
         </activity>
         <!-- end boudour section -->
@@ -120,7 +122,8 @@
 
 
         <!-- hesham section -->
-        <activity android:name=".activity.ShowUpcomingTrips" />
+        <activity android:name=".activity.ShowUpcomingTrips"
+          />
         <activity
             android:name=".activity.StartActivityDrawer"
             android:theme="@style/MyMaterialTheme.Base" />

@@ -271,8 +271,8 @@
         fab:menu_animationDelayPerItem="55"
         fab:menu_backgroundColor="@android:color/transparent"
         fab:menu_buttonSpacing="0dp"
-        fab:menu_colorNormal="#da3c2f"
-        fab:menu_colorPressed="#dc4b3f"
+        fab:menu_colorNormal="@color/colorAccent"
+        fab:menu_colorPressed="@color/colorAccent"
         fab:menu_colorRipple="#99d4d4d4"
         fab:menu_fab_size="normal"
         fab:menu_icon="@drawable/fab_add"
@@ -302,34 +302,43 @@
             android:id="@+id/show_trip_start"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@color/colorAccent"
             android:src="@drawable/cloud"
             fab:fab_label="Start"
             fab:fab_size="mini" />
+
         <com.github.clans.fab.FloatingActionButton
             android:id="@+id/show_trip_done"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@color/colorAccent"
             android:src="@drawable/plus"
             fab:fab_label="Done"
             fab:fab_size="mini" />
+
         <com.github.clans.fab.FloatingActionButton
             android:id="@+id/show_trip_cancel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@color/colorAccent"
             android:src="@drawable/edit"
             fab:fab_label="Cancel"
             fab:fab_size="mini" />
+
         <com.github.clans.fab.FloatingActionButton
             android:id="@+id/show_trip_edit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@color/colorAccent"
             android:src="@drawable/edit"
             fab:fab_label="Update"
             fab:fab_size="mini" />
+
         <com.github.clans.fab.FloatingActionButton
             android:id="@+id/show_trip_delete"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@color/colorAccent"
             android:src="@drawable/rubbish"
             fab:fab_label="Delete"
             fab:fab_size="mini" />;8
