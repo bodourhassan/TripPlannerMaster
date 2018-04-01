@@ -285,16 +285,21 @@ public class AddNewTrip extends AppCompatActivity implements ConnectionCallbacks
     }
 
     public void onClicksave(View view) {
-        Date nowDate = new Date();
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+        Date nowDate=null ;
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         SimpleDateFormat TimeFormat = new SimpleDateFormat("HH:mm");
-        sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
-
+        Date userDate=null;
+        Date myTime=null;
+        Date CurrentTime=null;
         try {
-            Date userDate= sdf.parse(DateView.getText().toString());
-            Log.e("Dateeeeeeeeeee", DateView.getText().toString());
-            Date myTime = TimeFormat.parse(TimeView.getText().toString());
-            Date CurrentTime = TimeFormat.parse(TimeFormat.format(new Date()));
+             userDate = sdf.parse(DateView.getText().toString());
+            nowDate = sdf.parse(sdf.format(new Date()));
+             myTime = TimeFormat.parse(TimeView.getText().toString());
+            CurrentTime = TimeFormat.parse(TimeFormat.format(new Date()));
+        }
+        catch (ParseException e) {
+            e.printStackTrace();
+        }
         if (TripNameView.getText().toString().trim().equals("")) {
             Toast.makeText(getBaseContext(), " Enter Trip Name ",
                     Toast.LENGTH_SHORT).show();
@@ -310,16 +315,22 @@ public class AddNewTrip extends AppCompatActivity implements ConnectionCallbacks
             Toast.makeText(getBaseContext(), " Enter Your Description  ",
                     Toast.LENGTH_SHORT).show();
 
-        } else if (userDate.compareTo(nowDate)==0) {
-            if (CurrentTime.after(myTime)) {
-                Toast.makeText(getBaseContext(), " Enter Upcomming Time ",
-                        Toast.LENGTH_SHORT).show();
-            }
         }
-          else if (userDate.compareTo(nowDate)<0) {
+        else if (userDate.compareTo(nowDate)==0 && myTime.compareTo(CurrentTime)<0) {
+
+
+                    Toast.makeText(getBaseContext(), " Enter Upcomming Time ",
+                            Toast.LENGTH_SHORT).show();
+
+
+            }
+            else if(userDate.compareTo(nowDate)<0 ){
                 Toast.makeText(getBaseContext(), " Enter Upcomming Date ",
                         Toast.LENGTH_SHORT).show();
+
             }
+
+
         else {
             String NameofTrip = TripNameView.getText().toString();
             String StartLoc = mylocationStart.getText().toString();
@@ -334,7 +345,6 @@ public class AddNewTrip extends AppCompatActivity implements ConnectionCallbacks
             String TripDirection = myRadiobutton.getText().toString();
             myNoteList.clear();
             for (int i = 0; i < listItems.size(); i++) {
-                Log.e("When Add", listItems.get(i));
                 Note note = new Note(listItems.get(i), TripConstant.NoteLater);
                 myNoteList.add(note);
             }
@@ -353,39 +363,9 @@ public class AddNewTrip extends AppCompatActivity implements ConnectionCallbacks
                 startService(intent);
 
             }
-            for (int i = 0; i < NewTrip.getTripNotes().size(); i++) {
-                Log.e("Trip before", NewTrip.getTripNotes().get(i).getNoteBody());
-            }
-            ArrayList<Trip> all = myTripTable.selectAllTrips();
-            Toast.makeText(getBaseContext(), all.size() + "," + test,
-                    Toast.LENGTH_SHORT).show();
-            Log.e("My Data:", "Name : " + NameofTrip);
-            Log.e("My Data:", "start : " + StartLoc);
-            Log.e("My Data:", "end : " + Endloc);
-            Log.e("My Data:", "desc : " + Desc);
-            Log.e("My Data:", "date : " + Date);
-            Log.e("My Data:", "time : " + Time);
-            Log.e("My Data:", "direction : " + TripDirection);
-            Log.e("My Data:", "cate : " + TripCatagory);
-
-//            Trip my = myTripTable.selectSingleTrips(1 + "");
-//            Log.e("dataaaaaaaaaaaaa:", "Name : " + my.getTripName());
-//            Log.e("dataaaaaaaaaaaaaa:", "start : " + my.getTripStartPoint());
-//            Log.e("dataaaaaaaaaaaaaa:", "end : " + my.getTripEndPoint());
-//            Log.e("dataaaaaaaaaaaaaa:", "desc : " + my.getTripDescription());
-//            Log.e("dataaaaaaaaaaaaaa:", "date : " + my.getTripDate());
-//            Log.e("dataaaaaaaaaaaaaa:", "time : " + my.getTripTime());
-//            Log.e("dataaaaaaaaaaaaaa:", "direction : " + my.getTripDirection());
-//            Log.e("dataaaaaaaaaaaaaa:", "cate : " + my.getTripCategory());
-//            for (int i = 0; i < my.getTripNotes().size(); i++) {
-//                Log.e("Trip after", my.getTripNotes().get(i).getNoteBody());
-//            }
-
-            finish();
+           finish();
         }
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+
 
     }
 
