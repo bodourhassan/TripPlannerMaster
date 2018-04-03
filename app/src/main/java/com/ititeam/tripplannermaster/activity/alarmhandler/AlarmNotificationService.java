@@ -9,6 +9,8 @@ import android.content.Intent;
 import android.support.v4.app.NotificationCompat;
 
 import com.ititeam.tripplannermaster.R;
+import com.ititeam.tripplannermaster.model.ParcelableUtil;
+import com.ititeam.tripplannermaster.model.Trip;
 
 /**
  * Created by MARK on 27/03/18.
@@ -19,7 +21,7 @@ public class AlarmNotificationService extends IntentService {
 
     //Notification ID for Alarm
     public static final int NOTIFICATION_ID = 1;
-
+    Trip trip = null;
     public AlarmNotificationService() {
         super("AlarmNotificationService");
     }
@@ -28,17 +30,24 @@ public class AlarmNotificationService extends IntentService {
     public void onHandleIntent(Intent intent) {
 
         //Send notification
-        sendNotification("Wake Up! Wake Up! Alarm started!!");
+        sendNotification("Wake Up! Wake Up! Alarm started!!" , intent);
     }
 
     //handle notification
-    private void sendNotification(String msg) {
+    private void sendNotification(String msg , Intent intent) {
         alarmNotificationManager = (NotificationManager) this
                 .getSystemService(Context.NOTIFICATION_SERVICE);
 
+        if(trip == null)
+        {
+            trip =(Trip) ParcelableUtil.unmarshall(intent.getByteArrayExtra("trip") , Trip.CREATOR);
+        }
+        Intent returningIntent = new Intent(this, AlarmActivity.class);
+        byte[] last = ParcelableUtil.marshall(trip);
+        returningIntent.putExtra("trip",last);
         //get pending intent
-        PendingIntent contentIntent = PendingIntent.getActivity(this, 0,
-                new Intent(this, AlarmActivity.class), PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent contentIntent = PendingIntent.getActivity(this, 0,returningIntent
+                , PendingIntent.FLAG_UPDATE_CURRENT);
 
         //Create notification
         NotificationCompat.Builder alamNotificationBuilder = new NotificationCompat.Builder(
