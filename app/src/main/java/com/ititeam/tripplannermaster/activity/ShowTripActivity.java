@@ -91,7 +91,9 @@ public class ShowTripActivity extends FragmentActivity implements OnMapReadyCall
     TripTableOperations tripTableOperations=null;
     //Pending intent instance
     private PendingIntent pendingIntent;
-
+    boolean flag=false;
+    boolean flag1=false;
+    boolean flag3=false;
     //Alarm Request Code
     private static final int ALARM_REQUEST_CODE = 133;
 
@@ -104,7 +106,7 @@ public class ShowTripActivity extends FragmentActivity implements OnMapReadyCall
         tripEndPoint = findViewById(R.id.show_trip_end_point);
         tripDescription = findViewById(R.id.show_trip_description);
         tripDirection = findViewById(R.id.show_trip_direction);
-        tripStatus=findViewById(R.id.show_trip_status);
+        tripStatus = findViewById(R.id.show_trip_status);
         tripDate = findViewById(R.id.show_trip_date);
         tripTime = findViewById(R.id.show_trip_time);
         materialDesignFAM = findViewById(R.id.show_trip_material_design_android_floating_action_menu);
@@ -113,55 +115,68 @@ public class ShowTripActivity extends FragmentActivity implements OnMapReadyCall
         floatingActionButton3 = findViewById(R.id.show_trip_done);
         floatingActionButton4 = findViewById(R.id.show_trip_cancel);
         floatingActionButton5 = findViewById(R.id.show_trip_delete);
-         tripTableOperations=new TripTableOperations(getBaseContext());
-         Intent intent=getIntent();
-        String trip_id=intent.getStringExtra("trip_id");
-        trip = tripTableOperations.selectSingleTrips(trip_id );
-        notes=trip.getTripNotes();
-         ListView myList = findViewById(R.id.show_trip_note_custom_list);
-        ShowTripNotesAdapter myadapter = new ShowTripNotesAdapter(this, R.layout.show_trip_notes_layout, notes);
-         myList.setAdapter(myadapter);
-        myList.setOnTouchListener(new View.OnTouchListener() {
-            // Setting on Touch Listener for handling the touch inside ScrollView
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                // Disallow the touch request for parent scroll on touch of child view
-                v.getParent().requestDisallowInterceptTouchEvent(true);
-                return false;
+        tripTableOperations = new TripTableOperations(getBaseContext());
+        Intent intent = getIntent();
+        String trip_id = intent.getStringExtra("trip_id");
+        trip = tripTableOperations.selectSingleTrips(trip_id);
+        if (trip != null) {
+            notes = trip.getTripNotes();
+            ListView myList = findViewById(R.id.show_trip_note_custom_list);
+            ShowTripNotesAdapter myadapter = new ShowTripNotesAdapter(this, R.layout.show_trip_notes_layout, notes);
+            myList.setAdapter(myadapter);
+            myList.setOnTouchListener(new View.OnTouchListener() {
+                // Setting on Touch Listener for handling the touch inside ScrollView
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    // Disallow the touch request for parent scroll on touch of child view
+                    v.getParent().requestDisallowInterceptTouchEvent(true);
+                    return false;
+                }
+            });
+            tripName.setText(trip.getTripName());
+            tripStartPoint.setText(trip.getTripStartPoint());
+            tripEndPoint.setText(trip.getTripEndPoint());
+            tripTime.setText(trip.getTripTime());
+            tripDate.setText(trip.getTripDate());
+            tripDirection.setText(trip.getTripDirection());
+            tripDescription.setText(trip.getTripDescription());
+            tripStatus.setText(trip.getTripStatus());
+            Date nowDate=null ;
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            SimpleDateFormat TimeFormat = new SimpleDateFormat("HH:mm");
+            Date userDate=null;
+            Date myTime=null;
+            Date CurrentTime=null;
+            try {
+                userDate = sdf.parse(trip.getTripDate());
+                nowDate = sdf.parse(sdf.format(new Date()));
+                myTime = TimeFormat.parse(trip.getTripTime());
+                CurrentTime = TimeFormat.parse(TimeFormat.format(new Date()));
             }
-        });
-         tripName.setText(trip.getTripName());
-        tripStartPoint.setText(trip.getTripStartPoint());
-        tripEndPoint.setText(trip.getTripEndPoint());
-        tripTime.setText(trip.getTripTime());
-        tripDate.setText(trip.getTripDate());
-        tripDirection.setText(trip.getTripDirection());
-        tripDescription.setText(trip.getTripDescription());
-        tripStatus.setText(trip.getTripStatus());
-        Date nowDate = new Date();
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
-        sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
-        try {
-            Date tripDate = sdf.parse(trip.getTripDate());
-            if(nowDate.compareTo(tripDate)>0||trip.getTripStatus().equals(TripConstant.DoneStatus)||trip.getTripStatus().equals(TripConstant.CancelledStatus)){
-                materialDesignFAM.removeMenuButton(floatingActionButton1);
-                materialDesignFAM.removeMenuButton(floatingActionButton2);
+            catch (ParseException e) {
+                e.printStackTrace();
+            }
+            
 
-            }
-            if(trip.getTripStatus().equals(TripConstant.DoneStatus)||trip.getTripStatus().equals(TripConstant.CancelledStatus)){
-                materialDesignFAM.removeMenuButton(floatingActionButton3);
-                materialDesignFAM.removeMenuButton(floatingActionButton4);
-            }else if(trip.getTripStatus().equals(TripConstant.halfTripStatus)){
-                materialDesignFAM.removeMenuButton(floatingActionButton3);
-            }
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        listPoints = new ArrayList<>();
-        markers = new ArrayList<>();
-        mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.map);
-        if (!isConnected()) {
+                if ((userDate.compareTo(nowDate)==0 && myTime.compareTo(CurrentTime)<=0) ||userDate.compareTo(nowDate)<0|| trip.getTripStatus().equals(TripConstant.DoneStatus) || trip.getTripStatus().equals(TripConstant.CancelledStatus)) {
+                    materialDesignFAM.removeMenuButton(floatingActionButton1);
+                    materialDesignFAM.removeMenuButton(floatingActionButton2);
+                    flag3=true;
+                }
+                if (trip.getTripStatus().equals(TripConstant.DoneStatus) || trip.getTripStatus().equals(TripConstant.CancelledStatus)) {
+                    materialDesignFAM.removeMenuButton(floatingActionButton3);
+                    materialDesignFAM.removeMenuButton(floatingActionButton4);
+                    flag=true;
+                } else if (trip.getTripStatus().equals(TripConstant.halfTripStatus)) {
+                    materialDesignFAM.removeMenuButton(floatingActionButton3);
+                    flag1=true;
+                }
+
+            listPoints = new ArrayList<>();
+            markers = new ArrayList<>();
+            mapFragment = (SupportMapFragment) getSupportFragmentManager()
+                    .findFragmentById(R.id.map);
+            if (!isConnected()) {
 /*            LinearLayout mapLayout = findViewById(R.id.map_layout);
             LinearLayout.LayoutParams mapLayoutParams = new LinearLayout.LayoutParams(0, 0);
             mapLayoutParams.setMargins(0,0,0,100);
@@ -170,134 +185,131 @@ public class ShowTripActivity extends FragmentActivity implements OnMapReadyCall
 */
 
 
-        } else {
+            } else {
 
-            mapFragment.getMapAsync(this);
-        }
-       // LinearLayout notesLayout = findViewById(R.id.notes_layout);
-        /*for (Note nNote : notes) {
-            ImageView imageView = new ImageView(this);
-            imageView.setImageResource(R.mipmap.wrong_icon);
-            LinearLayout.LayoutParams imgLayoutParams = new LinearLayout.LayoutParams(30, 30);
-            imageView.setLayoutParams(imgLayoutParams);
-            LinearLayout linearLayout = new LinearLayout(this);
-            linearLayout.setOrientation(LinearLayout.HORIZONTAL);
-            Label label = new Label(this);
-            label.setText(nNote.getNoteBody());
-            LinearLayout.LayoutParams labelLayoutParams = new LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.MATCH_PARENT,
-                    LinearLayout.LayoutParams.MATCH_PARENT);
-            labelLayoutParams.setMargins(5, -2, 0, 0);
-            label.setLayoutParams(labelLayoutParams);
-            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.MATCH_PARENT,
-                    LinearLayout.LayoutParams.MATCH_PARENT);
-
-            layoutParams.setMargins(0, 0, 0, 15);
-            linearLayout.addView(imageView);
-            linearLayout.addView(label);
-            linearLayout.setLayoutParams(layoutParams);
-            notesLayout.addView(linearLayout);
-
-
-        }*/
-        floatingActionButton1.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                //TODO something when floating action menu first item clicked
-           //go to start Activity
-           Intent intent =new Intent(ShowTripActivity.this,StartTripActivity.class);
-           intent.putExtra("trip_id",trip_id);
-           startActivity(intent);
-
+                mapFragment.getMapAsync(this);
             }
-        });
-        floatingActionButton2.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                //TODO something when floating action menu second item clicked
-                Intent intent =new Intent(ShowTripActivity.this,UpdateTrip.class);
-                intent.putExtra("trip_id",trip_id);
-                startActivity(intent);
 
-            }
-        });
-        floatingActionButton3.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                //TODO something when floating action menu third item clicked
-                trip.setTripStatus(TripConstant.DoneStatus);
-                tripTableOperations.updateTrip(trip);
-                tripStatus.setText(TripConstant.DoneStatus);
+            floatingActionButton1.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    //TODO something when floating action menu first item clicked
+                    //go to start Activity
+                    Intent intent = new Intent(ShowTripActivity.this, StartTripActivity.class);
+                    intent.putExtra("trip_id", trip_id);
+                    startActivity(intent);
 
-                materialDesignFAM.removeMenuButton(floatingActionButton1);
-                materialDesignFAM.removeMenuButton(floatingActionButton2);
-                materialDesignFAM.removeMenuButton(floatingActionButton3);
-                materialDesignFAM.removeMenuButton(floatingActionButton4);
-                materialDesignFAM.close(false);
-                Toast.makeText(ShowTripActivity.this, "trip has Done", Toast.LENGTH_SHORT).show();
+                }
+            });
+            floatingActionButton2.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    //TODO something when floating action menu second item clicked
+                    Intent intent = new Intent(ShowTripActivity.this, UpdateTrip.class);
+                    intent.putExtra("trip_id", trip_id);
+                    startActivity(intent);
 
-            }
-        });
-        floatingActionButton4.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                //TODO something when floating action menu third item clicked
-                trip.setTripStatus(TripConstant.CancelledStatus);
-                tripTableOperations.updateTrip(trip);
+                }
+            });
+            floatingActionButton3.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    //TODO something when floating action menu third item clicked
+                    AlarmManager manager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+                    Intent alarmIntent = new Intent(ShowTripActivity.this, MainActivity.class);
+                    pendingIntent = PendingIntent.getBroadcast(getBaseContext(), trip.getTripId(), alarmIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+                    manager.cancel(pendingIntent);
+                    trip.setTripStatus(TripConstant.DoneStatus);
+                    tripTableOperations.updateTrip(trip);
+                    tripStatus.setText(TripConstant.DoneStatus);
+                    if(!flag3) {
+                     materialDesignFAM.removeMenuButton(floatingActionButton1);
+                     materialDesignFAM.removeMenuButton(floatingActionButton2);
+}
+                    if(!flag) {
+                        materialDesignFAM.removeMenuButton(floatingActionButton3);
+                        materialDesignFAM.removeMenuButton(floatingActionButton4);
+                    }else{
+                        if(!flag1){
+                            materialDesignFAM.removeMenuButton(floatingActionButton4);
+                        }
+                    }
+                    materialDesignFAM.close(false);
+                    Toast.makeText(ShowTripActivity.this, "trip has Done", Toast.LENGTH_SHORT).show();
 
-                tripStatus.setText(TripConstant.CancelledStatus);
-                materialDesignFAM.removeMenuButton(floatingActionButton1);
-                materialDesignFAM.removeMenuButton(floatingActionButton2);
-                materialDesignFAM.removeMenuButton(floatingActionButton3);
-                materialDesignFAM.removeMenuButton(floatingActionButton4);
-                materialDesignFAM.close(false);
-                Toast.makeText(ShowTripActivity.this, "trip has Cancelled", Toast.LENGTH_SHORT).show();
-            }
-        });
-        floatingActionButton5.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                //TODO something when floating action menu third item clicked
+                }
+            });
+            floatingActionButton4.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    //TODO something when floating action menu third item clicked
+                    AlarmManager manager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+                    Intent alarmIntent = new Intent(ShowTripActivity.this, MainActivity.class);
+                    pendingIntent = PendingIntent.getBroadcast(getBaseContext(), trip.getTripId(), alarmIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+                    manager.cancel(pendingIntent);
+                    trip.setTripStatus(TripConstant.CancelledStatus);
+                    tripTableOperations.updateTrip(trip);
 
-                AlertDialog.Builder alert = new AlertDialog.Builder(ShowTripActivity.this);
-                alert.setTitle("Delete Trip "+trip.getTripName());
-                alert.setMessage("Are you sure you want to delete "+trip.getTripName()+" ?");
+                    tripStatus.setText(TripConstant.CancelledStatus);
+                    if(!flag3) {
+                        materialDesignFAM.removeMenuButton(floatingActionButton1);
+                        materialDesignFAM.removeMenuButton(floatingActionButton2);
+                    }
+                    if(!flag) {
+                        materialDesignFAM.removeMenuButton(floatingActionButton3);
+                        materialDesignFAM.removeMenuButton(floatingActionButton4);
+                    }else{
+                        if(!flag1){
+                            materialDesignFAM.removeMenuButton(floatingActionButton4);
+                        }
+                    }
+                    materialDesignFAM.close(false);
+                    Toast.makeText(ShowTripActivity.this, "trip has Cancelled", Toast.LENGTH_SHORT).show();
+                }
+            });
+            floatingActionButton5.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    //TODO something when floating action menu third item clicked
 
-                alert.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    AlertDialog.Builder alert = new AlertDialog.Builder(ShowTripActivity.this);
+                    alert.setTitle("Delete Trip " + trip.getTripName());
+                    alert.setMessage("Are you sure you want to delete " + trip.getTripName() + " ?");
+
+                    alert.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
 
 
-                    public void onClick(DialogInterface dialog, int which) {
-                        // continue with delete
-                        AlarmManager manager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-                        Intent alarmIntent = new Intent(ShowTripActivity.this, MainActivity.class);
-                        pendingIntent = PendingIntent.getBroadcast(getBaseContext(),trip.getTripId() , alarmIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+                        public void onClick(DialogInterface dialog, int which) {
+                            // continue with delete
+                            AlarmManager manager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+                            Intent alarmIntent = new Intent(ShowTripActivity.this, MainActivity.class);
+                            pendingIntent = PendingIntent.getBroadcast(getBaseContext(), trip.getTripId(), alarmIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
-                        //cancel the alarm manager of the pending intent
-                        tripTableOperations.deleteTrip(String.valueOf(trip.getTripId()));
-                        manager.cancel(pendingIntent);
+                            //cancel the alarm manager of the pending intent
+                            tripTableOperations.deleteTrip(String.valueOf(trip.getTripId()));
+                            manager.cancel(pendingIntent);
                         /*mItemManger.removeShownLayouts(viewHolder.swipeLayout);
                         upcommingTrips.remove(position);
                         notifyItemRemoved(position);
                         notifyItemRangeChanged(position, upcommingTrips.size());
                         mItemManger.closeAllItems();*/
-                     //   Toast.makeText(getApplicationContext(), "here in delete", Toast.LENGTH_SHORT).show();
+                            //   Toast.makeText(getApplicationContext(), "here in delete", Toast.LENGTH_SHORT).show();
                         /*Intent intent = new Intent(ShowTripActivity.this, StartActivityDrawer.class);
 
                         startActivity(intent);*/
-                        finish();
-                    }
-                });
+                            finish();
+                        }
+                    });
 
-                alert.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        // close dialog
-                        dialog.cancel();
-                    }
-                });
-                alert.show();
+                    alert.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            // close dialog
+                            dialog.cancel();
+                        }
+                    });
+                    alert.show();
                /* Intent intent =new Intent(ShowTripActivity.this,UpdateTrip.class);
                 intent.putExtra("trip_id",trip_id);
                 startActivity(intent);*/
-            }
-        });
+                }
+            });
+        }
     }
-
     /**
      * Manipulates the map once available.
      * This callback is triggered when the map is ready to be used.

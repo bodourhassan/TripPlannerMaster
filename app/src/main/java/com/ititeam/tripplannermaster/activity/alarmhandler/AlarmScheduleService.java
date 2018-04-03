@@ -118,7 +118,7 @@ public class AlarmScheduleService extends IntentService {
                 month = Calendar.DECEMBER;
                 break;
         }
-        cal.set(Integer.parseInt(date[0]),month,Integer.parseInt(date[2]),Integer.parseInt(time[0]),Integer.parseInt(time[1]));
+        cal.set(Integer.parseInt(date[0]),month,Integer.parseInt(date[2]),Integer.parseInt(time[0]),Integer.parseInt(time[1]) ,0);
         //cal.set(2018,3,1,2,58 ,0);
 
         AlarmManager manager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);//get instance of alarm manager
