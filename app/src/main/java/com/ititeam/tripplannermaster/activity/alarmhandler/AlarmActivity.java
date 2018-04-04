@@ -24,7 +24,7 @@ public class AlarmActivity extends AppCompatActivity {
 
     //Pending intent instance
     private PendingIntent pendingIntent;
-
+    Trip trip = null;
     //Alarm Request Code
     private static final int ALARM_REQUEST_CODE = 133;
     private Intent openingIntent = null;
@@ -45,9 +45,10 @@ public class AlarmActivity extends AppCompatActivity {
             public void onClick(View v) {
                 //Trip trip = (Trip) getIntent().getSerializableExtra("trip");
                 //Trip trip= (Trip) openingIntent.getSerializableExtra("trip");
-                Trip trip =(Trip) ParcelableUtil.unmarshall(openingIntent.getByteArrayExtra("trip") , Trip.CREATOR);
+
+                trip =(Trip) ParcelableUtil.unmarshall(openingIntent.getByteArrayExtra("trip") , Trip.CREATOR);
                 Intent intent =new Intent(AlarmActivity.this,StartTripActivity.class);
-                intent.putExtra("trip",trip);
+                intent.putExtra("trip_id",trip.getTripId()+"");
                 stopAlarmManager();
                 startActivity(intent);
 
@@ -68,7 +69,10 @@ public class AlarmActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //Later alarm manager
+                 trip =(Trip) ParcelableUtil.unmarshall(openingIntent.getByteArrayExtra("trip") , Trip.CREATOR);
                 Intent intent = new Intent(AlarmActivity.this , AlarmNotificationService.class);
+                byte[] last = ParcelableUtil.marshall(trip);
+                intent.putExtra("trip",last);
                 startService(intent);
                 //Stop the Media Player Service to stop sound
                 stopService(new Intent(AlarmActivity.this, AlarmSoundService.class));
@@ -94,7 +98,10 @@ public class AlarmActivity extends AppCompatActivity {
         Intent alarmIntent = new Intent(AlarmActivity.this, MainActivity.class);
         //Trip trip = (Trip) getIntent().getSerializableExtra("trip");
         //Trip trip= (Trip) openingIntent.getSerializableExtra("trip");
-        Trip trip =(Trip) ParcelableUtil.unmarshall(openingIntent.getByteArrayExtra("trip") , Trip.CREATOR);
+        if(trip == null)
+        {
+            trip =(Trip) ParcelableUtil.unmarshall(openingIntent.getByteArrayExtra("trip") , Trip.CREATOR);
+        }
         Toast.makeText(getApplicationContext(), trip.getTripId()+"", Toast.LENGTH_SHORT).show();
         pendingIntent = PendingIntent.getBroadcast(getBaseContext(), trip.getTripId(), alarmIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
