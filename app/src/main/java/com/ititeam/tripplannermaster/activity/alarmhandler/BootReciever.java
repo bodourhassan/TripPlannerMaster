@@ -36,7 +36,7 @@ public class BootReciever extends BroadcastReceiver {
                 intent.putExtra("trip",last);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                Toast.makeText(context,trip.getTripId()+"", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(context,trip.getTripId()+"", Toast.LENGTH_SHORT).show();
                 ComponentName comp = new ComponentName(context.getPackageName(),
                 AlarmScheduleService.class.getName());
                 startWakefulService(context, (intent.setComponent(comp)));

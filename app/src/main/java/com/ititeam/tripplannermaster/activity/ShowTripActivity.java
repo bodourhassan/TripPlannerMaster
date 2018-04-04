@@ -195,6 +195,7 @@ public class ShowTripActivity extends FragmentActivity implements OnMapReadyCall
                     //TODO something when floating action menu first item clicked
                     //go to start Activity
                     Intent intent = new Intent(ShowTripActivity.this, StartTripActivity.class);
+                    materialDesignFAM.close(false);
                     intent.putExtra("trip_id", trip_id);
                     startActivity(intent);
 
@@ -204,6 +205,7 @@ public class ShowTripActivity extends FragmentActivity implements OnMapReadyCall
                 public void onClick(View v) {
                     //TODO something when floating action menu second item clicked
                     Intent intent = new Intent(ShowTripActivity.this, UpdateTrip.class);
+                    materialDesignFAM.close(false);
                     intent.putExtra("trip_id", trip_id);
                     startActivity(intent);
 

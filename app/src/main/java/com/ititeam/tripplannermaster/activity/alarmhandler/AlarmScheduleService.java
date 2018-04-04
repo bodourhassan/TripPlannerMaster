@@ -40,7 +40,7 @@ public class AlarmScheduleService extends IntentService {
             Log.i("Mark" , trip.getTripDate()+"");
 
             //Trip trip =  new TripTableOperations(getApplicationContext()).selectSingleTrips(trip_id+"");
-            Toast.makeText(this,trip.getTripId()+"", Toast.LENGTH_SHORT).show();
+           // Toast.makeText(this,trip.getTripId()+"", Toast.LENGTH_SHORT).show();
             Intent alarmIntent = new Intent(AlarmScheduleService.this, AlarmReceiver.class);
             //alarmIntent.putExtra("trip_id" , trip_id);
 
@@ -124,7 +124,7 @@ public class AlarmScheduleService extends IntentService {
         AlarmManager manager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);//get instance of alarm manager
         manager.set(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), pendingIntent);//set alarm manager with entered timer by converting into milliseconds
 
-        Toast.makeText(this, "Alarm Set for " + 1 + " seconds.", Toast.LENGTH_SHORT).show();
+       // Toast.makeText(this, "Alarm Set for " + 1 + " seconds.", Toast.LENGTH_SHORT).show();
     }
 
 }

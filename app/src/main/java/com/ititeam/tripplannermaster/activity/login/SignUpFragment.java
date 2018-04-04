@@ -136,7 +136,7 @@ public class SignUpFragment extends Fragment implements OnSignUpListener{
                         User.setEmail(uEmail);
                         prog.dismiss();
                         Toast.makeText(getActivity(), "succefull", Toast.LENGTH_SHORT).show();
-
+                        getActivity().finish();
                         startActivity(new Intent(getActivity(), StartActivityDrawer.class));
                     }
                 }

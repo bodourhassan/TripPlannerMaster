@@ -13,10 +13,12 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Toast;
 
+import com.ititeam.tripplannermaster.DB.TripTableOperations;
 import com.ititeam.tripplannermaster.R;
 import com.ititeam.tripplannermaster.activity.MainActivity;
 import com.ititeam.tripplannermaster.activity.ShowTripActivity;
 import com.ititeam.tripplannermaster.activity.StartTripActivity;
+import com.ititeam.tripplannermaster.activity.TripConstant;
 import com.ititeam.tripplannermaster.model.ParcelableUtil;
 import com.ititeam.tripplannermaster.model.Trip;
 
@@ -50,7 +52,9 @@ public class AlarmActivity extends AppCompatActivity {
                 Intent intent =new Intent(AlarmActivity.this,StartTripActivity.class);
                 intent.putExtra("trip_id",trip.getTripId()+"");
                 stopAlarmManager();
+                finish();
                 startActivity(intent);
+
 
             }
         });
@@ -60,6 +64,9 @@ public class AlarmActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //Stop alarm manager
+                trip =(Trip) ParcelableUtil.unmarshall(openingIntent.getByteArrayExtra("trip") , Trip.CREATOR);
+                trip.setTripStatus(TripConstant.CancelledStatus);
+                new TripTableOperations(getApplicationContext()).updateTrip(trip);
                 stopAlarmManager();
                 finish();
             }
@@ -102,7 +109,7 @@ public class AlarmActivity extends AppCompatActivity {
         {
             trip =(Trip) ParcelableUtil.unmarshall(openingIntent.getByteArrayExtra("trip") , Trip.CREATOR);
         }
-        Toast.makeText(getApplicationContext(), trip.getTripId()+"", Toast.LENGTH_SHORT).show();
+       // Toast.makeText(getApplicationContext(), trip.getTripId()+"", Toast.LENGTH_SHORT).show();
         pendingIntent = PendingIntent.getBroadcast(getBaseContext(), trip.getTripId(), alarmIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         manager.cancel(pendingIntent);//cancel the alarm manager of the pending intent

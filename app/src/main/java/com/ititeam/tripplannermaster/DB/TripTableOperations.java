@@ -9,7 +9,10 @@ import android.database.Cursor;
 import android.util.Log;
 import android.widget.Toast;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import com.ititeam.tripplannermaster.activity.AddNewTrip;
 import com.ititeam.tripplannermaster.activity.MainActivity;
@@ -471,19 +474,41 @@ public class TripTableOperations {
         //deleteAllTrips();
         for (Trip trip : trips) {
 
+            Date nowDate=null ;
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            SimpleDateFormat TimeFormat = new SimpleDateFormat("HH:mm");
+            Date userDate=null;
+            Date myTime=null;
+            Date CurrentTime=null;
+            try {
+                nowDate = sdf.parse(sdf.format(new Date()));
+                CurrentTime = TimeFormat.parse(TimeFormat.format(new Date()));
+            }catch (Exception e){
+                e.printStackTrace();
+            }
             Trip localTrip = selectSingleTrips(trip.getTripId() + "");
 
             if(localTrip==null) {
              //   Toast.makeText(context, "enter", Toast.LENGTH_SHORT).show();
                 insertTrip(trip);
                 byte[] last = ParcelableUtil.marshall(trip);
-                Log.i("Mark" , trip.getTripDate()+"");
 
-                Intent intent=new Intent(context, AlarmScheduleService.class);
-                intent.putExtra("trip",last);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                context.startService(intent);
+                try {
+                    userDate = sdf.parse(trip.getTripDate());
+
+                    myTime = TimeFormat.parse(trip.getTripTime());
+
+                }
+                catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                if ((userDate.compareTo(nowDate)==0 && myTime.compareTo(CurrentTime)>=0) ||userDate.compareTo(nowDate)>0) {
+                    Intent intent = new Intent(context, AlarmScheduleService.class);
+                    intent.putExtra("trip", last);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                    context.startService(intent);
+                }
 
             }
 

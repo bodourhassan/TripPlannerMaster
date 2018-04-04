@@ -377,8 +377,9 @@ public class LoginFragment extends Fragment implements OnLoginListener , View.On
 
                             Intent intent = new Intent(getActivity(), StartActivityDrawer.class);
                             intent.putExtra("login_user_email", User.getEmail());
-
+                            getActivity().finish();
                             getActivity().startActivity(intent);
+
 
 
                         }

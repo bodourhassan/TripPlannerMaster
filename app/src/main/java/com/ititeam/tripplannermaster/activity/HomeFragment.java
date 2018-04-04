@@ -116,14 +116,17 @@ public class HomeFragment extends Fragment{
                 // startActivity(i);
                 Toast.makeText(getActivity(), "clicked", Toast.LENGTH_SHORT).show();
                 Intent i = new Intent(getActivity() , AddNewTrip.class);
+                materialDesignFAM.close(false);
                 startActivity(i);
             }
         });
         floatingActionButton2.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 //TODO something when floating action menu second item clicked
+                materialDesignFAM.close(false);
                 UploadDataToFirebase uploadDataToFirebase=new UploadDataToFirebase(getActivity());
                 uploadDataToFirebase.execute();
+
 
             }
         });
@@ -191,7 +194,7 @@ public class HomeFragment extends Fragment{
             viewHolder.btnStart.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Toast.makeText(getActivity(), ""+upcommingTrips.get(position).getTripId(), Toast.LENGTH_SHORT).show();
+                  //  Toast.makeText(getActivity(), ""+upcommingTrips.get(position).getTripId(), Toast.LENGTH_SHORT).show();
                     Intent intent =new Intent(getActivity(),StartTripActivity.class);
                     intent.putExtra("trip_id",String.valueOf(upcommingTrips.get(position).getTripId()));
                     startActivity(intent);
@@ -271,7 +274,7 @@ public class HomeFragment extends Fragment{
             viewHolder.swipeLayout.getSurfaceView().setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(getActivity(), "position is "+upcommingTrips.get(position).getTripId(), Toast.LENGTH_SHORT).show();
+                   // Toast.makeText(getActivity(), "position is "+upcommingTrips.get(position).getTripId(), Toast.LENGTH_SHORT).show();
                     Intent i = new Intent(getActivity() , ShowTripActivity.class);
                     i.putExtra("trip_id" , String.valueOf(upcommingTrips.get(position).getTripId()));
                     startActivity(i);
@@ -326,13 +329,13 @@ public class HomeFragment extends Fragment{
                             AlarmManager manager = (AlarmManager) getActivity().getSystemService(Context.ALARM_SERVICE);
                             Intent alarmIntent = new Intent(getActivity(), MainActivity.class);
                             pendingIntent = PendingIntent.getBroadcast(getActivity().getBaseContext(),upcommingTrips.get(position).getTripId() , alarmIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-                            Toast.makeText(getActivity(), "here "+upcommingTrips.get(position).getTripId()+"in delete"+position, Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(getActivity(), "here "+upcommingTrips.get(position).getTripId()+"in delete"+position, Toast.LENGTH_SHORT).show();
 
                             tripTableOperations.deleteTrip(String.valueOf(upcommingTrips.get(position).getTripId()));
                             mItemManger.removeShownLayouts(viewHolder.swipeLayout);
                             upcommingTrips.remove(position);
                             notifyItemRemoved(position);
-                            Toast.makeText(getActivity(), "here size"+upcommingTrips.size(), Toast.LENGTH_SHORT).show();
+                           // Toast.makeText(getActivity(), "here size"+upcommingTrips.size(), Toast.LENGTH_SHORT).show();
                             notifyItemRangeChanged(position, upcommingTrips.size());
                             mItemManger.closeAllItems();
                             manager.cancel(pendingIntent);//cancel the alarm manager of the pending intent
