@@ -166,6 +166,7 @@ public class StartTripActivity extends FragmentActivity implements OnMapReadyCal
             @Override
             public void onClick(View v) {
                 myTrip.setTripStatus(TripConstant.CancelledStatus);
+                boolean tset = myOperation.updateTrip(myTrip);
                finish();
             }
         });
