@@ -58,7 +58,9 @@
             android:id="@+id/material_design_floating_action_menu_item1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@color/colorAccent"
             android:src="@drawable/plus"
+            fab:backgroundTint="@color/colorAccent"
             fab:fab_label="Add Trip"
             fab:fab_size="mini" />
 
@@ -66,15 +68,20 @@
             android:id="@+id/material_design_floating_action_menu_item2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@color/colorAccent"
             android:src="@drawable/cloud"
+            fab:backgroundTint="@color/colorAccent"
             fab:fab_label="sync"
             fab:fab_size="mini" />
 
         <com.github.clans.fab.FloatingActionButton
+
             android:id="@+id/material_design_floating_action_menu_item3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@color/colorAccent"
             android:src="@drawable/rubbish"
+            fab:backgroundTint="@color/colorAccent"
             fab:fab_label="test 3"
             fab:fab_size="mini" />
     </com.github.clans.fab.FloatingActionMenu>

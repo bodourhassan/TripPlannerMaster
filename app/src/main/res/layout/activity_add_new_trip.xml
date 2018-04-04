@@ -30,7 +30,7 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="950dp"
+            android:layout_height="920dp"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true">
@@ -223,10 +223,10 @@
                 android:layout_width="160dp"
                 android:layout_height="wrap_content"
                 android:layout_alignBottom="@+id/TripCat"
-                android:layout_marginLeft="8dp"
-                android:layout_marginStart="8dp"
-                android:layout_toEndOf="@+id/TimeText"
-                android:layout_toRightOf="@+id/TimeText"
+                android:layout_alignEnd="@+id/fab"
+                android:layout_alignRight="@+id/fab"
+                android:layout_marginEnd="6dp"
+                android:layout_marginRight="6dp"
                 android:entries="@string/WorkValue" />
 
             <TextView
@@ -244,10 +244,12 @@
                 android:id="@+id/textView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignLeft="@+id/TripCat"
-                android:layout_alignStart="@+id/TripCat"
-                android:layout_below="@+id/TripCatId"
-                android:layout_marginTop="20dp"
+                android:layout_alignEnd="@+id/TripCat"
+                android:layout_alignRight="@+id/TripCat"
+                android:layout_below="@+id/TripCat"
+                android:layout_marginEnd="7dp"
+                android:layout_marginRight="7dp"
+                android:layout_marginTop="29dp"
                 android:text="@string/NodeListKey"
                 android:textColor="@color/common_google_signin_btn_text_dark_focused" />
 
