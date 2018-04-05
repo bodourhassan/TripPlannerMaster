@@ -11,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ititeam.tripplannermaster.DB.TripTableOperations;
@@ -30,13 +31,16 @@ public class AlarmActivity extends AppCompatActivity {
     //Alarm Request Code
     private static final int ALARM_REQUEST_CODE = 133;
     private Intent openingIntent = null;
-
+    TextView  trip_name;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
          this.supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_alarm);
+        trip_name = (TextView)findViewById(R.id.trip_name);
         this.openingIntent = getIntent();
+        trip =(Trip) ParcelableUtil.unmarshall(openingIntent.getByteArrayExtra("trip") , Trip.CREATOR);
+        trip_name.setText(trip.getTripName());
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
             this.setFinishOnTouchOutside(false);
         }

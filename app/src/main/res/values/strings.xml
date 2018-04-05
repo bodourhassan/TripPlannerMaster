@@ -3,7 +3,7 @@
     <!--mark section -->
     <string name="stop_alarm">Cancel</string>
     <string name="start_alarm">Start</string>
-    <string name="label">Select your Alarm input type from below:</string>
+    <string name="label">" trip name"</string>
     <string name="later_alarm">Later</string>
     <!-- end mark section-->
 

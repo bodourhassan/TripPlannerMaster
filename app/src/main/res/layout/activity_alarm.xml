@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -8,53 +9,49 @@
     tools:context="com.ititeam.tripplannermaster.activity.alarmhandler.AlarmActivity">
 
     <TextView
-        android:id="@+id/textView6"
+        android:id="@+id/trip_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="30dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="41dp"
         android:text="@string/label"
         android:textAlignment="center"
         android:textColor="@android:color/holo_blue_bright"
         android:textSize="24sp"
         android:textStyle="bold" />
 
-    <Button
+    <android.support.design.widget.FloatingActionButton
         android:id="@+id/start_alarm_button"
-        android:layout_width="150dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/textView6"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="64dp"
-        android:background="@drawable/my_button_dessign"
-        android:text="@string/start_alarm"
-        android:textColor="@android:color/white"
-        android:textSize="24sp" />
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/trip_name"
+        android:layout_marginLeft="47dp"
+        android:layout_marginStart="47dp"
+        android:layout_marginTop="44dp"
+        android:clickable="true"
+        app:srcCompat="@drawable/start_icon" />
 
-    <Button
-        android:id="@+id/stop_alarm_button"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/start_alarm_button"
-        android:layout_alignStart="@+id/start_alarm_button"
-        android:layout_below="@+id/start_alarm_button"
-        android:layout_marginTop="34dp"
-        android:background="@drawable/my_button_dessign"
-        android:text="@string/stop_alarm"
-        android:textColor="@android:color/white"
-        android:textSize="24sp" />
-
-    <Button
+    <android.support.design.widget.FloatingActionButton
         android:id="@+id/later_alarm_button"
-        android:layout_width="150dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/stop_alarm_button"
+        android:layout_alignTop="@+id/start_alarm_button"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="42dp"
-        android:background="@drawable/my_button_dessign"
-        android:text="@string/later_alarm"
-        android:textColor="@android:color/white"
-        android:textSize="24sp" />
+        android:clickable="true"
+        app:srcCompat="@drawable/img_95431" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/stop_alarm_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@+id/later_alarm_button"
+        android:layout_marginEnd="39dp"
+        android:layout_marginRight="39dp"
+        android:clickable="true"
+        app:srcCompat="@drawable/close" />
 </RelativeLayout>
